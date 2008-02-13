@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="AppleTitle" content="Quick Start">
+		<title>Quick Start</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<p>5. Creating and Editing Objects <br>
+			<br>
+			#K5.1. Drawing Objects<br>
+			<br>
+			You should take the following steps to create an object.<br>
+			<br>
+			1. Click on an object-button in the toolbox &lt;Objects&gt; (cf. Fig.5.1). <br>
+				The selected object will change its color to green.<br>
+			2. Move the mouse cursor to the writing area, so that it becomes a cross.<br>
+			3. Press the left mouse button and drag to the right and down. <br>
+				Only with the &lt;Solid Line&gt; you can drag in any direction.<br>
+			4. On releasing the mouse button the program acts depending on the type of object.<br>
+			<br>
+			If you decide to cancel the selected action before the object has been transferred to the writing area, either press the &lt;Escape&gt;-key or click on the &lt;Pointer&gt;-button in the &lt;Object&gt; toolbox. Once an object has been transferred to the writing area, it can be removed by selecting it and pressing the &lt;Delete&gt; key (for another possibility see 7.1).<br>
+			<br>
+			{bmc bm51.WMF}<br>
+			Fig.5.1<br>
+			<br>
+			#K5.2. Text<br>
+			<br>
+			After one has followed the instructions decribed in 5.1, the program will show the following dialog:<br>
+			<br>
+			{bmc bm52.WMF}<br>
+			Fig.5.2<br>
+			<br>
+			You can now write your text. A new line must be created by pressing [Enter]. New lines are not created automatically. <br>
+			Formatting can only be applied to the whole text, e.g. if you press the bold button the whole text appears as bold. You can select any font in the combobox. If you select a hieroglyphic font (the name of which always starts with vg), you can write a hieroglyphic text too. But for this kind of text no properties like the rotation angle or rubric can be attributed, nor can signs be grouped beside or above each other.<br>
+			With the help of the table on the right-hand side you can select any sign of a font, and can scroll down to see more signs. A click on a sign transfers it into the textbox at the cursor position. <br>
+			Press &lt;Apply&gt; to transfer the text into the writing area at the upper left-hand angle of the blue selection rectangle, press &lt;Cancel&gt; to undo the action.<br>
+			If you want to change a text which has already been created, you must click on the text until the blue selection handle appears. A right-click on that handle will show the &lt;Edit Text&gt; dialog again. But this time the selected text will be shown in the textbox in its previously defined format. The two comboboxes, the bold and italic buttons will reflect the formatting of this text.<br>
+			<br>
+			Special signs:<br>
+			<br>
+			&amp;:  type &amp;&amp;<br>
+			<br>
+			#K5.3. Cartouches<br>
+			<br>
+			To create a cartouche you should follow the steps described in 5.1. After releasing the mouse button a cartouche is drawn on the writing area in exactly same the size as the blue rectangle. The end line of the cartouche is always drawn on the smaller side of the rectangle. After a new cartouche has been created, or if the cartouche has been selected, two handles appear, the blue one for the positioning of the cartouche, the grey one for resizing (Fig.5.3a). If you resize the cartouche, the end line will always appear at the smaller end. To change its side click on &lt;Reverse End&gt; in the toolbox &lt;Cartouche&gt;. If this toolbox is not visible click on the menu line &lt;Toolboxes/Cartouche&gt;. Here you can set the rubric property or borderwidth to 1 or 2 pixels.<br>
+			<br>
+			{bmc bm53.WMF}<br>
+			Fig.5.3<br>
+			<br>
+			Somewhat more complicated is the setting of the rounded edges of the cartouche By default the sizes of x and y are set to 50. The two scrollbars (Fig.5.3) can be used to change these values can be used. Fig.5.4 shows a cartouche with three different x-values but with a constant y-value. The maximal curve (x:100, y:100) is that of a circle, the minimal one shows a rectancle (x:0, y:0).<br>
+			<br>
+			{bmc bm54.WMF}<br>
+			Fig.5.4: Cartouche Edges<br>
+			<br>
+			If you want to change an already created cartouche, click on the cartouche until the blue selection handle appears. The toolbox &lt;Cartouche&gt; shows the properties of the selected cartouche which now can now be altered.<br>
+			<br>
+			#K5.4. Page Numbers<br>
+			<br>
+			Contrary to other objects the page number can only be created once. Normally you would position a page number within the head or foot bar area of a page. After following the instructions decribed in 5.1 the program will show the following dialog:<br>
+			<br>
+			{bmc bm55.WMF}<br>
+			Fig.5.5<br>
+			<br>
+			Here you can specify different properties. The font name and font size are self-explanatory. The Bold/Italic combobox values are shown in Fig.5.6a.<br>
+			<br>
+			{bmc bm56.WMF}<br>
+			Fig.5.6<br>
+			<br>
+			Alignment: The default value is &lt;Free&gt;. This means that the page number can be placed anywhere on the page. All other values limit the movement and you can only drag the page number in a vertical direction. If you select &lt;Left&gt; the page number will appear at the left margin. Fig.5.7 shows upper left-hand corner of a page with part of the margin frame (black lines). The page number is positioned in the vertical margin. In which directions the page numbers can be dragged is indicated by the blue arrows.<br>
+			{bmc bm57.WMF}<br>
+			Fig.5.7<br>
+			<br>
+			The &lt;Right&gt; property fixes the page number to the right margin, whereas &lt;Centre&gt; centres it in the middle position between the two margins. &lt;Alternate&gt; means that on the first page the page number is fixed at the left margin, on the second page to the right margin etc. This is especially useful if you are working with the page format A3 (see 3.1). Here the page number is positioned at the left margin on the left-hand page of the two A4 pages (that the A3 consists of) and at the right margin on the right-hand page.<br>
+			.<br>
+			<br>
+			Format: A &lt;Format&gt; definition should be used with alignment &lt;Centre&gt;. If you type any sign in the textbox the second textbox will immediately show the same sign. The preview area shows the approximate appearance of a formatted page number (see Fig.5.5).<br>
+			<br>
+			Initial Page Number: If you split a document into several parts, you can set the initial value of the page number guaranteeing the sequence of the page numbering. <br>
+			<br>
+			If the page format A3 is selected, the document will always begin with an even page number.<br>
+			<br>
+			If you want to change a page number that already exists, you must click on the page number until the blue selection handle appears. A right-click on that handle will show the &lt;Edit Pagenumber &gt; dialog again, but this time the selected page number will be shown with its previously defined properties, which can now be changed.<br>
+			<br>
+			#K5.5. Lines<br>
+			<br>
+			To create a line you should follow the steps described in 5.1. The line will be drawn with the current properties of the toolbox &lt;Line&gt;. A line is drawn either horizontally (0&oslash;) or vertically (90&oslash;). For other angles use the &lt;Solid Line&gt; object (see 5.6).<br>
+			<br>
+			<br>
+			{bmc bm58.WMF}<br>
+			Fig.5.8<br>
+			<br>
+			You can select various properties from the &lt;Line&gt; toolbox before drawing a line. If the line already exists you can change its properties after selecting it (see 5.6).<br>
+			<br>
+			Fig.5.9 includes examples of different types of lines:<br>
+			<br>
+			{bmc bm59.WMF}<br>
+			Fig.5.9: Types of Lines<br>
+			<br>
+			<br>
+			a: Vertical line with default properties<br>
+			b: Horizontal line with default properties<br>
+			c: Horizontal line-&gt; Bordertype: Dash , Arrow: None<br>
+			d: Horizontal line-&gt; Bordertype: Guideline,  Arrow: None <br>
+			e: Horizontal line-&gt; Bordertype: Solid (Rubric checked,  Border:2) , Arrow: None<br>
+			f: Horizontal line-&gt; Bordertype: Solid, Arrow: Upper/Left, Head: 5/5<br>
+			g: Horizontal line-&gt; Bordertype: Solid (Rubric checked, Border:1), Arrow: Lower/Right, Head: 5/5<br>
+			h: Horizontal line-&gt; Bordertype: Solid, Arrow: Both, Head: 5/5<br>
+			i: Horizontal line-&gt; Bordertype: Solid Arrow: Both, Head: 12/3<br>
+			<br>
+			Blue guidelines will not be printed.<br>
+			<br>
+			#K5.6. Rectangles, Circles, Solid Lines, Arcs<br>
+			<br>
+			Fig.5.10 shows the four objects discussed here: <br>
+			<br>
+			a. Rectangle<br>
+			b. Circle<br>
+			c. Solid Line (with and without an arrow head)<br>
+			d. Arc<br>
+			<br>
+			{bmc bm60.WMF}<br>
+			Fig.5.10<br>
+			<br>
+			<br>
+			To create one of these objects you should follow the steps described in 5.1. After doing this, the objects can be drawn directly in the writing area. Fig.5.10c shows the &lt;Solid Line&gt; object with and without an arrow head. To create this object with an arrow head use the &gt; button.<br>
+			<br>
+			These items are created with a black solid line, and no further properties can be set or changed. They serve more as guidelines for special purposes, e.g. writing a hieroglyphic text in a circle (Fig.5.11) or within a rounded lunette of a stela: <br>
+			<br>
+			{bmc bm61.WMF}<br>
+			Fig.5.11<br>
+			<br>
+			There is no direct function for writing a text directly in a circle. In this example hieroglyphs are created one by one, dragged to the exact position and rotated. After having written all hieroglyphs the circle can be deleted by selecting the circle and pressing [Delete].<br>
+			<br>
+			It is of course possible to use the said objects for simple drawings, such as:<br>
+			<br>
+			{bmc bm62.WMF}<br>
+			Fig.5.12<br>
+			<br>
+			<br>
+			#K5.7. Rubric Passages<br>
+			<br>
+			The program offers several possibilities to define rubric passages.<br>
+			<br>
+			{bmc bm63.WMF}<br>
+			Fig.5.13<br>
+			<br>
+			5.7.1. The Rubric Object (Fig.5.13a)<br>
+			<br>
+			The rubric object is a rectangle without borderlines and filled with a point pattern. To create this object follow the steps described in 5.1. After that the object can be drawn directly in the writing area. Because of the very low screen resolution the raster width appears on the screen as shown in Fig.5.13a. The rubric raster looks similar  when copying to WMF (see 7. The Clipboard), so that it will be printed by the external program as it appears on the screen.  If a rubric object is printed with VisualGlyph the program uses the high resolution of the printer, so that it looks like a greyish background.<br>
+			When the rubric object is used together with a grid (see 2.2. Grid) points may overlap.<br>
+			<br>
+			<br>
+			5.7.2.  Other possibilities<br>
+			<br>
+			- The Rubric Font Signs (Fig.5.13b)<br>
+			rubric = Ss7<br>
+			rubric1 = Ss7*,<br>
+			rubric2 = Ss7**<br>
+			<br>
+			-  Rubric Hieroglyphs (Fig.5.13c)<br>
+			See: 4.4.3 Formatting Single Hieroglyphs<br>
+			<br>
+			-  Using the Line Object (Fig.5.13d)<br>
+			See: 5.5. Lines<br>
+			<br>
+			#K5.8. Destroyed Passages<br>
+			<br>
+			5.8.1. The &rsquo;Destroyed &rsquo; Object<br>
+			<br>
+			{bmc bm64.WMF}<br>
+			Fig.5.14<br>
+			<br>
+			The destroyed object (Fig.5.14a) is a rectangle without borderlines and filled with a diagonal line pattern. To create this object follow the steps described in 5.1. After that the object can be drawn directly in the writing area. This object is printed exactly as it appears on the screen.<br>
+			<br>
+			5.8.2. Font Signs <br>
+			<br>
+			Instead of the &rsquo;Destroyed&lsquo; object you can use font signs. Fig.5.14b shows the eight signs, which are defined as: #, #13, #13*, #12, #12*, #1, #1*, #1**. These sign are listed under &rsquo;Ss. Special Signs&rsquo;.<br>
+			<br>
+			#K5.9. Selecting, Positioning and Resizing Objects<br>
+			<br>
+			5.9.1 Selecting Single Objects<br>
+			<br>
+			Objects have an invisible frame. This is shown in Fig.5.15a-g as a blue dashed rectangle. For the more complicated frame around hieroglyphs see 4.4.1. If you click inside this frame the object will be selected. A blue handle will appear in the lower left-hand corner and in the case of Fig. 5.15a-d,f-g a grey handle in the upper right-hand corner.<br>
+			<br>
+			{bmc bm65.WMF}<br>
+			<br>
+			Fig.5.15: Selection Frame<br>
+			<br>
+			In some cases several frames can overlap. Fig.5.16 shows a case of three overlapping objects: <br>
+			<br>
+			- the nfr-glyph<br>
+			- the kA-glyph <br>
+			- the cartouche<br>
+			<br>
+			{bmc bm66.WMF}<br>
+			Fig.5.16: Overlapping Objects<br>
+			<br>
+			The head of the red arrow points to the overlapping area. If you click in this area one of the three objects will be selected, the second click will select the next object etc.<br>
+			<br>
+			5.9.2 Multiselecting Objects<br>
+			<br>
+			If you want to multiselect objects, click on the writing area (see e.g. Fig.5.17a) and drag to the right and down (Fig.5.17bc). All objects which lie completely within the blue dashed frame will be selected and the blue rectangle will touch the outer limits of the selected objects. In addition, a blue handle appears in the lower left-hand corner.  Thus, by clicking a cartouche, only the cartouche will be moved if dragged by the handle. But by dragging a frame around that cartouche, the signs inside will also be dragged.<br>
+			{bmc bm67.WMF}<br>
+			Fig.5.17<br>
+			<br>
+			If a range of hieroglyphs is multiselected the user can change its &lt;rubric&gt; and &lt;mirror&gt; properties by clicking on the corresponding checkboxes in the &lt;Format Glyph&gt; toolbox (see Fig.4.13).<br>
+			<br>
+			5.9.3 Moving and Copying Objects<br>
+			<br>
+			If one or several objects are selected a blue handle will appear at the lower left corner. The handle serves to move or copy the(se) object(s). <br>
+			Moving Objects: You can move objects with the mouse or with the arrow keys. If the mouse cursor touches the blue handle it will appear as a vertical arrow. With the left mouse button you can drag the objects to any position within the page currently displayed. Note that dragging the objects outside the page will delete these objects as soon as they are deselected. Objects are deselected if the blue handle disappears after a click on the writing area where no object is located. The selected objects can also be moved with the four arrow keys, but only pixel-wise.<br>
+			Copying Objects: To copy selected objects press the [Control] key, then press the left mouse button when the cursor is placed over the blue handle as an arrow, and drag the object to the desired position.<br>
+			<br>
+			Moving or copying objects takes time. On less powerful processors the user should check the menu: View/Fast DragDrop, so that the objects inside the blue dashed frame will not be shown while dragging.By default this item is checked on Win95 and Win98, but unchecked on all other operating systems.<br>
+			For moving or copying objects to another page than the current use the clipboard (see chapter 7).<br>
+			<br>
+			5.9.4 Sizing Objects <br>
+			<br>
+			Only single selected objects can be sized (see 5.6). Here sizing is only applied to drawing objects:<br>
+			<br>
+			- Rubric<br>
+			- Line<br>
+			- Solid Line<br>
+			- Circle<br>
+			- Arc<br>
+			- Cartouche<br>
+			- Rectangle<br>
+			<br>
+			<br>
+			Hieroglyphs, text and page number are resized by changing the font size.<br>
+			To size a single object select it. The grey handle appears. If you want the object to change its size, move the mouse cursor over the handle and drag it with the left mouse button down. The object can be resized pixel-wise with the arrow keys if the &lt;Control&gt; key is pressed.</p>
+	</body>
+
+</html>

@@ -1,0 +1,37 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                fineTunePosition = id; 
+                firstPageNumberToShowChanged = id; 
+                initialPageNrChanged = id; 
+                pageNumberFormatLinksChanged = id; 
+                pageNumberFormatRechtsChanged = id; 
+                pageNumberSizeChanged = id; 
+                pageNumberStyleChanged = id; 
+                pnAlignmentChanged = id; 
+                pnFontChanged = id; 
+                pnPagePositionChanged = id; 
+                showPageNrChanged = id; 
+            }; 
+            CLASS = PageNrController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                firstPageNumberToShowField = NSTextField; 
+                fontBox = NSComboBox; 
+                fontSizeStepper = NSStepper; 
+                fontSizeTextField = NSTextField; 
+                fontStyleBox = NSComboBox; 
+                formatTextLinksField = NSTextField; 
+                formatTextRechtsField = NSTextField; 
+                initialPageNrField = NSTextField; 
+                pnAlignmentBox = NSComboBox; 
+                pnPagePositionMatrix = NSMatrix; 
+                showPageNrButton = NSButton; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

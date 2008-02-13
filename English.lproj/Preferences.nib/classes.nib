@@ -1,0 +1,52 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = IGEdgeDockablePanelWithKey; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {
+            CLASS = IGGridView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {controller = PreferencesController; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                autoSaveIntervalChanged = id; 
+                backgroundColorAction = id; 
+                gridColorWellAction = id; 
+                gridSpacingSliderAction = id; 
+                guidelineCountChanged = id; 
+                guidelineTypeChanged = id; 
+                selectedViewChanged = id; 
+                showsGridCheckboxAction = id; 
+                snapsToGridCheckboxAction = id; 
+            }; 
+            CLASS = PreferencesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                advancedPrefsView = NSView; 
+                autoSaveIntervalPopup = NSPopUpButton; 
+                fontsColorsPrefsView = NSView; 
+                generalPrefsView = NSView; 
+                gridColorWell = NSColorWell; 
+                gridSpacingSlider = NSSlider; 
+                gridSpacingTextField = NSTextField; 
+                gridView = IGGridView; 
+                guidelineCountTextField = NSTextField; 
+                guidelineTypeMatrix = NSMatrix; 
+                showsGridCheckbox = NSButton; 
+                snapsToGridCheckbox = NSButton; 
+                tabView = NSTabView; 
+                textEditingPrefsView = NSView; 
+                updatePrefsView = NSView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = SKTGridView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {controller = id; }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

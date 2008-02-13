@@ -1,0 +1,31 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                changeGlyphAction = id; 
+                glyphAngle = id; 
+                glyphAngleTextFieldAction = id; 
+                glyphSizeStepperAction = id; 
+                glyphSizeTextFieldAction = id; 
+                mirroredCheckBox = id; 
+                rubricCheckBox = id; 
+            }; 
+            CLASS = FormatGlyphController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                angleButtonMatrix = NSMatrix; 
+                angleSlider = NSSlider; 
+                angleTextField = NSTextField; 
+                mirroredCheckBoxOutlet = NSButton; 
+                rubricCheckBoxOutlet = NSButton; 
+                sizeTextField = NSTextField; 
+                stepperButton = NSStepper; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = IGEdgeDockablePanelWithKey; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }
+    ); 
+    IBVersion = 1; 
+}

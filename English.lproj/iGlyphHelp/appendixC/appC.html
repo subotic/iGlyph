@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="AppleTitle" content="Quick Start">
+		<title>Quick Start</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<p>Appendix C: Program Bugs<br>
+			<br>
+			1. Rotated Hieroglyphs (Chapter 4.4.3): Rotated hieroglyphs are transferred correctly from VisualGlyph to MS-WORD. If the user DoubleClicks on the WMF-Graphic the Word Graphic-Editor loses the rotation angles and other properties might change too.<br>
+			Comment: This is probably a mistake or limitation of the WORD Editor.<br>
+			<br>
+			2.Edit Text Dialog (Chapter 5.2): At the right-hand side of the &lt;Edit Text&gt; dialog you see a table with all signs of the font. Here the signs are drawn like pictures. In this case all signs of a font can be shown. If the user clicks on a sign to transfer it to the textbox then some signs (with an ASC value greater then 128) are not transferred. <br>
+			Comment: This is probably a mistake or limitation of the textbox-control.<br>
+			<br>
+			3. Dashed Lines: A dashed line is created with the system function dotted line (see chapter 5.5). Within VisualGlyph this is of no importance, and if the user copies such a line to MS-WORD then it is shown as dotted.<br>
+			Comment: The appearance of the dotted or dashed line is caused by an unknown effect of the system function.<br>
+			<br>
+			4. Hieroglyphs and Text do not appear on the screen:  This error may appear in many different ways. One case will be described here:<br>
+			<br>
+			{bmc bm83.WMF}<br>
+			Fig. C.1<br>
+			<br>
+			Fig. C.1 shows the page format A3, but only a part of it is visible on the screen, here colored as yellow. The text &quot;New Text&quot; was printed on the right page. The user sees the word  &quot;New&quot;, by scrolling to the right he will normally see the full text. But on one computer the word &quot;Text&quot; was not shown. The phenomena occured with font signs in general but not with line drawings and depends on the graphics card (in this case NVidia Geforce MX 2000 was installed). Reducing the max. speed corrected this error. Another work around was to turn &lt;font smoothing&gt; on (Menu: View/Font Smoothing), but this only had an effect when setting the font size to a larger scale.<br>
+			<br>
+			In all probability video drivers can cause this type of errors, so that you should try to install the correct driver and its  latest version. <br>
+			<br>
+			5. Exported Hieroglyphs are cut: It might occur that signs are cut in WORD or other programs.  In this case the user can manually set the surrounding blue frame in Visualglyph by pressing Cntrl-LeftArrow, Control-RightArrow, Control-UpArrow, Control-DownArrow. After this you can repeat the export action (Cntrl-W). For further information see 7.2. Export Data to Word Processors etc.</p>
+	</body>
+
+</html>

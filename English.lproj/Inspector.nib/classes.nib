@@ -1,0 +1,48 @@
+{
+    IBClasses = (
+        {CLASS = EdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = IGEdgeDockablePanelWithKey; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {
+            ACTIONS = {
+                changeGlyphAction = id; 
+                glyphAngle = id; 
+                glyphAngleTextFieldAction = id; 
+                glyphSizeStepperAction = id; 
+                glyphSizeTextFieldAction = id; 
+                mirroredCheckBox = id; 
+                rubricCheckBox = id; 
+            }; 
+            CLASS = IGFormatGlyphInspectorView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                angleButtonMatrix = NSMatrix; 
+                angleSlider = NSSlider; 
+                angleTextField = NSTextField; 
+                mirroredCheckBoxOutlet = NSButton; 
+                rubricCheckBoxOutlet = NSButton; 
+                sizeTextField = NSTextField; 
+                stepperButton = NSStepper; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {selectedViewChanged = id; }; 
+            CLASS = IGInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                cartoucheView = NSView; 
+                inspectorBox = NSBox; 
+                inspectorButtonMatrix = NSMatrix; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

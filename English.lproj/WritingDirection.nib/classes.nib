@@ -1,0 +1,28 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {
+            ACTIONS = {
+                charSpacingStepperAction = id; 
+                charSpacingTextFieldAction = id; 
+                lineSpacingStepperAction = id; 
+                lineSpacingTextFieldAction = id; 
+                writtingDirectionChanged = id; 
+            }; 
+            CLASS = WritingDirectionController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                charSpacingStepperButton = NSStepper; 
+                charSpacingTextField = NSTextField; 
+                horizontalButtonMatrix = NSMatrix; 
+                lineSpacingStepperButton = NSStepper; 
+                lineSpacingTextField = NSTextField; 
+                verticalButtonMatrix = NSMatrix; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

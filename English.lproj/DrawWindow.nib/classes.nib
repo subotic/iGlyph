@@ -1,0 +1,95 @@
+{
+    IBClasses = (
+        {CLASS = IGBackgroundView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {
+                changeMarginUnits = id; 
+                dismissMarginSheet = id; 
+                pageMargins = id; 
+                useMinimumMargins = id; 
+            }; 
+            CLASS = IGDrawWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                bottomMargin = NSTextField; 
+                columnField = NSTextField; 
+                currentPageField = NSTextField; 
+                glyphGroupTextField = NSTextField; 
+                graphicView = IGGraphicView; 
+                leftMargin = NSTextField; 
+                marginUnits = NSMatrix; 
+                marginView = NSView; 
+                marginWindow = NSWindow; 
+                rightMargin = NSTextField; 
+                topMargin = NSTextField; 
+                window = NSWindow; 
+                xCursorPosTextField = NSTextField; 
+                yCursorPosTextField = NSTextField; 
+                zoomScrollView = IGZoomScrollView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {
+                alignBottomEdges = id; 
+                alignHorizontalCenters = id; 
+                alignLeftEdges = id; 
+                alignRightEdges = id; 
+                alignTopEdges = id; 
+                alignVerticalCenters = id; 
+                appendPageToEnd = id; 
+                bringToFront = id; 
+                changeColor = id; 
+                concludeDragOperation = id; 
+                delete = id; 
+                deleteCurrentPage = id; 
+                deselectAll = id; 
+                draggingExited = id; 
+                goToPage = id; 
+                gridSelectedGraphicsAction = id; 
+                insertPageBeforeThisOne = id; 
+                makeNaturalSize = id; 
+                makeSameHeight = id; 
+                makeSameWidth = id; 
+                newRowButtonAction = id; 
+                pageDown = id; 
+                pageUp = id; 
+                selectAll = id; 
+                sendToBack = id; 
+                showsGridMenuAction = id; 
+                snapsToGridMenuAction = id; 
+                writeGlyphGroupAction = id; 
+            }; 
+            CLASS = IGGraphicView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                controller = IGDrawWindowController; 
+                currentPageField = NSTextField; 
+                zoomButton = NSPopUpButton; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = IGMainView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = IGMarginView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = IGSupView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = IGViewSelectionController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {CLASS = IGViewSelectionData; LANGUAGE = ObjC; SUPERCLASS = NSArray; }, 
+        {
+            ACTIONS = {scalePopUpAction = id; }; 
+            CLASS = IGZoomScrollView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                backgroundView = IGBackgroundView; 
+                graphicView = IGGraphicView; 
+                supView = IGSupView; 
+            }; 
+            SUPERCLASS = NSScrollView; 
+        }, 
+        {CLASS = VGCenteringClipView; LANGUAGE = ObjC; SUPERCLASS = NSClipView; }
+    ); 
+    IBVersion = 1; 
+}
