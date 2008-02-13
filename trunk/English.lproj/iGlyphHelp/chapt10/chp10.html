@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="AppleTitle" content="Quick Start">
+		<title>Quick Start</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<p>10. Working with Fonts<br>
+			<br>
+			1. Introduction: The program is font-based. That means that all hieroglyphs are created not as graphics, but as font signs. This simplifies the program a lot. There are numerous functions that can be exercised on fonts, e.g. rotating, setting the font size and the forecolor etc, but the very basic function of mirroring is not available. This was probably not included in font functions because modern languages are only written in one direction and consequently with one sign orientation. VisualGlyph solves this problem by duplicating the fonts. There is always a basic font, e.g. &lt;vgGGAF&gt; and its mirrored counterpart &lt;vgGGAFm&gt; whose appendix &lt;m&gt; stands for &quot;mirrored&quot;. The basic version of VisualGlyph has five fonts:<br>
+			<br>
+			- vgGGAF<br>
+			- vgGGFN<br>
+			- vgGGNU<br>
+			- vgGGUZ<br>
+			- vgUsr1<br>
+			<br>
+			plus its mirrored supplements. If the mirrored font is missing VisualGlyph will use the basic unmirrored font instead. Fonts are not hard coded, which means that there is no direct connection between these fonts and the program. The program reads the file &lt;IG_GlyphCodes.txt&gt; which supplies the font names which can be used and other information. If that file is not present VisualGlyph will not start but send an error message instead.<br>
+			<br>
+			The File&lt;IG_GlyphCodes.txt&gt;: The file &lt;IG_GlyphCodes.txt&gt; has three sections:<br>
+			<br>
+			[Visual Glyph]<br>
+			This section contains the Version number.<br>
+			<br>
+			[Fonts]<br>
+			In this section the fonts are defined. The font name is attributed to a font number.<br>
+			<br>
+			[Signs]<br>
+			This section divides the signs into groups. A group is defined by an asterisk * (e.g. *A. Man and his Occupations). The definitions of the single signs which belong to this group can be found below. For example, the line A12,1,44,mSa means:<br>
+			<br>
+			A12: the Gardiner sign designation<br>
+			1:      the font number, which is related to the font name (see [Fonts]).<br>
+			33:    the position of this sign within the font.<br>
+			MSa: the value of this sign (this is not always applicable).<br>
+			<br>
+			The following lines show the first lines of the file &lt;IG_GlyphCodes.txt&gt;:<br>
+			<br>
+			[Visual Glyph]<br>
+			Version=1.0<br>
+			[Fonts]<br>
+			1=vgGGAF<br>
+			2=vgGGFN<br>
+			3=vgGGNU<br>
+			4=vgGGUZ<br>
+			5=vgUsr1<br>
+			[Signs]<br>
+			*A. Man and his Occupations<br>
+			A1,1,33,<br>
+			A2,1,34,<br>
+			A3,1,35,<br>
+			A4,1,36,<br>
+			A5,1,37,<br>
+			A6,1,38,<br>
+			A7,1,39,<br>
+			A8,1,40,<br>
+			A9,1,41,<br>
+			A10,1,42,<br>
+			A11,1,43,<br>
+			A12,1,44,mSa<br>
+			<br>
+			<br>
+			2. Adding fonts: You can replace VisualGlyphs fonts or add fonts. To add a new font, take the following steps (see the arrows a,b,c).<br>
+			- Add the font name to the section [Fonts] and attribute the next continuing font number (Fig.10.1a: 6=Arial).<br>
+			- Add a new group to the [Signs] section: *Arial (* marks a group) .<br>
+			- Add sign definitions to this section. As an example only three signs A,B,C are defined here, with no Gardiner sign designations.<br>
+			<br>
+			{bmc bm82.WMF}<br>
+			Fig.10.1<br>
+			<br>
+			After having saved the &lt;IG_GlyphCodes.txt&gt; file and restarting the program the user will see the newly defined group &lt;Arial&gt; in the combobox. The three new signs A,B,C can be treated the same way as the hieroglyphs which are supplied by the basic fonts. They can be rotated, its forecolor can be changed to red etc. In this example a non-hieroglyphic font was added, but you can add your own hieroglyphic font in the same manner as well.</p>
+	</body>
+
+</html>

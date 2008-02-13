@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = HieroTableColumn; LANGUAGE = ObjC; SUPERCLASS = NSTableColumn; }, 
+        {
+            ACTIONS = {glyphGroupPopUpChanged = id; headerChanged = id; }; 
+            CLASS = HieroglyphsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {glyphGroupPopUp = NSPopUpButton; myTableView = NSTableView; }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = HieroglyphsPanelData; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = HieroglyphsPanelView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = IGHieroglyphsTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = vgNSTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
+    ); 
+    IBVersion = 1; 
+}

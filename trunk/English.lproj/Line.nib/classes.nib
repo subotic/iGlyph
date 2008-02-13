@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {
+            ACTIONS = {
+                arrowHeadChange = id; 
+                arrowHeadSizeChange = id; 
+                arrowTypeChange = id; 
+                doReverseArrow = id; 
+                lineRubricChange = id; 
+                lineTypeChange = id; 
+                lineWidthChange = id; 
+            }; 
+            CLASS = LineController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                arrowHeadSizeSlider = NSSlider; 
+                arrowHeadSlider = NSSlider; 
+                arrowTypeMatrix = NSMatrix; 
+                lineRubricButton = NSButton; 
+                lineTypeMatrix = NSMatrix; 
+                lineWidthMatrix = NSMatrix; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
