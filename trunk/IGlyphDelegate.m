@@ -47,6 +47,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
   //standardUserDefaults beinhalten Werte welche genommen werden falls der Benutzer
   //noch nie die Applikation gestartet hat und demzufolge auch diese Werte nicht in
   //der userDefaults zu finden sind.
+  /**
   NSMutableDictionary *defaultsDict = [NSMutableDictionary dictionary];
   
   [defaultsDict setObject:@"0" forKey:IGPrefSnapsToGridKey];
@@ -63,6 +64,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
   [defaultsDict setObject:@"15" forKey:IGPrefAutoSaveIntervalKey];
   [defaultsDict setObject:@"0" forKey:IGPrefShowToolTipsKey];
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
+  **/
 }
 
 

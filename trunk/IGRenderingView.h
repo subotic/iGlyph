@@ -6,7 +6,7 @@
 //  Copyright (c) 2004 Ivan Subotic. All rights reserved.
 //
 
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 @class IGDrawDocument;
 
 @interface IGRenderingView : NSView {
