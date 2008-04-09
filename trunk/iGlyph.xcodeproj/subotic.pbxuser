@@ -2,13 +2,15 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeArchitecture = i386;
-		activeBuildConfigurationName = Deployment;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 3244443B0A63C31700BBE596 /* iGlyph */;
+		activeSDKForArchive = macosx10.5;
 		activeTarget = 4EB1F4DF09864EBB00D1533D /* iGlyph */;
 		addToTargets = (
 			4EB1F4DF09864EBB00D1533D /* iGlyph */,
 		);
 		breakpoints = (
+			32DCADFF0DAD22760089DAB1 /* objc_exception_throw */,
 		);
 		codeSenseManager = 3299C68A05468EE40054ABE3 /* Code sense */;
 		executables = (
@@ -23,8 +25,8 @@
 					20,
 					210,
 					20,
-					110,
-					109,
+					132,
+					87,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -90,7 +92,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_FiletypeID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					327,
+					459,
 					20,
 					43,
 					20,
@@ -164,8 +166,8 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					310,
-					10,
+					417,
+					60,
 					20,
 					70,
 					43,
@@ -181,7 +183,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 224603367;
+			PBXPerProjectTemplateStateSaveDate = 229457189;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -640,7 +642,11 @@
 				PBXModuleWindowStatusBarHidden = YES;
 				RubberWindowFrame = "480 245 1178 380 0 0 1920 1178 ";
 			};
-			PBXWorkspaceStateSaveDate = 224603367;
+			PBXWorkspaceStateSaveDate = 229457189;
+		};
+		perUserProjectItems = {
+			32DCAE3A0DAD2D1D0089DAB1 = 32DCAE3A0DAD2D1D0089DAB1 /* PBXTextBookmark */;
+			32DCAE470DAD30540089DAB1 = 32DCAE470DAD30540089DAB1 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 3299C68905468EE40054ABE3 /* Source Control */;
 		userBookmarkGroup = 324B7F5507669750001219FA /* PBXBookmarkGroup */;
@@ -690,8 +696,23 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				commandLineArgs = (
+				);
+				displayName = "Executable Runner";
+				environment = {
+				};
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
 		};
 		customDataFormattersEnabled = 1;
 		debuggerPlugin = GDBDebugging;
@@ -738,6 +759,7 @@
 			CVSToolPath = /usr/bin/cvs;
 			CVSUseSSH = YES;
 			SubversionToolPath = /usr/local/bin/svn;
+			repositoryName = "iGlyph Google Code";
 		};
 		scmType = scm.subversion;
 	};
@@ -761,6 +783,14 @@
 			sepNavWindowFrame = "{{151, 30}, {884, 998}}";
 		};
 	};
+	32CA4F630368D1EE00C91783 /* IGlyph_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {848, 765}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 153}";
+			sepNavWindowFrame = "{{19, 4}, {907, 869}}";
+		};
+	};
 	32D23D07085911D500C9B2C5 /* IGPICTCreator.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1009, 1020}}";
@@ -776,6 +806,39 @@
 			sepNavVisRect = "{{0, 0}, {1009, 1020}}";
 			sepNavWindowFrame = "{{786, 2}, {1054, 1125}}";
 		};
+	};
+	32DCADFF0DAD22760089DAB1 /* objc_exception_throw */ = {
+		isa = PBXSymbolicBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 1;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		hitCount = 1;
+		ignoreCount = 0;
+		location = libobjc.A.dylib;
+		modificationTime = 229451258.24256;
+		state = 1;
+		symbolName = objc_exception_throw;
+	};
+	32DCAE3A0DAD2D1D0089DAB1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: syntax error before ')' token";
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		rLen = 1;
+		rLoc = 116;
+		rType = 1;
+	};
+	32DCAE470DAD30540089DAB1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 147";
+		rLen = 0;
+		rLoc = 4315;
+		rType = 0;
+		vrLen = 1943;
+		vrLoc = 3421;
 	};
 	32EDE991087489D700104997 /* IGInspectorController.h */ = {
 		uiCtxt = {
@@ -815,8 +878,9 @@
 	};
 	4E573BA104FA608700F265BD /* CartoucheController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1009, 1176}}";
-			sepNavSelRange = "{2019, 10}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1176}}";
+			sepNavSelRange = "{579, 0}";
+			sepNavVisRange = "{0, 1099}";
 			sepNavVisRect = "{{0, 612}, {1009, 564}}";
 			sepNavWindowFrame = "{{197, 504}, {750, 543}}";
 		};
@@ -831,8 +895,9 @@
 	};
 	4E573BA504FA608700F265BD /* FormatGlyphController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1005, 1246}}";
-			sepNavSelRange = "{2073, 10}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1246}}";
+			sepNavSelRange = "{585, 0}";
+			sepNavVisRange = "{0, 1030}";
 			sepNavVisRect = "{{0, 347}, {1005, 899}}";
 			sepNavWindowFrame = "{{708, 0}, {1050, 1028}}";
 		};
@@ -847,24 +912,27 @@
 	};
 	4E573BA704FA608700F265BD /* HieroglyphsController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1009, 980}}";
-			sepNavSelRange = "{1892, 10}";
+			sepNavIntBoundsRect = "{{0, 0}, {1637, 1078}}";
+			sepNavSelRange = "{1168, 0}";
+			sepNavVisRange = "{564, 1394}";
 			sepNavVisRect = "{{0, 397}, {1009, 564}}";
-			sepNavWindowFrame = "{{151, 287}, {1696, 891}}";
+			sepNavWindowFrame = "{{127, -121}, {1696, 878}}";
 		};
 	};
 	4E573BA804FA608700F265BD /* HieroglyphsController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1009, 4956}}";
-			sepNavSelRange = "{11520, 10}";
+			sepNavIntBoundsRect = "{{0, 0}, {759, 3976}}";
+			sepNavSelRange = "{4315, 0}";
+			sepNavVisRange = "{3413, 1953}";
 			sepNavVisRect = "{{0, 4359}, {1009, 564}}";
-			sepNavWindowFrame = "{{473, 177}, {818, 851}}";
+			sepNavWindowFrame = "{{316, 27}, {818, 851}}";
 		};
 	};
 	4E573BA904FA608700F265BD /* LineController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1204}}";
-			sepNavSelRange = "{1288, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1176}}";
+			sepNavSelRange = "{485, 0}";
+			sepNavVisRange = "{0, 952}";
 			sepNavVisRect = "{{0, 392}, {705, 429}}";
 			sepNavWindowFrame = "{{518, 452}, {750, 534}}";
 		};
@@ -879,8 +947,9 @@
 	};
 	4E573BAB04FA608700F265BD /* ObjectsController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 453}}";
-			sepNavSelRange = "{676, 30}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{579, 0}";
+			sepNavVisRange = "{0, 863}";
 			sepNavVisRect = "{{0, 0}, {705, 453}}";
 			sepNavWindowFrame = "{{245, 239}, {750, 558}}";
 		};
@@ -895,8 +964,9 @@
 	};
 	4E573BAD04FA608700F265BD /* PreferencesController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1050}}";
-			sepNavSelRange = "{2196, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1050}}";
+			sepNavSelRange = "{587, 0}";
+			sepNavVisRange = "{0, 1114}";
 			sepNavVisRect = "{{0, 626}, {705, 414}}";
 			sepNavWindowFrame = "{{945, 536}, {750, 534}}";
 		};
@@ -911,8 +981,9 @@
 	};
 	4E573BAF04FA608700F265BD /* TipsController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 428}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{574, 0}";
+			sepNavVisRange = "{0, 664}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
 			sepNavWindowFrame = "{{381, 345}, {750, 534}}";
 		};
@@ -927,8 +998,9 @@
 	};
 	4E573BB104FA608700F265BD /* WritingDirectionController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {903, 910}}";
-			sepNavSelRange = "{1284, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 910}}";
+			sepNavSelRange = "{598, 0}";
+			sepNavVisRange = "{0, 918}";
 			sepNavVisRect = "{{0, 0}, {903, 672}}";
 			sepNavWindowFrame = "{{639, 179}, {948, 801}}";
 		};
@@ -943,26 +1015,27 @@
 	};
 	4E573BE304FA61C300F265BD /* IGlyphDelegate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {813, 1120}}";
-			sepNavSelRange = "{80, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {813, 1134}}";
+			sepNavSelRange = "{347, 23}";
 			sepNavVisRange = "{0, 1259}";
 			sepNavVisRect = "{{0, 28}, {827, 727}}";
-			sepNavWindowFrame = "{{579, 49}, {872, 832}}";
+			sepNavWindowFrame = "{{66, 46}, {872, 832}}";
 		};
 	};
 	4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1078, 3374}}";
-			sepNavSelRange = "{80, 0}";
-			sepNavVisRange = "{0, 2334}";
+			sepNavIntBoundsRect = "{{0, 0}, {1078, 2660}}";
+			sepNavSelRange = "{2343, 0}";
+			sepNavVisRange = "{824, 1900}";
 			sepNavVisRect = "{{0, 1118}, {1092, 899}}";
-			sepNavWindowFrame = "{{394, 0}, {1137, 1028}}";
+			sepNavWindowFrame = "{{394, 0}, {1137, 878}}";
 		};
 	};
 	4E712BAD052195FB00BA812E /* IGFontData.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1196, 756}}";
-			sepNavSelRange = "{327, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1188, 756}}";
+			sepNavSelRange = "{312, 0}";
+			sepNavVisRange = "{0, 1186}";
 			sepNavVisRect = "{{0, 0}, {924, 157}}";
 			sepNavWindowFrame = "{{111, 262}, {750, 502}}";
 		};
@@ -975,6 +1048,13 @@
 			sepNavWindowFrame = "{{86, 23}, {1061, 759}}";
 		};
 	};
+	4E7573690A665A32001721EE /* IGEdgeDockablePanel.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{577, 0}";
+			sepNavVisRange = "{0, 660}";
+		};
+	};
 	4E75736A0A665A32001721EE /* IGEdgeDockablePanel.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1199, 910}}";
@@ -985,8 +1065,9 @@
 	};
 	4E75736B0A665A32001721EE /* IGEdgeDockablePanelWithKey.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1199, 941}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{567, 0}";
+			sepNavVisRange = "{0, 697}";
 			sepNavVisRect = "{{0, 0}, {1199, 941}}";
 			sepNavWindowFrame = "{{88, 49}, {1244, 1061}}";
 		};
@@ -1007,8 +1088,9 @@
 	};
 	4ED518FB0675ACD200966A46 /* IGBackgroundView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1204, 899}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{178, 0}";
+			sepNavVisRange = "{0, 229}";
 			sepNavVisRect = "{{0, 0}, {1204, 899}}";
 			sepNavWindowFrame = "{{19, 0}, {1249, 1028}}";
 		};
@@ -1023,8 +1105,9 @@
 	};
 	4EDA68C9064BAE75009CE3E6 /* IGGridView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 449}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{172, 0}";
+			sepNavVisRange = "{0, 295}";
 			sepNavVisRect = "{{0, 0}, {705, 449}}";
 			sepNavWindowFrame = "{{157, 220}, {750, 502}}";
 		};
@@ -1039,8 +1122,9 @@
 	};
 	4EDBD2E40675EF4E00E85E0C /* IGSupView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1204, 899}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{171, 0}";
+			sepNavVisRange = "{0, 215}";
 			sepNavVisRect = "{{0, 0}, {1204, 899}}";
 			sepNavWindowFrame = "{{19, 0}, {1249, 1028}}";
 		};
@@ -1053,6 +1137,13 @@
 			sepNavWindowFrame = "{{19, 0}, {1249, 1028}}";
 		};
 	};
+	4EED813506AD349D00ADEF7E /* IGHieroglyphsTableView.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{184, 0}";
+			sepNavVisRange = "{0, 332}";
+		};
+	};
 	4EED813606AD349D00ADEF7E /* IGHieroglyphsTableView.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {836, 1273}}";
@@ -1063,25 +1154,27 @@
 	};
 	4EF496E2050F5D010016C459 /* IGGraphicView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1002, 3766}}";
-			sepNavSelRange = "{125, 0}";
-			sepNavVisRange = "{0, 828}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 2268}}";
+			sepNavSelRange = "{175, 0}";
+			sepNavVisRange = "{0, 563}";
 			sepNavVisRect = "{{0, 2427}, {998, 256}}";
-			sepNavWindowFrame = "{{439, 251}, {1061, 686}}";
+			sepNavWindowFrame = "{{439, 192}, {1061, 686}}";
 		};
 	};
 	4EF496E3050F5D010016C459 /* IGGraphicView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2474, 44996}}";
-			sepNavSelRange = "{91249, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1024, 27608}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1557}";
 			sepNavVisRect = "{{0, 31771}, {998, 256}}";
-			sepNavWindowFrame = "{{457, 137}, {1083, 891}}";
+			sepNavWindowFrame = "{{457, 0}, {1083, 878}}";
 		};
 	};
 	4EFBE44F0647B97900AEE351 /* IGDrawWindowController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 839}}";
-			sepNavSelRange = "{1061, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1022}}";
+			sepNavSelRange = "{392, 0}";
+			sepNavVisRange = "{0, 749}";
 			sepNavVisRect = "{{0, 239}, {705, 428}}";
 			sepNavWindowFrame = "{{266, 450}, {750, 534}}";
 		};
@@ -1120,8 +1213,9 @@
 	};
 	4EFBE45C0647C3E200AEE351 /* IGCircle.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 428}}";
-			sepNavSelRange = "{252, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{170, 0}";
+			sepNavVisRange = "{0, 286}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
 			sepNavWindowFrame = "{{657, 93}, {750, 534}}";
 		};
@@ -1136,8 +1230,9 @@
 	};
 	4EFBE4600647C42300AEE351 /* IGLine.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 428}}";
-			sepNavSelRange = "{254, 24}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 910}}";
+			sepNavSelRange = "{168, 0}";
+			sepNavVisRange = "{0, 586}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
 			sepNavWindowFrame = "{{634, 114}, {750, 534}}";
 		};
@@ -1246,16 +1341,18 @@
 	};
 	4EFBE47D0647C76C00AEE351 /* IGGlyph.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1382, 5446}}";
-			sepNavSelRange = "{8223, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 3752}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 769}";
 			sepNavVisRect = "{{0, 2493}, {994, 488}}";
 			sepNavWindowFrame = "{{306, 215}, {1039, 617}}";
 		};
 	};
 	4EFBE4800647D76200AEE351 /* IGDrawDocument.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {998, 1904}}";
-			sepNavSelRange = "{3353, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1288}}";
+			sepNavSelRange = "{176, 0}";
+			sepNavVisRange = "{0, 946}";
 			sepNavVisRect = "{{0, 1237}, {998, 256}}";
 			sepNavWindowFrame = "{{79, 137}, {750, 534}}";
 		};
@@ -1270,9 +1367,9 @@
 	};
 	4EFBE7B10648F53B00AEE351 /* IGRenderingView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {758, 430}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 498}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{177, 0}";
+			sepNavVisRange = "{0, 496}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
 			sepNavWindowFrame = "{{404, 324}, {750, 534}}";
 		};
@@ -1287,8 +1384,9 @@
 	};
 	4EFBE7B80649276D00AEE351 /* IGFoundationExtras.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1036, 967}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavSelRange = "{180, 0}";
+			sepNavVisRange = "{0, 425}";
 			sepNavVisRect = "{{0, 0}, {1036, 967}}";
 			sepNavWindowFrame = "{{82, 80}, {1081, 1072}}";
 		};

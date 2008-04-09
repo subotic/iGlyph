@@ -23,6 +23,11 @@
 
 @implementation HieroglyphsController
 
+@synthesize rowNumber;
+@synthesize colNumber;
+@synthesize glyphNumber;
+
+
 + (id)sharedHieroglyphsController
 {
     static HieroglyphsController *_sharedHieroglyphsController = nil;
@@ -103,28 +108,18 @@
 {
     NSLog(@"HieroglyphsController(resizeTable) -> start");
     
-    glyphNumber = [[fontDataDic objectForKey:selectedTitle] count];
-    //NSLog(@"HieroglyphsController(resizeTable)->Anzahl der Eintraege im Array ist: %d", glyphNumber);
+    self.glyphNumber = [[fontDataDic objectForKey:selectedTitle] count];
+    NSLog(@"HieroglyphsController(resizeTable) -> Anzahl der Eintraege im Array ist: %d", self.glyphNumber);
     
-    NSRect rect = [myTableView frame];
-    int width = rect.size.width;
+    NSInteger width = [myTableView frame].size.width;
     //NSLog(@"myTableView breite: %d", width);
-    colNumber = ((width)/50);
+    
+    self.colNumber = width/50;
     int glyphCount = [[fontDataDic objectForKey:selectedTitle] count];
-    rowNumber = (glyphCount / colNumber);
-    if (rowNumber % 2 != 0) //ungerade
-    {
-        rowNumber = rowNumber + 1; //ich muss eine gerade Anzahl von Reihen haben
-    } 
-    else
-    {
-       if (glyphCount != (rowNumber * colNumber)) //wenn es genau aufgeht, dann brauche ich keine Reihen mehr
-       {
-            rowNumber = rowNumber + 2;
-        }
-    }
-
+    self.rowNumber = ceilf(glyphCount / self.colNumber);
+    
     // clear columns in MyTableView
+    /**
     NSArray *columnsArr = [myTableView tableColumns];
     NSEnumerator *enumerator = [columnsArr objectEnumerator];
     id anObject;
@@ -132,12 +127,21 @@
     {
         [myTableView removeTableColumn:anObject];
     }
+    **/
+    NSLog(@"HieroglyphsController(resizeTable)-> vor clear columns");
+    // clear columns in MyTableView
+    
+    NSArray *columnsArr = [myTableView tableColumns];
+    for ( id anObject in columnsArr ) {
+      [myTableView removeTableColumn:anObject];
+    }
+    NSLog(@"hier");
     
     int i;
     for (i = 0; i < colNumber; i++)
     {
         NSString *tempString = [[NSString alloc] initWithFormat:@"%d",i];// (1)
-        //NSLog(@"HieroglyphsController(resizeTable) tempString ==> %@", tempString);
+        NSLog(@"HieroglyphsController(resizeTable) tempString ==> %@", tempString);
         
         NSTableHeaderCell *cellHeader = [[NSTableHeaderCell alloc]initTextCell:tempString]; // (2)
         NSTextFieldCell *cellData = [[NSTextFieldCell alloc] initTextCell:@""]; // (3)
@@ -160,7 +164,7 @@
         [myTableView setRowHeight:50];
     }
     
-    //NSLog(@"HieroglyphsController(resizeTable) -> [myTableView reloadData] start");
+    NSLog(@"HieroglyphsController(resizeTable) -> [myTableView reloadData] start");
     [myTableView reloadData];
     //NSLog(@"HieroglyphsController(resizeTable) -> [myTableView reloadData] end");
     NSLog(@"HieroglyphsController(resizeTable) -> end");
@@ -171,7 +175,7 @@
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
     NSLog(@"numberOfRowsInTableView");
-    return rowNumber;
+    return self.rowNumber;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
