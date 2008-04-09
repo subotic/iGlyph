@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		327B7D2B0B94E0DC00BAEB3A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327B7D170B94E0DC00BAEB3A /* Sparkle.framework */; };
-		327B7D3B0B94E1A800BAEB3A /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 327B7D170B94E0DC00BAEB3A /* Sparkle.framework */; };
+		32DCAD9F0DACEC7D0089DAB1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DCAD9E0DACEC7D0089DAB1 /* Cocoa.framework */; };
 		4E44D3B30A63B559006A945F /* iGlyph.xcclassmodel in Resources */ = {isa = PBXBuildFile; fileRef = 4E44D3B20A63B559006A945F /* iGlyph.xcclassmodel */; };
 		4E75736D0A665A32001721EE /* IGEdgeDockablePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E7573690A665A32001721EE /* IGEdgeDockablePanel.h */; };
 		4E75736E0A665A32001721EE /* IGEdgeDockablePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E75736A0A665A32001721EE /* IGEdgeDockablePanel.m */; };
@@ -161,9 +160,6 @@
 		4EB1F57609864F8700D1533D /* PageNrController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ADB326075E6CBD006329AC /* PageNrController.m */; };
 		4EB1F57809864F8700D1533D /* IGPICTCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D23D08085911D500C9B2C5 /* IGPICTCreator.m */; };
 		4EB1F57909864F8700D1533D /* IGInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDE992087489D700104997 /* IGInspectorController.m */; };
-		4EB1F6F4098650B700D1533D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EB1F614098650B700D1533D /* AppKit.framework */; };
-		4EB1F6F5098650B700D1533D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EB1F615098650B700D1533D /* Cocoa.framework */; };
-		4EB1F6F6098650B700D1533D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EB1F616098650B700D1533D /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -173,7 +169,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				327B7D3B0B94E1A800BAEB3A /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,13 +183,13 @@
 		3226B91D07E9124E0069519A /* IGFonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = IGFonts; sourceTree = "<group>"; };
 		3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = IG_GlyphCodes.txt; sourceTree = "<group>"; };
 		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
-		327B7D170B94E0DC00BAEB3A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		32ADB31D075E6C5D006329AC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PageNr.nib; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageNrController.h; sourceTree = "<group>"; };
 		32ADB326075E6CBD006329AC /* PageNrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageNrController.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IGlyph_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGlyph_Prefix.pch; sourceTree = "<group>"; };
 		32D23D07085911D500C9B2C5 /* IGPICTCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGPICTCreator.h; sourceTree = "<group>"; };
 		32D23D08085911D500C9B2C5 /* IGPICTCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGPICTCreator.m; sourceTree = "<group>"; };
+		32DCAD9E0DACEC7D0089DAB1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		32EDE991087489D700104997 /* IGInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGInspectorController.h; sourceTree = "<group>"; };
 		32EDE992087489D700104997 /* IGInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGInspectorController.m; sourceTree = "<group>"; };
 		32EDE99808748A6E00104997 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Inspector.nib; sourceTree = "<group>"; };
@@ -291,9 +286,6 @@
 		4EA4A8340B98828100D0F703 /* wd_upToDownVert.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = wd_upToDownVert.tiff; sourceTree = "<group>"; };
 		4EA4A8350B98828100D0F703 /* wd_upToDownVertMirr.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = wd_upToDownVertMirr.tiff; sourceTree = "<group>"; };
 		4EB1F4E009864EBB00D1533D /* iGlyph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGlyph.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EB1F614098650B700D1533D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		4EB1F615098650B700D1533D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		4EB1F616098650B700D1533D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		4ED518FB0675ACD200966A46 /* IGBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGBackgroundView.h; sourceTree = "<group>"; };
 		4ED518FC0675ACD200966A46 /* IGBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGBackgroundView.m; sourceTree = "<group>"; };
 		4EDA686E064BA50B009CE3E6 /* IGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImage.h; sourceTree = "<group>"; };
@@ -346,10 +338,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EB1F6F4098650B700D1533D /* AppKit.framework in Frameworks */,
-				4EB1F6F5098650B700D1533D /* Cocoa.framework in Frameworks */,
-				4EB1F6F6098650B700D1533D /* WebKit.framework in Frameworks */,
-				327B7D2B0B94E0DC00BAEB3A /* Sparkle.framework in Frameworks */,
+				32DCAD9F0DACEC7D0089DAB1 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +366,8 @@
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				327B7D310B94E11400BAEB3A /* Linked Frameworks */,
 				4E44D3B20A63B559006A945F /* iGlyph.xcclassmodel */,
+				32DCAD9E0DACEC7D0089DAB1 /* Cocoa.framework */,
 			);
 			name = VisualGlyph;
 			sourceTree = "<group>";
@@ -410,17 +399,6 @@
 			children = (
 			);
 			name = "Bindings Controller";
-			sourceTree = "<group>";
-		};
-		327B7D310B94E11400BAEB3A /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4EB1F614098650B700D1533D /* AppKit.framework */,
-				4EB1F615098650B700D1533D /* Cocoa.framework */,
-				4EB1F616098650B700D1533D /* WebKit.framework */,
-				327B7D170B94E0DC00BAEB3A /* Sparkle.framework */,
-			);
-			name = "Linked Frameworks";
 			sourceTree = "<group>";
 		};
 		4E573BC904FA60A500F265BD /* Controller */ = {
@@ -718,7 +696,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 4E1F7F0E0856E087007F166E /* Build configuration list for PBXProject "iGlyph" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* VisualGlyph */;
 			projectDirPath = "";
@@ -970,124 +948,71 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4E1F7F0F0856E087007F166E /* Development */ = {
+		32DC7F5D0DACE3590078AE6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				COPY_PHASE_STRIP = NO;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				STRIP_INSTALLED_PRODUCT = NO;
-				ZERO_LINK = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				SDKROOT = macosx10.5;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
 			};
-			name = Development;
+			name = Debug;
 		};
-		4E1F7F100856E087007F166E /* Deployment */ = {
+		32DC7F5E0DACE3590078AE6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				DEPLOYMENT_LOCATION = NO;
-				DEPLOYMENT_POSTPROCESSING = YES;
-				DSTROOT = /;
-				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Deployment;
-		};
-		4E1F7F110856E087007F166E /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
-		};
-		4EB1F4E309864EDA00D1533D /* Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS)",
-					"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PREFIX_HEADER = IGlyph_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = iGlyph;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
-			name = Development;
+			name = Debug;
 		};
-		4EB1F4E409864EDA00D1533D /* Deployment */ = {
+		32DC7F5F0DACE3670078AE6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS)",
-					"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = iGlyph;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				SDKROOT = macosx10.5;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
 			};
-			name = Deployment;
+			name = Release;
 		};
-		4EB1F4E509864EDA00D1533D /* Default */ = {
+		32DC7F600DACE3670078AE6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.5.sdk/System/Library/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PREFIX_HEADER = IGlyph_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -1099,9 +1024,8 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = iGlyph;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
-			name = Default;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1109,22 +1033,20 @@
 		4E1F7F0E0856E087007F166E /* Build configuration list for PBXProject "iGlyph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4E1F7F0F0856E087007F166E /* Development */,
-				4E1F7F100856E087007F166E /* Deployment */,
-				4E1F7F110856E087007F166E /* Default */,
+				32DC7F5D0DACE3590078AE6F /* Debug */,
+				32DC7F5F0DACE3670078AE6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		4EB1F4E209864EDA00D1533D /* Build configuration list for PBXNativeTarget "iGlyph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4EB1F4E309864EDA00D1533D /* Development */,
-				4EB1F4E409864EDA00D1533D /* Deployment */,
-				4EB1F4E509864EDA00D1533D /* Default */,
+				32DC7F5E0DACE3590078AE6F /* Debug */,
+				32DC7F600DACE3670078AE6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

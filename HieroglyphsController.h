@@ -12,7 +12,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 
 @class IGFontData;
 @class IGGraphicView;
@@ -27,12 +27,19 @@
   IGFontData *fontData;
   NSMutableDictionary *fontDataDic;
   NSMutableArray *glyphGroupsArr;
-  int rowNumber;
-  int colNumber;
-  int glyphNumber;
+  
+  NSInteger rowNumber;
+  NSInteger colNumber;
+  NSInteger glyphNumber;
+  
   int headerSelected;
+  
   NSString *selectedTitle;
 }
+
+@property (assign) NSInteger rowNumber;
+@property (assign) NSInteger colNumber;
+@property (assign) NSInteger glyphNumber;
 
 - (id)init;
 - (void)awakeFromNib;

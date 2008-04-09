@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 
 @class IGGraphicView;
 @class IGDrawWindowController;

@@ -15,7 +15,7 @@
 
 typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROLL } ScrollingBehavior;
 
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 
 @class IGGraphicView;
 @class IGBackgroundView;
