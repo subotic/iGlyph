@@ -64,8 +64,13 @@
     fontData = [[NSApp delegate] sharedFontData];
     fontDataDic = [fontData getFontData];
     glyphGroupsArr = [fontData getGlyphGroups];
-    self.selectedTitle = [glyphGroupsArr objectAtIndex:0];
     headerSelected = 0;
+    
+    self.selectedTitle = [glyphGroupsArr objectAtIndex:0];
+    self.colNumber = [myTableView numberOfColumns];
+    self.glyphNumber = [[fontDataDic objectForKey:self.selectedTitle] count];
+    
+    //[myTableView 
     
     // reset the glyphGroup pop-up
     [self addGlyphGroupPopUpItems];
@@ -99,6 +104,8 @@
   NSLog(@"HieroglyphsController(glyphGroupPopUpChanged)->Ausgewahlter Titel: %@", groupTitle);
   
   self.selectedTitle = groupTitle;
+  self.glyphNumber = [[fontDataDic objectForKey:groupTitle] count];
+  
   [self calculateNumberOfRowsInTableView];
   [myTableView reloadData];
 }
@@ -107,8 +114,8 @@
 
 - (void)calculateNumberOfRowsInTableView
 {
-    self.rowNumber = 15;
-    //self.rowNumber = ceil([[fontDataDic objectForKey:self.selectedTitle] count] / self.colNumber);
+    //self.rowNumber = 15;
+    self.rowNumber = ceil(self.glyphNumber / self.colNumber);
 }
 
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
@@ -121,7 +128,7 @@
 {
     //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
     int column = [[tableColumn identifier] intValue];
-    int neededValue = (column + row * colNumber);
+    int neededValue = (column + row * 8); //hat acht columns
     
     NSMutableArray *titleData = [fontDataDic objectForKey:self.selectedTitle];
     
@@ -163,12 +170,10 @@
         [attribString appendAttributedString:attribStringGlyph];
             
         //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 1");
-        //return attribString;
-        return @"1";
+        return attribString;
     } else {
        	//NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 2");
-        //return attribString;
-        return @"0";
+        return attribString;
     }
 }
 
