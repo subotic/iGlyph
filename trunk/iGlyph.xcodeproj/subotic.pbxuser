@@ -11,6 +11,7 @@
 		);
 		breakpoints = (
 			32DCADFF0DAD22760089DAB1 /* objc_exception_throw */,
+			3272294C0DADF6930011BC88 /* HieroglyphsController.m:110 */,
 		);
 		codeSenseManager = 3299C68A05468EE40054ABE3 /* Code sense */;
 		executables = (
@@ -183,7 +184,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 229457189;
+			PBXPerProjectTemplateStateSaveDate = 229470736;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -642,9 +643,48 @@
 				PBXModuleWindowStatusBarHidden = YES;
 				RubberWindowFrame = "480 245 1178 380 0 0 1920 1178 ";
 			};
-			PBXWorkspaceStateSaveDate = 229457189;
+			PBXWorkspaceStateSaveDate = 229470736;
 		};
 		perUserProjectItems = {
+			327228DE0DAD72240011BC88 /* PBXTextBookmark */ = 327228DE0DAD72240011BC88 /* PBXTextBookmark */;
+			327228EF0DAD72E40011BC88 /* PBXTextBookmark */ = 327228EF0DAD72E40011BC88 /* PBXTextBookmark */;
+			327228F00DAD738E0011BC88 /* PBXTextBookmark */ = 327228F00DAD738E0011BC88 /* PBXTextBookmark */;
+			327228F20DAD73C60011BC88 /* PBXTextBookmark */ = 327228F20DAD73C60011BC88 /* PBXTextBookmark */;
+			327228FB0DAD76B60011BC88 /* PBXTextBookmark */ = 327228FB0DAD76B60011BC88 /* PBXTextBookmark */;
+			327228FE0DADE8CC0011BC88 /* PBXTextBookmark */ = 327228FE0DADE8CC0011BC88 /* PBXTextBookmark */;
+			327229000DADE9060011BC88 /* PBXTextBookmark */ = 327229000DADE9060011BC88 /* PBXTextBookmark */;
+			327229020DADE9700011BC88 /* PBXBookmark */ = 327229020DADE9700011BC88 /* PBXBookmark */;
+			327229060DADE9C90011BC88 /* PBXTextBookmark */ = 327229060DADE9C90011BC88 /* PBXTextBookmark */;
+			327229080DADEA6F0011BC88 /* PBXTextBookmark */ = 327229080DADEA6F0011BC88 /* PBXTextBookmark */;
+			3272290B0DADEB860011BC88 /* PBXBookmark */ = 3272290B0DADEB860011BC88 /* PBXBookmark */;
+			3272290F0DADEBF50011BC88 /* PBXTextBookmark */ = 3272290F0DADEBF50011BC88 /* PBXTextBookmark */;
+			3272291A0DADEC6E0011BC88 /* PBXTextBookmark */ = 3272291A0DADEC6E0011BC88 /* PBXTextBookmark */;
+			327229200DADEE970011BC88 /* PBXTextBookmark */ = 327229200DADEE970011BC88 /* PBXTextBookmark */;
+			327229230DADEE970011BC88 /* PBXTextBookmark */ = 327229230DADEE970011BC88 /* PBXTextBookmark */;
+			327229250DADEE970011BC88 /* PBXTextBookmark */ = 327229250DADEE970011BC88 /* PBXTextBookmark */;
+			3272293A0DADF4E00011BC88 /* PBXTextBookmark */ = 3272293A0DADF4E00011BC88 /* PBXTextBookmark */;
+			327229420DADF6310011BC88 /* PBXTextBookmark */ = 327229420DADF6310011BC88 /* PBXTextBookmark */;
+			327229430DADF6310011BC88 /* PBXTextBookmark */ = 327229430DADF6310011BC88 /* PBXTextBookmark */;
+			327229480DADF6810011BC88 /* PBXTextBookmark */ = 327229480DADF6810011BC88 /* PBXTextBookmark */;
+			327229490DADF6810011BC88 /* PBXTextBookmark */ = 327229490DADF6810011BC88 /* PBXTextBookmark */;
+			3272294F0DADF6A30011BC88 /* PBXTextBookmark */ = 3272294F0DADF6A30011BC88 /* PBXTextBookmark */;
+			327229500DADF6A30011BC88 /* PBXTextBookmark */ = 327229500DADF6A30011BC88 /* PBXTextBookmark */;
+			327229590DADF7240011BC88 /* PBXTextBookmark */ = 327229590DADF7240011BC88 /* PBXTextBookmark */;
+			3272295A0DADF7240011BC88 /* PBXTextBookmark */ = 3272295A0DADF7240011BC88 /* PBXTextBookmark */;
+			3272295B0DADF7240011BC88 /* PBXTextBookmark */ = 3272295B0DADF7240011BC88 /* PBXTextBookmark */;
+			3272295E0DADF74F0011BC88 /* PBXTextBookmark */ = 3272295E0DADF74F0011BC88 /* PBXTextBookmark */;
+			327229630DADF7930011BC88 /* PBXBookmark */ = 327229630DADF7930011BC88 /* PBXBookmark */;
+			327229670DADF7AD0011BC88 /* PBXTextBookmark */ = 327229670DADF7AD0011BC88 /* PBXTextBookmark */;
+			327229680DADF7AD0011BC88 /* PBXTextBookmark */ = 327229680DADF7AD0011BC88 /* PBXTextBookmark */;
+			3272296B0DADF7CC0011BC88 /* PBXTextBookmark */ = 3272296B0DADF7CC0011BC88 /* PBXTextBookmark */;
+			3272296C0DADF7CC0011BC88 /* PBXTextBookmark */ = 3272296C0DADF7CC0011BC88 /* PBXTextBookmark */;
+			3272296F0DADF8090011BC88 /* PBXTextBookmark */ = 3272296F0DADF8090011BC88 /* PBXTextBookmark */;
+			327229720DADF8090011BC88 /* PBXTextBookmark */ = 327229720DADF8090011BC88 /* PBXTextBookmark */;
+			327229730DADF8090011BC88 /* PBXTextBookmark */ = 327229730DADF8090011BC88 /* PBXTextBookmark */;
+			327229740DADF8090011BC88 /* PBXTextBookmark */ = 327229740DADF8090011BC88 /* PBXTextBookmark */;
+			327229770DADF83E0011BC88 /* PBXTextBookmark */ = 327229770DADF83E0011BC88 /* PBXTextBookmark */;
+			327229780DADF83E0011BC88 /* PBXTextBookmark */ = 327229780DADF83E0011BC88 /* PBXTextBookmark */;
+			327229790DADF83E0011BC88 /* PBXTextBookmark */ = 327229790DADF83E0011BC88 /* PBXTextBookmark */;
 			32DCAE3A0DAD2D1D0089DAB1 = 32DCAE3A0DAD2D1D0089DAB1 /* PBXTextBookmark */;
 			32DCAE470DAD30540089DAB1 = 32DCAE470DAD30540089DAB1 /* PBXTextBookmark */;
 		};
@@ -751,6 +791,440 @@
 		vrLen = 830;
 		vrLoc = 30157;
 	};
+	327228DE0DAD72240011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 147";
+		rLen = 0;
+		rLoc = 2762;
+		rType = 0;
+		vrLen = 1895;
+		vrLoc = 3413;
+	};
+	327228EF0DAD72E40011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 140";
+		rLen = 0;
+		rLoc = 2762;
+		rType = 0;
+		vrLen = 2521;
+		vrLoc = 2854;
+	};
+	327228F00DAD738E0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 135";
+		rLen = 0;
+		rLoc = 2762;
+		rType = 0;
+		vrLen = 2590;
+		vrLoc = 2854;
+	};
+	327228F20DAD73C60011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 136";
+		rLen = 0;
+		rLoc = 2762;
+		rType = 0;
+		vrLen = 2477;
+		vrLoc = 3161;
+	};
+	327228FB0DAD76B60011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 73";
+		rLen = 0;
+		rLoc = 1903;
+		rType = 0;
+		vrLen = 1752;
+		vrLoc = 1165;
+	};
+	327228FE0DADE8CC0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 85";
+		rLen = 0;
+		rLoc = 2190;
+		rType = 0;
+		vrLen = 2414;
+		vrLoc = 2604;
+	};
+	327229000DADE9060011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 106";
+		rLen = 0;
+		rLoc = 2691;
+		rType = 0;
+		vrLen = 2374;
+		vrLoc = 2412;
+	};
+	327229020DADE9700011BC88 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+	};
+	327229060DADE9C90011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 287";
+		rLen = 0;
+		rLoc = 7680;
+		rType = 0;
+		vrLen = 2884;
+		vrLoc = 6541;
+	};
+	327229080DADEA6F0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 109";
+		rLen = 0;
+		rLoc = 2762;
+		rType = 0;
+		vrLen = 2425;
+		vrLoc = 1885;
+	};
+	3272290B0DADEB860011BC88 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+	};
+	3272290F0DADEBF50011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 165";
+		rLen = 0;
+		rLoc = 5570;
+		rType = 0;
+		vrLen = 2952;
+		vrLoc = 2870;
+	};
+	3272291A0DADEC6E0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 98";
+		rLen = 0;
+		rLoc = 2441;
+		rType = 0;
+		vrLen = 2795;
+		vrLoc = 2353;
+	};
+	327229200DADEE970011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 169";
+		rLen = 0;
+		rLoc = 5723;
+		rType = 0;
+		vrLen = 2959;
+		vrLoc = 2816;
+	};
+	327229230DADEE970011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229240DADEE970011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		rLen = 0;
+		rLoc = 2147483647;
+		rType = 0;
+	};
+	327229240DADEE970011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = file;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	327229250DADEE970011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229260DADEE970011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2600;
+		vrLoc = 1235;
+	};
+	327229260DADEE970011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	3272293A0DADF4E00011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: syntax error before '}' token";
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		rLen = 1;
+		rLoc = 111;
+		rType = 1;
+	};
+	327229420DADF6310011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 80";
+		rLen = 0;
+		rLoc = 2132;
+		rType = 0;
+		vrLen = 1904;
+		vrLoc = 1402;
+	};
+	327229430DADF6310011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229440DADF6310011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	327229440DADF6310011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	327229480DADF6810011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 110";
+		rLen = 0;
+		rLoc = 2879;
+		rType = 0;
+		vrLen = 2471;
+		vrLoc = 1838;
+	};
+	327229490DADF6810011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 3272294A0DADF6810011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	3272294A0DADF6810011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	3272294C0DADF6930011BC88 /* HieroglyphsController.m:110 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		functionName = "-calculateNumberOfRowsInTableView";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 110;
+		location = iGlyph;
+		modificationTime = 229504716.460652;
+		state = 1;
+	};
+	3272294F0DADF6A30011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 301";
+		rLen = 0;
+		rLoc = 9614;
+		rType = 0;
+		vrLen = 2423;
+		vrLoc = 1899;
+	};
+	327229500DADF6A30011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229510DADF6A30011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	327229510DADF6A30011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	327229590DADF7240011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		rLen = 0;
+		rLoc = 109;
+		rType = 1;
+	};
+	3272295A0DADF7240011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 111";
+		rLen = 0;
+		rLoc = 2858;
+		rType = 0;
+		vrLen = 2437;
+		vrLoc = 1899;
+	};
+	3272295B0DADF7240011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 3272295C0DADF7240011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	3272295C0DADF7240011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	3272295E0DADF74F0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 3272295F0DADF74F0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2687;
+		vrLoc = 961;
+	};
+	3272295F0DADF74F0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	327229630DADF7930011BC88 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+	};
+	327229670DADF7AD0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 169";
+		rLen = 0;
+		rLoc = 5723;
+		rType = 0;
+		vrLen = 3112;
+		vrLoc = 3387;
+	};
+	327229680DADF7AD0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229690DADF7AD0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	327229690DADF7AD0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	3272296B0DADF7CC0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 170";
+		rLen = 0;
+		rLoc = 5680;
+		rType = 0;
+		vrLen = 3043;
+		vrLoc = 3387;
+	};
+	3272296C0DADF7CC0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 3272296D0DADF7CC0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	3272296D0DADF7CC0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	3272296F0DADF8090011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 138";
+		rLen = 11;
+		rLoc = 4115;
+		rType = 0;
+		vrLen = 2970;
+		vrLoc = 2760;
+	};
+	327229720DADF8090011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA704FA608700F265BD /* HieroglyphsController.h */;
+		rLen = 0;
+		rLoc = 2147483647;
+		rType = 0;
+	};
+	327229730DADF8090011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA704FA608700F265BD /* HieroglyphsController.h */;
+		name = "HieroglyphsController.h: 62";
+		rLen = 0;
+		rLoc = 1647;
+		rType = 0;
+		vrLen = 1839;
+		vrLoc = 80;
+	};
+	327229740DADF8090011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 327229750DADF8090011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	327229750DADF8090011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
+	327229770DADF83E0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
+		name = "HieroglyphsController.m: 138";
+		rLen = 0;
+		rLoc = 4126;
+		rType = 0;
+		vrLen = 2970;
+		vrLoc = 2760;
+	};
+	327229780DADF83E0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4E573BA704FA608700F265BD /* HieroglyphsController.h */;
+		name = "HieroglyphsController.h: 62";
+		rLen = 0;
+		rLoc = 1647;
+		rType = 0;
+		vrLen = 1839;
+		vrLoc = 80;
+	};
+	327229790DADF83E0011BC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 3272297A0DADF83E0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */;
+		name = "Diff Local vs. HEAD — HieroglyphsController.m: 43";
+		rLen = 129;
+		rLoc = 1383;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 961;
+	};
+	3272297A0DADF83E0011BC88 /* Diff Local vs. HEAD — HieroglyphsController.m */ = {
+		isa = PBXFileReference;
+		path = "Diff Local vs. HEAD — HieroglyphsController.m";
+		sourceTree = "<group>";
+	};
 	3299C68905468EE40054ABE3 /* Source Control */ = {
 		isa = PBXSourceControlManager;
 		fallbackIsa = XCSourceControlManager;
@@ -759,7 +1233,7 @@
 			CVSToolPath = /usr/bin/cvs;
 			CVSUseSSH = YES;
 			SubversionToolPath = /usr/local/bin/svn;
-			repositoryName = "iGlyph Google Code";
+			repositoryName = "iGlyphe Google Code";
 		};
 		scmType = scm.subversion;
 	};
@@ -815,10 +1289,10 @@
 		continueAfterActions = 0;
 		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 229451258.24256;
+		modificationTime = 229504713.561034;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -826,8 +1300,8 @@
 		isa = PBXTextBookmark;
 		comments = "error: syntax error before ')' token";
 		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
-		rLen = 1;
-		rLoc = 116;
+		rLen = 0;
+		rLoc = 104;
 		rType = 1;
 	};
 	32DCAE470DAD30540089DAB1 /* PBXTextBookmark */ = {
@@ -835,7 +1309,7 @@
 		fRef = 4E573BA804FA608700F265BD /* HieroglyphsController.m */;
 		name = "HieroglyphsController.m: 147";
 		rLen = 0;
-		rLoc = 4315;
+		rLoc = 2762;
 		rType = 0;
 		vrLen = 1943;
 		vrLoc = 3421;
@@ -912,20 +1386,20 @@
 	};
 	4E573BA704FA608700F265BD /* HieroglyphsController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1637, 1078}}";
-			sepNavSelRange = "{1168, 0}";
-			sepNavVisRange = "{564, 1394}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 994}}";
+			sepNavSelRange = "{1647, 0}";
+			sepNavVisRange = "{80, 1839}";
 			sepNavVisRect = "{{0, 397}, {1009, 564}}";
-			sepNavWindowFrame = "{{127, -121}, {1696, 878}}";
+			sepNavWindowFrame = "{{589, -7}, {906, 1062}}";
 		};
 	};
 	4E573BA804FA608700F265BD /* HieroglyphsController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {759, 3976}}";
-			sepNavSelRange = "{4315, 0}";
-			sepNavVisRange = "{3413, 1953}";
+			sepNavIntBoundsRect = "{{0, 0}, {808, 3458}}";
+			sepNavSelRange = "{4126, 0}";
+			sepNavVisRange = "{2760, 2970}";
 			sepNavVisRect = "{{0, 4359}, {1009, 564}}";
-			sepNavWindowFrame = "{{316, 27}, {818, 851}}";
+			sepNavWindowFrame = "{{482, 60}, {867, 1081}}";
 		};
 	};
 	4E573BA904FA608700F265BD /* LineController.h */ = {
@@ -1146,10 +1620,11 @@
 	};
 	4EED813606AD349D00ADEF7E /* IGHieroglyphsTableView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {836, 1273}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 1302}}";
+			sepNavSelRange = "{1569, 0}";
+			sepNavVisRange = "{3, 1867}";
 			sepNavVisRect = "{{0, 688}, {705, 428}}";
-			sepNavWindowFrame = "{{127, 576}, {750, 534}}";
+			sepNavWindowFrame = "{{160, 158}, {912, 983}}";
 		};
 	};
 	4EF496E2050F5D010016C459 /* IGGraphicView.h */ = {
