@@ -1,48 +1,60 @@
-{
-    IBClasses = (
-        {CLASS = EdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
-        {
-            ACTIONS = {"" = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = IGEdgeDockablePanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
-        {CLASS = IGEdgeDockablePanelWithKey; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
-        {
-            ACTIONS = {
-                changeGlyphAction = id; 
-                glyphAngle = id; 
-                glyphAngleTextFieldAction = id; 
-                glyphSizeStepperAction = id; 
-                glyphSizeTextFieldAction = id; 
-                mirroredCheckBox = id; 
-                rubricCheckBox = id; 
-            }; 
-            CLASS = IGFormatGlyphInspectorView; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                angleButtonMatrix = NSMatrix; 
-                angleSlider = NSSlider; 
-                angleTextField = NSTextField; 
-                mirroredCheckBoxOutlet = NSButton; 
-                rubricCheckBoxOutlet = NSButton; 
-                sizeTextField = NSTextField; 
-                stepperButton = NSStepper; 
-            }; 
-            SUPERCLASS = NSView; 
-        }, 
-        {
-            ACTIONS = {selectedViewChanged = id; }; 
-            CLASS = IGInspectorController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                cartoucheView = NSView; 
-                inspectorBox = NSBox; 
-                inspectorButtonMatrix = NSMatrix; 
-            }; 
-            SUPERCLASS = NSWindowController; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key></key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>selectedViewChanged</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>IGInspectorController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>cartoucheView</key>
+				<string>NSView</string>
+				<key>inspectorBox</key>
+				<string>NSBox</string>
+				<key>inspectorButtonMatrix</key>
+				<string>NSMatrix</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>IGEdgeDockablePanelWithKey</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSPanel</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

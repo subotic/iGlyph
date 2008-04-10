@@ -27,7 +27,7 @@
   IGFontData *fontData;
   NSMutableDictionary *fontDataDic;
   NSMutableArray *glyphGroupsArr;
-  
+    
   NSInteger rowNumber;
   NSInteger colNumber;
   NSInteger glyphNumber;
