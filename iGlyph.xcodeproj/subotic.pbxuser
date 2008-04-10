@@ -183,7 +183,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 229534426;
+			PBXPerProjectTemplateStateSaveDate = 229547146;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -642,7 +642,14 @@
 				PBXModuleWindowStatusBarHidden = YES;
 				RubberWindowFrame = "480 245 1178 380 0 0 1920 1178 ";
 			};
-			PBXWorkspaceStateSaveDate = 229534426;
+			PBXWorkspaceStateSaveDate = 229547146;
+		};
+		perUserProjectItems = {
+			324424F40DAE9D1B00386D5E /* PBXTextBookmark */ = 324424F40DAE9D1B00386D5E /* PBXTextBookmark */;
+			324424F60DAE9D1B00386D5E /* PBXTextBookmark */ = 324424F60DAE9D1B00386D5E /* PBXTextBookmark */;
+			324424F80DAE9D1B00386D5E /* PBXTextBookmark */ = 324424F80DAE9D1B00386D5E /* PBXTextBookmark */;
+			324424FA0DAE9D1B00386D5E /* PBXTextBookmark */ = 324424FA0DAE9D1B00386D5E /* PBXTextBookmark */;
+			324424FC0DAE9D1B00386D5E /* PBXTextBookmark */ = 324424FC0DAE9D1B00386D5E /* PBXTextBookmark */;
 		};
 		sourceControlManager = 3299C68905468EE40054ABE3 /* Source Control */;
 		userBookmarkGroup = 324B7F5507669750001219FA /* PBXBookmarkGroup */;
@@ -683,6 +690,98 @@
 			sepNavSelRange = "{72, 0}";
 			sepNavVisRect = "{{0, 0}, {705, 405}}";
 			sepNavWindowFrame = "{{450, 282}, {750, 534}}";
+		};
+	};
+	324424F40DAE9D1B00386D5E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 324424F50DAE9D1B00386D5E /* subotic.pbxuser */;
+		name = "subotic.pbxuser: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 892;
+		vrLoc = 0;
+	};
+	324424F50DAE9D1B00386D5E /* subotic.pbxuser */ = {
+		isa = PBXFileReference;
+		name = subotic.pbxuser;
+		path = /Volumes/Projects/_SVN/iGlyph/iGlyph.xcodeproj/subotic.pbxuser;
+		sourceTree = "<absolute>";
+	};
+	324424F60DAE9D1B00386D5E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 324424F70DAE9D1B00386D5E /* subotic.mode1v3 */;
+		name = "subotic.mode1v3: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 265;
+		vrLoc = 0;
+	};
+	324424F70DAE9D1B00386D5E /* subotic.mode1v3 */ = {
+		isa = PBXFileReference;
+		name = subotic.mode1v3;
+		path = /Volumes/Projects/_SVN/iGlyph/iGlyph.xcodeproj/subotic.mode1v3;
+		sourceTree = "<absolute>";
+	};
+	324424F80DAE9D1B00386D5E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 324424F90DAE9D1B00386D5E /* subotic.mode1v3 */;
+		name = "subotic.mode1v3: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 265;
+		vrLoc = 0;
+	};
+	324424F90DAE9D1B00386D5E /* subotic.mode1v3 */ = {
+		isa = PBXFileReference;
+		name = subotic.mode1v3;
+		path = /Volumes/Projects/_SVN/iGlyph/iGlyph.xcodeproj/subotic.mode1v3;
+		sourceTree = "<absolute>";
+	};
+	324424FA0DAE9D1B00386D5E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 324424FB0DAE9D1B00386D5E /* subotic.pbxuser */;
+		name = "subotic.pbxuser: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 892;
+		vrLoc = 0;
+	};
+	324424FB0DAE9D1B00386D5E /* subotic.pbxuser */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text;
+		name = subotic.pbxuser;
+		path = /Volumes/Projects/_SVN/iGlyph/iGlyph.xcodeproj/subotic.pbxuser;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {582, 9730}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 892}";
+		};
+	};
+	324424FC0DAE9D1B00386D5E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 324424FD0DAE9D1B00386D5E /* subotic.mode1v3 */;
+		name = "subotic.mode1v3: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 730;
+		vrLoc = 0;
+	};
+	324424FD0DAE9D1B00386D5E /* subotic.mode1v3 */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.xml;
+		name = subotic.mode1v3;
+		path = /Volumes/Projects/_SVN/iGlyph/iGlyph.xcodeproj/subotic.mode1v3;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {624, 9478}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 730}";
 		};
 	};
 	3244443B0A63C31700BBE596 /* iGlyph */ = {
@@ -755,7 +854,7 @@
 			CVSToolPath = /usr/bin/cvs;
 			CVSUseSSH = YES;
 			SubversionToolPath = /usr/local/bin/svn;
-			repositoryName = "iGlyph Google Code";
+			repositoryName = "iGlyphe Google Code";
 		};
 		scmType = scm.subversion;
 	};
@@ -1028,15 +1127,17 @@
 	};
 	4E7573690A665A32001721EE /* IGEdgeDockablePanel.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 958}}";
 			sepNavSelRange = "{577, 0}";
 			sepNavVisRange = "{0, 660}";
+			sepNavWindowFrame = "{{19, 111}, {906, 1062}}";
 		};
 	};
 	4E75736A0A665A32001721EE /* IGEdgeDockablePanel.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1199, 910}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1185, 924}}";
 			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1666}";
 			sepNavVisRect = "{{0, 11}, {1199, 899}}";
 			sepNavWindowFrame = "{{111, 0}, {1244, 1028}}";
 		};
