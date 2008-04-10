@@ -41,6 +41,8 @@
 @property (assign) NSInteger colNumber;
 @property (assign) NSInteger glyphNumber;
 
+@property (assign) NSString *selectedTitle;
+
 - (id)init;
 - (void)awakeFromNib;
 - (void)dealloc;
@@ -49,8 +51,6 @@
 
 - (void)addGlyphGroupPopUpItems;
 
-- (void)resizeTable;
-
 - (IBAction)glyphGroupPopUpChanged:(id)sender;
 
 - (IBAction)headerChanged:(id)sender;
@@ -58,14 +58,8 @@
 - (void)glyphClickedAtRow:(int)rowValue andColumn:(int)columnValue;
 - (void)replaceSelectedGlyphWithThisOneAtRow:(int)rowValue andColumn:(int)columnValue;   
 
-
-  //table color and stuff
-- (NSColor *)oddRowColor;
-- (NSColor *)evenRowColor;
-- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row;
-
-
   //Data Source stuff
+- (void)calculateNumberOfRowsInTableView;
 - (int)numberOfRowsInTableView:(NSTableView *)tableView;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 

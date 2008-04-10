@@ -24,6 +24,7 @@
     [super drawRow:row clipRect:rect]; 
 }
 
+
 - (void)highlightSelectionInClipRect:(NSRect)clipRect {
     
     NSEnumerator *rowEnumerator;
@@ -49,10 +50,12 @@
     }
 }
 
+
 - (NSColor *)_highlightColorForCell:(NSCell *)cell
 {
     return [NSColor whiteColor];
-} 
+}
+
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
     NSLog(@"Bin in meiner IGNSTableView subclase bei rightMouseDown");
