@@ -20,6 +20,7 @@
 
 #import "IGGraphic.h"
 #import "IGCartouche.h"
+#import "IGRectangle.h"
 #import "IGTextArea.h"
 #import "IGLine.h"
 #import "IGRubric.h"
@@ -365,6 +366,7 @@
 
 static NSString *MyDocumentToolbarIdentifier = @"MyDocument Toolbar";
 static NSString *CartoucheToolbarItemIdentifier = @"Cartouche ToolbarItem";
+static NSString *RectangleToolbarItemIdentifier = @"Rectangle ToolbarItem";
 static NSString *TextToolbarItemIdentifier = @"Text ToolbarItem";
 static NSString *LineToolbarItemIdentifier = @"Line ToolbarItem";
 static NSString *RubricToolbarItemIdentifier = @"Rubric ToolbarItem";
@@ -400,7 +402,15 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
     [toolbarItem setImage:[NSImage imageNamed: @"TB_Shape_Oval"]];
     [toolbarItem setTarget: self];
     [toolbarItem setAction: @selector(insertCartouche:)];
-    
+  
+  } else if ([itemIdent isEqual:RectangleToolbarItemIdentifier]) { // a basic button item
+    [toolbarItem setLabel: @"Rectangle"];
+    [toolbarItem setPaletteLabel: @"Rectangle"];
+    [toolbarItem setToolTip:@"Make a Rectangle"];
+    [toolbarItem setImage:[NSImage imageNamed: @"TB_Square"]];
+    [toolbarItem setTarget: self];
+    [toolbarItem setAction: @selector(insertRectangle:)];
+
   } else if ([itemIdent isEqual:TextToolbarItemIdentifier]) { // a basic button item
     [toolbarItem setLabel: @"TextArea"];
     [toolbarItem setPaletteLabel: @"TextArea"];
@@ -484,7 +494,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 { // return an array of the items found in the default toolbar
   return [NSArray arrayWithObjects:
-    CartoucheToolbarItemIdentifier, TextToolbarItemIdentifier, LineToolbarItemIdentifier,
+    CartoucheToolbarItemIdentifier, RectangleToolbarItemIdentifier, TextToolbarItemIdentifier, LineToolbarItemIdentifier,
     RubricToolbarItemIdentifier, DestroyedToolbarItemIdentifier, CircleToolbarItemIdentifier,
     ArcToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
     BackToFrontTolbarItemIndentifier, FrontToBackTolbarItemIndentifier,
@@ -495,7 +505,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 { // return an array of all the items that can be put in the toolbar
   return [NSArray arrayWithObjects:
-    CartoucheToolbarItemIdentifier, TextToolbarItemIdentifier, LineToolbarItemIdentifier,
+    CartoucheToolbarItemIdentifier, RectangleToolbarItemIdentifier, TextToolbarItemIdentifier, LineToolbarItemIdentifier,
     RubricToolbarItemIdentifier, DestroyedToolbarItemIdentifier, CircleToolbarItemIdentifier,
     ArcToolbarItemIdentifier, BackToFrontTolbarItemIndentifier, FrontToBackTolbarItemIndentifier,
     NSToolbarPrintItemIdentifier, NSToolbarShowColorsItemIdentifier,
@@ -562,6 +572,16 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
   [graphicView selectGraphic:_newObject];
   [[IGInspectorController sharedInspectorController] refreshInspector];
 }
+
+-(void)insertRectangle:(id)sender
+{
+  IGGraphic *_newObject = [[IGRectangle allocWithZone:[[self document] zone]] init];
+  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [[self document] insertGraphic:_newObject atIndex:0];
+  [graphicView clearSelection];
+  [graphicView selectGraphic:_newObject];
+}
+
 
 -(void)insertTextArea:(id)sender
 {

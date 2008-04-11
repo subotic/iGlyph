@@ -128,7 +128,7 @@
 {
     //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
     int column = [[tableColumn identifier] intValue];
-    int neededValue = (column + row * 8); //hat acht columns
+    int neededValue = (column + row * self.colNumber);
     
     NSMutableArray *titleData = [fontDataDic objectForKey:self.selectedTitle];
     
@@ -142,13 +142,17 @@
     NSMutableParagraphStyle *myPara = [[NSMutableParagraphStyle alloc] init];
     [myPara setAlignment:NSCenterTextAlignment];
     unichar newChar;
+    
+    //Dynamische Vergršsserung des Textes und der Glyphen bei €nderung der Tabellengršsse
+    int deltaSize = floor([[myTableView tableColumnWithIdentifier:@"0"] width] / 5);
+    
     if (neededValue < self.glyphNumber) {
         //text Teil
         NSMutableString *txt = [[NSMutableString alloc] init];
         [txt setString:[[titleData objectAtIndex:neededValue] objectAtIndex:headerSelected]];
         [txt appendString:@"\n"];
             
-        [attrsTxt setObject:[NSFont systemFontOfSize:9] forKey:NSFontAttributeName];
+        [attrsTxt setObject:[NSFont systemFontOfSize:(deltaSize * 1)] forKey:NSFontAttributeName];
         [attrsTxt setObject:myPara forKey:NSParagraphStyleAttributeName];
 
         [attribStringTxt initWithString:txt attributes:attrsTxt];
@@ -159,9 +163,9 @@
         NSString *glyph = [NSString stringWithCharacters:pNewChar length:1];
         NSString *font = [[titleData objectAtIndex:neededValue] objectAtIndex:1];
         
-        NSAssert([NSFont fontWithName:font size:36], @"Unable to load Font. Are they installed?");	
+        NSAssert([NSFont fontWithName:font size:40], @"Unable to load Font. Are they installed?");	
 		
-        [attrsGlyph setObject:[NSFont fontWithName:font size:36] forKey:NSFontAttributeName];
+        [attrsGlyph setObject:[NSFont fontWithName:font size:(deltaSize * 4)] forKey:NSFontAttributeName];
         [attrsGlyph setObject:myPara forKey:NSParagraphStyleAttributeName];
             
         [attribStringGlyph initWithString:glyph attributes:attrsGlyph];
@@ -279,6 +283,7 @@
 - (void)windowDidResize:(NSNotification *)notification
 {
     //[self resizeTable];
+    [myTableView setRowHeight:[[myTableView tableColumnWithIdentifier:@"0"] width]];
     [myTableView reloadData];
 }
 
