@@ -93,8 +93,10 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>vgmc</string>
+  <key>CFBundleShortVersionString</key>
+	<string>0.7b</string>
 	<key>CFBundleVersion</key>
-	<string>0.5.b06</string>
+	<string>5</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>NO</string>
 	<key>NSHumanReadableCopyright</key>
@@ -103,7 +105,5 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUFeedURL</key>
-	<string>http://rss.mac.com/ivan.subotic/iGlyph/IGlyphUpdateAppcast.xml</string>
 </dict>
 </plist>
