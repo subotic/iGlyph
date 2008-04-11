@@ -70,7 +70,6 @@
 		4EA4A86C0B98828300D0F703 /* wd_upToDownMirr.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4EA4A8330B98828100D0F703 /* wd_upToDownMirr.tiff */; };
 		4EA4A86D0B98828300D0F703 /* wd_upToDownVert.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4EA4A8340B98828100D0F703 /* wd_upToDownVert.tiff */; };
 		4EA4A86E0B98828300D0F703 /* wd_upToDownVertMirr.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4EA4A8350B98828100D0F703 /* wd_upToDownVertMirr.tiff */; };
-		4EB1F4E809864F5100D1533D /* IGlyph_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* IGlyph_Prefix.pch */; };
 		4EB1F4E909864F5100D1533D /* CartoucheController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E573BA104FA608700F265BD /* CartoucheController.h */; };
 		4EB1F4EB09864F5100D1533D /* FormatGlyphController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E573BA504FA608700F265BD /* FormatGlyphController.h */; };
 		4EB1F4EC09864F5100D1533D /* HieroglyphsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E573BA704FA608700F265BD /* HieroglyphsController.h */; };
@@ -626,7 +625,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EB1F4E809864F5100D1533D /* IGlyph_Prefix.pch in Headers */,
 				4EB1F4E909864F5100D1533D /* CartoucheController.h in Headers */,
 				4EB1F4EB09864F5100D1533D /* FormatGlyphController.h in Headers */,
 				4EB1F4EC09864F5100D1533D /* HieroglyphsController.h in Headers */,
@@ -968,6 +966,7 @@
 		32DC7F5E0DACE3590078AE6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
@@ -1001,6 +1000,7 @@
 		32DC7F600DACE3670078AE6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
