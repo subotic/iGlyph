@@ -59,8 +59,16 @@ extern NSString *IGGlyphDidChangeNotification;
   BOOL filled;
   BOOL stroked;
   
-  
   CGFloat fontSize;  //nur für Hieroglyphen
+  
+  NSInteger xCartoucheEdgeSize; //nur für die Cartouche
+  NSInteger yCartoucheEdgeSize; //nur für die Cartouche
+  NSInteger endCartoucheAlignment; //nur für die Cartouche
+  
+  NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+  NSInteger arrowHeadAngle;
+  NSInteger arrowHeadSize;
+  
   //ende neue gemeinsame Variablen
   
   @private
