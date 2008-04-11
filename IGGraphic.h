@@ -47,6 +47,22 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic : NSObject <NSCopying> {
   
+  //neue gemeinsame Variablen
+  CGFloat strokeThickness;
+  NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
+  NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+  NSColor *fillColor; //Füllfarbe
+  NSInteger fillType; //Schattierung
+  NSInteger angle;
+  
+  BOOL mirrored;
+  BOOL filled;
+  BOOL stroked;
+  
+  
+  CGFloat fontSize;  //nur für Hieroglyphen
+  //ende neue gemeinsame Variablen
+  
   @private
   IGDrawDocument *_document;
   NSRect _bounds;

@@ -2,7 +2,7 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeArchitecture = i386;
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = 3244443B0A63C31700BBE596 /* iGlyph */;
 		activeSDKForArchive = macosx10.5;
 		activeTarget = 4EB1F4DF09864EBB00D1533D /* iGlyph */;
@@ -183,7 +183,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 229610347;
+			PBXPerProjectTemplateStateSaveDate = 229647494;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -642,7 +642,11 @@
 				PBXModuleWindowStatusBarHidden = YES;
 				RubberWindowFrame = "480 245 1178 380 0 0 1920 1178 ";
 			};
-			PBXWorkspaceStateSaveDate = 229610347;
+			PBXWorkspaceStateSaveDate = 229647494;
+		};
+		perUserProjectItems = {
+			32EA77D30DAFDDD0002E9A8A = 32EA77D30DAFDDD0002E9A8A /* PBXBookmark */;
+			32EA77DC0DAFE209002E9A8A = 32EA77DC0DAFE209002E9A8A /* PBXTextBookmark */;
 		};
 		sourceControlManager = 3299C68905468EE40054ABE3 /* Source Control */;
 		userBookmarkGroup = 324B7F5507669750001219FA /* PBXBookmarkGroup */;
@@ -818,6 +822,20 @@
 		modificationTime = 229504713.561034;
 		state = 1;
 		symbolName = objc_exception_throw;
+	};
+	32EA77D30DAFDDD0002E9A8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 4EFBE4540647C28A00AEE351 /* IGGraphic.h */;
+	};
+	32EA77DC0DAFE209002E9A8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EFBE4540647C28A00AEE351 /* IGGraphic.h */;
+		name = "IGGraphic.h: 64";
+		rLen = 0;
+		rLoc = 1474;
+		rType = 0;
+		vrLen = 1242;
+		vrLoc = 891;
 	};
 	32EDE991087489D700104997 /* IGInspectorController.h */ = {
 		uiCtxt = {
@@ -1012,17 +1030,18 @@
 	};
 	4E712BAD052195FB00BA812E /* IGFontData.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1188, 756}}";
-			sepNavSelRange = "{312, 0}";
-			sepNavVisRange = "{0, 1186}";
+			sepNavIntBoundsRect = "{{0, 0}, {1188, 742}}";
+			sepNavSelRange = "{1673, 0}";
+			sepNavVisRange = "{347, 1326}";
 			sepNavVisRect = "{{0, 0}, {924, 157}}";
-			sepNavWindowFrame = "{{111, 262}, {750, 502}}";
+			sepNavWindowFrame = "{{626, 165}, {757, 666}}";
 		};
 	};
 	4E712BAE052195FB00BA812E /* IGFontData.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1430, 3108}}";
-			sepNavSelRange = "{310, 16}";
+			sepNavIntBoundsRect = "{{0, 0}, {1422, 2576}}";
+			sepNavSelRange = "{5142, 0}";
+			sepNavVisRange = "{4194, 1742}";
 			sepNavVisRect = "{{0, 2478}, {1016, 630}}";
 			sepNavWindowFrame = "{{86, 23}, {1061, 759}}";
 		};
@@ -1172,11 +1191,11 @@
 	};
 	4EFBE4540647C28A00AEE351 /* IGGraphic.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {691, 2702}}";
-			sepNavSelRange = "{1197, 0}";
-			sepNavVisRange = "{1571, 814}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 2604}}";
+			sepNavSelRange = "{1474, 0}";
+			sepNavVisRange = "{891, 1242}";
 			sepNavVisRect = "{{0, 3435}, {924, 368}}";
-			sepNavWindowFrame = "{{566, 335}, {750, 543}}";
+			sepNavWindowFrame = "{{513, 57}, {783, 821}}";
 		};
 	};
 	4EFBE4550647C28A00AEE351 /* IGGraphic.m */ = {
