@@ -1,0 +1,9 @@
+1. Textmodus und Grafischen Modus auswählen können
+	-> Textmodus mit Zeilenumbruch
+	-> Grafisch wie bis jetzt
+	
+2. GUI ähnlich wie bei MacScribe
+	-> Hierglyphen Panel
+	-> Erstes Panel vom Inspector ist der Toolspanel von Macscribe
+	-> ObjectPanel als Menuleiste oben implementieren
+		-> Klick erstellt ein Beispielobject
