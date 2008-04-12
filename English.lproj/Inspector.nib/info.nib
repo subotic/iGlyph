@@ -7,11 +7,12 @@
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../iGlyph.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>IBOpenObjects</key>
 	<array>
-		<integer>6</integer>
-		<integer>171</integer>
+		<integer>116</integer>
+		<integer>313</integer>
+		<integer>500</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>9C7010</string>

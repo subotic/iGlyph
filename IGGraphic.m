@@ -17,6 +17,26 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 
 @implementation IGGraphic
 
+  @synthesize strokeThickness;
+  @synthesize strokeType; //volle Linie, gestrichelte Linie, usw.
+  @synthesize strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+  @synthesize fillColor; //Füllfarbe
+  @synthesize fillType; //Schattierung
+  @synthesize angle;
+  @synthesize cornerRadius;
+  
+  @synthesize mirrored;
+  @synthesize filled;
+  @synthesize stroked;
+  
+  @synthesize fontSize;  //nur für Hieroglyphen
+  @synthesize cartoucheOrientation; //nur für die Cartouche
+  
+  @synthesize arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+  @synthesize arrowReversed;
+  @synthesize arrowHeadAngle;
+  @synthesize arrowHeadSize;
+
 #pragma mark -- init stuff --
 // =================================== Initialization ===================================
 
@@ -38,13 +58,22 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
         _glyphBezPathShouldRecalculate = NO;
         _glyphIsCreating = NO;
         
+        //new variables
+        self.strokeThickness = 1.0;
+        self.strokeType = 0;
+        self.strokeColor = [NSColor blackColor];
+        self.fillColor = [NSColor whiteColor];
+        self.fillType = 0;
+        self.angle = 0;
+        self.mirrored = FALSE;
+        self.filled = FALSE;
+        self.stroked = TRUE;
+        
     }
     return self;
 }
 
 - (void)dealloc {
-    [_fillColor release];
-    [_strokeColor release];
     [super dealloc];
 
 }
@@ -154,6 +183,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
     return _gFlags.drawsFill;
 }
 
+/**
 - (void)setFillColor:(NSColor *)fillColor {
     if (_fillColor != fillColor) {
         [[[self undoManager] prepareWithInvocationTarget:self] setFillColor:_fillColor];
@@ -171,6 +201,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 - (NSColor *)fillColor {
     return _fillColor;
 }
+**/
 
 - (void)setDrawsStroke:(BOOL)flag {
     if (_gFlags.drawsStroke != flag) {
@@ -184,6 +215,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
     return _gFlags.drawsStroke;
 }
 
+/**
 - (void)setStrokeColor:(NSColor *)strokeColor {
     if (_strokeColor != strokeColor) {
         [[[self undoManager] prepareWithInvocationTarget:self] setStrokeColor:_strokeColor];
@@ -201,6 +233,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 - (NSColor *)strokeColor {
     return _strokeColor;
 }
+**/
 
 - (void)setStrokeLineWidth:(float)width {
     if (_strokeLineWidth != width) {

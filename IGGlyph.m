@@ -29,6 +29,15 @@
         //[self setRubricCartouche:NO];
         [self setMirrored:NO];
         [self setAngle:0];
+        
+        //neue Variablen
+        self.stroked = FALSE;
+        self.filled = TRUE;
+        self.fontSize = 25;
+        self.angle = 0;
+        self.mirrored = FALSE;
+        self.fillColor = [NSColor blackColor];
+        
     }
     return self;
 }
