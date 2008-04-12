@@ -133,8 +133,7 @@
       break;
       
     case 5:
-      [[self window] setTitle:@"irgendwas"];
-      //newContentView = cartoucheView;
+      [[self window] setTitle:@"Styles"];
       
       break;
       

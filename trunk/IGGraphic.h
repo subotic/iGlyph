@@ -54,18 +54,17 @@ extern NSString *IGGlyphDidChangeNotification;
   NSColor *fillColor; //Füllfarbe
   NSInteger fillType; //Schattierung
   NSInteger angle;
+  NSInteger cornerRadius;
   
   BOOL mirrored;
   BOOL filled;
   BOOL stroked;
   
   CGFloat fontSize;  //nur für Hieroglyphen
-  
-  NSInteger xCartoucheEdgeSize; //nur für die Cartouche
-  NSInteger yCartoucheEdgeSize; //nur für die Cartouche
-  NSInteger endCartoucheAlignment; //nur für die Cartouche
+  NSInteger cartoucheOrientation; //nur für die Cartouche
   
   NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+  BOOL arrowReversed;
   NSInteger arrowHeadAngle;
   NSInteger arrowHeadSize;
   
@@ -130,6 +129,26 @@ extern NSString *IGGlyphDidChangeNotification;
   unsigned pageNr;
   
 }
+
+  @property (assign) CGFloat strokeThickness;
+  @property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
+  @property (assign) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+  @property (assign) NSColor *fillColor; //Füllfarbe
+  @property (assign) NSInteger fillType; //Schattierung
+  @property (assign) NSInteger angle;
+  @property (assign) NSInteger cornerRadius;
+  
+  @property (assign) BOOL mirrored;
+  @property (assign) BOOL filled;
+  @property (assign) BOOL stroked;
+  
+  @property (assign) CGFloat fontSize;  //nur für Hieroglyphen
+  @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
+  
+  @property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+  @property (assign) BOOL arrowReversed;
+  @property (assign) NSInteger arrowHeadAngle;
+  @property (assign) NSInteger arrowHeadSize;
 
 - (id)init;
 

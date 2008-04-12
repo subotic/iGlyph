@@ -42,7 +42,8 @@
     localBounds.size.height += 7;
     NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:localBounds];
     
-    [path setLineWidth:[self strokeLineWidth]];
+    //[path setLineWidth:[self strokeLineWidth]];
+    [path setLineWidth: self.strokeThickness];
 
     return path;
 }

@@ -31,6 +31,13 @@
       
       [self setBounds:NSMakeRect(250, 350, 100, 50)];
       
+      self.cornerRadius = 30;
+      self.cartoucheOrientation = 0;
+      self.stroked = TRUE;
+      self.strokeType = 0;
+      self.strokeThickness = 1.0;
+      self.filled = FALSE;
+      
     }
     return self;
 }
