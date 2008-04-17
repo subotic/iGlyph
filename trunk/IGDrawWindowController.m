@@ -165,9 +165,42 @@
   return graphicView;
 }
 
+- (void)createGraphicOfClassGlyph:(unichar)glyphChar withFont:(NSString *)fontName {
+  int page = 0;
+  if (NSPointInRect(graphicView.currentCursorPosition, [graphicView pageHeaderRect])) {
+      page =0; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+  } else {
+      page = graphicView.currentPage; //ansonsten ganz normal
+  }
+  
+  [[self document] createGraphicOfClassGlyph:glyphChar withFont:fontName onPosition:[graphicView currentCursorPosition] onPage:page];
+}
+
+- (NSMutableArray *)selectedGraphics {
+  NSLog(@"IGDrawWindowController(selectedGraphics)");
+  return [[self document] selectedGraphics];
+}
+
 - (void)invalidateGraphic:(IGGraphic *)graphic {
+  NSLog(@"IGDrawWindowController(invalidateGraphic)");
   [graphicView invalidateGraphic:graphic];
 }
+
+- (void)selectGraphic:(IGGraphic *)graphic {
+  NSLog(@"IGDrawWindowController(selectGraphic)");
+  [[self document] selectGraphic: graphic];
+}
+
+- (void)deselectGraphic:(IGGraphic *)graphic {
+  NSLog(@"IGDrawWindowController(deselectGraphic)");
+  [[self document] deselectGraphic: graphic];
+}
+
+- (void)clearSelection {
+  NSLog(@"IGDrawWindowController(clearSelection)");
+  [[self document] clearSelection];
+}
+
 
 - (void)redisplayTweak:(IGGraphic *)graphic {
   [graphicView redisplayTweak:graphic];
@@ -566,7 +599,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertCartouche:(id)sender
 {
   IGGraphic *_newObject = [[IGCartouche allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -576,7 +609,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertRectangle:(id)sender
 {
   IGGraphic *_newObject = [[IGRectangle allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -586,7 +619,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertTextArea:(id)sender
 {
   IGGraphic *_newObject = [[IGTextArea allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -595,7 +628,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertLine:(id)sender
 {
   IGGraphic *_newObject = [[IGLine allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -604,7 +637,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertRubric:(id)sender
 {
   IGGraphic *_newObject = [[IGRubric allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -613,7 +646,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertDestroyed:(id)sender
 {
   IGGraphic *_newObject = [[IGDestroyed allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -622,7 +655,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertCircle:(id)sender
 {
   IGGraphic *_newObject = [[IGCircle allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];
@@ -631,7 +664,7 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 -(void)insertArc:(id)sender
 {
   IGGraphic *_newObject = [[IGArc allocWithZone:[[self document] zone]] init];
-  [_newObject setPageNr:[[self graphicView] currentPage]];
+  [_newObject setPageNr:graphicView.currentPage];
   [[self document] insertGraphic:_newObject atIndex:0];
   [graphicView clearSelection];
   [graphicView selectGraphic:_newObject];

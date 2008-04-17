@@ -37,13 +37,16 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
 
 @implementation IGDrawDocument
 
+@synthesize selectedGraphics;
+@synthesize documentGraphics;
+
 - (id)init {
   self = [super init];
   if (self) {
-    _graphics = [[NSMutableArray allocWithZone:[self zone]] init];
+    documentGraphics = [[NSMutableArray allocWithZone:[self zone]] init];
     //ich brauche 0 und 1, da 0 der header und 1 die erste Seite sein werden
-    [_graphics addObject:[[NSMutableArray allocWithZone:[self zone]] init]];
-    [_graphics addObject:[[NSMutableArray allocWithZone:[self zone]] init]];
+    [self.documentGraphics addObject:[[NSMutableArray allocWithZone:[self zone]] init]];
+    [self.documentGraphics addObject:[[NSMutableArray allocWithZone:[self zone]] init]];
     _pageCount = 1;
     NSLog(@"IGDrawDocument init");
     [[self printInfo] setLeftMargin:72];
@@ -74,16 +77,14 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
       _autoSaveTimer = [NSTimer scheduledTimerWithTimeInterval:_autoSaveInterval  target:self selector:@selector(autoSaveTimer:) userInfo:nil repeats:YES];
     }
     
+    self.selectedGraphics = [[NSMutableArray allocWithZone:[self zone]] init];
+    
   }
   return self;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [_graphics release];
-  [_pageNumberFont release];
-  [_pageNumberFormatArr release];
-  [_autoSaveTimer invalidate];
   [super dealloc];
 }
 
@@ -566,13 +567,13 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (NSData *)dataRepresentationOfType:(NSString *)type {
   if ([type isEqualToString:IGDrawDocumentType]) {
-    return [self drawDocumentDataForGraphics:[self graphics]];
+    return [self drawDocumentDataForGraphics:self.documentGraphics];
   } else if ([type isEqualToString:NSTIFFPboardType]) {
-    return [self TIFFRepresentationForGraphics:[self graphics]];
+    return [self TIFFRepresentationForGraphics:self.documentGraphics];
   } else if ([type isEqualToString:NSPDFPboardType]) {
-    return [self PDFRepresentationForGraphics:[self graphics]];
+    return [self PDFRepresentationForGraphics:self.documentGraphics];
   } else if ([type isEqualToString:NSPostScriptPboardType]) {
-    return [self EPSRepresentationForGraphics:[self graphics]];
+    return [self EPSRepresentationForGraphics:self.documentGraphics];
   } else {
     return nil;
   }
@@ -581,7 +582,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (BOOL)loadDataRepresentation:(NSData *)data ofType:(NSString *)type {
   if ([type isEqualToString:IGDrawDocumentType]) {
     NSDictionary *doc = [self drawDocumentDictionaryFromData:data];
-    [self setGraphics:[self graphicsFromDrawDocumentDictionary:doc]];
+    self.documentGraphics = [self graphicsFromDrawDocumentDictionary:doc];
     
     data = [doc objectForKey:IGPrintInfoKey];
     if (data) {
@@ -710,7 +711,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   NSSize paperSize = [self paperSize];
   //Die IGRenderingView wird benutzt um die Daten für den Druck aufzubereiten....So ist es möglich die Darstellung in der IGGraphicView so zu gestallten wie man will ohne daran an den Druck achten zu müssen!!! COOL
-  IGRenderingView *view = [[IGRenderingView allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height) graphics:[self graphics] pageCount:[self pageCount] document:self];
+  IGRenderingView *view = [[IGRenderingView allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height) graphics:self.documentGraphics pageCount:[self pageCount] document:self];
   
   printOp = [NSPrintOperation printOperationWithView:view printInfo:printInfo];
   [printOp setShowPanels:flag];
@@ -766,44 +767,56 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   return _pageCount;
 }
 
-- (NSArray *)graphics {
-  return _graphics;
+- (NSArray *)graphicsOnPage:(unsigned)pageNr {
+  return [self.documentGraphics objectAtIndex:pageNr];
 }
 
-- (NSArray *)graphicsOnPage:(unsigned)pageNr {
-  return [_graphics objectAtIndex:pageNr];
-}
+- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page {
+  [self clearSelection];
+  //wenn ich eine neue glyphe erstelle, will ich sie mit den standard eigenschaften erstellen und nicht wie die letzte die ich verändert habe
+  //ich muss dann ins leere klicken und dann die einstellungen ändern, welche für alle neuen glyphen gelten
+  [[FormatGlyphController sharedFormatGlyphController] restoreTmpFormating];
+  
+  IGGraphic *newGraphic = [[IGGlyph allocWithZone:[self zone]] init];
+  //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach init -> %@", _creatingGraphic);
+  if ([newGraphic createGlyph:glyphUniChar withFont:fontName onPosition:pos onPage:page]) {
+    //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach createGlyph -> %@", _creatingGraphic);
+  
+    [self insertGraphic:newGraphic atIndex:0];
+    [self selectGraphic:newGraphic];
+    }
+  }
 
 - (void)setGraphics:(NSArray *)graphics {
-  NSAssert([_graphics count], @"IGDrawDocument(setGraphics) -> Unable to get _graphics count");
-	unsigned pCount = [_graphics count];
+  NSAssert([self.documentGraphics count], @"IGDrawDocument(setGraphics) -> Unable to get graphics count");
+	unsigned pCount = [self.documentGraphics count];
   unsigned gCount;
   
   while (pCount-- > 0) {
-    gCount = [[_graphics objectAtIndex:pCount] count];
+    gCount = [[self.documentGraphics objectAtIndex:pCount] count];
     while (gCount-- > 0) {
       [self removeGraphicAtIndex:gCount onPage:gCount];
     }
-    [_graphics removeObjectAtIndex:pCount];
+    [self.documentGraphics removeObjectAtIndex:pCount];
   }
   
   pCount = [graphics count];
   while (pCount-- > 0) {
-    [_graphics insertObject:[[NSMutableArray alloc] init] atIndex:0];
+    [self.documentGraphics insertObject:[[NSMutableArray alloc] init] atIndex:0];
     gCount = [[graphics objectAtIndex:pCount] count];
     while (gCount-- > 0) {
       IGGraphic *curGraphic = [[graphics objectAtIndex:pCount] objectAtIndex:gCount];
-      [[_graphics objectAtIndex:0] insertObject:curGraphic atIndex:0];
+      [[self.documentGraphics objectAtIndex:0] insertObject:curGraphic atIndex:0];
       [curGraphic setDocument:self];
       //[self invalidateGraphic:curGraphic];
       //[self redisplayTweak:curGraphic];
     }
   }
-  _pageCount = [_graphics count] - 1;
+  _pageCount = [self.documentGraphics count] - 1;
 }
 
 - (void)setGraphics:(NSArray *)graphics onPage:(unsigned)pageNr {
-  unsigned i = [[_graphics objectAtIndex:pageNr] count];
+  unsigned i = [[self.documentGraphics objectAtIndex:pageNr] count];
   while (i-- > 0) {
     [self removeGraphicAtIndex:i onPage:pageNr];
   }
@@ -828,15 +841,15 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSAssert([graphic pageNr], @"Unable to get PageNr");
 	unsigned pageNr = [graphic pageNr];
   [[[self undoManager] prepareWithInvocationTarget:self] removeGraphicAtIndex:index onPage:pageNr];
-  [[_graphics objectAtIndex:pageNr] insertObject:graphic atIndex:index];
+  [[self.documentGraphics objectAtIndex:pageNr] insertObject:graphic atIndex:index];
   [graphic setDocument:self];
   [self invalidateGraphic:graphic];
   NSLog(@"IGDrawDocument(insertGraphic)-->IGGraphic inserted: %@", graphic);
 }
 
 - (void)removeGraphicAtIndex:(unsigned)index onPage:(unsigned)pageNr {
-  id graphic = [[[_graphics objectAtIndex:pageNr] objectAtIndex:index] retain];
-  [[_graphics objectAtIndex:pageNr] removeObjectAtIndex:index];
+  id graphic = [[[self.documentGraphics objectAtIndex:pageNr] objectAtIndex:index] retain];
+  [[self.documentGraphics objectAtIndex:pageNr] removeObjectAtIndex:index];
   [self invalidateGraphic:graphic];
   [[[self undoManager] prepareWithInvocationTarget:self] insertGraphic:graphic atIndex:index];
   [graphic release];
@@ -846,7 +859,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSLog(@"IGDrawDocument(removeGraphics)");
   //NSAssert([graphic pageNr], @"Unable to get PageNr");
   unsigned pageNr = [graphic pageNr];
-  unsigned index = [[_graphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
+  unsigned index = [[self.documentGraphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
   //if (index != NSNotFound) {
   [self removeGraphicAtIndex:index onPage:pageNr];
   //}
@@ -854,15 +867,15 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)moveGraphic:(IGGraphic *)graphic toIndex:(unsigned)newIndex {
   unsigned pageNr = [graphic pageNr];
-  unsigned curIndex = [[_graphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
+  unsigned curIndex = [[self.documentGraphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
   if (curIndex != newIndex) {
     [[[self undoManager] prepareWithInvocationTarget:self] moveGraphic:graphic toIndex:((curIndex > newIndex) ? curIndex+1 : curIndex)];
     if (curIndex < newIndex) {
       newIndex--;
     }
     [graphic retain];
-    [[_graphics objectAtIndex:pageNr] removeObjectAtIndex:curIndex];
-    [[_graphics objectAtIndex:pageNr] insertObject:graphic atIndex:newIndex];
+    [[self.documentGraphics objectAtIndex:pageNr] removeObjectAtIndex:curIndex];
+    [[self.documentGraphics objectAtIndex:pageNr] insertObject:graphic atIndex:newIndex];
     [graphic release];
     [self invalidateGraphic:graphic];
   }
@@ -871,14 +884,14 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (void)moveGraphic:(IGGraphic *)graphic toPage:(unsigned)pageNr {
   [self removeGraphic:graphic];
   [graphic setPageNr:pageNr];
-  [[_graphics objectAtIndex:pageNr] addObject:graphic];
+  [[self.documentGraphics objectAtIndex:pageNr] addObject:graphic];
 }
 
 - (void)insertPageAtPage:(unsigned)pageNr {
   if (pageNr == nil) {
-    [_graphics addObject:[[NSMutableArray alloc] init]];
+    [self.documentGraphics addObject:[[NSMutableArray alloc] init]];
   } else {
-    [_graphics insertObject:[[NSMutableArray alloc] init] atIndex:pageNr];
+    [self.documentGraphics insertObject:[[NSMutableArray alloc] init] atIndex:pageNr];
     //da alle grafischen Objecte die Seite gewechselt haben, müssen sie mit der richtigen Seitenzahl geupdated werden
     int i;
     int count = [[self graphicsOnPage:(pageNr + 1)] count];
@@ -891,18 +904,67 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)removePage:(unsigned)pageNr {
   if (pageNr == 1) {
-    [_graphics removeObjectAtIndex:pageNr];
-    [_graphics addObject:[[NSMutableArray alloc] init]];
+    [self.documentGraphics removeObjectAtIndex:pageNr];
+    [self.documentGraphics addObject:[[NSMutableArray alloc] init]];
   } else {
-    [_graphics removeObjectAtIndex:pageNr];
+    [self.documentGraphics removeObjectAtIndex:pageNr];
     _pageCount--;
   }
 }
 
 // ===========================================================================
 #pragma mark -
+#pragma mark graphic selection
+// =========================== graphic selection =============================
+- (void)selectGraphic:(IGGraphic *)graphic {
+  NSLog(@"IGDrawDocument(selectGraphic)");
+  
+  unsigned curIndex = [self.selectedGraphics indexOfObjectIdenticalTo:graphic];
+  if (curIndex == NSNotFound) {
+    [[[self undoManager] prepareWithInvocationTarget:self] deselectGraphic:graphic];
+    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
+    
+    [self.selectedGraphics addObject:graphic];
+        
+    [[[self windowControllers] objectAtIndex:0] invalidateGraphic: graphic];
+  }
+}
+
+- (void)deselectGraphic:(IGGraphic *)graphic {
+  NSLog(@"IGDrawDocument(deselectGraphic)");
+  
+  unsigned curIndex = [self.selectedGraphics indexOfObjectIdenticalTo:graphic];
+  if (curIndex != NSNotFound) {
+    [[[self undoManager] prepareWithInvocationTarget:self] selectGraphic:graphic];
+    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
+    
+    //[self willChangeSomething]; //KVO manual notification
+    [self.selectedGraphics removeObjectAtIndex:curIndex];
+    //[self didChangeSomething]; //KVO manual notification
+        
+    [[[self windowControllers] objectAtIndex:0] invalidateGraphic: graphic];
+  }
+
+
+}
+
+- (void)clearSelection {
+  NSLog(@"IGDrawDocument(clearSelection)");
+  
+  NSArray* selection = self.selectedGraphics;
+  for ( IGGraphic *oneGraphic in selection ) {
+    [[[self windowControllers] objectAtIndex:0] invalidateGraphic:oneGraphic];
+  }
+  
+  [self.selectedGraphics removeAllObjects];
+}
+
+
+
+// ===========================================================================
+#pragma mark -
 #pragma mark default document values
-// ====================== default document values ===========================
+// ====================== default document values ============================
 
 - (void)setDocumentFontSize:(float)value
 {
@@ -1132,540 +1194,3 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   return _pnDeltaPosition;
 }
 @end
-
-/**
-@implementation IGDrawDocument (IGScriptingExtras)
-
-// These are methods that we probably wouldn't bother with if we weren't scriptable.
-
-// graphics and setGraphics: are already implemented above.
-
-- (void)addInGraphics:(IGGraphic *)graphic {
-  [self insertGraphic:graphic atIndex:[[self graphics] count]];
-}
-
-- (void)insertInGraphics:(IGGraphic *)graphic atIndex:(unsigned)index {
-  [self insertGraphic:graphic atIndex:index];
-}
-
-- (void)removeFromGraphicsAtIndex:(unsigned)index {
-  [self removeGraphicAtIndex:index onPage:1];
-}
-
-- (void)replaceInGraphics:(IGGraphic *)graphic atIndex:(unsigned)index {
-  [self removeGraphicAtIndex:index];
-  [self insertGraphic:graphic atIndex:index];
-}
-
-- (NSArray *)graphicsWithClass:(Class)theClass {
-  NSArray *graphics = [self graphics];
-  NSMutableArray *result = [NSMutableArray array];
-  unsigned i, c = [graphics count];
-  id curGraphic;
-  
-  for (i=0; i<c; i++) {
-    curGraphic = [graphics objectAtIndex:i];
-    if ([curGraphic isKindOfClass:theClass]) {
-      [result addObject:curGraphic];
-    }
-  }
-  return result;
-}
-
-- (NSArray *)rectangles {
-  return [self graphicsWithClass:[IGRectangle class]];
-}
-
-- (NSArray *)circles {
-  return [self graphicsWithClass:[IGCircle class]];
-}
-
-- (NSArray *)lines {
-  return [self graphicsWithClass:[IGLine class]];
-}
-
-- (NSArray *)textAreas {
-  return [self graphicsWithClass:[IGTextArea class]];
-}
-
-- (NSArray *)images {
-  return [self graphicsWithClass:[IGImage class]];
-}
-
-- (void)setRectangles:(NSArray *)rects {
-  // We won't allow wholesale setting of these subset keys.
-  [NSException raise:NSOperationNotSupportedForKeyException format:@"Setting 'rectangles' key is not supported."];
-}
-
-- (void)addInRectangles:(IGGraphic *)graphic {
-  [self addInGraphics:graphic];
-}
-
-- (void)insertInRectangles:(IGGraphic *)graphic atIndex:(unsigned)index {
-  // MF:!!! This is not going to be ideal.  If we are being asked to, say, "make a new rectangle at after rectangle 2", we will be after rectangle 2, but we may be after some other stuff as well since we will be asked to insertInRectangles:atIndex:3...
-  NSArray *rects = [self rectangles];
-  if (index == [rects count]) {
-    [self addInGraphics:graphic];
-  } else {
-    NSArray *graphics = [self graphics];
-    int newIndex = [graphics indexOfObjectIdenticalTo:[rects objectAtIndex:index]];
-    if (newIndex != NSNotFound) {
-      [self insertGraphic:graphic atIndex:newIndex];
-    } else {
-      // Shouldn't happen.
-      [NSException raise:NSRangeException format:@"Could not find the given rectangle in the graphics."];
-    }
-  }
-}
-
-- (void)removeFromRectanglesAtIndex:(unsigned)index {
-  NSArray *rects = [self rectangles];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[rects objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given rectangle in the graphics."];
-  }
-}
-
-- (void)replaceInRectangles:(IGGraphic *)graphic atIndex:(unsigned)index {
-  NSArray *rects = [self rectangles];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[rects objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-    [self insertGraphic:graphic atIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given rectangle in the graphics."];
-  }
-}
-
-- (void)setCircles:(NSArray *)circles {
-  // We won't allow wholesale setting of these subset keys.
-  [NSException raise:NSOperationNotSupportedForKeyException format:@"Setting 'circles' key is not supported."];
-}
-
-- (void)addInCircles:(IGGraphic *)graphic {
-  [self addInGraphics:graphic];
-}
-
-- (void)insertInCircles:(IGGraphic *)graphic atIndex:(unsigned)index {
-  // MF:!!! This is not going to be ideal.  If we are being asked to, say, "make a new rectangle at after rectangle 2", we will be after rectangle 2, but we may be after some other stuff as well since we will be asked to insertInCircles:atIndex:3...
-  NSArray *circles = [self circles];
-  if (index == [circles count]) {
-    [self addInGraphics:graphic];
-  } else {
-    NSArray *graphics = [self graphics];
-    int newIndex = [graphics indexOfObjectIdenticalTo:[circles objectAtIndex:index]];
-    if (newIndex != NSNotFound) {
-      [self insertGraphic:graphic atIndex:newIndex];
-    } else {
-      // Shouldn't happen.
-      [NSException raise:NSRangeException format:@"Could not find the given circle in the graphics."];
-    }
-  }
-}
-
-- (void)removeFromCirclesAtIndex:(unsigned)index {
-  NSArray *circles = [self circles];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[circles objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given circle in the graphics."];
-  }
-}
-
-- (void)replaceInCircles:(IGGraphic *)graphic atIndex:(unsigned)index {
-  NSArray *circles = [self circles];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[circles objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-    [self insertGraphic:graphic atIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given circle in the graphics."];
-  }
-}
-
-- (void)setLines:(NSArray *)lines {
-  // We won't allow wholesale setting of these subset keys.
-  [NSException raise:NSOperationNotSupportedForKeyException format:@"Setting 'lines' key is not supported."];
-}
-
-- (void)addInLines:(IGGraphic *)graphic {
-  [self addInGraphics:graphic];
-}
-
-- (void)insertInLines:(IGGraphic *)graphic atIndex:(unsigned)index {
-  // MF:!!! This is not going to be ideal.  If we are being asked to, say, "make a new rectangle at after rectangle 2", we will be after rectangle 2, but we may be after some other stuff as well since we will be asked to insertInLines:atIndex:3...
-  NSArray *lines = [self lines];
-  if (index == [lines count]) {
-    [self addInGraphics:graphic];
-  } else {
-    NSArray *graphics = [self graphics];
-    int newIndex = [graphics indexOfObjectIdenticalTo:[lines objectAtIndex:index]];
-    if (newIndex != NSNotFound) {
-      [self insertGraphic:graphic atIndex:newIndex];
-    } else {
-      // Shouldn't happen.
-      [NSException raise:NSRangeException format:@"Could not find the given line in the graphics."];
-    }
-  }
-}
-
-- (void)removeFromLinesAtIndex:(unsigned)index {
-  NSArray *lines = [self lines];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[lines objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given line in the graphics."];
-  }
-}
-
-- (void)replaceInLines:(IGGraphic *)graphic atIndex:(unsigned)index {
-  NSArray *lines = [self lines];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[lines objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-    [self insertGraphic:graphic atIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given line in the graphics."];
-  }
-}
-
-- (void)setTextAreas:(NSArray *)textAreas {
-  // We won't allow wholesale setting of these subset keys.
-  [NSException raise:NSOperationNotSupportedForKeyException format:@"Setting 'textAreas' key is not supported."];
-}
-
-- (void)addInTextAreas:(IGGraphic *)graphic {
-  [self addInGraphics:graphic];
-}
-
-- (void)insertInTextAreas:(IGGraphic *)graphic atIndex:(unsigned)index {
-  // MF:!!! This is not going to be ideal.  If we are being asked to, say, "make a new rectangle at after rectangle 2", we will be after rectangle 2, but we may be after some other stuff as well since we will be asked to insertInTextAreas:atIndex:3...
-  NSArray *textAreas = [self textAreas];
-  if (index == [textAreas count]) {
-    [self addInGraphics:graphic];
-  } else {
-    NSArray *graphics = [self graphics];
-    int newIndex = [graphics indexOfObjectIdenticalTo:[textAreas objectAtIndex:index]];
-    if (newIndex != NSNotFound) {
-      [self insertGraphic:graphic atIndex:newIndex];
-    } else {
-      // Shouldn't happen.
-      [NSException raise:NSRangeException format:@"Could not find the given text area in the graphics."];
-    }
-  }
-}
-
-- (void)removeFromTextAreasAtIndex:(unsigned)index {
-  NSArray *textAreas = [self textAreas];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[textAreas objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given text area in the graphics."];
-  }
-}
-
-- (void)replaceInTextAreas:(IGGraphic *)graphic atIndex:(unsigned)index {
-  NSArray *textAreas = [self textAreas];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[textAreas objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-    [self insertGraphic:graphic atIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given text area in the graphics."];
-  }
-}
-
-- (void)setImages:(NSArray *)images {
-  // We won't allow wholesale setting of these subset keys.
-  [NSException raise:NSOperationNotSupportedForKeyException format:@"Setting 'images' key is not supported."];
-}
-
-- (void)addInImages:(IGGraphic *)graphic {
-  [self addInGraphics:graphic];
-}
-
-- (void)insertInImages:(IGGraphic *)graphic atIndex:(unsigned)index {
-  // MF:!!! This is not going to be ideal.  If we are being asked to, say, "make a new rectangle at after rectangle 2", we will be after rectangle 2, but we may be after some other stuff as well since we will be asked to insertInImages:atIndex:3...
-  NSArray *images = [self images];
-  if (index == [images count]) {
-    [self addInGraphics:graphic];
-  } else {
-    NSArray *graphics = [self graphics];
-    int newIndex = [graphics indexOfObjectIdenticalTo:[images objectAtIndex:index]];
-    if (newIndex != NSNotFound) {
-      [self insertGraphic:graphic atIndex:newIndex];
-    } else {
-      // Shouldn't happen.
-      [NSException raise:NSRangeException format:@"Could not find the given image in the graphics."];
-    }
-  }
-}
-
-- (void)removeFromImagesAtIndex:(unsigned)index {
-  NSArray *images = [self images];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[images objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given image in the graphics."];
-  }
-}
-
-- (void)replaceInImages:(IGGraphic *)graphic atIndex:(unsigned)index {
-  NSArray *images = [self images];
-  NSArray *graphics = [self graphics];
-  int newIndex = [graphics indexOfObjectIdenticalTo:[images objectAtIndex:index]];
-  if (newIndex != NSNotFound) {
-    [self removeGraphicAtIndex:newIndex];
-    [self insertGraphic:graphic atIndex:newIndex];
-  } else {
-    // Shouldn't happen.
-    [NSException raise:NSRangeException format:@"Could not find the given image in the graphics."];
-  }
-}
-
-// The following "indicesOf..." methods are in support of scripting.  They allow more flexible range and relative specifiers to be used with the different graphic keys of a xDrawDocument.
-// The scripting engine does not know about the fact that the "rectangles" key is really just a subset of the "graphics" key, so script code like "rectangles from circle 1 to line 4" don't make sense to it.  But Sketch does know and can answer such questions itself, with a little work.
-- (NSArray *)indicesOfObjectsByEvaluatingRangeSpecifier:(NSRangeSpecifier *)rangeSpec {
-  NSString *key = [rangeSpec key];
-  
-  if ([key isEqual:@"graphics"] || [key isEqual:@"rectangles"] || [key isEqual:@"circles"] || [key isEqual:@"lines"] || [key isEqual:@"textAreas"] || [key isEqual:@"images"]) {
-    // This is one of the keys we might want to deal with.
-    NSScriptObjectSpecifier *startSpec = [rangeSpec startSpecifier];
-    NSScriptObjectSpecifier *endSpec = [rangeSpec endSpecifier];
-    NSString *startKey = [startSpec key];
-    NSString *endKey = [endSpec key];
-    NSArray *graphics = [self graphics];
-    
-    if ((startSpec == nil) && (endSpec == nil)) {
-      // We need to have at least one of these...
-      return nil;
-    }
-    if ([graphics count] == 0) {
-      // If there are no graphics, there can be no match.  Just return now.
-      return [NSArray array];
-    }
-    
-    if ((!startSpec || [startKey isEqual:@"graphics"] || [startKey isEqual:@"rectangles"] || [startKey isEqual:@"circles"] || [startKey isEqual:@"lines"] || [startKey isEqual:@"textAreas"] || [startKey isEqual:@"images"]) && (!endSpec || [endKey isEqual:@"graphics"] || [endKey isEqual:@"rectangles"] || [endKey isEqual:@"circles"] || [endKey isEqual:@"lines"] || [endKey isEqual:@"textAreas"] || [endKey isEqual:@"images"])) {
-      int startIndex;
-      int endIndex;
-      
-      // The start and end keys are also ones we want to handle.
-      
-      // The strategy here is going to be to find the index of the start and stop object in the full graphics array, regardless of what its key is.  Then we can find what we're looking for in that range of the graphics key (weeding out objects we don't want, if necessary).
-      
-      // First find the index of the first start object in the graphics array
-      if (startSpec) {
-        id startObject = [startSpec objectsByEvaluatingSpecifier];
-        if ([startObject isKindOfClass:[NSArray class]]) {
-          if ([startObject count] == 0) {
-            startObject = nil;
-          } else {
-            startObject = [startObject objectAtIndex:0];
-          }
-        }
-        if (!startObject) {
-          // Oops.  We could not find the start object.
-          return nil;
-        }
-        startIndex = [graphics indexOfObjectIdenticalTo:startObject];
-        if (startIndex == NSNotFound) {
-          // Oops.  We couldn't find the start object in the graphics array.  This should not happen.
-          return nil;
-        }
-      } else {
-        startIndex = 0;
-      }
-      
-      // Now find the index of the last end object in the graphics array
-      if (endSpec) {
-        id endObject = [endSpec objectsByEvaluatingSpecifier];
-        if ([endObject isKindOfClass:[NSArray class]]) {
-          unsigned endObjectsCount = [endObject count];
-          if (endObjectsCount == 0) {
-            endObject = nil;
-          } else {
-            endObject = [endObject objectAtIndex:(endObjectsCount-1)];
-          }
-        }
-        if (!endObject) {
-          // Oops.  We could not find the end object.
-          return nil;
-        }
-        endIndex = [graphics indexOfObjectIdenticalTo:endObject];
-        if (endIndex == NSNotFound) {
-          // Oops.  We couldn't find the end object in the graphics array.  This should not happen.
-          return nil;
-        }
-      } else {
-        endIndex = [graphics count] - 1;
-      }
-      
-      if (endIndex < startIndex) {
-        // Accept backwards ranges gracefully
-        int temp = endIndex;
-        endIndex = startIndex;
-        startIndex = temp;
-      }
-      
-      {
-        // Now startIndex and endIndex specify the end points of the range we want within the graphics array.
-        // We will traverse the range and pick the objects we want.
-        // We do this by getting each object and seeing if it actually appears in the real key that we are trying to evaluate in.
-        NSMutableArray *result = [NSMutableArray array];
-        BOOL keyIsGraphics = [key isEqual:@"graphics"];
-        NSArray *rangeKeyObjects = (keyIsGraphics ? nil : [self valueForKey:key]);
-        id curObj;
-        unsigned curKeyIndex, i;
-        
-        for (i=startIndex; i<=endIndex; i++) {
-          if (keyIsGraphics) {
-            [result addObject:[NSNumber numberWithInt:i]];
-          } else {
-            curObj = [graphics objectAtIndex:i];
-            curKeyIndex = [rangeKeyObjects indexOfObjectIdenticalTo:curObj];
-            if (curKeyIndex != NSNotFound) {
-              [result addObject:[NSNumber numberWithInt:curKeyIndex]];
-            }
-          }
-        }
-        return result;
-      }
-    }
-  }
-  return nil;
-}
-
-- (NSArray *)indicesOfObjectsByEvaluatingRelativeSpecifier:(NSRelativeSpecifier *)relSpec {
-  NSString *key = [relSpec key];
-  
-  if ([key isEqual:@"graphics"] || [key isEqual:@"rectangles"] || [key isEqual:@"circles"] || [key isEqual:@"lines"] || [key isEqual:@"textAreas"] || [key isEqual:@"images"]) {
-    // This is one of the keys we might want to deal with.
-    NSScriptObjectSpecifier *baseSpec = [relSpec baseSpecifier];
-    NSString *baseKey = [baseSpec key];
-    NSArray *graphics = [self graphics];
-    NSRelativePosition relPos = [relSpec relativePosition];
-    
-    if (baseSpec == nil) {
-      // We need to have one of these...
-      return nil;
-    }
-    if ([graphics count] == 0) {
-      // If there are no graphics, there can be no match.  Just return now.
-      return [NSArray array];
-    }
-    
-    if ([baseKey isEqual:@"graphics"] || [baseKey isEqual:@"rectangles"] || [baseKey isEqual:@"circles"] || [baseKey isEqual:@"lines"] || [baseKey isEqual:@"textAreas"] || [baseKey isEqual:@"images"]) {
-      int baseIndex;
-      
-      // The base key is also one we want to handle.
-      
-      // The strategy here is going to be to find the index of the base object in the full graphics array, regardless of what its key is.  Then we can find what we're looking for before or after it.
-      
-      // First find the index of the first or last base object in the graphics array
-      // Base specifiers are to be evaluated within the same container as the relative specifier they are the base of.  That's this document.
-      id baseObject = [baseSpec objectsByEvaluatingWithContainers:self];
-      if ([baseObject isKindOfClass:[NSArray class]]) {
-        int baseCount = [baseObject count];
-        if (baseCount == 0) {
-          baseObject = nil;
-        } else {
-          if (relPos == NSRelativeBefore) {
-            baseObject = [baseObject objectAtIndex:0];
-          } else {
-            baseObject = [baseObject objectAtIndex:(baseCount-1)];
-          }
-        }
-      }
-      if (!baseObject) {
-        // Oops.  We could not find the base object.
-        return nil;
-      }
-      
-      baseIndex = [graphics indexOfObjectIdenticalTo:baseObject];
-      if (baseIndex == NSNotFound) {
-        // Oops.  We couldn't find the base object in the graphics array.  This should not happen.
-        return nil;
-      }
-      
-      {
-        // Now baseIndex specifies the base object for the relative spec in the graphics array.
-        // We will start either right before or right after and look for an object that matches the type we want.
-        // We do this by getting each object and seeing if it actually appears in the real key that we are trying to evaluate in.
-        NSMutableArray *result = [NSMutableArray array];
-        BOOL keyIsGraphics = [key isEqual:@"graphics"];
-        NSArray *relKeyObjects = (keyIsGraphics ? nil : [self valueForKey:key]);
-        id curObj;
-        unsigned curKeyIndex, graphicCount = [graphics count];
-        
-        if (relPos == NSRelativeBefore) {
-          baseIndex--;
-        } else {
-          baseIndex++;
-        }
-        while ((baseIndex >= 0) && (baseIndex < graphicCount)) {
-          if (keyIsGraphics) {
-            [result addObject:[NSNumber numberWithInt:baseIndex]];
-            break;
-          } else {
-            curObj = [graphics objectAtIndex:baseIndex];
-            curKeyIndex = [relKeyObjects indexOfObjectIdenticalTo:curObj];
-            if (curKeyIndex != NSNotFound) {
-              [result addObject:[NSNumber numberWithInt:curKeyIndex]];
-              break;
-            }
-          }
-          if (relPos == NSRelativeBefore) {
-            baseIndex--;
-          } else {
-            baseIndex++;
-          }
-        }
-        
-        return result;
-      }
-    }
-  }
-  return nil;
-}
-
-- (NSArray *)indicesOfObjectsByEvaluatingObjectSpecifier:(NSScriptObjectSpecifier *)specifier {
-  // We want to handle some range and relative specifiers ourselves in order to support such things as "graphics from circle 3 to circle 5" or "circles from graphic 1 to graphic 10" or "circle before rectangle 3".
-  // Returning nil from this method will cause the specifier to try to evaluate itself using its default evaluation strategy.
-  
-  if ([specifier isKindOfClass:[NSRangeSpecifier class]]) {
-    return [self indicesOfObjectsByEvaluatingRangeSpecifier:(NSRangeSpecifier *)specifier];
-  } else if ([specifier isKindOfClass:[NSRelativeSpecifier class]]) {
-    return [self indicesOfObjectsByEvaluatingRelativeSpecifier:(NSRelativeSpecifier *)specifier];
-  }
-  
-  
-  // If we didn't handle it, return nil so that the default object specifier evaluation will do it.
-  return nil;
-}
-
-@end
-**/

@@ -31,6 +31,12 @@ enum {
 };
 
 @interface IGGraphicView : NSView {
+    
+    NSPoint currentCursorPosition;
+    NSRect currentCursorRect;
+    NSRect oldCursorRect;
+    NSInteger currentPage;
+    
     @private
     IBOutlet IGDrawWindowController *controller;
     IBOutlet NSPopUpButton *zoomButton;
@@ -66,9 +72,7 @@ enum {
     NSRect _verticalRulerLineRect;
     NSRect _horizontalRulerLineRect;
     
-    NSPoint _currentCursorPosition;
-    NSRect _currentCursorRect;
-    NSRect _oldCursorRect;
+    
     unsigned int _writingDirection;
     struct __glyphFlags {
         unsigned int fontSize;
@@ -84,14 +88,17 @@ enum {
     NSColor *marginLineColor;
     NSColor *pageBackgroundColor;
     NSColor *colorBetweenPages;
-    unsigned _currentPage;
     
-    //bindings stuff
+    
+    //bindings stuff (wurde ins modell verschoben)
     NSMutableArray *_selectedGraphics;
 }
 
-//binding stuff
-//- (NSIndexSet *)selectionIndexes;
+  @property NSPoint currentCursorPosition;
+  @property NSRect currentCursorRect;
+  @property NSRect oldCursorRect;
+  @property NSInteger currentPage;
+
 
 // IGDrawWindowController accessors and convenience methods
 - (void)setDrawWindowController:(IGDrawWindowController *)theController;
@@ -110,8 +117,6 @@ enum {
 - (NSRect)marginRectForSide:(unsigned)side;
 - (NSPrintInfo *)drawDocumentPrintInfo;
 - (float)pageSeparatorHeight;
-- (unsigned)currentPage;
-- (void)setCurrentPage:(unsigned)newCurrentPage;
 
 // Display invalidation and toolbar validation
 - (void)invalidateGraphic:(IGGraphic *)graphic;
@@ -170,7 +175,6 @@ enum {
 - (void)mouseDown:(NSEvent *)theEvent;
 
 // Currsor stuff
-- (NSPoint)currentCursorPosition;
 - (void)setCurrentCursorPosition:(NSPoint)position;
 - (void)displayCursorPos;
 - (void)blinkingCursorTimer:(NSTimer *)aTimer;
