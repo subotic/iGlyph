@@ -226,7 +226,7 @@ extern NSString *IGGlyphDidChangeNotification;
 
 - (BOOL)createWithEvent:(NSEvent *)theEvent inView:(IGGraphicView *)view;
 - (BOOL)replaceGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName;
-- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName InView:(IGGraphicView *)view;
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos;
 
 - (BOOL)isEditable;
 - (void)startEditingWithEvent:(NSEvent *)event inView:(IGGraphicView *)view;
@@ -330,9 +330,6 @@ extern NSString *IGGlyphDidChangeNotification;
 
 - (float)arrowHead;
 - (void)setArrowHead:(float)value;
-
-- (float)arrowHeadSize;
-- (void)setArrowHeadSize:(float)value;
 
 - (void)doReverseArrow;
 - (BOOL)reverseArrow;

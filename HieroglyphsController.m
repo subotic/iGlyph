@@ -207,7 +207,8 @@
     
     NSString *fontName = [[titleData objectAtIndex:glyphPosInArray] objectAtIndex:1];
     
-    [[self theMainView] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
+    //[[self theMainView] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
+    [[self theMainWindowController] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
 }
 
 //wird vom IGHieroglyphsTableView aufgerufen wenn right-click oder ctr-click

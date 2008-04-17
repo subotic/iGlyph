@@ -11,12 +11,16 @@
 
 @interface IGRenderingView : NSView {
     @private	
-    NSArray *_graphics;
+    NSArray *graphics;
     NSSize _paperSize;
-    unsigned _pageCount;
-    IGDrawDocument *_drawDocument;
+    NSInteger pageCount;
+    IGDrawDocument *drawDocument;
 }
 
-- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphics pageCount:(unsigned)count document:(IGDrawDocument *)document;
+@property (copy) NSArray *graphics;
+@property NSInteger pageCount;
+@property IGDrawDocument *drawDocument;
+
+- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document;
 
 @end

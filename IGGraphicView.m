@@ -36,15 +36,17 @@ enum {
 };
 
 
-static void *PropertyObservationContext = (void *)1091;
-static void *GraphicsObservationContext = (void *)1092;
-static void *SelectionIndexesObservationContext = (void *)1093;
-
 NSString *IGGraphicViewSelectionDidChangeNotification = @"IGGraphicViewSelectionDidChange";
 
 @implementation IGGraphicView
 
 static float IGDefaultPasteCascadeDelta = 10.0;
+
+
+  @dynamic currentCursorPosition;
+  @synthesize currentCursorRect;
+  @synthesize oldCursorRect;
+  @synthesize currentPage;
 
 
 - (id)initWithFrame:(NSRect)frame {
@@ -71,13 +73,13 @@ static float IGDefaultPasteCascadeDelta = 10.0;
     _glyphFlags.rubricColor = NO;
     _glyphFlags.mirrored = NO;
     _glyphFlags.angle = 0;
-    _currentCursorRect = NSMakeRect(_currentCursorPosition.x - IG_HALF_HANDLE_WIDTH, _currentCursorPosition.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
-    _oldCursorRect = _currentCursorRect;
+    self.currentCursorRect = NSMakeRect(self.currentCursorPosition.x - IG_HALF_HANDLE_WIDTH, self.currentCursorPosition.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
+    self.oldCursorRect = self.currentCursorRect;
     _cursorColor = [NSColor whiteColor];
     _blinkingCursorTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(blinkingCursorTimer:) userInfo:nil repeats:YES];
     [self setMarginLineColor:[NSColor lightGrayColor]];
     colorBetweenPages = [NSColor darkGrayColor];
-    _currentPage = 1;
+    self.currentPage = 1;
     
     [self setShowsGrid:[[PreferencesController sharedPreferencesController] showsGrid]];
     _gvFlags.showsGrid = NO;
@@ -95,9 +97,6 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 - (void)dealloc {
   [self endEditing];
-  [_selectedGraphics release];
-  [_rubberbandGraphics release];
-  [_gridColor release];
   [super dealloc];
 }
 
@@ -230,61 +229,20 @@ return rect;
   return 12345;
 }
 
--(unsigned)currentPage
-{
-  return _currentPage;
-}
-
--(void)setCurrentPage:(unsigned)newCurrentPage
-{
-  _currentPage = newCurrentPage;
-}
-
 // ===========================================================================
 #pragma mark -
 #pragma mark display invalidation and toolbar validation
 // ======================= Display invalidation ==============================
 
 - (void)invalidateGraphic:(IGGraphic *)graphic {
-  unsigned pageNr = [graphic pageNr];
-  
-  if ([graphic class] == [IGGlyph class]) {
-    
-    if (pageNr == _currentPage || pageNr == 0) {
-      //NSLog(@"IGGraphicView(invalidateGlyph)");
-      if ([self selectedGraphicCountOfClass:[IGGlyph class]] == 1) {
-        [self setNeedsDisplayInRect:[graphic drawingBounds]];
-        
-      } else {
-        [self setNeedsDisplayInRect:[graphic drawingBounds]];
-        
-        /**
-        if (![[self graphicsOnPage:pageNr] containsObject:graphic] && ![[self graphicsOnPage:0] containsObject:graphic]) {
-          [self deselectGraphic:graphic];  // deselectGraphic will call invalidateGraphic, too, but only if the graphic is in the selection and since the graphic is removed from the selection before this method is called again the potential infinite loop should not happen.
-        }
-         **/
-      }
-    } else {
-      [self setNeedsDisplayInRect:[graphic drawingBounds]];
-      
-      if (![[self graphicsOnPage:pageNr] containsObject:graphic] && ![[self graphicsOnPage:0] containsObject:graphic]) {
-        [self deselectGraphic:graphic];  // deselectGraphic will call invalidateGraphic, too, but only if the graphic is in the selection and since the graphic is removed from the selection before this method is called again the potential infinite loop should not happen.
-      }
-    }
-    
-  } else {
-    [self setNeedsDisplayInRect:[graphic drawingBounds]];
-    
-    if (![[self graphicsOnPage:pageNr] containsObject:graphic]) {
-      [self deselectGraphic:graphic];  // deselectGraphic will call invalidateGraphic, too, but only if the graphic is in the selection and since the graphic is removed from the selection before this method is called again the potential infinite loop should not happen.
-    }
-  }
+  NSLog(@"IGGraphicView(invalidateGraphic)");
+  [self setNeedsDisplayInRect:[graphic drawingBounds]];
 }
 
 - (void)invalidateGraphics:(NSArray *)graphics {
-  unsigned i, c = [graphics count];
-  for (i=0; i<c; i++) {
-    [self invalidateGraphic:[graphics objectAtIndex:i]];
+  NSLog(@"IGGraphicView(invalidateGraphics)");
+  for (IGGraphic *oneGraphic in graphics) {
+    [self invalidateGraphic: oneGraphic];
   }
 }
 
@@ -302,7 +260,7 @@ return rect;
     if ([[self selectedGraphics] count] == 0) {
       return NO;
     } else if ([[self selectedGraphics] count] == 1) {
-      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:_currentPage] objectAtIndex:0]) {
+      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:self.currentPage] objectAtIndex:0]) {
         return NO;
       } else {
         return YES;
@@ -313,7 +271,7 @@ return rect;
     if ([[self selectedGraphics] count] == 0) {
       return NO;
     } else if ([[self selectedGraphics] count] == 1) {
-      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:_currentPage] lastObject]) {
+      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:self.currentPage] lastObject]) {
         return NO;
       } else {
         return YES;
@@ -331,14 +289,14 @@ return rect;
 
 - (NSMutableArray *)selectedGraphics
 {
-  return _selectedGraphics;
+  return [[self drawWindowController] selectedGraphics];
 }
 
 - (NSArray *)cartoucheSelectedGraphics
 {
   Class filterClass = [IGCartouche class];
-  NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[_selectedGraphics count]];
-  NSEnumerator *objectsEnumerator = [_selectedGraphics objectEnumerator];
+  NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[[self selectedGraphics] count]];
+  NSEnumerator *objectsEnumerator = [[self selectedGraphics] objectEnumerator];
   id item;
   
   while (item = [objectsEnumerator nextObject]) {
@@ -398,18 +356,20 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (NSArray *)orderedSelectedGraphics  {
-  //NSAssert([[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:_currentPage]], @"orderedSelectedGraphics: probleme eine geordneten Array mit den Graphics zur zu geben");
-  return [[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:_currentPage]];
+  //NSAssert([[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:self.currentPage]], @"orderedSelectedGraphics: probleme eine geordneten Array mit den Graphics zur zu geben");
+  return [[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:self.currentPage]];
 }
 
 - (BOOL)graphicIsSelected:(IGGraphic *)graphic {
-  return (([_selectedGraphics indexOfObjectIdenticalTo:graphic] == NSNotFound) ? NO : YES);
+  return (([[self selectedGraphics] indexOfObjectIdenticalTo:graphic] == NSNotFound) ? NO : YES);
 }
 
 - (void)selectGraphic:(IGGraphic *)graphic
 {
   NSLog(@"IGGraphicView(selectGraphic)");
+  [[self drawWindowController] selectGraphic: graphic];
   
+  /**
   unsigned curIndex = [_selectedGraphics indexOfObjectIdenticalTo:graphic];
   if (curIndex == NSNotFound) {
     [[[self undoManager] prepareWithInvocationTarget:self] deselectGraphic:graphic];
@@ -424,12 +384,15 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [[NSNotificationCenter defaultCenter] postNotificationName:IGGraphicViewSelectionDidChangeNotification object:self];
     [self updateRulers];
   }
+  **/
 }
 
 - (void)deselectGraphic:(IGGraphic *)graphic
 {
   NSLog(@"IGGraphicView(deselectGraphic)");
+  [[self drawWindowController] deselectGraphic:graphic];
   
+  /**
   unsigned curIndex = [_selectedGraphics indexOfObjectIdenticalTo:graphic];
   if (curIndex != NSNotFound) {
     [[[self undoManager] prepareWithInvocationTarget:self] selectGraphic:graphic];
@@ -444,12 +407,15 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [[NSNotificationCenter defaultCenter] postNotificationName:IGGraphicViewSelectionDidChangeNotification object:self];
     [self updateRulers];
   }
+  **/
 }
 
 - (void)clearSelection
 {  
   NSLog(@"IGGraphicView(clearSelection)");
-    
+  [[self drawWindowController] clearSelection];
+  
+  /**  
   int i, c = [_selectedGraphics count];
   id curGraphic;
   
@@ -469,6 +435,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [[NSNotificationCenter defaultCenter] postNotificationName:IGGraphicViewSelectionDidChangeNotification object:self];
     [self updateRulers];
   }
+  **/
 }
 
 - (void)willChangeSomething
@@ -562,7 +529,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (BOOL)cursorUnderPoint:(NSPoint)point {
-  NSRect cursorRect = NSMakeRect(_currentCursorPosition.x - IG_HALF_HANDLE_WIDTH, _currentCursorPosition.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
+  NSRect cursorRect = NSMakeRect(self.currentCursorPosition.x - IG_HALF_HANDLE_WIDTH, self.currentCursorPosition.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
   return NSMouseInRect(point, cursorRect, YES);
 }
 
@@ -730,7 +697,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   //body
-  graphics = [[drawWindowController document] graphicsOnPage:_currentPage];
+  graphics = [[drawWindowController document] graphicsOnPage:self.currentPage];
   i = [graphics count];
   while (i-- > 0) {
     curGraphic = [graphics objectAtIndex:i];
@@ -776,7 +743,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     int pageNrAlignment = [[self drawDocument] pageNrAlignment];
     int pageNrPosition = [[self drawDocument] pageNrPosition];
     
-    signed int pnNumberToShow = _currentPage - firstPageNumberToShow + initialPageNumber;
+    signed int pnNumberToShow = self.currentPage - firstPageNumberToShow + initialPageNumber;
     
     //NSLog(@"IGGraphicView(drawRect) -> pnStyle= %i", pnStyle);
     //Fontname and Size... fehlt nur noch Style
@@ -854,7 +821,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSAttributedString *pageNumberObject = [[NSAttributedString alloc] initWithString:pnMutableString attributes:pageNrAttribsDict];
     
     //damit die Seitenzahl erst aber der gewünschten Seite angezeigt wird
-    if (_currentPage >= firstPageNumberToShow) {
+    if (self.currentPage >= firstPageNumberToShow) {
       [pageNumberObject drawAtPoint:pnPosition];
     }
     
@@ -876,7 +843,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSFrameRect(_rubberbandRect);
   }
   
-  if (NSIntersectsRect(rect, _currentCursorRect)) {
+  if (NSIntersectsRect(rect, self.currentCursorRect)) {
     [self drawCursor];
   }
 }
@@ -945,7 +912,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   IGDrawDocument *document = [self drawDocument];
   _creatingGraphic = [[theClass allocWithZone:[document zone]] init];
   if ([_creatingGraphic createWithEvent:theEvent inView:self]) {
-    [_creatingGraphic setPageNr:_currentPage];
+    [_creatingGraphic setPageNr:self.currentPage];
     [document insertGraphic:_creatingGraphic atIndex:0];
     [self selectGraphic:_creatingGraphic];
     if ([_creatingGraphic isEditable]) {
@@ -972,7 +939,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (NSPointInRect([_creatingGraphic bounds].origin, [self pageHeaderRect])) {
       [_creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
     } else {
-      [_creatingGraphic setPageNr:_currentPage]; //ansonsten ganz normal
+      [_creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
     }
     [document insertGraphic:_creatingGraphic atIndex:0];
     [self selectGraphic:_creatingGraphic];
@@ -986,7 +953,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   //moving the cursor
-  NSPoint mainCursor = [self currentCursorPosition];
+  NSPoint mainCursor = self.currentCursorPosition;
   NSPoint tempCursor = mainCursor;
   int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
   NSRect glyphBounds = [_creatingGraphic bounds];
@@ -1017,7 +984,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSBeep();
   }
   
-  [self setCurrentCursorPosition:tempCursor];        
+  self.currentCursorPosition = tempCursor;        
   [[self window] invalidateCursorRectsForView:self];
   
   [_creatingGraphic release];
@@ -1451,7 +1418,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   [[FormatGlyphController sharedFormatGlyphController] restoreTmpFormating];
   
   //dies ist unser Ausgangspunkt. von hier aus berechne ich den endgültigen standort der glyphe
-  NSPoint mainCursor = [self currentCursorPosition];
+  NSPoint mainCursor = self.currentCursorPosition;
   NSPoint tempCursor = mainCursor;
   
   unichar glyphUniChar;
@@ -1586,7 +1553,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       if (NSPointInRect([_creatingGraphic bounds].origin, [self pageHeaderRect])) {
         [_creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
       } else {
-        [_creatingGraphic setPageNr:_currentPage]; //ansonsten ganz normal
+        [_creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
       }
       [document insertGraphic:_creatingGraphic atIndex:0];
       [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
@@ -1605,11 +1572,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     tempCursor.y = mainCursor.y + glyphGroupBounds.size.height + glyphGroupBounds.size.height * 0.25;
     if (glyphGroupBounds.size.height < groupBoundsSize.height) {
       for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:_currentPage] objectAtIndex:i] moveBy:NSMakePoint(0,(groupBoundsSize.height - glyphGroupBounds.size.height) * 0.5 + glyphGroupBounds.size.height)];
+        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(0,(groupBoundsSize.height - glyphGroupBounds.size.height) * 0.5 + glyphGroupBounds.size.height)];
       }
     } else {
       for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:_currentPage] objectAtIndex:i] moveBy:NSMakePoint(0, glyphGroupBounds.size.height)];
+        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(0, glyphGroupBounds.size.height)];
       }
     }
   }
@@ -1620,11 +1587,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     tempCursor.x = mainCursor.x - glyphGroupBounds.size.width - glyphGroupBounds.size.width * 0.25;
     if (glyphGroupBounds.size.width < groupBoundsSize.width) {
       for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:_currentPage] objectAtIndex:i] moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5 - glyphGroupBounds.size.width, 0)];
+        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5 - glyphGroupBounds.size.width, 0)];
       }
     } else {
       for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:_currentPage] objectAtIndex:i] moveBy:NSMakePoint(-groupBoundsSize.width, 0)];
+        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(-groupBoundsSize.width, 0)];
       }
     }
   }
@@ -1635,7 +1602,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     tempCursor.x = mainCursor.x + glyphGroupBounds.size.width + glyphGroupBounds.size.width * 0.25;
     if (glyphGroupBounds.size.width < groupBoundsSize.width) {
       for (i = 0; i < [glyphGroupDic count]; i++) {
-        id tempGraphic = [[self graphicsOnPage:_currentPage] objectAtIndex:i];
+        id tempGraphic = [[self graphicsOnPage:self.currentPage] objectAtIndex:i];
         [tempGraphic moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5, 0)];
       }
     }
@@ -1649,7 +1616,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSBeep();
   }
   
-  [self setCurrentCursorPosition:tempCursor];
+  self.currentCursorPosition = tempCursor;
 }
 
 
@@ -1725,7 +1692,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         [self performSelector:@selector(invalidateGraphic:) withEachObjectInSet:_rubberbandGraphics];
         _rubberbandRect = newRubberbandRect;
         [_rubberbandGraphics release];
-        _rubberbandGraphics = [[self graphicsIntersectingRect:_rubberbandRect onPage:_currentPage] retain];
+        _rubberbandGraphics = [[self graphicsIntersectingRect:_rubberbandRect onPage:self.currentPage] retain];
         
         [self setNeedsDisplayInRect:_rubberbandRect];
         [self performSelector:@selector(invalidateGraphic:) withEachObjectInSet:_rubberbandGraphics];
@@ -1763,8 +1730,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
   BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
-  //++NSRect selBounds = NSMakeRect(_currentCursorPosition.x, _currentCursorPosition.y, 0, 0);
-  NSPoint selPoint = _currentCursorPosition;
+  //++NSRect selBounds = NSMakeRect(self.currentCursorPosition.x, self.currentCursorPosition.y, 0, 0);
+  NSPoint selPoint = self.currentCursorPosition;
   lastPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
   
   //wenn ctrl gedrückt, kann ich den cursor in alle richtungen verschieben
@@ -1786,13 +1753,13 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     
     //hier wird die bewegung in der x-Achse oder der y-Achse beschränkt je nach schreibrichtung
     if (!ctrlKeyDown && (wd == leftToRight || wd == rightToLeft)) {
-      curPoint.y = _currentCursorPosition.y + selPointOffset.y;
+      curPoint.y = self.currentCursorPosition.y + selPointOffset.y;
     } else if (!ctrlKeyDown) {
-      curPoint.x = _currentCursorPosition.x + selPointOffset.x;
+      curPoint.x = self.currentCursorPosition.x + selPointOffset.x;
     } else if (ctrlKeyDown) {
       //damit ich mit ctrlKey den Cursor frei bewegen kann
-      curPoint.x = _currentCursorPosition.x + selPointOffset.x;
-      curPoint.y = _currentCursorPosition.y + selPointOffset.y;
+      curPoint.x = self.currentCursorPosition.x + selPointOffset.x;
+      curPoint.y = self.currentCursorPosition.y + selPointOffset.y;
     }
     
     if (!isMoving && ((fabs(curPoint.x - lastPoint.x) >= 2.0) || (fabs(curPoint.y - lastPoint.y) >= 2.0))) {
@@ -1809,7 +1776,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         curPoint.y = boundsOrigin.y + selPointOffset.y;
       }
       if (!NSEqualPoints(lastPoint, curPoint)) {
-        [self setCurrentCursorPosition:NSMakePoint(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y)];
+        self.currentCursorPosition = NSMakePoint(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y);
         didMove = YES;
         if (echoToRulers) {
           [self continueEchoingMoveToRulers:NSMakeRect(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y, 0, 0)];
@@ -1884,8 +1851,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
             }
             } else if (!NSContainsRect([self pageHeaderSmalerRect],[graphic bounds])  && !NSContainsRect([self pageFooterSmalerRect],[graphic bounds])) {
               //} else if (!NSPointInRect(NSMakePoint([graphic bounds].origin.x, [graphic bounds].origin.y + 5), [self pageHeaderRect])) {
-              if ([graphic pageNr] != _currentPage) {
-                [[self drawDocument] moveGraphic:graphic toPage:_currentPage]; //ansonsten müssen wir sie in die _currentPage verschieben
+              if ([graphic pageNr] != self.currentPage) {
+                [[self drawDocument] moveGraphic:graphic toPage:self.currentPage]; //ansonsten müssen wir sie in die self.currentPage verschieben
               }
               }
           
@@ -1938,7 +1905,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   BOOL shiftKeyDown = (([theEvent modifierFlags] & NSShiftKeyMask) ? YES : NO);
   
   curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-  graphic = [self graphicUnderPoint:curPoint onPage:_currentPage] ? [self graphicUnderPoint:curPoint onPage:_currentPage] : [self graphicUnderPoint:curPoint onPage:0];
+  graphic = [self graphicUnderPoint:curPoint onPage:self.currentPage] ? [self graphicUnderPoint:curPoint onPage:self.currentPage] : [self graphicUnderPoint:curPoint onPage:0];
   
   NSLog(@"graphic under point %@", graphic);
   cursorSelected = [self cursorUnderPoint:curPoint];
@@ -2016,7 +1983,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   //ist nur für das text objekt interessant da dieses nur editable ist
   if ([theEvent clickCount] > 1) {
     NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    IGGraphic *graphic = [self graphicUnderPoint:curPoint onPage:_currentPage];
+    IGGraphic *graphic = [self graphicUnderPoint:curPoint onPage:self.currentPage];
     if (graphic && [graphic isEditable]) {
       [self startEditingGraphic:graphic withEvent:theEvent];
       return;
@@ -2027,7 +1994,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   if ([theEvent clickCount] == 1 && ctrlKeyDown) {
     NSLog(@"IGGraphicView(mouseDown) -> ctrl-click sollte es sein");
     NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    [self setCurrentCursorPosition:curPoint];
+    self.currentCursorPosition = curPoint;
     [self setNeedsDisplay:YES];
   }
   
@@ -2094,7 +2061,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   float spacing = [self gridSpacing];
   BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
   
-  NSPoint selPoint = _currentCursorPosition;
+  NSPoint selPoint = self.currentCursorPosition;
   lastPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
   
   if (snapsToGrid || echoToRulers) {
@@ -2106,7 +2073,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   //damit der cursor beim rechts-click auch dorthin springt
-  [self setCurrentCursorPosition:lastPoint];
+  self.currentCursorPosition = lastPoint;
   
   if (echoToRulers)  {
     [self stopEchoingMoveToRulers];
@@ -2129,7 +2096,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
   
   //damit der cursor beim rechts-click auch dorthin springt
-  //[self setCurrentCursorPosition:curPoint];
+  //[self.currentCursorPosition = curPoint];
   
   if (!isMoving && ((fabs(curPoint.x - lastPoint.x) >= 2.0) || (fabs(curPoint.y - lastPoint.y) >= 2.0))) {
     isMoving = YES;
@@ -2144,7 +2111,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       curPoint.y = boundsOrigin.y + selPointOffset.y;
     }
     if (!NSEqualPoints(lastPoint, curPoint)) {
-      [self setCurrentCursorPosition:NSMakePoint(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y)];
+      self.currentCursorPosition = NSMakePoint(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y);
       didMove = YES;
       if (echoToRulers) {
         [self continueEchoingMoveToRulers:NSMakeRect(curPoint.x - selPointOffset.x, curPoint.y - selPointOffset.y, 0, 0)];
@@ -2232,34 +2199,34 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 // ============================ Currsor stuff ===============================
 
 - (NSPoint)currentCursorPosition {
-  return _currentCursorPosition;
+  return currentCursorPosition;
 }
 
 - (void)setCurrentCursorPosition:(NSPoint)position {
-  _currentCursorPosition = position;
-  _currentCursorRect = NSMakeRect(position.x - IG_HALF_HANDLE_WIDTH, position.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
+  currentCursorPosition = position;
+  self.currentCursorRect = NSMakeRect(position.x - IG_HALF_HANDLE_WIDTH, position.y - IG_HALF_HANDLE_WIDTH, IG_HANDLE_WIDTH, IG_HANDLE_WIDTH);
   
-  [self setNeedsDisplayInRect:NSInsetRect(_currentCursorRect, -1, -1)];
-  [self setNeedsDisplayInRect:NSInsetRect(_oldCursorRect, -1, -1)];
-  _oldCursorRect = _currentCursorRect;
+  [self setNeedsDisplayInRect:NSInsetRect(self.currentCursorRect, -1, -1)];
+  [self setNeedsDisplayInRect:NSInsetRect(self.oldCursorRect, -1, -1)];
+  self.oldCursorRect = self.currentCursorRect;
   
 }
 
 - (void)displayCursorPos {
   //NSLog(@"IGGraphicView(displayCursorPos)");
-  //[[self drawWindowController] displayCursorPos:[self currentCursorPosition]];
+  //[[self drawWindowController] displayCursorPos:self.currentCursorPosition];
 }
 
 - (void)blinkingCursorTimer:(NSTimer *)aTimer {
   _cursorColor = (_cursorColor == [NSColor whiteColor] ? [NSColor redColor] : [NSColor whiteColor]);
-  [self setNeedsDisplayInRect:_currentCursorRect];
+  [self setNeedsDisplayInRect:self.currentCursorRect];
 }
 
 - (void)drawCursor {
   [[NSColor blackColor] set];
-  NSFrameRect(_currentCursorRect);
+  NSFrameRect(self.currentCursorRect);
   [_cursorColor set];
-  NSRectFill(NSInsetRect(_currentCursorRect, 1, 1));
+  NSRectFill(NSInsetRect(self.currentCursorRect, 1, 1));
 }
 
 - (void)invalidateBlinkingCursorTimer {
@@ -2267,7 +2234,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (void)resetCursorRects {
-  [self addCursorRect:_currentCursorRect cursor:[NSCursor pointingHandCursor]];
+  [self addCursorRect:self.currentCursorRect cursor:[NSCursor pointingHandCursor]];
   NSLog(@"IGGraphicView(resetCursorRects)");
 }
 
@@ -2280,7 +2247,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   float lineSpacing = [[self drawDocument] documentLineSpacing];
   float fontSize = [[self drawDocument] documentFontSize];
 
-  [self setCurrentCursorPosition:NSMakePoint([self documentRectForPageNumber:0].origin.x + 10, [self currentCursorPosition].y + (lineSpacing * fontSize))];
+  self.currentCursorPosition = NSMakePoint([self documentRectForPageNumber:0].origin.x + 10, self.currentCursorPosition.y + (lineSpacing * fontSize));
 }
 
 // ===========================================================================
@@ -2295,7 +2262,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   if (type) {
     if ([type isEqualToString:NSColorPboardType]) {
       NSPoint point = [self convertPoint:[sender draggingLocation] fromView:nil];
-      if ([self graphicUnderPoint:point onPage:_currentPage]) {
+      if ([self graphicUnderPoint:point onPage:self.currentPage]) {
         return NSDragOperationGeneric;
       }
     }
@@ -2340,7 +2307,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   
   if (type) {
     if ([type isEqualToString:NSColorPboardType]) {
-      IGGraphic *hitGraphic = [self graphicUnderPoint:point onPage:_currentPage];
+      IGGraphic *hitGraphic = [self graphicUnderPoint:point onPage:self.currentPage];
       
       if (hitGraphic) {
         NSColor *color = [[NSColor colorFromPasteboard:pboard] colorWithAlphaComponent:1.0];
@@ -2437,7 +2404,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (IBAction)selectAll:(id)sender {
-  NSMutableArray *graphics = [NSMutableArray arrayWithArray:[[self drawDocument] graphicsOnPage:_currentPage]];
+  NSMutableArray *graphics = [NSMutableArray arrayWithArray:[[self drawDocument] graphicsOnPage:self.currentPage]];
   [graphics addObjectsFromArray:[[self drawDocument] graphicsOnPage:0]];
   [self performSelector:@selector(selectGraphic:) withEachObjectInArray:graphics];
 }
@@ -2472,7 +2439,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   unsigned i, c = [orderedSelection count];
   if (c > 0) {
     IGDrawDocument *document = [self drawDocument];
-    unsigned lastIndex = [[self graphicsOnPage:_currentPage] count];
+    unsigned lastIndex = [[self graphicsOnPage:self.currentPage] count];
     for (i=0; i<c; i++) {
       [document moveGraphic:[orderedSelection objectAtIndex:i] toIndex:lastIndex];
     }
@@ -2743,8 +2710,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       NSArray *array = [document graphicsFromDrawDocumentDictionarySinglePage:docDict];
       
       NSPoint pastePositionDelta = NSZeroPoint;
-      pastePositionDelta.x = [self currentCursorPosition].x - [document boundsForGraphics:array].origin.x;
-      pastePositionDelta.y = [self currentCursorPosition].y - [document boundsForGraphics:array].origin.y;
+      pastePositionDelta.x = self.currentCursorPosition.x - [document boundsForGraphics:array].origin.x;
+      pastePositionDelta.y = self.currentCursorPosition.y - [document boundsForGraphics:array].origin.y;
       pastePositionDelta.y -= [document boundsForGraphics:array].size.height;
       
       int i = [array count];
@@ -2754,7 +2721,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         while (i-- > 0) {
           curGraphic = [array objectAtIndex:i];
           
-          [curGraphic setPageNr:_currentPage];
+          [curGraphic setPageNr:self.currentPage];
           [curGraphic moveBy:pastePositionDelta];
           
           [document insertGraphic:curGraphic atIndex:0];
@@ -2769,7 +2736,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       NSArray *filenames = [generalPBoard propertyListForType:NSFilenamesPboardType];
       if ([filenames count] == 1) {
         NSString *filename = [filenames objectAtIndex:0];
-        if ([self makeNewImageFromContentsOfFile:filename atPoint:[self currentCursorPosition]]) {
+        if ([self makeNewImageFromContentsOfFile:filename atPoint:self.currentCursorPosition]) {
           [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
         }
       }
@@ -2824,7 +2791,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     while (i-- > 0) {
       curGraphic = [array objectAtIndex:i];
       if (_pasteCascadeNumber > 0) {
-        [curGraphic setPageNr:_currentPage];
+        [curGraphic setPageNr:self.currentPage];
         [curGraphic moveBy:NSMakePoint(_pasteCascadeNumber * savedPasteCascadeDelta.x, _pasteCascadeNumber * savedPasteCascadeDelta.y)];
       }
       NSLog(@"paste -> %@", curGraphic);
@@ -3092,19 +3059,19 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 - (IBAction)pageDown:(id)sender
 {
   
-  if ([sender tag] == 19 && _currentPage > 1)
+  if ([sender tag] == 19 && self.currentPage > 1)
   {
     NSLog(@"pageDown to first page");
-    _currentPage = 1;
+    self.currentPage = 1;
     
     [self clearSelection];
     [self updateCurrentPageField];
     [self setNeedsDisplay:YES];
     
-  } else if ([sender tag] == 11 && _currentPage > 1) {
+  } else if ([sender tag] == 11 && self.currentPage > 1) {
     
     NSLog(@"pageDown one page");
-    _currentPage--;
+    self.currentPage--;
     
     [self clearSelection];
     [self updateCurrentPageField];
@@ -3117,19 +3084,19 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 {
   int pageCount = [self pageCount];
   
-  if ([sender tag] == 29 && _currentPage < pageCount)
+  if ([sender tag] == 29 && self.currentPage < pageCount)
   {
     NSLog(@"pageUp to last page");
-    _currentPage = pageCount;
+    self.currentPage = pageCount;
     
     [self clearSelection];
     [self updateCurrentPageField];
     [self setNeedsDisplay:YES];
     
-  } else if ([sender tag] == 21 && _currentPage < pageCount) {
+  } else if ([sender tag] == 21 && self.currentPage < pageCount) {
     
     NSLog(@"pageUp one page");
-    _currentPage++;
+    self.currentPage++;
     
     [self clearSelection];
     [self updateCurrentPageField];
@@ -3143,7 +3110,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   
   NSLog(@"insertPageBeforeThisOne:");
   //[pageArr insertObject:[[NSMutableArray alloc] init] atIndex:(pageToDisplayRange.location -1)];
-  [[self drawDocument] insertPageAtPage:(int)_currentPage];
+  [[self drawDocument] insertPageAtPage:(int)self.currentPage];
   [self clearSelection];
   [self updateCurrentPageField];
   [self setNeedsDisplay:YES];
@@ -3156,7 +3123,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSLog(@"appendPageToEnd:");
   //[pageArr addObject:[[NSMutableArray alloc] init]];
   [[self drawDocument] insertPageAtPage:nil];
-  _currentPage = [self pageCount];
+  self.currentPage = [self pageCount];
   [self clearSelection];
   [self updateCurrentPageField];
   [self setNeedsDisplay:YES];
@@ -3169,11 +3136,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   
   NSLog(@"deleteCurrentPage:");
   
-  if ([self pageCount] > 1 && [self pageCount] == _currentPage) { //mehr als eine Seite und ich befinde mich auf der letzten
-    [[self drawDocument] removePage:_currentPage];
-    _currentPage--;
+  if ([self pageCount] > 1 && [self pageCount] == self.currentPage) { //mehr als eine Seite und ich befinde mich auf der letzten
+    [[self drawDocument] removePage:self.currentPage];
+    self.currentPage--;
   } else {//eine oder mehr Seiten und ich befinde mich NICHT auf der letzten
-    [[self drawDocument] removePage:_currentPage];
+    [[self drawDocument] removePage:self.currentPage];
   }
   [self clearSelection];
   [self updateCurrentPageField];
@@ -3186,7 +3153,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   if ((page == 0) || (page > [self pageCount])) {
     NSBeep();
   } else {
-    _currentPage = page;
+    self.currentPage = page;
   }
   
   [self clearSelection];
@@ -3196,7 +3163,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)updateCurrentPageField {
   
-  [currentPageField setStringValue:[[NSString alloc] initWithFormat:@"%d of %d", _currentPage, [self pageCount]]];
+  [currentPageField setStringValue:[[NSString alloc] initWithFormat:@"%d of %d", self.currentPage, [self pageCount]]];
 }
 
 

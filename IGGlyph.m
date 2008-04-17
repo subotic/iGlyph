@@ -197,10 +197,10 @@
     return YES;
 }
 
-- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName InView:(IGGraphicView *)view {
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page {
     // Hier wollen wir die Graphic (in unserem Fall immer eine Glyphe) auf die Cursorposition setzen
     // Dafür müssen wir die aktuelle Cursorposition aus der view abfragen und damit die bounds setzen.
-    NSPoint mainCursor = [view currentCursorPosition];
+    NSPoint mainCursor = pos;
     //NSLog(@"mainCursor und boundsOrigin müssen gleich sein");
     //NSLog(@"IGGlyph(createGlyph) -> mainCursor x: %f, y: %f", mainCursor.x, mainCursor.y); 
     //damit wir die Glyphe auch später (nach save/load, copy/paste, usw.) noch Zeichnen können, muss
@@ -378,17 +378,17 @@ NSString *IGAngleKey = @"Angle";
     return theGlyph;
 }
 
-- (NSFont *)getFont:(NSString *)fontName withSize:(float)fontSize
+- (NSFont *)getFont:(NSString *)name withSize:(float)size
 {
-    if ([NSFont fontWithName:fontName size:fontSize])
+    if ([NSFont fontWithName:name size:size])
     {
-        return [NSFont fontWithName:fontName size:fontSize];
+        return [NSFont fontWithName:name size:size];
     }
     else
     {
-        NSLog(@"FONT NICHT VERFUEGBAR name: %@ , groesse: %f ", fontName, fontSize);
+        NSLog(@"FONT NICHT VERFUEGBAR name: %@ , groesse: %f ", name, size);
     }
-    return [NSFont systemFontOfSize:fontSize];
+    return [NSFont systemFontOfSize:size];
 }
 
 - (unsigned)knobMask {

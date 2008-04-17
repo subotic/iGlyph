@@ -73,6 +73,20 @@
 					PBXBookmarksDataSource_CommentsID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					300,
+					480.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
 			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
@@ -92,7 +106,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_FiletypeID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					459,
+					570,
 					20,
 					43,
 					20,
@@ -183,7 +197,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 229830557;
+			PBXPerProjectTemplateStateSaveDate = 230117510;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -642,7 +656,16 @@
 				PBXModuleWindowStatusBarHidden = YES;
 				RubberWindowFrame = "480 245 1178 380 0 0 1920 1178 ";
 			};
-			PBXWorkspaceStateSaveDate = 229830557;
+			PBXWorkspaceStateSaveDate = 230117510;
+		};
+		perUserProjectItems = {
+			32346FB70DB7511E007D87CE /* PBXBookmark */ = 32346FB70DB7511E007D87CE /* PBXBookmark */;
+			32346FC00DB752B7007D87CE /* PBXTextBookmark */ = 32346FC00DB752B7007D87CE /* PBXTextBookmark */;
+			32346FCB0DB75621007D87CE /* PBXTextBookmark */ = 32346FCB0DB75621007D87CE /* PBXTextBookmark */;
+			32346FCC0DB75621007D87CE /* PBXTextBookmark */ = 32346FCC0DB75621007D87CE /* PBXTextBookmark */;
+			32346FCF0DB75621007D87CE /* PBXTextBookmark */ = 32346FCF0DB75621007D87CE /* PBXTextBookmark */;
+			32346FD00DB75621007D87CE /* PBXTextBookmark */ = 32346FD00DB75621007D87CE /* PBXTextBookmark */;
+			32346FD10DB75621007D87CE /* PBXTextBookmark */ = 32346FD10DB75621007D87CE /* PBXTextBookmark */;
 		};
 		sourceControlManager = 3299C68905468EE40054ABE3 /* Source Control */;
 		userBookmarkGroup = 324B7F5507669750001219FA /* PBXBookmarkGroup */;
@@ -685,6 +708,67 @@
 			sepNavVisRect = "{{0, 0}, {705, 405}}";
 			sepNavWindowFrame = "{{450, 282}, {750, 534}}";
 		};
+	};
+	32346FB70DB7511E007D87CE /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 4EFBE4810647D76200AEE351 /* IGDrawDocument.m */;
+	};
+	32346FC00DB752B7007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EFBE4810647D76200AEE351 /* IGDrawDocument.m */;
+		name = "IGDrawDocument.m: 46";
+		rLen = 0;
+		rLoc = 1023;
+		rType = 0;
+		vrLen = 2042;
+		vrLoc = 507;
+	};
+	32346FCB0DB75621007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EF496E3050F5D010016C459 /* IGGraphicView.m */;
+		name = "IGGraphicView.m: 2202";
+		rLen = 0;
+		rLoc = 88150;
+		rType = 0;
+		vrLen = 889;
+		vrLoc = 87381;
+	};
+	32346FCC0DB75621007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EF496E3050F5D010016C459 /* IGGraphicView.m */;
+		name = "IGGraphicView.m: 2202";
+		rLen = 0;
+		rLoc = 88093;
+		rType = 0;
+		vrLen = 1955;
+		vrLoc = 87036;
+	};
+	32346FCF0DB75621007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EF496E2050F5D010016C459 /* IGGraphicView.h */;
+		rLen = 0;
+		rLoc = 2147483647;
+		rType = 0;
+	};
+	32346FD00DB75621007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EF496E2050F5D010016C459 /* IGGraphicView.h */;
+		name = "IGGraphicView.h: 113";
+		rLen = 14;
+		rLoc = 2858;
+		rType = 0;
+		vrLen = 1152;
+		vrLoc = 1754;
+	};
+	32346FD10DB75621007D87CE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4EFBE4810647D76200AEE351 /* IGDrawDocument.m */;
+		name = "IGDrawDocument.m: 46";
+		rLen = 0;
+		rLoc = 1023;
+		rType = 0;
+		vrLen = 2042;
+		vrLoc = 507;
 	};
 	3244443B0A63C31700BBE596 /* iGlyph */ = {
 		isa = PBXExecutable;
@@ -743,7 +827,7 @@
 		fRef = 4EFBE4550647C28A00AEE351 /* IGGraphic.m */;
 		name = didChange;
 		rLen = 0;
-		rLoc = 32911;
+		rLoc = 32828;
 		rType = 0;
 		vrLen = 830;
 		vrLoc = 30157;
@@ -756,7 +840,7 @@
 			CVSToolPath = /usr/bin/cvs;
 			CVSUseSSH = YES;
 			SubversionToolPath = /usr/local/bin/svn;
-			repositoryName = "iGlyphe Google Code";
+			repositoryName = "iGlyph Google Code";
 		};
 		scmType = scm.subversion;
 	};
@@ -815,7 +899,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 229504713.561034;
+		modificationTime = 230119206.70201;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -840,8 +924,8 @@
 		isa = PBXTextBookmark;
 		fRef = 4EF496E3050F5D010016C459 /* IGGraphicView.m */;
 		name = "- (void)drawRect:(NSRect)rect\n";
-		rLen = 30;
-		rLoc = 17183;
+		rLen = 0;
+		rLoc = 10990;
 		rType = 0;
 		vrLen = 2069;
 		vrLoc = 18494;
@@ -851,10 +935,147 @@
 		fRef = 4EF496E3050F5D010016C459 /* IGGraphicView.m */;
 		name = "VGGraphicView.m: 629";
 		rLen = 0;
-		rLoc = 25059;
+		rLoc = 10990;
 		rType = 0;
 		vrLen = 3384;
 		vrLoc = 23963;
+	};
+	4E44D3B20A63B559006A945F /* iGlyph.xcclassmodel */ = {
+		uiCtxt = {
+			"Xdesign Model Editor Bookmark Key" = {
+				UIContextForClassArea = {
+					_indexOfSelectedView = 0;
+					chosenTableColumnns = (
+						"CT Class",
+						"CT Kind",
+						"CT Superclass",
+						"CT Documentation",
+					);
+					chosenTableColumnns_sortDirections = (
+						YES,
+					);
+					chosenTableColumnns_sortKeys = (
+						browserDisplayName,
+					);
+					chosenTableColumnns_sortSelectors = (
+						"compare:",
+					);
+					chosenTableWidths = (
+						133.000000,
+						45.000000,
+						135.454102,
+						22.000000,
+					);
+				};
+				UIContextForDetailArea = {
+					_indexOfSelectedView = 1;
+				};
+				UIContextForLayoutManager = {
+					detailSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {725, 179}}",
+							"{{730, 0}, {381, 179}}",
+						);
+					};
+					diagramSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {1111, 179}}",
+							"{{0, 184}, {1111, 527}}",
+						);
+					};
+					tableSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {363, 179}}",
+							"{{368, 0}, {355, 179}}",
+						);
+					};
+				};
+				UIContextForPropertyArea = {
+					_indexOfSelectedView = 0;
+					chosenTableColumnnsAT = (
+						"PR Type Icon",
+						"PR Member",
+						"PR Kind",
+						"PR Type",
+						"PR Visibility",
+						"PR Documentation",
+					);
+					chosenTableColumnnsAT_sortDirections = (
+					);
+					chosenTableColumnnsAT_sortKeys = (
+					);
+					chosenTableColumnnsAT_sortSelectors = (
+					);
+					chosenTableColumnnsPT = (
+						"AL Type Icon",
+						"AL Member",
+						"AL Kind",
+						"AL Type",
+						"AL Visibility",
+						"AL Documentation",
+					);
+					chosenTableColumnnsPT_sortDirections = (
+					);
+					chosenTableColumnnsPT_sortKeys = (
+					);
+					chosenTableColumnnsPT_sortSelectors = (
+					);
+					chosenTableColumnnsRT = (
+						"OP Type Icon",
+						"OP Member",
+						"OP Kind",
+						"OP Type",
+						"OP Visibility",
+						"OP Documentation",
+					);
+					chosenTableColumnnsRT_sortDirections = (
+					);
+					chosenTableColumnnsRT_sortKeys = (
+					);
+					chosenTableColumnnsRT_sortSelectors = (
+					);
+					chosenTableWidthsAT = (
+						22.000000,
+						122.000000,
+						66.000000,
+						82.000000,
+						44.000000,
+						22.000000,
+					);
+					chosenTableWidthsPT = (
+						22.000000,
+						122.000000,
+						61.000000,
+						87.000000,
+						44.000000,
+						22.000000,
+					);
+					chosenTableWidthsRT = (
+						22.000000,
+						122.000000,
+						62.000000,
+						86.000000,
+						44.000000,
+						22.000000,
+					);
+				};
+				"xdesign model browser state key - shown/hidden" = 1;
+				"xdesign model diagram view visible rect key" = "{{4858, -49}, {1096, 512}}";
+			};
+			sepNavWindowFrame = "{{19, 78}, {1111, 800}}";
+		};
 	};
 	4E573BA104FA608700F265BD /* CartoucheController.h */ = {
 		uiCtxt = {
@@ -901,9 +1122,9 @@
 	};
 	4E573BA804FA608700F265BD /* HieroglyphsController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {808, 3458}}";
-			sepNavSelRange = "{4447, 0}";
-			sepNavVisRange = "{374, 1210}";
+			sepNavIntBoundsRect = "{{0, 0}, {808, 4060}}";
+			sepNavSelRange = "{7271, 0}";
+			sepNavVisRange = "{6359, 1956}";
 			sepNavVisRect = "{{0, 4359}, {1009, 564}}";
 			sepNavWindowFrame = "{{271, 0}, {867, 878}}";
 		};
@@ -1004,9 +1225,9 @@
 	};
 	4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1078, 2926}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1078, 3402}}";
 			sepNavSelRange = "{4045, 47}";
-			sepNavVisRange = "{2369, 1616}";
+			sepNavVisRange = "{2347, 1636}";
 			sepNavVisRect = "{{0, 1118}, {1092, 899}}";
 			sepNavWindowFrame = "{{243, 0}, {1137, 878}}";
 		};
@@ -1097,8 +1318,9 @@
 	};
 	4EDA68CA064BAE75009CE3E6 /* IGGridView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 428}}";
-			sepNavSelRange = "{394, 28}";
+			sepNavIntBoundsRect = "{{0, 0}, {691, 430}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 583}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
 			sepNavWindowFrame = "{{209, 407}, {750, 534}}";
 		};
@@ -1138,56 +1360,56 @@
 	};
 	4EF496E2050F5D010016C459 /* IGGraphicView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 2268}}";
-			sepNavSelRange = "{175, 0}";
-			sepNavVisRange = "{0, 563}";
+			sepNavIntBoundsRect = "{{0, 0}, {1002, 2954}}";
+			sepNavSelRange = "{2279, 21}";
+			sepNavVisRange = "{1857, 1222}";
 			sepNavVisRect = "{{0, 2427}, {998, 256}}";
-			sepNavWindowFrame = "{{439, 192}, {1061, 686}}";
+			sepNavWindowFrame = "{{603, 208}, {1061, 686}}";
 		};
 	};
 	4EF496E3050F5D010016C459 /* IGGraphicView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1024, 27608}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1557}";
+			sepNavIntBoundsRect = "{{0, 0}, {1124, 27650}}";
+			sepNavSelRange = "{88150, 0}";
+			sepNavVisRange = "{87826, 860}";
 			sepNavVisRect = "{{0, 31771}, {998, 256}}";
-			sepNavWindowFrame = "{{457, 0}, {1083, 878}}";
+			sepNavWindowFrame = "{{428, 131}, {1083, 878}}";
 		};
 	};
 	4EFBE44F0647B97900AEE351 /* IGDrawWindowController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1008, 1204}}";
-			sepNavSelRange = "{392, 0}";
-			sepNavVisRange = "{0, 677}";
+			sepNavIntBoundsRect = "{{0, 0}, {1008, 1330}}";
+			sepNavSelRange = "{1429, 6}";
+			sepNavVisRange = "{1204, 848}";
 			sepNavVisRect = "{{0, 239}, {705, 428}}";
-			sepNavWindowFrame = "{{266, 344}, {750, 534}}";
+			sepNavWindowFrame = "{{722, 309}, {750, 534}}";
 		};
 	};
 	4EFBE4500647B97900AEE351 /* IGDrawWindowController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1350, 6146}}";
-			sepNavSelRange = "{566, 0}";
-			sepNavVisRange = "{0, 1284}";
+			sepNavIntBoundsRect = "{{0, 0}, {1350, 7630}}";
+			sepNavSelRange = "{3502, 0}";
+			sepNavVisRange = "{3070, 891}";
 			sepNavVisRect = "{{0, 1330}, {1168, 564}}";
-			sepNavWindowFrame = "{{441, 0}, {901, 878}}";
+			sepNavWindowFrame = "{{92, 0}, {901, 878}}";
 		};
 	};
 	4EFBE4540647C28A00AEE351 /* IGGraphic.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 3164}}";
-			sepNavSelRange = "{1605, 0}";
-			sepNavVisRange = "{1877, 1195}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 4844}}";
+			sepNavSelRange = "{8330, 0}";
+			sepNavVisRange = "{7922, 971}";
 			sepNavVisRect = "{{0, 3435}, {924, 368}}";
-			sepNavWindowFrame = "{{268, 59}, {783, 821}}";
+			sepNavWindowFrame = "{{165, 94}, {783, 821}}";
 		};
 	};
 	4EFBE4550647C28A00AEE351 /* IGGraphic.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1242, 12306}}";
-			sepNavSelRange = "{369, 0}";
-			sepNavVisRange = "{144, 937}";
+			sepNavIntBoundsRect = "{{0, 0}, {1242, 11620}}";
+			sepNavSelRange = "{32653, 0}";
+			sepNavVisRange = "{32444, 783}";
 			sepNavVisRect = "{{0, 13949}, {924, 368}}";
-			sepNavWindowFrame = "{{161, 154}, {750, 543}}";
+			sepNavWindowFrame = "{{391, 354}, {750, 543}}";
 		};
 	};
 	4EFBE4590647C38300AEE351 /* IGRectangle.m */ = {
@@ -1260,9 +1482,9 @@
 	};
 	4EFBE4690647C4B100AEE351 /* IGCartouche.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2118, 1792}}";
+			sepNavIntBoundsRect = "{{0, 0}, {2118, 2338}}";
 			sepNavSelRange = "{1169, 0}";
-			sepNavVisRange = "{146, 1640}";
+			sepNavVisRange = "{0, 1419}";
 			sepNavVisRect = "{{0, 0}, {924, 368}}";
 			sepNavWindowFrame = "{{139, 120}, {1229, 849}}";
 		};
@@ -1333,50 +1555,52 @@
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 614}";
 			sepNavVisRect = "{{0, 0}, {924, 368}}";
-			sepNavWindowFrame = "{{42, 380}, {812, 772}}";
+			sepNavWindowFrame = "{{42, 256}, {812, 772}}";
 		};
 	};
 	4EFBE47D0647C76C00AEE351 /* IGGlyph.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {980, 3962}}";
-			sepNavSelRange = "{882, 0}";
-			sepNavVisRange = "{436, 1117}";
+			sepNavIntBoundsRect = "{{0, 0}, {1374, 4410}}";
+			sepNavSelRange = "{8316, 0}";
+			sepNavVisRange = "{7761, 2457}";
 			sepNavVisRect = "{{0, 2493}, {994, 488}}";
 			sepNavWindowFrame = "{{174, 99}, {1039, 617}}";
 		};
 	};
 	4EFBE4800647D76200AEE351 /* IGDrawDocument.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 1288}}";
-			sepNavSelRange = "{176, 0}";
-			sepNavVisRange = "{0, 946}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 1540}}";
+			sepNavSelRange = "{334, 0}";
+			sepNavVisRange = "{0, 1016}";
 			sepNavVisRect = "{{0, 1237}, {998, 256}}";
-			sepNavWindowFrame = "{{79, 137}, {750, 534}}";
+			sepNavWindowFrame = "{{558, 263}, {893, 687}}";
 		};
 	};
 	4EFBE4810647D76200AEE351 /* IGDrawDocument.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2582, 23394}}";
-			sepNavSelRange = "{33419, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1296, 11690}}";
+			sepNavSelRange = "{920, 16}";
+			sepNavVisRange = "{225, 1817}";
 			sepNavVisRect = "{{0, 12616}, {1036, 899}}";
-			sepNavWindowFrame = "{{168, 0}, {1081, 1028}}";
+			sepNavWindowFrame = "{{84, 99}, {1166, 920}}";
 		};
 	};
 	4EFBE7B10648F53B00AEE351 /* IGRenderingView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 473}}";
-			sepNavSelRange = "{177, 0}";
-			sepNavVisRange = "{0, 496}";
+			sepNavIntBoundsRect = "{{0, 0}, {780, 430}}";
+			sepNavSelRange = "{379, 0}";
+			sepNavVisRange = "{0, 605}";
 			sepNavVisRect = "{{0, 0}, {705, 428}}";
-			sepNavWindowFrame = "{{404, 324}, {750, 534}}";
+			sepNavWindowFrame = "{{841, 344}, {750, 534}}";
 		};
 	};
 	4EFBE7B20648F53B00AEE351 /* IGRenderingView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1202, 3415}}";
-			sepNavSelRange = "{9158, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1242, 3360}}";
+			sepNavSelRange = "{558, 0}";
+			sepNavVisRange = "{0, 1624}";
 			sepNavVisRect = "{{0, 2445}, {808, 970}}";
-			sepNavWindowFrame = "{{297, 80}, {853, 1076}}";
+			sepNavWindowFrame = "{{297, 0}, {853, 1028}}";
 		};
 	};
 	4EFBE7B80649276D00AEE351 /* IGFoundationExtras.h */ = {

@@ -784,7 +784,7 @@ NSString *IGPageNum = @"PageNr";
     return NO;
 }
 
-- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName InView:(IGGraphicView *)view {
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos {
     //override by IGGlyph class
     return NO;
 }
@@ -965,9 +965,9 @@ NSString *IGPageNum = @"PageNr";
     return _glyphGraphicFlags.fontSize;
 }
 
-- (void)setFontSize:(float)fontSize {
-    if (fontSize) {
-        _glyphGraphicFlags.fontSize = fontSize;
+- (void)setFontSize:(float)size {
+    if (size) {
+        _glyphGraphicFlags.fontSize = size;
     } else {
         _glyphGraphicFlags.fontSize = 25;
     }
@@ -1141,17 +1141,6 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 
-- (float)arrowHeadSize
-{
-    return _lineGraphicFlags.arrowHeadSize;
-}
-
-- (void)setArrowHeadSize:(float)value
-{
-    _lineGraphicFlags.arrowHeadSize = value;
-    NSLog(@"IGGraphic(setArrowHeadSize)->%f", _lineGraphicFlags.arrowHeadSize);
-    [self didChange];
-}
 
 - (void)doReverseArrow
 {

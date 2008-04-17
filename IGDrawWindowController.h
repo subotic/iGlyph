@@ -53,7 +53,18 @@ typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROL
 
 - (IGGraphicView *)graphicView;
 
+// Creating Graphics
+//- (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
+- (void)createGraphicOfClassGlyph:(unichar)glyphChar WithFont:(NSString *)fontName;
+//- (void)createGraphicsOfClassGlyphFromDic:(NSDictionary *)glyphGroupDic;
+
+
 - (void)invalidateGraphic:(IGGraphic *)graphic;
+
+- (NSMutableArray *)selectedGraphics;
+- (void)selectGraphic:(IGGraphic *)graphic;
+- (void)deselectGraphic:(IGGraphic *)graphic;
+- (void)clearSelection;
 
 - (void)displayMousePos:(NSPoint)pos;
 

@@ -12,28 +12,26 @@
 
 @implementation IGRenderingView
 
-- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphics pageCount:(unsigned)count document:(IGDrawDocument *)document {
+@synthesize graphics;
+@synthesize pageCount;
+@synthesize drawDocument;
+
+- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document {
     self = [super initWithFrame:frame];
     if (self) {
-        _graphics = [graphics retain];
-        _pageCount = count;
-        _drawDocument = document;
+        self.graphics = graphicsArr;
+        self.pageCount = count;
+        self.drawDocument = document;
     }
     return self;
 }
 
 - (void)dealloc {
-    [_graphics release];
     [super dealloc];
 }
 
-
-- (IGDrawDocument *)drawDocument {
-    return _drawDocument;
-}
-
 - (NSPrintInfo *)drawDocumentPrintInfo {
-    return [[self drawDocument] printInfo];
+    return [self.drawDocument printInfo];
 }
 
 - (NSRect)pageHeaderRect {
@@ -69,11 +67,11 @@
     [[NSColor whiteColor] set];
     NSRectFill(rect);
     
-    if (_pageCount) { //hier will ich mehrere Seiten darstellen
+    if (self.pageCount) { //hier will ich mehrere Seiten darstellen
         int curPage;
         curPage = [[NSPrintOperation currentOperation] currentPage];
         //header
-        curPageGraphics = [_graphics objectAtIndex:0];
+        curPageGraphics = [self.graphics objectAtIndex:0];
         i = [curPageGraphics count];
         while (i-- > 0) {
             curGraphic = [curPageGraphics objectAtIndex:i];
@@ -86,7 +84,7 @@
             }
         }
         //body
-        curPageGraphics = [_graphics objectAtIndex:curPage];
+        curPageGraphics = [self.graphics objectAtIndex:curPage];
         i = [curPageGraphics count];
         while (i-- > 0) {
             curGraphic = [curPageGraphics objectAtIndex:i];
@@ -103,22 +101,22 @@
         //----------------anfang pagenumers----------------        
         //Page Numbers
         //nicht vergessen die printversion auch anzupassen
-        if ([[self drawDocument] showPageNumbers]) {
+        if ([self.drawDocument showPageNumbers]) {
             NSPrintInfo *printInfo = [self drawDocumentPrintInfo]; 
             
             
             NSMutableDictionary *pageNrAttribsDict = [NSMutableDictionary dictionary];
             NSMutableString *pnMutableString = [[NSMutableString alloc] init];
             
-            NSString *pnFontName = [[self drawDocument] pageNumberFont];
-            float pnFontSize = [[self drawDocument] pageNumberSize];
-            int pnStyle = [[self drawDocument] pageNumberStyle];
-            NSMutableArray *pnFormatArr = [[self drawDocument] pageNumberFormatArr];
-            int initialPageNumber = [[self drawDocument] initialPageNr]; //die Zahl ab welcher gezählt werden soll
-            int firstPageNumberToShow = [[self drawDocument] firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
+            NSString *pnFontName = [self.drawDocument pageNumberFont];
+            float pnFontSize = [self.drawDocument pageNumberSize];
+            int pnStyle = [self.drawDocument pageNumberStyle];
+            NSMutableArray *pnFormatArr = [self.drawDocument pageNumberFormatArr];
+            int initialPageNumber = [self.drawDocument initialPageNr]; //die Zahl ab welcher gezählt werden soll
+            int firstPageNumberToShow = [self.drawDocument firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
             
-            int pageNrAlignment = [[self drawDocument] pageNrAlignment];
-            int pageNrPosition = [[self drawDocument] pageNrPosition];
+            int pageNrAlignment = [self.drawDocument pageNrAlignment];
+            int pageNrPosition = [self.drawDocument pageNrPosition];
             
             signed int pnNumberToShow = curPage - firstPageNumberToShow + initialPageNumber;
             
@@ -190,7 +188,7 @@
             pnPosition.y -= pnFontSize;
             
             //PNr finetune
-            NSSize pnDelta = [[self drawDocument] pnDeltaPosition];
+            NSSize pnDelta = [self.drawDocument pnDeltaPosition];
             pnPosition.x += pnDelta.width;
             pnPosition.y += pnDelta.height;
             
@@ -208,9 +206,9 @@
         
         
     } else { //der fall wo ich nur eine auswahl von graphics darstellen will zBsp bei der PDFRepresantation
-        i = [_graphics count];
+        i = [self.graphics count];
         while (i-- > 0) {
-            curGraphic = [_graphics objectAtIndex:i];
+            curGraphic = [self.graphics objectAtIndex:i];
             drawingBounds = [curGraphic drawingBounds];
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
@@ -228,7 +226,7 @@
 
 - (BOOL)knowsPageRange:(NSRangePointer)aRange {
     aRange->location = 1;
-    aRange->length = (_pageCount == 0 ? 1 : _pageCount); //dieser murks ist nötig da ich oben pageCount = 0 setze wenn ich nur eine selection drucken möchte, weshalb ich es hier wieder richten muss
+    aRange->length = (self.pageCount == 0 ? 1 : self.pageCount); //dieser murks ist nötig da ich oben pageCount = 0 setze wenn ich nur eine selection drucken möchte, weshalb ich es hier wieder richten muss
     return YES;
 }
 

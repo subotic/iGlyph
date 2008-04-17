@@ -12,30 +12,38 @@
 @class IGGraphicView;
 
 @interface IGDrawDocument : NSDocument {
-    @private
-    NSMutableArray *_graphics;
-    int _pageCount; //nummber of pages in this document
-    
-    //needed for the PageNr Stuff
-    BOOL _showPageNumbers;
-    NSString *_pageNumberFont;
-    float _pageNumberSize;
-    int _pageNumberStyle; //Normal, Bold, Italic
-    NSMutableArray *_pageNumberFormatArr; //-1- oder so
-    int _initialPageNr; //starting on which page
-    int _pageNrAlignment; //Left, Center, Right
-    int _pageNrPosition; //Header , Footer
-    int _firstPageNrNumber; //count from 0 or 1 or something else
-    NSSize _pnDeltaPosition; //finetune parameter
-    
-    float _documentFontSize;
-    int _documentCharSpacing;
-    float _documentLineSpacing;
-    
-    int _autoSaveInterval;
-    NSTimer *_autoSaveTimer;
+  
+  NSMutableArray *selectedGraphics;
+  NSMutableArray *documentGraphics;
+  
+  
+@private
+  
+  int _pageCount; //nummber of pages in this document
+  
+  //needed for the PageNr Stuff
+  BOOL _showPageNumbers;
+  NSString *_pageNumberFont;
+  float _pageNumberSize;
+  int _pageNumberStyle; //Normal, Bold, Italic
+  NSMutableArray *_pageNumberFormatArr; //-1- oder so
+  int _initialPageNr; //starting on which page
+  int _pageNrAlignment; //Left, Center, Right
+  int _pageNrPosition; //Header , Footer
+  int _firstPageNrNumber; //count from 0 or 1 or something else
+  NSSize _pnDeltaPosition; //finetune parameter
+  
+  float _documentFontSize;
+  int _documentCharSpacing;
+  float _documentLineSpacing;
+  
+  int _autoSaveInterval;
+  NSTimer *_autoSaveTimer;
     
 }
+
+@property (copy) NSMutableArray *selectedGraphics;
+@property (copy) NSMutableArray *documentGraphics;
 
 - (id)init;
 
@@ -69,8 +77,9 @@
 
 - (int)pageCount;
 
-- (NSArray *)graphics;
 - (NSArray *)graphicsOnPage:(unsigned)pageNr;
+
+- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page;
 
 - (void)setGraphics:(NSArray *)graphics;
 - (void)setGraphics:(NSArray *)graphics onPage:(unsigned)pageNr;
@@ -88,7 +97,21 @@
 - (void)removePage:(unsigned)pageNr;
 
 
-//default document values
+// ===========================================================================
+#pragma mark -
+#pragma mark graphic selection
+// =========================== graphic selection =============================
+- (void)selectGraphic:(IGGraphic *)graphic;
+- (void)deselectGraphic:(IGGraphic *)graphic;
+- (void)clearSelection;
+
+
+
+
+// ===========================================================================
+#pragma mark -
+#pragma mark default document values
+// ====================== default document values ============================
 - (void)setDocumentFontSize:(float)value;
 - (float)documentFontSize;
 
