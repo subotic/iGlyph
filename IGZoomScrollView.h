@@ -21,13 +21,13 @@
     double scaleFactor;
 }
 
-- (id)initWithFrame:(NSRect)theFrame;
+- (instancetype)initWithFrame:(NSRect)theFrame;
 - (void)awakeFromNib;
 
 // View Zoom Methods
 - (void)tile;
 - (void)scalePopUpAction:(id)sender;
 - (void)setScaleFactor:(float)factor adjustPopup:(BOOL)flag;
-- (float)scaleFactor;
+@property (NS_NONATOMIC_IOSONLY, readonly) float scaleFactor;
 
 @end

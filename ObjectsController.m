@@ -40,21 +40,21 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 
 @implementation ObjectsController
 
-+ (id)sharedObjectsController
++ (instancetype)sharedObjectsController
 {
     static ObjectsController *_sharedObjectsController = nil;
     
     if (!_sharedObjectsController) {
-        _sharedObjectsController = [[ObjectsController allocWithZone:[self zone]] init];
+        _sharedObjectsController = [[ObjectsController allocWithZone:nil] init];
     }
     return _sharedObjectsController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithWindowNibName:@"Objects"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"Objects"];
+        self.windowFrameAutosaveName = @"Objects";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -62,19 +62,19 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 }
 
 - (void)windowDidLoad {
-    NSArray *cells = [toolButtons cells];
-    unsigned i, c = [cells count];
+    NSArray *cells = toolButtons.cells;
+    NSUInteger i, c = cells.count;
     
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"Objects"];
+    [self.window setFrameUsingName:@"Objects"];
     
     
     for (i=0; i < c; i++) {
-        [[cells objectAtIndex:i] setRefusesFirstResponder:YES];
+        [cells[i] setRefusesFirstResponder:YES];
     }
-    [(NSPanel *)[self window] setFloatingPanel:YES];
-    [(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
+    [(NSPanel *)self.window setFloatingPanel:YES];
+    [(NSPanel *)self.window setBecomesKeyOnlyIfNeeded:YES];
     
     //[toolButtons setIntercellSpacing:NSMakeSize(0.0,0.0)];
     //[toolButtons sizeToFit]];
@@ -91,7 +91,7 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 
 - (Class)currentGraphicClass {
     
-    int row = [toolButtons selectedRow];
+    NSInteger row = toolButtons.selectedRow;
     Class theClass = nil;
     if (row == IGTextToolRow) { //Text
         theClass = [IGTextArea class];
@@ -115,8 +115,9 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(ObjectsController.m)->Notification received - %@\n", [notification name]);
-    [[NSApp delegate] resetMenuItemFlag:OBJECTS_MENU_TAG];
+    NSLog(@"(ObjectsController.m)->Notification received - %@\n", notification.name);
+    IGlyphDelegate *delegate = [NSApplication sharedApplication].delegate;
+    [delegate resetMenuItemFlag:OBJECTS_MENU_TAG];
 }
 
 - (void)selectArrowTool {

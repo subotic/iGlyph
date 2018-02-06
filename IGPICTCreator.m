@@ -16,10 +16,10 @@
     IGPICTCreator *theVGPC = [self alloc];
     if (!theVGPC) return NULL;
     theVGPC = [theVGPC initWithSize:PICTSSize];
-    return [theVGPC autorelease];
+    return theVGPC;
 }
 
-- (id) initWithSize:(NSSize)PICTSSize
+- (instancetype) initWithSize:(NSSize)PICTSSize
 {
     theSize=PICTSSize;
     return self;
@@ -47,7 +47,6 @@
 - (void)dealloc
 {
     KillPicture(thePictHandle);
-    [super dealloc];
 }
 
 @end

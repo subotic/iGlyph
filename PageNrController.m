@@ -13,7 +13,7 @@
 
 @implementation PageNrController
 
-+ (id)sharedPageNrController
++ (PageNrController*)sharedPageNrController
 {
     static PageNrController *_sharedPageNrController = nil;
     
@@ -23,11 +23,11 @@
     return _sharedPageNrController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super initWithWindowNibName:@"PageNr"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"PageNr"];
+        self.windowFrameAutosaveName = @"PageNr";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -35,7 +35,7 @@
 
 - (void) convertToViewController
 {
-  controlledView = [[[self window] contentView] retain];
+  controlledView = self.window.contentView;
   [self setWindow: nil];
 }
 
@@ -46,30 +46,28 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [controlledView release];
-    [super dealloc];
 }
 
 - (void)updatePanel {
-    if ([self isWindowLoaded] && _drawDocument) {
-        [self setPageNrFont:[_drawDocument pageNumberFont]];
-        [self setPageNumberSize:[_drawDocument pageNumberSize]];
-        [self setPageNumberStyle:[_drawDocument pageNumberStyle]];
-        [self setPageNumberFormatArr:[_drawDocument pageNumberFormatArr]];
-        [self setInitialPageNr:[_drawDocument initialPageNr]];
-        [self setPageNrAlignment:[_drawDocument pageNrAlignment]];
-        [self setPageNrPosition:[_drawDocument pageNrPosition]];
-        [self setFirstPageNumberToShow:[_drawDocument firstPageNumberToShow]];
-        [self setShowPageNumbers:[_drawDocument showPageNumbers]];
+    if (self.windowLoaded && _drawDocument) {
+        [self setPageNrFont:_drawDocument.pageNumberFont];
+        [self setPageNumberSize:_drawDocument.pageNumberSize];
+        [self setPageNumberStyle:_drawDocument.pageNumberStyle];
+        [self setPageNumberFormatArr:_drawDocument.pageNumberFormatArr];
+        [self setInitialPageNr:_drawDocument.initialPageNr];
+        [self setPageNrAlignment:_drawDocument.pageNrAlignment];
+        [self setPageNrPosition:_drawDocument.pageNrPosition];
+        [self setFirstPageNumberToShow:_drawDocument.firstPageNumberToShow];
+        [self setShowPageNumbers:_drawDocument.showPageNumbers];
     }
 }
 
 - (void)setMainWindow:(NSWindow *)mainWindow {
-    NSWindowController *controller = [mainWindow windowController];
+    NSWindowController *controller = mainWindow.windowController;
     
     if (controller && [controller isKindOfClass:[IGDrawWindowController class]]) {
-        _inspectingGraphicView = [(IGDrawWindowController *)controller graphicView];
-        _drawDocument = [(IGDrawWindowController *)controller document];
+        _inspectingGraphicView = ((IGDrawWindowController *)controller).graphicView;
+        _drawDocument = ((IGDrawWindowController *)controller).document;
     } else {
         _inspectingGraphicView = nil;
         _drawDocument = nil;
@@ -78,8 +76,8 @@
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    NSLog(@"%@", [[NSApp mainWindow] title]);
-    [self setMainWindow:[notification object]];
+    NSLog(@"%@", NSApp.mainWindow.title);
+    [self setMainWindow:notification.object];
 }
 
 - (void)mainWindowResigned:(NSNotification *)notification {
@@ -93,16 +91,16 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"PageNr"];
+    [self.window setFrameUsingName:@"PageNr"];
     
-    [(NSPanel *)[self window] setFloatingPanel:YES];
-    [(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
-    [self setMainWindow:[NSApp mainWindow]];
+    [(NSPanel *)self.window setFloatingPanel:YES];
+    [(NSPanel *)self.window setBecomesKeyOnlyIfNeeded:YES];
+    [self setMainWindow:NSApp.mainWindow];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowResigned:) name:NSWindowDidResignMainNotification object:nil];
     
     //Loading the Fonts
-    NSArray *availableFontsArr = [[NSFontManager sharedFontManager] availableFontFamilies];
+    NSArray *availableFontsArr = [NSFontManager sharedFontManager].availableFontFamilies;
     NSArray *sortedArray;
     sortedArray = [availableFontsArr sortedArrayUsingFunction:myStringSort context:NULL];
     
@@ -113,12 +111,12 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
         [fontBox addItemWithObjectValue:anObject];
     }
     [fontBox selectItemWithObjectValue:@"Arial"];
-    [fontSizeStepper setFloatValue:12];
+    fontSizeStepper.floatValue = 12;
     [fontStyleBox selectItemAtIndex:0];
-    [initialPageNrField setStringValue:@"1"];
+    initialPageNrField.stringValue = @"1";
     [pnAlignmentBox selectItemAtIndex:1];
     [pnPagePositionMatrix selectCellWithTag:0];
-    [firstPageNumberToShowField setStringValue:@"1"];
+    firstPageNumberToShowField.stringValue = @"1";
     
     
     //zuerst alles einstellen und dann updatePanel aufrufen damit etwas angezeigt wird falls kein Dokument geladen ist
@@ -139,8 +137,8 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController(pageNumberSizeChanged) %f",[sender floatValue]);
-        [_drawDocument setPageNumberSize:[sender floatValue]];
-        [fontSizeTextField setFloatValue:[sender floatValue]];
+        _drawDocument.pageNumberSize = [sender floatValue];
+        fontSizeTextField.floatValue = [sender floatValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -149,7 +147,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [_drawDocument setPageNumberStyle:[sender indexOfSelectedItem]];
+        _drawDocument.pageNumberStyle = [sender indexOfSelectedItem];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -158,8 +156,8 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [[_drawDocument pageNumberFormatArr] removeObjectAtIndex:0];
-        [[_drawDocument pageNumberFormatArr] insertObject:[sender stringValue] atIndex:0];
+        [_drawDocument.pageNumberFormatArr removeObjectAtIndex:0];
+        [_drawDocument.pageNumberFormatArr insertObject:[sender stringValue] atIndex:0];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -168,8 +166,8 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [[_drawDocument pageNumberFormatArr] removeObjectAtIndex:1];
-        [[_drawDocument pageNumberFormatArr] insertObject:[sender stringValue] atIndex:1];
+        [_drawDocument.pageNumberFormatArr removeObjectAtIndex:1];
+        [_drawDocument.pageNumberFormatArr insertObject:[sender stringValue] atIndex:1];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -178,7 +176,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [_drawDocument setInitialPageNr:[sender intValue]];
+        _drawDocument.initialPageNr = [sender intValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -187,7 +185,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [_drawDocument setPageNrAlignment:[sender indexOfSelectedItem]];
+        _drawDocument.pageNrAlignment = [sender indexOfSelectedItem];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -196,7 +194,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [_drawDocument setPageNrPosition:[[sender selectedCell] tag]];
+        _drawDocument.pageNrPosition = [[sender selectedCell] tag];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -205,7 +203,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         NSLog(@"PageNrController()");
-        [_drawDocument setFirstPageNumberToShow:[sender intValue]];
+        _drawDocument.firstPageNumberToShow = [sender intValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -214,7 +212,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)showPageNrChanged:(id)sender
 {
     if (_drawDocument) {
-        [_drawDocument setShowPageNumbers:[sender state]];
+        _drawDocument.showPageNumbers = [sender state];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -241,7 +239,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setPageNrFont:(NSString *)fontName
 {
-    [fontBox selectItemWithObjectValue:[fontName retain]];
+    [fontBox selectItemWithObjectValue:fontName];
 }
 
 /*
@@ -253,8 +251,8 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setPageNumberSize:(float)size
 {
-    [fontSizeStepper setFloatValue:size];
-    [fontSizeTextField setFloatValue:size];
+    fontSizeStepper.floatValue = size;
+    fontSizeTextField.floatValue = size;
 }
 
 /*
@@ -278,8 +276,8 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setPageNumberFormatArr:(NSMutableArray *)array
 {
-    [formatTextLinksField setStringValue:[array objectAtIndex:0]];
-    [formatTextRechtsField setStringValue:[array objectAtIndex:1]];
+    formatTextLinksField.stringValue = array[0];
+    formatTextRechtsField.stringValue = array[1];
 }
 
 /*
@@ -291,7 +289,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setInitialPageNr:(int)value
 {
-    [initialPageNrField setStringValue:[NSString stringWithFormat:@"%i",value]];
+    initialPageNrField.stringValue = [NSString stringWithFormat:@"%i",value];
 }
 
 /*
@@ -327,7 +325,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setFirstPageNumberToShow:(int)value
 {
-    [firstPageNumberToShowField setStringValue:[NSString stringWithFormat:@"%i",value]];
+    firstPageNumberToShowField.stringValue = [NSString stringWithFormat:@"%i",value];
 }
 
 /*
@@ -339,7 +337,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (void)setShowPageNumbers:(BOOL)value
 {
-    [showPageNrButton setState:value];
+    showPageNrButton.state = value;
 }
 
 /*

@@ -101,22 +101,21 @@ enum {
 
 
 // IGDrawWindowController accessors and convenience methods
-- (void)setDrawWindowController:(IGDrawWindowController *)theController;
-- (IGDrawWindowController *)drawWindowController;
-- (IGDrawDocument *)drawDocument;
+@property (NS_NONATOMIC_IOSONLY, strong) IGDrawWindowController *drawWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawDocument *drawDocument;
 - (NSArray *)graphicsOnPage:(unsigned)pageNr;
-- (NSSize)drawDocumentSize;
-- (NSSize)drawDocumentPaperSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize drawDocumentSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize drawDocumentPaperSize;
 
 - (NSRect)documentRectForPageNumber:(unsigned)pageNumber;
 - (NSRect)pageRectForPageNumber:(unsigned)pageNumber;
-- (NSRect)pageHeaderRect;
-- (NSRect)pageHeaderSmalerRect;
-- (NSRect)pageFooterRect;
-- (NSRect)pageFooterSmalerRect;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageHeaderRect;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageHeaderSmalerRect;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageFooterRect;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageFooterSmalerRect;
 - (NSRect)marginRectForSide:(unsigned)side;
-- (NSPrintInfo *)drawDocumentPrintInfo;
-- (float)pageSeparatorHeight;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSPrintInfo *drawDocumentPrintInfo;
+@property (NS_NONATOMIC_IOSONLY, readonly) float pageSeparatorHeight;
 
 // Display invalidation and toolbar validation
 - (void)invalidateGraphic:(IGGraphic *)graphic;
@@ -126,12 +125,12 @@ enum {
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem;
 
 // Selection primitives
-- (NSMutableArray *)selectedGraphics;
-- (NSArray *)cartoucheSelectedGraphics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSMutableArray *selectedGraphics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *cartoucheSelectedGraphics;
 
 - (int)selectedGraphicCountOfClass:(Class)aClass;
 - (IGGraphic *)theOnlySelectedGraphicOfClass:(Class)aClass;
-- (NSArray *)orderedSelectedGraphics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *orderedSelectedGraphics;
 - (BOOL)graphicIsSelected:(IGGraphic *)graphic;
 - (void)selectGraphic:(IGGraphic *)graphic;
 - (void)deselectGraphic:(IGGraphic *)graphic;
@@ -142,8 +141,8 @@ enum {
 
 // Managing editoring graphics
 - (void)setEditingGraphic:(IGGraphic *)graphic editorView:(NSView *)editorView;
-- (IGGraphic *)editingGraphic;
-- (NSView *)editorView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *editingGraphic;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *editorView;
 - (void)startEditingGraphic:(IGGraphic *)graphic withEvent:(NSEvent *)event;
 - (void)endEditing;
 
@@ -164,7 +163,7 @@ enum {
 - (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
 - (void)createGraphicOfClassGlyph:(unichar)glyphChar WithFont:(NSString *)fontName;
 - (void)createGraphicsOfClassGlyphFromDic:(NSDictionary *)glyphGroupDic;
-- (IGGraphic *)creatingGraphic;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *creatingGraphic;
 
 
 - (void)trackKnob:(int)knob ofGraphic:(IGGraphic *)graphic withEvent:(NSEvent *)theEvent;
@@ -223,28 +222,20 @@ enum {
 - (IBAction)writeGlyphGroupAction:(id)sender;
 
 // Grid and Guidelines settings
-- (BOOL)snapsToGrid;
-- (void)setSnapsToGrid:(BOOL)flag;
-- (BOOL)showsGrid;
-- (void)setShowsGrid:(BOOL)flag;
-- (float)gridSpacing;
-- (void)setGridSpacing:(float)spacing;
-- (NSColor *)gridColor;
-- (void)setGridColor:(NSColor *)color;
+@property (NS_NONATOMIC_IOSONLY) BOOL snapsToGrid;
+@property (NS_NONATOMIC_IOSONLY) BOOL showsGrid;
+@property (NS_NONATOMIC_IOSONLY) float gridSpacing;
+@property (NS_NONATOMIC_IOSONLY, copy) NSColor *gridColor;
 
-- (int)guidelineType;
-- (void)setGuidelineType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int guidelineType;
 
-- (int)guidelineCount;
-- (void)setGuidelineCount:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int guidelineCount;
 
 // Multiple page view stuff
-- (void)setMarginLineColor:(NSColor *)color;
-- (NSColor *)marginLineColor;
-- (void)setPageBackgroundColor:(NSColor *)color;
-- (NSColor *)pageBackgroundColor;
+@property (NS_NONATOMIC_IOSONLY, copy) NSColor *marginLineColor;
+@property (NS_NONATOMIC_IOSONLY, copy) NSColor *pageBackgroundColor;
 
-- (int)pageCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) int pageCount;
 - (IBAction)pageDown:(id)sender;
 - (IBAction)pageUp:(id)sender;
 - (IBAction)insertPageBeforeThisOne:(id)sender;

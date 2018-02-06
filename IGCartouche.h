@@ -17,19 +17,14 @@
   BOOL _rubricCartouche;
   
 }
-- (int)xEdge;
-- (void)setXEdge:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int xEdge;
 
-- (int)yEdge;
-- (void)setYEdge:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int yEdge;
 
-- (int)cartoucheBorderType;
-- (void)setCartoucheBorderType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int cartoucheBorderType;
 
-- (int)endCartoucheAlignment;
-- (void)setEndCartoucheAlignment:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int endCartoucheAlignment;
 
-- (BOOL)rubricCartouche;
-- (void)setRubricCartouche:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricCartouche;
 
 @end

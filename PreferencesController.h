@@ -43,7 +43,7 @@
     IGGraphicView *_inspectingGraphicView;
 }
 
-+ (id)sharedPreferencesController;
++ (PreferencesController*)sharedPreferencesController;
 
 - (IBAction)snapsToGridCheckboxAction:(id)sender;
 - (IBAction)showsGridCheckboxAction:(id)sender;
@@ -57,10 +57,10 @@
 
 - (IBAction)autoSaveIntervalChanged:(id)sender;
 
-- (BOOL)snapsToGrid;
-- (BOOL)showsGrid;
-- (float)gridSpacing;
-- (NSColor *)gridColor;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL snapsToGrid;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL showsGrid;
+@property (NS_NONATOMIC_IOSONLY, readonly) float gridSpacing;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSColor *gridColor;
 
 - (void)loadUserDefaults;
 

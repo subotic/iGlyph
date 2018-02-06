@@ -43,11 +43,11 @@
 
 @property (assign) NSString *selectedTitle;
 
-- (id)init;
+- (instancetype)init;
 - (void)awakeFromNib;
 - (void)dealloc;
 
-+ (id)sharedHieroglyphsController;
++ (HieroglyphsController*)sharedHieroglyphsController;
 
 - (void)addGlyphGroupPopUpItems;
 
@@ -64,8 +64,8 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 
   //key window stuff
-- (NSWindow *)theMainWindow;
-- (IGDrawWindowController *)theMainWindowController;
-- (IGGraphicView *)theMainView;
-- (IGGraphic *)theOnlySelectedGlyph;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *theOnlySelectedGlyph;
 @end

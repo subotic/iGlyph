@@ -40,7 +40,7 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
 @synthesize selectedGraphics;
 @synthesize documentGraphics;
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     documentGraphics = [[NSMutableArray allocWithZone:[self zone]] init];
@@ -49,10 +49,10 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
     [self.documentGraphics addObject:[[NSMutableArray allocWithZone:[self zone]] init]];
     _pageCount = 1;
     NSLog(@"IGDrawDocument init");
-    [[self printInfo] setLeftMargin:72];
-    [[self printInfo] setRightMargin:72];
-    [[self printInfo] setTopMargin:72];
-    [[self printInfo] setBottomMargin:72];
+    self.printInfo.leftMargin = 72;
+    self.printInfo.rightMargin = 72;
+    self.printInfo.topMargin = 72;
+    self.printInfo.bottomMargin = 72;
     
     //PageNr Stuff
     _showPageNumbers = NO;
@@ -97,9 +97,9 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController {
   NSLog(@"IGDrawDocument(windowControllerDidLoadNib)");
   [super windowControllerDidLoadNib:windowController];
-  [self setPrintInfo:[[[NSPrintInfo sharedPrintInfo] copy] autorelease]];
-  [[self printInfo] setHorizontalPagination:NSAutoPagination];
-  [[self printInfo] setVerticalPagination:NSAutoPagination];
+  self.printInfo = [[[NSPrintInfo sharedPrintInfo] copy] autorelease];
+  self.printInfo.horizontalPagination = NSAutoPagination;
+  self.printInfo.verticalPagination = NSAutoPagination;
 }
 
 static NSString *IGGraphicsListKey = @"GraphicsList";
@@ -115,41 +115,41 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSMutableDictionary *pnDic = [NSMutableDictionary dictionary];
   NSMutableDictionary *dvDic = [NSMutableDictionary dictionary];
   
-  unsigned i, pCount = [graphics count]; //pages
+  unsigned i, pCount = graphics.count; //pages
   unsigned j, gCount; //graphics per page
   NSMutableArray *pageArray = [NSMutableArray arrayWithCapacity:pCount]; //all pages
   NSMutableArray *graphicsArray;
   
   for (i=0; i < pCount; i++) {
-    gCount = [[graphics objectAtIndex:i] count];
+    gCount = [graphics[i] count];
     graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
     for (j = 0; j < gCount; j++) {
-      [graphicsArray addObject:[[[graphics objectAtIndex:i] objectAtIndex:j] propertyListRepresentation]];
+      [graphicsArray addObject:[graphics[i][j] propertyListRepresentation]];
     }
     [pageArray addObject:graphicsArray];
   }
   
   //grafische objekte
-  [doc setObject:pageArray forKey:IGGraphicsListKey];
-  [doc setObject:[NSString stringWithFormat:@"%d", IGCurrentDrawDocumentVersion] forKey:IGDrawDocumentVersionKey];
-  [doc setObject:[NSArchiver archivedDataWithRootObject:[self printInfo]] forKey:IGPrintInfoKey];
+  doc[IGGraphicsListKey] = pageArray;
+  doc[IGDrawDocumentVersionKey] = [NSString stringWithFormat:@"%d", IGCurrentDrawDocumentVersion];
+  doc[IGPrintInfoKey] = [NSArchiver archivedDataWithRootObject:self.printInfo];
   
   //page number stuff
-  [pnDic setObject:([self showPageNumbers] ? @"YES" : @"NO") forKey:@"showPageNumbers"];
-  [pnDic setObject:[self pageNumberFont] forKey:@"pageNumberFont"];
-  [pnDic setObject:[NSString stringWithFormat:@"%f", [self pageNumberSize]] forKey:@"pageNumberSize"];
-  [pnDic setObject:[NSString stringWithFormat:@"%i", [self pageNumberStyle]] forKey:@"pageNumberStyle"];
-  [pnDic setObject:[self pageNumberFormatArr] forKey:@"pageNumberFormatArr"];
-  [pnDic setObject:[NSString stringWithFormat:@"%i", [self firstPageNumberToShow]] forKey:@"firstPageNumberToShow"];
-  [pnDic setObject:[NSString stringWithFormat:@"%i", [self pageNrAlignment]] forKey:@"pageNrAlignment"];
-  [pnDic setObject:[NSString stringWithFormat:@"%i", [self pageNrPosition]] forKey:@"pageNrPosition"];
-  [pnDic setObject:[NSString stringWithFormat:@"%i", [self initialPageNr]] forKey:@"initialPageNr"];
-  [pnDic setObject:NSStringFromSize([self pnDeltaPosition]) forKey:@"pnDeltaPosition"];
-  [doc setObject:pnDic forKey:IGDrawDocumentPageNumberingKey];
+  pnDic[@"showPageNumbers"] = ([self showPageNumbers] ? @"YES" : @"NO");
+  pnDic[@"pageNumberFont"] = [self pageNumberFont];
+  pnDic[@"pageNumberSize"] = [NSString stringWithFormat:@"%f", [self pageNumberSize]];
+  pnDic[@"pageNumberStyle"] = [NSString stringWithFormat:@"%i", [self pageNumberStyle]];
+  pnDic[@"pageNumberFormatArr"] = [self pageNumberFormatArr];
+  pnDic[@"firstPageNumberToShow"] = [NSString stringWithFormat:@"%i", [self firstPageNumberToShow]];
+  pnDic[@"pageNrAlignment"] = [NSString stringWithFormat:@"%i", [self pageNrAlignment]];
+  pnDic[@"pageNrPosition"] = [NSString stringWithFormat:@"%i", [self pageNrPosition]];
+  pnDic[@"initialPageNr"] = [NSString stringWithFormat:@"%i", [self initialPageNr]];
+  pnDic[@"pnDeltaPosition"] = NSStringFromSize([self pnDeltaPosition]);
+  doc[IGDrawDocumentPageNumberingKey] = pnDic;
   
   //default values
-  [dvDic setObject:[NSString stringWithFormat:@"%f", [self documentFontSize]] forKey:@"fontSize"];
-  [doc setObject:dvDic forKey:IGDrawDocumentDefaultValuesKey];
+  dvDic[@"fontSize"] = [NSString stringWithFormat:@"%f", [self documentFontSize]];
+  doc[IGDrawDocumentDefaultValuesKey] = dvDic;
   
   return doc;
 }
@@ -157,16 +157,16 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (NSDictionary *)drawDocumentDictionaryForGraphicsSinglePage:(NSArray *)graphics //wird für copy gebraucht
 {  
   NSMutableDictionary *doc = [NSMutableDictionary dictionary];
-  unsigned j, gCount = [graphics count]; //graphics
+  unsigned j, gCount = graphics.count; //graphics
   NSMutableArray *graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
-	
-	for (j = 0; j < gCount; j++) {
-		[graphicsArray addObject:[[graphics objectAtIndex:j] propertyListRepresentation]];
-	}
+    
+    for (j = 0; j < gCount; j++) {
+        [graphicsArray addObject:[graphics[j] propertyListRepresentation]];
+    }
   
-  [doc setObject:graphicsArray forKey:IGGraphicsListKey];
-  [doc setObject:[NSString stringWithFormat:@"%d", IGCurrentDrawDocumentVersion] forKey:IGDrawDocumentVersionKey];
-  [doc setObject:[NSArchiver archivedDataWithRootObject:[self printInfo]] forKey:IGPrintInfoKey];
+  doc[IGGraphicsListKey] = graphicsArray;
+  doc[IGDrawDocumentVersionKey] = [NSString stringWithFormat:@"%d", IGCurrentDrawDocumentVersion];
+  doc[IGPrintInfoKey] = [NSArchiver archivedDataWithRootObject:self.printInfo];
   
   return doc;
 }
@@ -174,7 +174,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (NSData *)drawDocumentDataForGraphics:(NSArray *)graphics {
   NSDictionary *doc = [self drawDocumentDictionaryForGraphics:graphics];
   NSAssert(doc, @"Unable to create drawDocumentDictionaryForGraphics");
-  NSString *string = [doc description];
+  NSString *string = doc.description;
   return [string dataUsingEncoding:NSASCIIStringEncoding];
 }
 
@@ -182,7 +182,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 {
   NSDictionary *doc = [self drawDocumentDictionaryForGraphicsSinglePage:graphics];
   NSAssert(doc, @"Unable to create drawDocumentDictionaryForGraphics");
-	NSString *string = [doc description];
+    NSString *string = doc.description;
   return [string dataUsingEncoding:NSASCIIStringEncoding];
 }
 
@@ -196,17 +196,17 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 }
 
 - (NSArray *)graphicsFromDrawDocumentDictionary:(NSDictionary *)doc {
-  NSArray *graphicDicts = [doc objectForKey:IGGraphicsListKey];
-  unsigned i, pCount = [graphicDicts count]; //pages
+  NSArray *graphicDicts = doc[IGGraphicsListKey];
+  unsigned i, pCount = graphicDicts.count; //pages
   unsigned j, gCount; //graphics per page
   NSMutableArray *pageArray = [NSMutableArray arrayWithCapacity:pCount]; //all pages
   NSMutableArray *graphicsArray;
   
   for (i = 0; i < pCount; i++) {
-    gCount = [[graphicDicts objectAtIndex:i] count];
+    gCount = [graphicDicts[i] count];
     graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
     for (j = 0; j < gCount; j++) {
-      [graphicsArray addObject:[IGGraphic graphicWithPropertyListRepresentation:[[graphicDicts objectAtIndex:i] objectAtIndex:j]]];
+      [graphicsArray addObject:[IGGraphic graphicWithPropertyListRepresentation:graphicDicts[i][j]]];
     }
     [pageArray addObject:graphicsArray];
   }
@@ -215,9 +215,9 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 }
 
 - (NSArray *)graphicsFromDrawDocumentDictionarySinglePage:(NSDictionary *)doc {
-  NSArray *graphicDicts = [doc objectForKey:IGGraphicsListKey];
+  NSArray *graphicDicts = doc[IGGraphicsListKey];
   //unsigned i, pCount = [graphicDicts count]; //pages
-  unsigned j, gCount = [graphicDicts count]; //graphics per page
+  unsigned j, gCount = graphicDicts.count; //graphics per page
                                              //NSMutableArray *pageArray = [NSMutableArray arrayWithCapacity:pCount]; //all pages
   NSMutableArray *graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
   
@@ -225,7 +225,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   //gCount = [[graphicDicts objectAtIndex:i] count];
   //graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
   for (j = 0; j < gCount; j++) {
-    [graphicsArray addObject:[IGGraphic graphicWithPropertyListRepresentation:[graphicDicts objectAtIndex:j]]];
+    [graphicsArray addObject:[IGGraphic graphicWithPropertyListRepresentation:graphicDicts[j]]];
   }
   //[pageArray addObject:graphicsArray];
   //}
@@ -237,12 +237,12 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (NSRect)boundsForGraphics:(NSArray *)graphics {
   NSRect rect = NSZeroRect;
-  unsigned i, c = [graphics count];
+  unsigned i, c = graphics.count;
   for (i=0; i<c; i++) {
     if (i==0) {
-      rect = [[graphics objectAtIndex:i] bounds];
+      rect = [graphics[i] bounds];
     } else {
-      rect = NSUnionRect(rect, [[graphics objectAtIndex:i] bounds]);
+      rect = NSUnionRect(rect, [graphics[i] bounds]);
     }
   }
   return rect;
@@ -251,32 +251,32 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (NSRect)drawingBoundsForGraphics:(NSArray *)graphics //Achtung nur graphics im array, und keine Seite mit Graphics!!!!
 {
   NSRect rect = NSZeroRect;
-  unsigned i, c = [graphics count];
-	NSAssert(c > 0, @"Array ist leer was nicht sein duerfte");
+  unsigned i, c = graphics.count;
+    NSAssert(c > 0, @"Array ist leer was nicht sein duerfte");
   for (i=0; i < c; i++) {
     if (i==0) {
-      rect = [[graphics objectAtIndex:i] drawingBounds];
+      rect = [graphics[i] drawingBounds];
     } else {
-      rect = NSUnionRect(rect, [[graphics objectAtIndex:i] drawingBounds]);
+      rect = NSUnionRect(rect, [graphics[i] drawingBounds]);
     }
   }
-	NSAssert(!NSEqualRects(rect,NSZeroRect), @"Null Bounds kann nicht sein!!!");
+    NSAssert(!NSEqualRects(rect,NSZeroRect), @"Null Bounds kann nicht sein!!!");
   return rect;
 }
 
 - (NSRect)wordEportBoundsForGraphics:(NSArray *)graphics //Achtung nur graphics im array, und keine Seite mit Graphics!!!!
 {
   NSRect rect = NSZeroRect;
-  unsigned i, c = [graphics count];
-	NSAssert(c > 0, @"Array ist leer was nicht sein duerfte");
+  unsigned i, c = graphics.count;
+    NSAssert(c > 0, @"Array ist leer was nicht sein duerfte");
   for (i=0; i < c; i++) {
     if (i==0) {
-      rect = NSInsetRect([[graphics objectAtIndex:i] bounds], -0.5, -0.2);
+      rect = NSInsetRect([graphics[i] bounds], -0.5, -0.2);
     } else {
-      rect = NSUnionRect(rect, NSInsetRect([[graphics objectAtIndex:i] bounds], -0.5, -0.2));
+      rect = NSUnionRect(rect, NSInsetRect([graphics[i] bounds], -0.5, -0.2));
     }
   }
-	NSAssert(!NSEqualRects(rect,NSZeroRect), @"Null Bounds kann nicht sein!!!");
+    NSAssert(!NSEqualRects(rect,NSZeroRect), @"Null Bounds kann nicht sein!!!");
   return rect;
 }
 
@@ -293,7 +293,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSRect drawingBounds;
   NSImage *image;
   NSData *tiffData;
-  unsigned i = [graphics count];
+  unsigned i = graphics.count;
   NSAffineTransform *transform;
   IGGraphic *curGraphic;
   NSGraphicsContext *currentContext;
@@ -320,7 +320,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   while (i-- > 0) {
     // The only reason a graphic knows what view it is drawing in is so that it can draw differently
     // when being created or edited or selected.  A nil view means to draw in the standard way.
-    curGraphic = [graphics objectAtIndex:i];
+    curGraphic = graphics[i];
     drawingBounds = [curGraphic drawingBounds];
     [currentContext saveGraphicsState];
     [NSBezierPath clipRect:drawingBounds];
@@ -333,7 +333,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   
   //[[[image representations] objectAtIndex:0] setSize:NSMakeSize((int)(bounds.size.width * 72/600),(int)(bounds.size.height * 72/600))];
-  tiffData = [image TIFFRepresentation];
+  tiffData = image.TIFFRepresentation;
   [image release];
   return tiffData;
 }
@@ -346,10 +346,10 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   //erstelle die IGRenderingView als wäre es ein Seite
   IGRenderingView *view = [[IGRenderingView allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height) graphics:graphics pageCount:0 document:self];
-	NSData *pdfData = Nil;
-	
+    NSData *pdfData = Nil;
+    
   //Speichere den Teil mit den Glyphen als pdfData
-	pdfData = [view dataWithPDFInsideRect:bounds];
+    pdfData = [view dataWithPDFInsideRect:bounds];
   
   [view release];
   
@@ -363,7 +363,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSRect allGraphicsBounds = [self wordEportBoundsForGraphics:graphics];
   NSRect curGraphicBounds;
   
-  unsigned i = [graphics count];
+  unsigned i = graphics.count;
   
   IGPICTCreator* thePICT=[IGPICTCreator IGPICTCreatorWithSize:NSMakeSize(allGraphicsBounds.size.width * 50, allGraphicsBounds.size.height * 50)];
   [thePICT lockFocus];
@@ -379,7 +379,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   while (i-- > 0) {
     // The only reason a graphic knows what view it is drawing in is so that it can draw differently
     // when being created or edited or selected.  A nil view means to draw in the standard way.
-    curGraphic = [graphics objectAtIndex:i];
+    curGraphic = graphics[i];
     curGraphicBounds = [curGraphic bounds];
     
     NSSize deltaXY = NSMakeSize((curGraphicBounds.origin.x - allGraphicsBounds.origin.x) * 50 , (curGraphicBounds.origin.y - allGraphicsBounds.origin.y) * 50);
@@ -399,7 +399,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     //NSLog(@"new bezPath fuer eine glyphe: %@", newBP);
     
     //Dies darf für den ganzen Glyphenblock nur einmal berechnet werden, damit die glyphen ihre relative position behalten
-    NSPoint bezOrigin = [newBP bounds].origin;
+    NSPoint bezOrigin = newBP.bounds.origin;
     
     NSAffineTransform *moveToZero = [NSAffineTransform transform];
     [moveToZero translateXBy: (-bezOrigin.x + deltaXY.width) yBy: (-bezOrigin.y + deltaXY.height)];
@@ -428,7 +428,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     NSPoint result;
     
     int j;
-    int elementCount=[newBP elementCount];
+    int elementCount=newBP.elementCount;
     
     for(j = 0; j < elementCount; j++) {
       switch ([newBP elementAtIndex:j associatedPoints:associatedPts]) {
@@ -516,7 +516,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
       }
     }
     CloseRgn(myRgn);
-    ForeColor(blackColor);
+    ForeColor(kCGColorBlack);
     /*
      Rect srcRct;
      SetRect(&srcRct, 0, 0, allGraphicsBounds.size.width * 50, allGraphicsBounds.size.height * 50);
@@ -543,9 +543,9 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   //erstelle die IGRenderingView als wäre es ein Seite
   IGRenderingView *view = [[IGRenderingView allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height) graphics:graphics pageCount:0 document:self];
-	
+    
   NSMutableData *epsData = NULL;
-	
+    
   NSPrintOperation *printOp;
   
   printOp = [NSPrintOperation PDFOperationWithView:view insideRect:bounds toData:epsData];
@@ -584,69 +584,69 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     NSDictionary *doc = [self drawDocumentDictionaryFromData:data];
     self.documentGraphics = [self graphicsFromDrawDocumentDictionary:doc];
     
-    data = [doc objectForKey:IGPrintInfoKey];
+    data = doc[IGPrintInfoKey];
     if (data) {
       NSPrintInfo *printInfo = [NSUnarchiver unarchiveObjectWithData:data];
       if (printInfo) {
-        [self setPrintInfo:printInfo];
+        self.printInfo = printInfo;
       }
     }
     
     id obj;
     
-    NSDictionary *pnDic = [doc objectForKey:IGDrawDocumentPageNumberingKey];
+    NSDictionary *pnDic = doc[IGDrawDocumentPageNumberingKey];
     if (pnDic) {
-      obj = [pnDic objectForKey:@"showPageNumbers"];
+      obj = pnDic[@"showPageNumbers"];
       if (obj) {
         [self setShowPageNumbers:[obj isEqualToString:@"YES"]];
       }
-      obj = [pnDic objectForKey:@"pageNumberFont"];
+      obj = pnDic[@"pageNumberFont"];
       if (obj) {
         [self setPageNrFont:obj];
       }
-      obj = [pnDic objectForKey:@"pageNumberSize"];
+      obj = pnDic[@"pageNumberSize"];
       if (obj) {
         [self setPageNumberSize:[obj floatValue]];
       }
-      obj = [pnDic objectForKey:@"pageNumberStyle"];
+      obj = pnDic[@"pageNumberStyle"];
       if (obj) {
         [self setPageNumberStyle:[obj intValue]];
       }
-      obj = [pnDic objectForKey:@"pageNumberFormatArr"];
+      obj = pnDic[@"pageNumberFormatArr"];
       if (obj) {
         [self setPageNumberFormatArr:obj];
       }
-      obj = [pnDic objectForKey:@"firstPageNumberToShow"];
+      obj = pnDic[@"firstPageNumberToShow"];
       if (obj) {
         [self setFirstPageNumberToShow:[obj intValue]];
       }
-      obj = [pnDic objectForKey:@"pageNrAlignment"];
+      obj = pnDic[@"pageNrAlignment"];
       if (obj) {
         [self setPageNrAlignment:[obj intValue]];
       }
-      obj = [pnDic objectForKey:@"pageNrPosition"];
+      obj = pnDic[@"pageNrPosition"];
       if (obj) {
         [self setPageNrPosition:[obj intValue]];
       }
-      obj = [pnDic objectForKey:@"initialPageNr"];
+      obj = pnDic[@"initialPageNr"];
       if (obj) {
         [self setInitialPageNr:[obj intValue]];
       }
-      obj = [pnDic objectForKey:@"pnDeltaPosition"];
+      obj = pnDic[@"pnDeltaPosition"];
       if (obj) {
         _pnDeltaPosition = NSSizeFromString(obj);
       }
     }
     
-    NSDictionary *dvDic = [doc objectForKey:IGDrawDocumentDefaultValuesKey];
+    NSDictionary *dvDic = doc[IGDrawDocumentDefaultValuesKey];
     if (dvDic) {
-      obj = [dvDic objectForKey:@"fontSize"];
+      obj = dvDic[@"fontSize"];
       if (obj) {
         [self setDocumentFontSize:[obj floatValue]];
       }
     }
     
-    [[self undoManager] removeAllActions];
+    [self.undoManager removeAllActions];
     
     return YES;
   }
@@ -658,7 +658,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 // ===========================================================================
 
 -(void)autoSaveTimer {
-	NSLog(@"IGDrawDocument(autoSaveTimer) -> Doing autosave");
+    NSLog(@"IGDrawDocument(autoSaveTimer) -> Doing autosave");
 }
 
 // ===========================================================================
@@ -671,17 +671,17 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   // This clears the undo stack whenever we load or save.
   [super updateChangeCount:change];
   if (change == NSChangeCleared) {
-    [[self undoManager] removeAllActions];
+    [self.undoManager removeAllActions];
   }
 }
 
 - (NSWindow *)appropriateWindowForDocModalOperations {
-  NSArray *wcs = [self windowControllers];
-  unsigned i, c = [wcs count];
+  NSArray *wcs = self.windowControllers;
+  unsigned i, c = wcs.count;
   NSWindow *docWindow = nil;
   
   for (i=0; i<c; i++) {
-    docWindow = [[wcs objectAtIndex:i] window];
+    docWindow = [wcs[i] window];
     if (docWindow) {
       break;
     }
@@ -690,22 +690,22 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 }
 
 - (NSSize)documentSize {
-  NSPrintInfo *printInfo = [self printInfo];
-  NSSize paperSize = [printInfo paperSize];
-  paperSize.width -= ([printInfo leftMargin] + [printInfo rightMargin]);
-  paperSize.height -= ([printInfo topMargin] + [printInfo bottomMargin]);
+  NSPrintInfo *printInfo = self.printInfo;
+  NSSize paperSize = printInfo.paperSize;
+  paperSize.width -= (printInfo.leftMargin + printInfo.rightMargin);
+  paperSize.height -= (printInfo.topMargin + printInfo.bottomMargin);
   return paperSize;
 }
 
 - (NSSize)paperSize {
-  NSPrintInfo *printInfo = [self printInfo];
-  NSSize paperSize = [printInfo paperSize];
+  NSPrintInfo *printInfo = self.printInfo;
+  NSSize paperSize = printInfo.paperSize;
   return paperSize;
 }
 
 - (void)printShowingPrintPanel:(BOOL)flag {
   
-  NSPrintInfo *printInfo = [self printInfo];
+  NSPrintInfo *printInfo = self.printInfo;
   NSPrintOperation *printOp;
   NSWindow *docWindow = [self appropriateWindowForDocModalOperations];
   
@@ -728,7 +728,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)printSelection:(NSArray *)graphics {
   
-  NSPrintInfo *printInfo = [self printInfo];
+  NSPrintInfo *printInfo = self.printInfo;
   NSPrintOperation *printOp;
   NSWindow *docWindow = [self appropriateWindowForDocModalOperations];
   
@@ -752,11 +752,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 
 - (void)setPrintInfo:(NSPrintInfo *)printInfo {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPrintInfo:[self printInfo]];
-  [super setPrintInfo:printInfo];
+  [[self.undoManager prepareWithInvocationTarget:self] setPrintInfo:self.printInfo];
+  super.printInfo = printInfo;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change Print Info", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change Print Info", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
 }
 
 //the _graphic array is going to be a array that has an array for every page.
@@ -768,7 +768,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 }
 
 - (NSArray *)graphicsOnPage:(unsigned)pageNr {
-  return [self.documentGraphics objectAtIndex:pageNr];
+  return (self.documentGraphics)[pageNr];
 }
 
 - (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page {
@@ -789,69 +789,69 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setGraphics:(NSArray *)graphics {
   NSAssert([self.documentGraphics count], @"IGDrawDocument(setGraphics) -> Unable to get graphics count");
-	unsigned pCount = [self.documentGraphics count];
+    unsigned pCount = (self.documentGraphics).count;
   unsigned gCount;
   
   while (pCount-- > 0) {
-    gCount = [[self.documentGraphics objectAtIndex:pCount] count];
+    gCount = [(self.documentGraphics)[pCount] count];
     while (gCount-- > 0) {
       [self removeGraphicAtIndex:gCount onPage:gCount];
     }
     [self.documentGraphics removeObjectAtIndex:pCount];
   }
   
-  pCount = [graphics count];
+  pCount = graphics.count;
   while (pCount-- > 0) {
     [self.documentGraphics insertObject:[[NSMutableArray alloc] init] atIndex:0];
-    gCount = [[graphics objectAtIndex:pCount] count];
+    gCount = [graphics[pCount] count];
     while (gCount-- > 0) {
-      IGGraphic *curGraphic = [[graphics objectAtIndex:pCount] objectAtIndex:gCount];
-      [[self.documentGraphics objectAtIndex:0] insertObject:curGraphic atIndex:0];
+      IGGraphic *curGraphic = graphics[pCount][gCount];
+      [(self.documentGraphics)[0] insertObject:curGraphic atIndex:0];
       [curGraphic setDocument:self];
       //[self invalidateGraphic:curGraphic];
       //[self redisplayTweak:curGraphic];
     }
   }
-  _pageCount = [self.documentGraphics count] - 1;
+  _pageCount = (self.documentGraphics).count - 1;
 }
 
 - (void)setGraphics:(NSArray *)graphics onPage:(unsigned)pageNr {
-  unsigned i = [[self.documentGraphics objectAtIndex:pageNr] count];
+  unsigned i = [(self.documentGraphics)[pageNr] count];
   while (i-- > 0) {
     [self removeGraphicAtIndex:i onPage:pageNr];
   }
-  i = [graphics count];
+  i = graphics.count;
   while (i-- > 0) {
     //[self insertGraphic:[[self graphicsOnPage:pageNr] objectAtIndex:i] atIndex:0];
-    [self insertGraphic:[graphics objectAtIndex:i] atIndex:0];
+    [self insertGraphic:graphics[i] atIndex:0];
   }
 }
 
 - (void)invalidateGraphic:(IGGraphic *)graphic {
-  NSArray *windowControllers = [self windowControllers];
+  NSArray *windowControllers = self.windowControllers;
   [windowControllers makeObjectsPerformSelector:@selector(invalidateGraphic:) withObject:graphic];
 }
 
 - (void)redisplayTweak:(IGGraphic *)graphic {
-  NSArray *windowControllers = [self windowControllers];
+  NSArray *windowControllers = self.windowControllers;
   [windowControllers makeObjectsPerformSelector:@selector(redisplayTweak:) withObject:graphic];
 }
 
 - (void)insertGraphic:(IGGraphic *)graphic atIndex:(unsigned)index {
   NSAssert([graphic pageNr], @"Unable to get PageNr");
-	unsigned pageNr = [graphic pageNr];
-  [[[self undoManager] prepareWithInvocationTarget:self] removeGraphicAtIndex:index onPage:pageNr];
-  [[self.documentGraphics objectAtIndex:pageNr] insertObject:graphic atIndex:index];
+    unsigned pageNr = [graphic pageNr];
+  [[self.undoManager prepareWithInvocationTarget:self] removeGraphicAtIndex:index onPage:pageNr];
+  [(self.documentGraphics)[pageNr] insertObject:graphic atIndex:index];
   [graphic setDocument:self];
   [self invalidateGraphic:graphic];
   NSLog(@"IGDrawDocument(insertGraphic)-->IGGraphic inserted: %@", graphic);
 }
 
 - (void)removeGraphicAtIndex:(unsigned)index onPage:(unsigned)pageNr {
-  id graphic = [[[self.documentGraphics objectAtIndex:pageNr] objectAtIndex:index] retain];
-  [[self.documentGraphics objectAtIndex:pageNr] removeObjectAtIndex:index];
+  id graphic = [(self.documentGraphics)[pageNr][index] retain];
+  [(self.documentGraphics)[pageNr] removeObjectAtIndex:index];
   [self invalidateGraphic:graphic];
-  [[[self undoManager] prepareWithInvocationTarget:self] insertGraphic:graphic atIndex:index];
+  [[self.undoManager prepareWithInvocationTarget:self] insertGraphic:graphic atIndex:index];
   [graphic release];
 }
 
@@ -859,7 +859,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   NSLog(@"IGDrawDocument(removeGraphics)");
   //NSAssert([graphic pageNr], @"Unable to get PageNr");
   unsigned pageNr = [graphic pageNr];
-  unsigned index = [[self.documentGraphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
+  unsigned index = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
   //if (index != NSNotFound) {
   [self removeGraphicAtIndex:index onPage:pageNr];
   //}
@@ -867,15 +867,15 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)moveGraphic:(IGGraphic *)graphic toIndex:(unsigned)newIndex {
   unsigned pageNr = [graphic pageNr];
-  unsigned curIndex = [[self.documentGraphics objectAtIndex:pageNr] indexOfObjectIdenticalTo:graphic];
+  unsigned curIndex = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
   if (curIndex != newIndex) {
-    [[[self undoManager] prepareWithInvocationTarget:self] moveGraphic:graphic toIndex:((curIndex > newIndex) ? curIndex+1 : curIndex)];
+    [[self.undoManager prepareWithInvocationTarget:self] moveGraphic:graphic toIndex:((curIndex > newIndex) ? curIndex+1 : curIndex)];
     if (curIndex < newIndex) {
       newIndex--;
     }
     [graphic retain];
-    [[self.documentGraphics objectAtIndex:pageNr] removeObjectAtIndex:curIndex];
-    [[self.documentGraphics objectAtIndex:pageNr] insertObject:graphic atIndex:newIndex];
+    [(self.documentGraphics)[pageNr] removeObjectAtIndex:curIndex];
+    [(self.documentGraphics)[pageNr] insertObject:graphic atIndex:newIndex];
     [graphic release];
     [self invalidateGraphic:graphic];
   }
@@ -884,7 +884,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (void)moveGraphic:(IGGraphic *)graphic toPage:(unsigned)pageNr {
   [self removeGraphic:graphic];
   [graphic setPageNr:pageNr];
-  [[self.documentGraphics objectAtIndex:pageNr] addObject:graphic];
+  [(self.documentGraphics)[pageNr] addObject:graphic];
 }
 
 - (void)insertPageAtPage:(unsigned)pageNr {
@@ -894,9 +894,9 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [self.documentGraphics insertObject:[[NSMutableArray alloc] init] atIndex:pageNr];
     //da alle grafischen Objecte die Seite gewechselt haben, müssen sie mit der richtigen Seitenzahl geupdated werden
     int i;
-    int count = [[self graphicsOnPage:(pageNr + 1)] count];
+    int count = [self graphicsOnPage:(pageNr + 1)].count;
     for (i = 0; i < count; i++) {
-      [[[self graphicsOnPage:(pageNr + 1)] objectAtIndex:i] setPageNr:(pageNr + 1)];
+      [[self graphicsOnPage:(pageNr + 1)][i] setPageNr:(pageNr + 1)];
     }
   }
   _pageCount++;
@@ -921,12 +921,12 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   unsigned curIndex = [self.selectedGraphics indexOfObjectIdenticalTo:graphic];
   if (curIndex == NSNotFound) {
-    [[[self undoManager] prepareWithInvocationTarget:self] deselectGraphic:graphic];
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
+    [[self.undoManager prepareWithInvocationTarget:self] deselectGraphic:graphic];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
     
     [self.selectedGraphics addObject:graphic];
         
-    [[[self windowControllers] objectAtIndex:0] invalidateGraphic: graphic];
+    [self.windowControllers[0] invalidateGraphic: graphic];
   }
 }
 
@@ -935,14 +935,14 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   unsigned curIndex = [self.selectedGraphics indexOfObjectIdenticalTo:graphic];
   if (curIndex != NSNotFound) {
-    [[[self undoManager] prepareWithInvocationTarget:self] selectGraphic:graphic];
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
+    [[self.undoManager prepareWithInvocationTarget:self] selectGraphic:graphic];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Selection Change", @"UndoStrings", @"Action name for selection changes.")];
     
     //[self willChangeSomething]; //KVO manual notification
     [self.selectedGraphics removeObjectAtIndex:curIndex];
     //[self didChangeSomething]; //KVO manual notification
         
-    [[[self windowControllers] objectAtIndex:0] invalidateGraphic: graphic];
+    [self.windowControllers[0] invalidateGraphic: graphic];
   }
 
 
@@ -953,7 +953,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
   
   NSArray* selection = self.selectedGraphics;
   for ( IGGraphic *oneGraphic in selection ) {
-    [[[self windowControllers] objectAtIndex:0] invalidateGraphic:oneGraphic];
+    [self.windowControllers[0] invalidateGraphic:oneGraphic];
   }
   
   [self.selectedGraphics removeAllObjects];
@@ -968,11 +968,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setDocumentFontSize:(float)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setDocumentFontSize:[self documentFontSize]];
+  [[self.undoManager prepareWithInvocationTarget:self] setDocumentFontSize:[self documentFontSize]];
   _documentFontSize = value;
   [[FormatGlyphController sharedFormatGlyphController] setFontSize:value];
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change Document Font Size", @"UndoStrings", @"Action name for changing document font size.")];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change Document Font Size", @"UndoStrings", @"Action name for changing document font size.")];
   //[[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
   //[[FormatGlyphController sharedFormatGlyphController] updatePanel];
   
@@ -986,11 +986,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setDocumentCharSpacing:(int)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setDocumentCharSpacing:[self documentCharSpacing]];
+  [[self.undoManager prepareWithInvocationTarget:self] setDocumentCharSpacing:[self documentCharSpacing]];
   _documentCharSpacing = value;
   //[[FormatGlyphController sharedFormatGlyphController] setFontSize:value];
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change Document Char Spacing", @"UndoStrings", @"Action name for changing document font size.")];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change Document Char Spacing", @"UndoStrings", @"Action name for changing document font size.")];
   //[[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
   //[[FormatGlyphController sharedFormatGlyphController] updatePanel];
   
@@ -1004,11 +1004,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setDocumentLineSpacing:(float)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setDocumentLineSpacing:[self documentLineSpacing]];
+  [[self.undoManager prepareWithInvocationTarget:self] setDocumentLineSpacing:[self documentLineSpacing]];
   _documentLineSpacing = value;
   //[[FormatGlyphController sharedFormatGlyphController] setFontSize:value];
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change Document Font Size", @"UndoStrings", @"Action name for changing document font size.")];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change Document Font Size", @"UndoStrings", @"Action name for changing document font size.")];
   //[[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
   //[[FormatGlyphController sharedFormatGlyphController] updatePanel];
   
@@ -1029,11 +1029,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setShowPageNumbers:(BOOL)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setShowPageNumbers:[self showPageNumbers]];
+  [[self.undoManager prepareWithInvocationTarget:self] setShowPageNumbers:[self showPageNumbers]];
   _showPageNumbers = value;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change Show PageNr", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change Show PageNr", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
   
   
@@ -1047,11 +1047,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNrFont:(NSString *)fontName
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNrFont:[self pageNumberFont]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNrFont:[self pageNumberFont]];
   _pageNumberFont = fontName;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Font", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Font", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
   
 }
@@ -1064,11 +1064,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNumberSize:(float)size
 {    
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNumberSize:[self pageNumberSize]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNumberSize:[self pageNumberSize]];
   _pageNumberSize = size;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Size", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Size", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1079,11 +1079,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNumberStyle:(int)style
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNumberStyle:[self pageNumberStyle]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNumberStyle:[self pageNumberStyle]];
   _pageNumberStyle = style;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Style", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Style", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1094,11 +1094,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNumberFormatArr:(NSMutableArray *)array
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNumberFormatArr:[self pageNumberFormatArr]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNumberFormatArr:[self pageNumberFormatArr]];
   _pageNumberFormatArr = array;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Format", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Format", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1110,11 +1110,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setInitialPageNr:(int)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setInitialPageNr:[self initialPageNr]];
+  [[self.undoManager prepareWithInvocationTarget:self] setInitialPageNr:[self initialPageNr]];
   _initialPageNr = value;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change first PageNr", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change first PageNr", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1125,11 +1125,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNrAlignment:(int)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNrAlignment:[self pageNrAlignment]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNrAlignment:[self pageNrAlignment]];
   _pageNrAlignment = value;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Alignment", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Alignment", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1140,11 +1140,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (void)setPageNrPosition:(int)position
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setPageNrPosition:[self pageNrPosition]];
+  [[self.undoManager prepareWithInvocationTarget:self] setPageNrPosition:[self pageNrPosition]];
   _pageNrPosition = position;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr Position", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr Position", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
 }
 
@@ -1156,11 +1156,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 //the number of the page on which the first pagenumber should show up
 - (void)setFirstPageNumberToShow:(int)value
 {
-  [[[self undoManager] prepareWithInvocationTarget:self] setFirstPageNumberToShow:[self firstPageNumberToShow]];
+  [[self.undoManager prepareWithInvocationTarget:self] setFirstPageNumberToShow:[self firstPageNumberToShow]];
   _firstPageNrNumber = value;
   
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Change PageNr First Page", @"UndoStrings", @"Action name for changing print info.")];
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Change PageNr First Page", @"UndoStrings", @"Action name for changing print info.")];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
   [[PageNrController sharedPageNrController] updatePanel];
   
 }
@@ -1174,19 +1174,19 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (void)finetuneXParameter:(float)xValue
 {
   _pnDeltaPosition.width += xValue;
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
 }
 
 - (void)finetuneYParameter:(float)yValue
 {
   _pnDeltaPosition.height += yValue;
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
 }
 
 - (void)finetuneReset
 {
   _pnDeltaPosition = NSZeroSize;
-  [[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
+  [self.windowControllers makeObjectsPerformSelector:@selector(setUpGraphicView)];
 }
 
 - (NSSize)pnDeltaPosition

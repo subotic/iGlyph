@@ -121,31 +121,30 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
-  [super dealloc];
 }
 
 
 // if the toolbar is just text, then this method is used!!!
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-  int tag = [menuItem tag];
+  int tag = menuItem.tag;
   if (tag == OBJECTS_MENU_TAG) { //Menu Item Toolboxes/Objects
-    [menuItem setState:(currentObjectsMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentObjectsMenuFlagSetting ? NSOnState : NSOffState);
     return YES;
   } else if (tag == HYEROGLYPHS_MENU_TAG) { //Menu Item Toolboxes/Hieroglyphs
-    [menuItem setState:(currentHieroglyphsMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentHieroglyphsMenuFlagSetting ? NSOnState : NSOffState);
     return YES;
   } else if (tag == WRITINGDIRECTION_MENU_TAG) { //Menu Item Toolboxes/Writing Direction
-    [menuItem setState:(currentWritingDirectionMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentWritingDirectionMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
   } else if (tag == FORMATGLYPH_MENU_TAG) { //Menu Item Toolboxes/Format Glyph
-    [menuItem setState:(currentFormatGlyphMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentFormatGlyphMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
   } else if (tag == CARTOUCHE_MENU_TAG) { //Menu Item Toolboxes/Cartouche
-    [menuItem setState:(currentCartoucheMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentCartoucheMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
   } else if (tag == LINE_MENU_TAG) { //Menu Item Toolboxes/Line
-    [menuItem setState:(currentLineMenuFlagSetting ? NSOnState : NSOffState)];
+    menuItem.state = (currentLineMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
   }
   return YES; // we'll assume anything else is OK, which is the default
@@ -213,16 +212,34 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 
 // FontToGlyphLUT Geschichten
 
-- (id)sharedFontData
+- (instancetype)sharedFontData
 {
   NSLog(@"IGlyphDelegate(sharedFontData)");
   return [IGFontData sharedFontData];
 }
 
 
+//- (void)loadLocalFonts
+//{
+//    NSString *fontsFolder;
+//    if(fontsFolder = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"IGFonta"]) {
+//        NSURL *fontsURL;
+//        if (fontsURL = [NSURL fileURLWithPath:fontsFolder])
+//        {
+//            FSRef fsRef;
+//            FSSpec fsSpec;
+//            CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
+//            if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) == noErr)
+//            {
+//                ATSFontActivateFromFileSpecification(&fsSpec, kATSFontContextLocal, kATSFontFormatUnspecified, NULL, kATSOptionFlagsDefault, NULL);
+//            }
+//        }
+//    }
+//}
+
 - (void)loadLocalFonts
 {
-  NSString *fontsFolder = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"IGFonts"];
+  NSString *fontsFolder = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"IGFonts"];
   if (fontsFolder) {
     NSURL *fontsURL = [NSURL fileURLWithPath:fontsFolder];
     if (fontsURL) {
@@ -232,7 +249,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
       OSStatus status = FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL);
       if (noErr == status) {
         FMGeneration generationCount = FMGetGeneration();
-        status = FMActivateFonts(&fsSpec, NULL, NULL, kFMLocalActivationContext);
+        status = ATSFontActivateFromFileSpecification(&fsSpec, kATSFontContextLocal, kATSFontFormatUnspecified, NULL, kATSOptionFlagsDefault, NULL);
         generationCount = FMGetGeneration() - generationCount;
       }
     }   

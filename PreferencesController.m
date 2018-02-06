@@ -20,7 +20,7 @@
 
 @implementation PreferencesController
 
-+ (id)sharedPreferencesController
++ (PreferencesController*)sharedPreferencesController
 {
     static PreferencesController *_sharedPreferencesController = nil;
     
@@ -30,11 +30,11 @@
     return _sharedPreferencesController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super initWithWindowNibName:@"Preferences"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"Preferences"];
+        self.windowFrameAutosaveName = @"Preferences";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -42,7 +42,6 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 /*
@@ -86,7 +85,7 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"Preferences"];
+    [self.window setFrameUsingName:@"Preferences"];
     
     //[(NSPanel *)[self window] setFloatingPanel:YES];
     //[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
@@ -104,22 +103,22 @@
 
 - (IBAction)snapsToGridCheckboxAction:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setSnapsToGrid:[sender state]];
+        _inspectingGraphicView.snapsToGrid = [sender state];
         [[NSUserDefaults standardUserDefaults] setBool:[sender state] forKey:IGPrefSnapsToGridKey];
     }
 }
 
 - (IBAction)showsGridCheckboxAction:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setShowsGrid:[sender state]];
+        _inspectingGraphicView.showsGrid = [sender state];
         [[NSUserDefaults standardUserDefaults] setBool:[sender state] forKey:IGPrefShowsGridKey];
     }
 }
 
 - (IBAction)gridSpacingSliderAction:(id)sender {
     if (_inspectingGraphicView) {
-        [gridSpacingTextField setIntValue:[sender intValue]];
-        [_inspectingGraphicView setGridSpacing:(float)[sender intValue]];
+        gridSpacingTextField.intValue = [sender intValue];
+        _inspectingGraphicView.gridSpacing = (float)[sender intValue];
         [[NSUserDefaults standardUserDefaults] setFloat:[sender intValue] forKey:IGPrefGridSpacingKey];
     }
     [gridView setNeedsDisplay:YES];
@@ -127,7 +126,7 @@
 
 - (IBAction)gridColorWellAction:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setGridColor:[sender color]];
+        _inspectingGraphicView.gridColor = [sender color];
         [[NSUserDefaults standardUserDefaults] setObject:[sender color] forKey:IGPrefGridColorKey];
     }
     [gridView setNeedsDisplay:YES];
@@ -135,7 +134,7 @@
 
 - (IBAction)backgroundColorAction:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setPageBackgroundColor:[sender color]];
+        _inspectingGraphicView.pageBackgroundColor = [sender color];
         [[NSUserDefaults standardUserDefaults] setObject:[sender color] forKey:IGPrefBGColorKey];
     }
     [_inspectingGraphicView setNeedsDisplay:YES];
@@ -147,7 +146,7 @@
 
 - (IBAction)guidelineTypeChanged:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setGuidelineType :[[sender selectedCell] tag]];
+        _inspectingGraphicView.guidelineType = [[sender selectedCell] tag];
         [[NSUserDefaults standardUserDefaults] setInteger:[[sender selectedCell] tag] forKey:IGPrefGuideLineTypeKey];
     }
     [_inspectingGraphicView setNeedsDisplay:YES];
@@ -155,7 +154,7 @@
 
 - (IBAction)guidelineCountChanged:(id)sender {
     if (_inspectingGraphicView) {
-        [_inspectingGraphicView setGuidelineCount:[sender intValue]];
+        _inspectingGraphicView.guidelineCount = [sender intValue];
         [[NSUserDefaults standardUserDefaults] setInteger:[[sender selectedCell] tag] forKey:IGPrefGuideLineCountKey];
     }
     [_inspectingGraphicView setNeedsDisplay:YES];
@@ -169,19 +168,19 @@
 
 //Methoden fŸr update panel....hier mŸssen wir beim dokumment wechsel den panel updaten
 - (BOOL)snapsToGrid {
-    return (_inspectingGraphicView ? [_inspectingGraphicView snapsToGrid] : NO);
+    return (_inspectingGraphicView ? _inspectingGraphicView.snapsToGrid : NO);
 }
 
 - (BOOL)showsGrid {
-    return (_inspectingGraphicView ? [_inspectingGraphicView showsGrid] : NO);
+    return (_inspectingGraphicView ? _inspectingGraphicView.showsGrid : NO);
 }
 
 - (float)gridSpacing {
-    return (_inspectingGraphicView ? [_inspectingGraphicView gridSpacing] : 8);
+    return (_inspectingGraphicView ? _inspectingGraphicView.gridSpacing : 8);
 }
 
 - (NSColor *)gridColor {
-    return (_inspectingGraphicView ? [_inspectingGraphicView gridColor] : [NSColor lightGrayColor]);
+    return (_inspectingGraphicView ? _inspectingGraphicView.gridColor : [NSColor lightGrayColor]);
 }
 
 
@@ -191,14 +190,14 @@
     
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     
-    [snapsToGridCheckbox setState:[userDef integerForKey:IGPrefSnapsToGridKey]];
-    [showsGridCheckbox setState:[userDef integerForKey:IGPrefShowsGridKey]];
-    [gridSpacingSlider setFloatValue:[userDef floatForKey:IGPrefGridSpacingKey]];
-    [gridSpacingTextField setIntValue:[userDef integerForKey:IGPrefGridSpacingKey]];
+    snapsToGridCheckbox.state = [userDef integerForKey:IGPrefSnapsToGridKey];
+    showsGridCheckbox.state = [userDef integerForKey:IGPrefShowsGridKey];
+    gridSpacingSlider.floatValue = [userDef floatForKey:IGPrefGridSpacingKey];
+    gridSpacingTextField.intValue = [userDef integerForKey:IGPrefGridSpacingKey];
     //[gridColorWell setColor:[userDef objectForKey:IGPrefGridColorKey]];
     
     [guidelineTypeMatrix selectCellWithTag:[userDef integerForKey:IGPrefGuideLineTypeKey]];
-    [guidelineCountTextField setIntValue:[userDef integerForKey:IGPrefGuideLineCountKey]];
+    guidelineCountTextField.intValue = [userDef integerForKey:IGPrefGuideLineCountKey];
     
     
     [autoSaveIntervalPopup selectItemWithTitle:[userDef objectForKey:IGPrefAutoSaveIntervalKey]];
@@ -218,8 +217,8 @@
 {
   //muss zuerst die contenView reseten, damit ich bei der Gršssenanpassung nicht die vorhergehende View clippe
   
-  float oldHeight = [[[self window] contentView] frame].size.height;
-  [[self window] setContentView:Nil];
+  float oldHeight = self.window.contentView.frame.size.height;
+  [self.window setContentView:Nil];
   NSView *newContentView = Nil;
   
   switch ([sender tag]) 
@@ -227,7 +226,7 @@
     case 0:
       NSLog(@"Tag 0 -> General");
       
-      [[self window] setTitle:@"General Preferences"];
+      self.window.title = @"General Preferences";
       newContentView = generalPrefsView;
       
       break;
@@ -235,27 +234,27 @@
     case 1:
       NSLog(@"Tag 1 -> Text Editing");
       
-      [[self window] setTitle:@"Editing Preferences"];
+      self.window.title = @"Editing Preferences";
       newContentView = textEditingPrefsView;
       
       break;
       
     case 2:
       NSLog(@"Tag 2 -> Fonts & Colors");
-      [[self window] setTitle:@"Styles Preferences"];
+      self.window.title = @"Styles Preferences";
       newContentView = fontsColorsPrefsView;
       
       break;
       
     case 3:
       NSLog(@"Tag 3 -> Update");
-      [[self window] setTitle:@"Update Preferences"];
+      self.window.title = @"Update Preferences";
       newContentView = updatePrefsView;
       
       break;
       
     case 4:
-      [[self window] setTitle:@"Advanced Preferences"];
+      self.window.title = @"Advanced Preferences";
       newContentView = advancedPrefsView;
       
       break;
@@ -277,13 +276,13 @@
       break;
   }
   
-  float heightChange = [newContentView frame].size.height - oldHeight;
-  NSRect newWindowFrame = [[self window] frame];
+  float heightChange = newContentView.frame.size.height - oldHeight;
+  NSRect newWindowFrame = self.window.frame;
   newWindowFrame.size.height += heightChange;
   newWindowFrame.origin.y -= heightChange;
   
-  [[self window] setFrame: newWindowFrame display: YES animate: YES];
-  [[self window] setContentView: newContentView];
+  [self.window setFrame: newWindowFrame display: YES animate: YES];
+  self.window.contentView = newContentView;
   
   //[[[self window] contentView] setNeedsDisplay:YES];
   //[[self window] setViewsNeedDisplay:YES];
@@ -292,10 +291,10 @@
 
  - (void)resizePreferencesWindowForSelectedView:(NSView *)selectedView 
  {
-  NSRect preferencesWindowRect = [[self window] frame];
-  NSSize minimumPreferencesSize = [[self window] minSize];
+  NSRect preferencesWindowRect = self.window.frame;
+  NSSize minimumPreferencesSize = self.window.minSize;
     
-  NSRect selectedViewRect = [selectedView frame];
+  NSRect selectedViewRect = selectedView.frame;
   if (NSIsEmptyRect(selectedViewRect)) {
     NSLog(@"selectedViewRect is empty!!!");
     selectedViewRect = NSMakeRect(0, 0, minimumPreferencesSize.width, minimumPreferencesSize.height - 30);
@@ -316,14 +315,14 @@
     preferencesWindowRect.origin.y += preferencesWindowRect.size.height - 41 - minimumPreferencesSize.height;
     preferencesWindowRect.size.height = minimumPreferencesSize.height + 41;
     
-    [[self window] setFrame:NSMakeRect(preferencesWindowRect.origin.x, preferencesWindowRect.origin.y, preferencesWindowRect.size.width, preferencesWindowRect.size.height) display:YES animate:YES];
+    [self.window setFrame:NSMakeRect(preferencesWindowRect.origin.x, preferencesWindowRect.origin.y, preferencesWindowRect.size.width, preferencesWindowRect.size.height) display:YES animate:YES];
     
   } else {
     NSLog(@"neue View ist GROESSER als die Mindestgroesse");
     
     preferencesWindowRect.origin.y += preferencesWindowRect.size.height - 41 - selectedViewRect.size.height;
     preferencesWindowRect.size.height = selectedViewRect.size.height + 41;
-    [[self window] setFrame:NSMakeRect(preferencesWindowRect.origin.x, preferencesWindowRect.origin.y, preferencesWindowRect.size.width, preferencesWindowRect.size.height) display:YES animate:YES];
+    [self.window setFrame:NSMakeRect(preferencesWindowRect.origin.x, preferencesWindowRect.origin.y, preferencesWindowRect.size.width, preferencesWindowRect.size.height) display:YES animate:YES];
   }
    
   NSLog (@"-> preferencesWindowRect after resize: %f, %f, %f, %f", preferencesWindowRect.origin.x, preferencesWindowRect.origin.y, preferencesWindowRect.size.width, preferencesWindowRect.size.height);
@@ -348,13 +347,12 @@ static NSString *AdvancedPrefPaneToolbarItemIdentifier = @"Advanced PrefPane Too
 {
   NSToolbar *prefToolbar = [[NSToolbar alloc] initWithIdentifier:PreferencesToolbarIdentifier];
   [prefToolbar setAllowsUserCustomization:NO];
-  [prefToolbar setDisplayMode:NSToolbarDisplayModeIconAndLabel];
-  [prefToolbar setDelegate:self];
-  [prefToolbar setSelectedItemIdentifier:GeneralPrefPaneToolbarItemIdentifier];
-  [[self window] setToolbar:prefToolbar];
-  [prefToolbar release];
+  prefToolbar.displayMode = NSToolbarDisplayModeIconAndLabel;
+  prefToolbar.delegate = self;
+  prefToolbar.selectedItemIdentifier = GeneralPrefPaneToolbarItemIdentifier;
+  self.window.toolbar = prefToolbar;
   
-  [[self window] setContentView:generalPrefsView];
+  self.window.contentView = generalPrefsView;
   
 }
 
@@ -362,51 +360,50 @@ static NSString *AdvancedPrefPaneToolbarItemIdentifier = @"Advanced PrefPane Too
 {
   NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdent];
   
-  [toolbarItem autorelease];
   if ([itemIdent isEqual:GeneralPrefPaneToolbarItemIdentifier]) { // a basic button item
-    [toolbarItem setLabel: @"General"];
-    [toolbarItem setPaletteLabel: @"General"];
-    [toolbarItem setToolTip:@"General"];
-    [toolbarItem setImage:[NSImage imageNamed: @"PrefTB_General"]];
-    [toolbarItem setTag:0];
-    [toolbarItem setTarget: self];
-    [toolbarItem setAction: @selector(showPreferencePane:)];
+    toolbarItem.label = @"General";
+    toolbarItem.paletteLabel = @"General";
+    toolbarItem.toolTip = @"General";
+    toolbarItem.image = [NSImage imageNamed: @"PrefTB_General"];
+    toolbarItem.tag = 0;
+    toolbarItem.target = self;
+    toolbarItem.action = @selector(showPreferencePane:);
     
   } else if ([itemIdent isEqual:TextEditingPrefPaneToolbarItemIdentifier]) { // a basic button item
-    [toolbarItem setLabel: @"Editing"];
-    [toolbarItem setPaletteLabel: @"Editing"];
-    [toolbarItem setToolTip:@"Editing"];
-    [toolbarItem setImage:[NSImage imageNamed: @"PrefTB_TextEditing"]];
-    [toolbarItem setTag:1];
-    [toolbarItem setTarget: self];
-    [toolbarItem setAction: @selector(showPreferencePane:)];
+    toolbarItem.label = @"Editing";
+    toolbarItem.paletteLabel = @"Editing";
+    toolbarItem.toolTip = @"Editing";
+    toolbarItem.image = [NSImage imageNamed: @"PrefTB_TextEditing"];
+    toolbarItem.tag = 1;
+    toolbarItem.target = self;
+    toolbarItem.action = @selector(showPreferencePane:);
     
   } else if ([itemIdent isEqual:FontsColorsPrefPaneToolbarItemIdentifier]) { // a basic button item
-    [toolbarItem setLabel: @"Styles"];
-    [toolbarItem setPaletteLabel: @"Styles"];
-    [toolbarItem setToolTip:@"Styles"];
-    [toolbarItem setImage:[NSImage imageNamed: @"PrefTB_FontsColors"]];
-    [toolbarItem setTag:2];
-    [toolbarItem setTarget: self];
-    [toolbarItem setAction: @selector(showPreferencePane:)];
+    toolbarItem.label = @"Styles";
+    toolbarItem.paletteLabel = @"Styles";
+    toolbarItem.toolTip = @"Styles";
+    toolbarItem.image = [NSImage imageNamed: @"PrefTB_FontsColors"];
+    toolbarItem.tag = 2;
+    toolbarItem.target = self;
+    toolbarItem.action = @selector(showPreferencePane:);
     
   } else if ([itemIdent isEqual:UpdatePrefPaneToolbarItemIdentifier]) { // a basic button item
-    [toolbarItem setLabel: @"Update"];
-    [toolbarItem setPaletteLabel: @"Update"];
-    [toolbarItem setToolTip:@"Update"];
-    [toolbarItem setImage:[NSImage imageNamed: @"PrefTB_SoftwareUpdate"]];
-    [toolbarItem setTag:3];
-    [toolbarItem setTarget: self];
-    [toolbarItem setAction: @selector(showPreferencePane:)];
+    toolbarItem.label = @"Update";
+    toolbarItem.paletteLabel = @"Update";
+    toolbarItem.toolTip = @"Update";
+    toolbarItem.image = [NSImage imageNamed: @"PrefTB_SoftwareUpdate"];
+    toolbarItem.tag = 3;
+    toolbarItem.target = self;
+    toolbarItem.action = @selector(showPreferencePane:);
     
   } else if ([itemIdent isEqual:AdvancedPrefPaneToolbarItemIdentifier]) { // a basic button item
-    [toolbarItem setLabel: @"Advanced"];
-    [toolbarItem setPaletteLabel: @"Advanced"];
-    [toolbarItem setToolTip:@"Advanced"];
-    [toolbarItem setImage:[NSImage imageNamed: @"PrefTB_Advanced"]];
-    [toolbarItem setTag:4];
-    [toolbarItem setTarget: self];
-    [toolbarItem setAction: @selector(showPreferencePane:)];
+    toolbarItem.label = @"Advanced";
+    toolbarItem.paletteLabel = @"Advanced";
+    toolbarItem.toolTip = @"Advanced";
+    toolbarItem.image = [NSImage imageNamed: @"PrefTB_Advanced"];
+    toolbarItem.tag = 4;
+    toolbarItem.target = self;
+    toolbarItem.action = @selector(showPreferencePane:);
     
   } else {
     return nil;
@@ -416,20 +413,17 @@ static NSString *AdvancedPrefPaneToolbarItemIdentifier = @"Advanced PrefPane Too
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 { // return an array of the items found in the default toolbar
-  return [NSArray arrayWithObjects:
-    GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier, nil];
+  return @[GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
 { // sent to discover the selectable item identifiers for a toolbar
-  return [NSArray arrayWithObjects:
-    GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier, nil];
+  return @[GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 { // return an array of all the items that can be put in the toolbar
-  return [NSArray arrayWithObjects:
-    GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier, nil];
+  return @[GeneralPrefPaneToolbarItemIdentifier, TextEditingPrefPaneToolbarItemIdentifier, FontsColorsPrefPaneToolbarItemIdentifier, UpdatePrefPaneToolbarItemIdentifier, AdvancedPrefPaneToolbarItemIdentifier];
 }
 
 - (void)toolbarWillAddItem:(NSNotification *)notification
@@ -528,6 +522,6 @@ void IGDrawGridWithSettingsInRect(float spacing, NSColor *color, NSRect rect, NS
         }
     }
     
-    [gridPath setLineWidth:0.0];
+    gridPath.lineWidth = 0.0;
     [gridPath stroke];
 }

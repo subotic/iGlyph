@@ -11,10 +11,10 @@
 
 @implementation IGArc
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    [self setBounds:NSMakeRect(250, 300, 100, 50)];
+    self.bounds = NSMakeRect(250, 300, 100, 50);
   }
   return self;
 }
@@ -37,13 +37,13 @@
     [path transformUsingAffineTransform:ovalArcTrans];
     */
     
-    NSRect localBounds = [self bounds];
+    NSRect localBounds = self.bounds;
     localBounds.size.height *= 2;
     localBounds.size.height += 7;
     NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:localBounds];
     
     //[path setLineWidth:[self strokeLineWidth]];
-    [path setLineWidth: self.strokeThickness];
+    path.lineWidth = self.strokeThickness;
 
     return path;
 }

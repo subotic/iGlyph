@@ -50,8 +50,8 @@ extern NSString *IGGlyphDidChangeNotification;
   //neue gemeinsame Variablen
   CGFloat strokeThickness;
   NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
-  NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
-  NSColor *fillColor; //Füllfarbe
+  NSColor *__weak strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+  NSColor *__weak fillColor; //Füllfarbe
   NSInteger fillType; //Schattierung
   NSInteger angle;
   NSInteger cornerRadius;
@@ -132,8 +132,8 @@ extern NSString *IGGlyphDidChangeNotification;
 
   @property (assign) CGFloat strokeThickness;
   @property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
-  @property (assign) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
-  @property (assign) NSColor *fillColor; //Füllfarbe
+  @property (weak) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+  @property (weak) NSColor *fillColor; //Füllfarbe
   @property (assign) NSInteger fillType; //Schattierung
   @property (assign) NSInteger angle;
   @property (assign) NSInteger cornerRadius;
@@ -150,35 +150,29 @@ extern NSString *IGGlyphDidChangeNotification;
   @property (assign) NSInteger arrowHeadAngle;
   @property (assign) NSInteger arrowHeadSize;
 
-- (id)init;
+- (instancetype)init;
 
   // ========================= Binding Stuff =========================
 
 
   // ========================= Document accessors and conveniences =========================
-- (void)setDocument:(IGDrawDocument *)document;
-- (IGDrawDocument *)document;
-- (NSUndoManager *)undoManager;
+@property (NS_NONATOMIC_IOSONLY, strong) IGDrawDocument *document;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSUndoManager *undoManager;
 - (void)updateToolboxes;
 
   // =================================== Primitives ===================================
 - (void)didChange;
   // This sends the did change notification.  All change primitives should call it.
 
-- (void)setBounds:(NSRect)bounds;
-- (NSRect)bounds;
-- (void)setDrawsFill:(BOOL)flag;
-- (void)setPageNr:(unsigned)page;
-- (unsigned)pageNr;
-- (BOOL)drawsFill;
+@property (NS_NONATOMIC_IOSONLY) NSRect bounds;
+@property (NS_NONATOMIC_IOSONLY) unsigned int pageNr;
+@property (NS_NONATOMIC_IOSONLY) BOOL drawsFill;
 - (void)setFillColor:(NSColor *)fillColor;
 - (NSColor *)fillColor;
-- (void)setDrawsStroke:(BOOL)flag;
-- (BOOL)drawsStroke;
+@property (NS_NONATOMIC_IOSONLY) BOOL drawsStroke;
 - (void)setStrokeColor:(NSColor *)strokeColor;
 - (NSColor *)strokeColor;
-- (void)setStrokeLineWidth:(float)width;
-- (float)strokeLineWidth;
+@property (NS_NONATOMIC_IOSONLY) float strokeLineWidth;
 
   // =================================== Extended mutation ===================================
 - (void)startBoundsManipulation;
@@ -192,14 +186,14 @@ extern NSString *IGGlyphDidChangeNotification;
 - (void)makeNaturalSize;
 
   // =================================== Subclass capabilities ===================================
-- (BOOL)canDrawStroke;
-- (BOOL)canDrawFill;
-- (BOOL)hasNaturalSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL canDrawStroke;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL canDrawFill;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasNaturalSize;
 
   // =================================== Persistence ===================================
-- (NSMutableDictionary *)propertyListRepresentation;
-+ (id)graphicWithPropertyListRepresentation:(NSDictionary *)dict;
-+ (id)graphicWithPropertyListRepresentationFromPC:(NSDictionary *)dict;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSMutableDictionary *propertyListRepresentation;
++ (instancetype)graphicWithPropertyListRepresentation:(NSDictionary *)dict;
++ (instancetype)graphicWithPropertyListRepresentationFromPC:(NSDictionary *)dict;
 - (void)loadPropertyListRepresentation:(NSDictionary *)dict;
 - (void)loadPropertyListRepresentationFromPC:(NSDictionary *)dict;
 
@@ -208,11 +202,11 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic (IGDrawing)
 
-- (NSRect)drawingBounds;
-- (NSBezierPath *)bezierPath;
-- (NSBezierPath *)glyphBezierPath;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect drawingBounds;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSBezierPath *bezierPath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSBezierPath *glyphBezierPath;
 - (void)drawInView:(IGGraphicView *)view isSelected:(BOOL)flag;
-- (unsigned)knobMask;
+@property (NS_NONATOMIC_IOSONLY, readonly) unsigned int knobMask;
 - (int)knobUnderPoint:(NSPoint)point;
 - (void)drawHandleAtPoint:(NSPoint)point inView:(IGGraphicView *)view;
 - (void)drawHandlesInView:(IGGraphicView *)view;
@@ -228,7 +222,7 @@ extern NSString *IGGlyphDidChangeNotification;
 - (BOOL)replaceGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName;
 - (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos;
 
-- (BOOL)isEditable;
+@property (NS_NONATOMIC_IOSONLY, getter=isEditable, readonly) BOOL editable;
 - (void)startEditingWithEvent:(NSEvent *)event inView:(IGGraphicView *)view;
 - (void)endEditingInView:(IGGraphicView *)view;
 
@@ -240,56 +234,44 @@ extern NSString *IGGlyphDidChangeNotification;
 
 // These are methods that we probably wouldn't bother with if we weren't scriptable.
 
-- (NSScriptObjectSpecifier *)objectSpecifier;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSScriptObjectSpecifier *objectSpecifier;
 
-- (float)xPosition;
-- (void)setXPosition:(float)newVal;
+@property (NS_NONATOMIC_IOSONLY) float xPosition;
 
-- (float)yPosition;
-- (void)setYPosition:(float)newVal;
+@property (NS_NONATOMIC_IOSONLY) float yPosition;
 
-- (float)width;
-- (void)setWidth:(float)newVal;
+@property (NS_NONATOMIC_IOSONLY) float width;
 
-- (float)height;
-- (void)setHeight:(float)newVal;
+@property (NS_NONATOMIC_IOSONLY) float height;
 @end
 
 @interface IGGraphic (IGGlyphExtraStuff)
 
-- (BOOL)glyphIsCreating;
-- (void)setGlyphIsCreating:(BOOL)state;
+@property (NS_NONATOMIC_IOSONLY) BOOL glyphIsCreating;
 
 - (void)setOldGlyphBoundsSize:(NSSize)size;
 
 - (void)setBoundsDangerous:(NSRect)newBounds;
 
-- (NSBezierPath *)getOldGlyphBezPath;
+@property (NS_NONATOMIC_IOSONLY, getter=getOldGlyphBezPath, readonly, copy) NSBezierPath *oldGlyphBezPath;
 - (void)setGlyphBezPath:(NSBezierPath *)path;
 
 - (void)setGlypBezPathShouldRecalculate:(BOOL)flag;    
-- (BOOL)bezPathShouldRecalculate;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL bezPathShouldRecalculate;
 
-- (NSString *)fontName;
-- (void)setFontName:(NSString *)fontName;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *fontName;
 
-- (int)glyphASC;
-- (void)setGlyphASC:(int)glyphASC;
+@property (NS_NONATOMIC_IOSONLY) int glyphASC;
 
-- (NSGlyph)theGlyph;
-- (void)setTheGlyph:(NSGlyph)theGlyph;
+@property (NS_NONATOMIC_IOSONLY) NSGlyph theGlyph;
 
-- (float)fontSize;
-- (void)setFontSize:(float)fontSize;
+@property (NS_NONATOMIC_IOSONLY) float fontSize;
 
-- (BOOL)rubricColor;
-- (void)setRubricColor:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 
-- (BOOL)mirrored;
-- (void)setMirrored:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL mirrored;
 
-- (int)angle;
-- (void)setAngle:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int angle;
 
 @end
 
@@ -316,24 +298,18 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic (IGLineExtraStuff)
 
-- (int)lineType;
-- (void)setLineType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int lineType;
 
-- (float)lineWidth;
-- (void)setLineWidth:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
-- (BOOL)rubricLine;
-- (void)setRubricLine:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-- (int)arrowType;
-- (void)setArrowType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int arrowType;
 
-- (float)arrowHead;
-- (void)setArrowHead:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float arrowHead;
 
 - (void)doReverseArrow;
-- (BOOL)reverseArrow;
-- (void)setReverseArrow:(BOOL)aValue;
+@property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;
 @end
 
 extern NSString *IGClassKey;

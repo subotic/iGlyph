@@ -11,12 +11,12 @@
 #import "IGDrawDocument.h"
 
 @implementation IGTextArea
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _contents = [[NSTextStorage allocWithZone:[self zone]] init];
+        _contents = [[NSTextStorage allocWithZone:nil] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IG_contentsChanged:) name:NSTextStorageDidProcessEditingNotification object:_contents];
-        [self setBounds:NSMakeRect(250, 350, 34, 15)];
+        self.bounds = NSMakeRect(250, 350, 34, 15);
         [self setContents:[NSString stringWithString:@"Text"]];
     }
     return self;
@@ -24,8 +24,6 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_contents release];
-    [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -38,14 +36,13 @@
 
 - (void)setContents:(id)contents {
     if (contents != _contents) {
-        NSAttributedString *contentsCopy = [[NSAttributedString allocWithZone:[self zone]] initWithAttributedString:_contents];
-        [[[self undoManager] prepareWithInvocationTarget:self] setContents:contentsCopy];
-        [contentsCopy release];
+        NSAttributedString *contentsCopy = [[NSAttributedString allocWithZone:nil] initWithAttributedString:_contents];
+        [[self.undoManager prepareWithInvocationTarget:self] setContents:contentsCopy];
         // We are willing to accept either a string or an attributed string.
         if ([contents isKindOfClass:[NSAttributedString class]]) {
-            [_contents replaceCharactersInRange:NSMakeRange(0, [_contents length]) withAttributedString:contents];
+            [_contents replaceCharactersInRange:NSMakeRange(0, _contents.length) withAttributedString:contents];
         } else {
-            [_contents replaceCharactersInRange:NSMakeRange(0, [_contents length]) withString:contents];
+            [_contents replaceCharactersInRange:NSMakeRange(0, _contents.length) withString:contents];
         }
         [self didChange];
     }
@@ -91,29 +88,28 @@ static NSLayoutManager *sharedDrawingLayoutManager() {
         [tc setWidthTracksTextView:NO];
         [tc setHeightTracksTextView:NO];
         [sharedLM addTextContainer:tc];
-        [tc release];
     }
     return sharedLM;
 }
 
 - (void)drawInView:(IGGraphicView *)view isSelected:(BOOL)flag {
-    NSRect bounds = [self bounds];
-    if ([self drawsFill]) {
-        [[self fillColor] set];
+    NSRect bounds = self.bounds;
+    if (self.drawsFill) {
+        [self.fillColor set];
         NSRectFill(bounds);
     }
-    if (view && ([view editingGraphic] == self) || ([view creatingGraphic] == self)) {
+    if (view && (view.editingGraphic == self) || (view.creatingGraphic == self)) {
         [[NSColor knobColor] set];
         NSFrameRect(NSInsetRect(bounds, -1.0, -1.0));
         // If we are creating we have no text.  If we are editing, the editor (ie NSTextView) will draw the text.
     } else {
         NSTextStorage *contents = [self contents];
-        if ([contents length] > 0) {
+        if (contents.length > 0) {
             NSLayoutManager *lm = sharedDrawingLayoutManager();
-            NSTextContainer *tc = [[lm textContainers] objectAtIndex:0];
+            NSTextContainer *tc = lm.textContainers[0];
             NSRange glyphRange;
             
-            [tc setContainerSize:bounds.size];
+            tc.containerSize = bounds.size;
             [contents addLayoutManager:lm];
             // Force layout of the text and find out how much of it fits in the container.
             glyphRange = [lm glyphRangeForTextContainer:tc];
@@ -135,8 +131,8 @@ static NSLayoutManager *sharedDrawingLayoutManager() {
 static const float IGRightMargin = 36.0;
 
 - (NSSize)maxSize {
-    NSRect bounds = [self bounds];
-    NSSize size = [[self document] documentSize];
+    NSRect bounds = self.bounds;
+    NSSize size = self.document.documentSize;
     size.width = (size.width - bounds.origin.x - IGRightMargin);
     size.height = (size.height - bounds.origin.y - IGRightMargin);
     return size;
@@ -146,15 +142,15 @@ static const float IGRightMargin = 36.0;
     NSTextStorage *contents = [self contents];
     NSSize minSize = [self minSize];
     NSSize maxSize = [self maxSize];
-    unsigned len = [contents length];
+    unsigned len = contents.length;
     
     if (len > 0) {
         NSLayoutManager *lm = sharedDrawingLayoutManager();
-        NSTextContainer *tc = [[lm textContainers] objectAtIndex:0];
+        NSTextContainer *tc = lm.textContainers[0];
         NSRange glyphRange;
         NSSize requiredSize;
         
-        [tc setContainerSize:NSMakeSize(((maxSize.width < maxWidth) ? maxSize.width : maxWidth), maxSize.height)];
+        tc.containerSize = NSMakeSize(((maxSize.width < maxWidth) ? maxSize.width : maxWidth), maxSize.height);
         [contents addLayoutManager:lm];
         // Force layout of the text and find out how much of it fits in the container.
         glyphRange = [lm glyphRangeForTextContainer:tc];
@@ -178,10 +174,10 @@ static const float IGRightMargin = 36.0;
 }
 
 - (void)makeNaturalSize {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     NSSize requiredSize = [self requiredSize:1.0e6];
     bounds.size = requiredSize;
-    [self setBounds:bounds];
+    self.bounds = bounds;
 }
 
 - (void)setBounds:(NSRect)rect {
@@ -193,12 +189,12 @@ static const float IGRightMargin = 36.0;
     if (minSize.height > rect.size.height) {
         rect.size.height = minSize.height;
     }
-    [super setBounds:rect];
+    super.bounds = rect;
 }
 
 - (int)resizeByMovingKnob:(int)knob toPoint:(NSPoint)point {
     NSSize minSize = [self minSize];
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     // This constrains the size to be big enough for the text.  It is different from the constraining in -setBounds since it takes into account which corner or edge is moving to figure out which way to grow the bounds if necessary.
     if ((knob == UpperLeftKnob) || (knob == MiddleLeftKnob) || (knob == LowerLeftKnob)) {
@@ -238,13 +234,11 @@ static NSTextView *newEditor() {
     NSTextView *tv = [[NSTextView allocWithZone:NULL] initWithFrame:NSMakeRect(0.0, 0.0, 100.0, 100.0) textContainer:nil];
     
     [lm addTextContainer:tc];
-    [tc release];
     
-    [tv setTextContainerInset:NSMakeSize(0.0, 0.0)];
+    tv.textContainerInset = NSMakeSize(0.0, 0.0);
     [tv setDrawsBackground:NO];
     [tv setAllowsUndo:YES];
-    [tc setTextView:tv];
-    [tv release];
+    tc.textView = tv;
     
     return tv;
 }
@@ -257,7 +251,7 @@ static BOOL sharedEditorInUse = NO;
     NSTextStorage *contents = [self contents];
     NSSize maxSize = [self maxSize];
     NSSize minSize = [self minSize];
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     if (!sharedEditorInUse) {
         if (!sharedEditor) {
@@ -268,46 +262,46 @@ static BOOL sharedEditorInUse = NO;
     } else {
         editor = newEditor();
     }
-    [[editor textContainer] setWidthTracksTextView:NO];
+    [editor.textContainer setWidthTracksTextView:NO];
     if (NSWidth(bounds) > minSize.width + 1.0) {
         // If we are bigger than the minimum width we assume that someone already edited this IGTextArea or that they created it by dragging out a rect.  In either case, we figure the width should remain fixed.
-        [[editor textContainer] setContainerSize:NSMakeSize(NSWidth(bounds), maxSize.height)];
+        editor.textContainer.containerSize = NSMakeSize(NSWidth(bounds), maxSize.height);
         [editor setHorizontallyResizable:NO];
     } else {
-        [[editor textContainer] setContainerSize:maxSize];
+        editor.textContainer.containerSize = maxSize;
         [editor setHorizontallyResizable:YES];
     }
-    [editor setMinSize:minSize];
-    [editor setMaxSize:maxSize];
-    [[editor textContainer] setHeightTracksTextView:NO];
+    editor.minSize = minSize;
+    editor.maxSize = maxSize;
+    [editor.textContainer setHeightTracksTextView:NO];
     [editor setVerticallyResizable:YES];
-    [editor setFrame:bounds];
+    editor.frame = bounds;
     
-    [contents addLayoutManager:[editor layoutManager]];
+    [contents addLayoutManager:editor.layoutManager];
     [view addSubview:editor];
     [view setEditingGraphic:self editorView:editor];
-    [editor setSelectedRange:NSMakeRange(0, [contents length])];
-    [editor setDelegate:self];
+    [editor setSelectedRange:NSMakeRange(0, contents.length)];
+    editor.delegate = self;
     
     // Make sure we redisplay
     [self didChange];
     
-    [[view window] makeFirstResponder:editor];
+    [view.window makeFirstResponder:editor];
     if (event) {
         [editor mouseDown:event];
     }
 }
 
 - (void)endEditingInView:(IGGraphicView *)view {
-    if ([view editingGraphic] == self) {
-        NSTextView *editor = (NSTextView *)[view editorView];
+    if (view.editingGraphic == self) {
+        NSTextView *editor = (NSTextView *)view.editorView;
         [editor setDelegate:nil];
         [editor removeFromSuperview];
-        [[self contents] removeLayoutManager:[editor layoutManager]];
+        [[self contents] removeLayoutManager:editor.layoutManager];
         if (editor == sharedEditor) {
             sharedEditorInUse = NO;
         } else {
-            [[editor layoutManager] release];
+            editor.layoutManager;
         }
         [view setEditingGraphic:nil editorView:nil];
         [self makeNaturalSize];
@@ -316,13 +310,13 @@ static BOOL sharedEditorInUse = NO;
 
 - (void)textDidChange:(NSNotification *)notification {
     NSSize textSize;
-    NSRect myBounds = [self bounds];
-    BOOL fixedWidth = ([[notification object] isHorizontallyResizable] ? NO : YES);
+    NSRect myBounds = self.bounds;
+    BOOL fixedWidth = ([notification.object isHorizontallyResizable] ? NO : YES);
     
     textSize = [self requiredSize:(fixedWidth ? NSWidth(myBounds) : 1.0e6)];
     
     if ((textSize.width > myBounds.size.width) || (textSize.height > myBounds.size.height)) {
-        [self setBounds:NSMakeRect(myBounds.origin.x, myBounds.origin.y, ((!fixedWidth && (textSize.width > myBounds.size.width)) ? textSize.width : myBounds.size.width), ((textSize.height > myBounds.size.height) ? textSize.height : myBounds.size.height))];
+        self.bounds = NSMakeRect(myBounds.origin.x, myBounds.origin.y, ((!fixedWidth && (textSize.width > myBounds.size.width)) ? textSize.width : myBounds.size.width), ((textSize.height > myBounds.size.height) ? textSize.height : myBounds.size.height));
         // MF: For multiple editors we must fix up the others...  but we don't support multiple views of a document yet, and that's the only way we'd ever have the potential for multiple editors.
     }
 }
@@ -330,8 +324,8 @@ static BOOL sharedEditorInUse = NO;
 NSString *IGTextAreaContentsKey = @"Text";
 
 - (NSMutableDictionary *)propertyListRepresentation {
-    NSMutableDictionary *dict = [super propertyListRepresentation];
-    [dict setObject:[NSArchiver archivedDataWithRootObject:[self contents]] forKey:IGTextAreaContentsKey];
+    NSMutableDictionary *dict = super.propertyListRepresentation;
+    dict[IGTextAreaContentsKey] = [NSArchiver archivedDataWithRootObject:[self contents]];
     return dict;
 }
 
@@ -340,7 +334,7 @@ NSString *IGTextAreaContentsKey = @"Text";
     
     [super loadPropertyListRepresentation:dict];
     
-    obj = [dict objectForKey:IGTextAreaContentsKey];
+    obj = dict[IGTextAreaContentsKey];
     if (obj) {
         [self setContents:[NSUnarchiver unarchiveObjectWithData:obj]];
     }

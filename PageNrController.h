@@ -32,9 +32,9 @@
     IBOutlet NSButton *showPageNrButton;
 }
 
-+ (id)sharedPageNrController;
++ (PageNrController*)sharedPageNrController;
 
-- (NSView *)controlledView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *controlledView;
 
 - (void)updatePanel;
 

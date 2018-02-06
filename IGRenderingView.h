@@ -10,7 +10,7 @@
 @class IGDrawDocument;
 
 @interface IGRenderingView : NSView {
-    @private	
+    @private    
     NSArray *graphics;
     NSSize _paperSize;
     NSInteger pageCount;
@@ -21,6 +21,6 @@
 @property NSInteger pageCount;
 @property IGDrawDocument *drawDocument;
 
-- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document;
+- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -20,6 +20,6 @@
 
 }
 
-+ (id)sharedTipsController;
++ (TipsController*)sharedTipsController;
 
 @end

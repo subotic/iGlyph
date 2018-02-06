@@ -29,36 +29,28 @@
   
 }
 
-- (void)setStartsAtLowerLeft:(BOOL)flag;
-- (BOOL)startsAtLowerLeft;
+@property (NS_NONATOMIC_IOSONLY) BOOL startsAtLowerLeft;
 
-- (int)lineType;
-- (void)setLineType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int lineType;
 
-- (float)lineWidth;
-- (void)setLineWidth:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
-- (BOOL)rubricLine;
-- (void)setRubricLine:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-- (int)arrowType;
-- (void)setArrowType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int arrowType;
 
-- (float)arrowHead;
-- (void)setArrowHead:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float arrowHead;
 
-- (float)arrowHeadSize;
-- (void)setArrowHeadSize:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float arrowHeadSize;
 
 - (void)doReverseArrow;
-- (BOOL)reverseArrow;
-- (void)setReverseArrow:(BOOL)aValue;
+@property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;
 
 
 
   //main window stuff
-- (NSWindow *)theMainWindow;
-- (IGDrawWindowController *)theMainWindowController;
-- (IGGraphicView *)theMainView;
-- (IGGraphic *)theOnlySelectedGlyph;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) IGGraphic *theOnlySelectedGlyph;
 @end

@@ -49,7 +49,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
   @synthesize currentPage;
 
 
-- (id)initWithFrame:(NSRect)frame {
+- (instancetype)initWithFrame:(NSRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     NSMutableArray *dragTypes = [NSMutableArray arrayWithObjects:NSColorPboardType, NSFilenamesPboardType, nil];
@@ -107,7 +107,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 /*
 - (NSIndexSet *)selectionIndexes
 {
-	return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[_selectedGraphics count])];
+    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[_selectedGraphics count])];
 }
 */
 
@@ -125,11 +125,11 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (IGDrawDocument *)drawDocument {
-  return [[self drawWindowController] document];
+  return [self drawWindowController].document;
 }
 
 - (NSArray *)graphicsOnPage:(unsigned)pageNr {
-  return [[[self drawWindowController] document] graphicsOnPage:pageNr];
+  return [[self drawWindowController].document graphicsOnPage:pageNr];
 }
 
 - (NSSize)drawDocumentSize { //paperSize minus margins
@@ -140,12 +140,12 @@ static float IGDefaultPasteCascadeDelta = 10.0;
   return [[self drawDocument] paperSize];
 }
 
-- (NSRect)documentRectForPageNumber:(unsigned)pageNumber {	/* First page is page 0, of course! */
+- (NSRect)documentRectForPageNumber:(unsigned)pageNumber {    /* First page is page 0, of course! */
 
 NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
 NSRect rect = [self pageRectForPageNumber:pageNumber];
-rect.origin.x += [printInfo leftMargin];
-rect.origin.y += [printInfo topMargin];
+rect.origin.x += printInfo.leftMargin;
+rect.origin.y += printInfo.topMargin;
 rect.size = [self drawDocumentSize];
 return rect;
 }
@@ -162,34 +162,34 @@ return rect;
 - (NSRect)pageHeaderRect {
   NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
   NSRect rect = NSZeroRect;
-  rect.size.width = [printInfo paperSize].width;
-  rect.size.height = [printInfo topMargin];
+  rect.size.width = printInfo.paperSize.width;
+  rect.size.height = printInfo.topMargin;
   return rect;
 }
 
 - (NSRect)pageHeaderSmalerRect {
   NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
   NSRect rect = NSZeroRect;
-  rect.size.width = [printInfo paperSize].width;
-  rect.size.height = [printInfo topMargin] - 5;
+  rect.size.width = printInfo.paperSize.width;
+  rect.size.height = printInfo.topMargin - 5;
   return rect;
 }
 
 - (NSRect)pageFooterRect {
   NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
   NSRect rect = NSZeroRect;
-  rect.size.width = [printInfo paperSize].width;
-  rect.size.height = [printInfo bottomMargin];
-  rect.origin.y = [printInfo paperSize].height - rect.size.height;
+  rect.size.width = printInfo.paperSize.width;
+  rect.size.height = printInfo.bottomMargin;
+  rect.origin.y = printInfo.paperSize.height - rect.size.height;
   return rect;
 }
 
 - (NSRect)pageFooterSmalerRect {
   NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
   NSRect rect = NSZeroRect;
-  rect.size.width = [printInfo paperSize].width;
-  rect.size.height = [printInfo bottomMargin];
-  rect.origin.y = [printInfo paperSize].height - rect.size.height + 5;
+  rect.size.width = printInfo.paperSize.width;
+  rect.size.height = printInfo.bottomMargin;
+  rect.origin.y = printInfo.paperSize.height - rect.size.height + 5;
   return rect;
 }
 
@@ -198,20 +198,20 @@ return rect;
   NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
   NSRect rect = NSZeroRect;
   if (side == 0) {
-    rect.origin.y += [printInfo topMargin];
-    rect.size.width = [printInfo leftMargin];
+    rect.origin.y += printInfo.topMargin;
+    rect.size.width = printInfo.leftMargin;
     rect.size.height = [self drawDocumentSize].height;
     return rect;
   } else if (side == 1) {
-    rect.origin.x = [printInfo paperSize].width - [printInfo rightMargin];
-    rect.origin.y += [printInfo topMargin];
-    rect.size.width = [printInfo rightMargin];
+    rect.origin.x = printInfo.paperSize.width - printInfo.rightMargin;
+    rect.origin.y += printInfo.topMargin;
+    rect.size.width = printInfo.rightMargin;
     rect.size.height = [self drawDocumentSize].height;
     return rect;
   } else if (side == 2) {
-    rect.origin.y = [printInfo paperSize].height - [printInfo bottomMargin];
-    rect.size.width = [printInfo paperSize].width;
-    rect.size.height = [printInfo bottomMargin];
+    rect.origin.y = printInfo.paperSize.height - printInfo.bottomMargin;
+    rect.size.width = printInfo.paperSize.width;
+    rect.size.height = printInfo.bottomMargin;
     return rect;
   }
   return rect; //sollte nie auftreten
@@ -222,7 +222,7 @@ return rect;
 }
 
 - (NSPrintInfo *)drawDocumentPrintInfo {
-  return [[self drawDocument] printInfo];
+  return [self drawDocument].printInfo;
 }
 
 - (int)tag {
@@ -254,13 +254,13 @@ return rect;
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 { // works just like menu item validation, but for the toolbar.
-  int tag = [toolbarItem tag];
+  int tag = toolbarItem.tag;
   if (tag == 31) { //BackToFront
                    //NSLog(@"tag 31 validate");
-    if ([[self selectedGraphics] count] == 0) {
+    if ([self selectedGraphics].count == 0) {
       return NO;
-    } else if ([[self selectedGraphics] count] == 1) {
-      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:self.currentPage] objectAtIndex:0]) {
+    } else if ([self selectedGraphics].count == 1) {
+      if ([self selectedGraphics][0] == [self graphicsOnPage:self.currentPage][0]) {
         return NO;
       } else {
         return YES;
@@ -268,10 +268,10 @@ return rect;
     }
   } else if (tag == 32) { //FrontToBack
                           //NSLog(@"tag 32 validate");
-    if ([[self selectedGraphics] count] == 0) {
+    if ([self selectedGraphics].count == 0) {
       return NO;
-    } else if ([[self selectedGraphics] count] == 1) {
-      if ([[self selectedGraphics] objectAtIndex:0] == [[self graphicsOnPage:self.currentPage] lastObject]) {
+    } else if ([self selectedGraphics].count == 1) {
+      if ([self selectedGraphics][0] == [self graphicsOnPage:self.currentPage].lastObject) {
         return NO;
       } else {
         return YES;
@@ -295,7 +295,7 @@ return rect;
 - (NSArray *)cartoucheSelectedGraphics
 {
   Class filterClass = [IGCartouche class];
-  NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[[self selectedGraphics] count]];
+  NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[self selectedGraphics].count];
   NSEnumerator *objectsEnumerator = [[self selectedGraphics] objectEnumerator];
   id item;
   
@@ -488,11 +488,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IGGraphic *)graphicUnderPoint:(NSPoint)point onPage:(unsigned)pageNr {
   NSArray *graphics = [self graphicsOnPage:pageNr];
-  unsigned i, c = [graphics count];
+  unsigned i, c = graphics.count;
   IGGraphic *curGraphic = nil;
   
   for (i=0; i<c; i++) {
-    curGraphic = [graphics objectAtIndex:i];
+    curGraphic = graphics[i];
     if ([self mouse:point inRect:[curGraphic drawingBounds]] && [curGraphic hitTest:point isSelected:[self graphicIsSelected:curGraphic]]) {
       break;
     }
@@ -507,20 +507,20 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 - (NSSet *)graphicsIntersectingRect:(NSRect)rect onPage:(unsigned)pageNr {
   NSArray *graphics = [self graphicsOnPage:pageNr];
   NSArray *headerGraphics = [self graphicsOnPage:0];
-  unsigned i, c = [graphics count];
-  unsigned j, k = [headerGraphics count];
+  unsigned i, c = graphics.count;
+  unsigned j, k = headerGraphics.count;
   NSMutableSet *result = [NSMutableSet set];
   IGGraphic *curGraphic;
   
   for (i = 0; i < c; i++) {
-    curGraphic = [graphics objectAtIndex:i];
+    curGraphic = graphics[i];
     if (NSIntersectsRect(rect, [curGraphic drawingBounds])) {
       [result addObject:curGraphic];
     }
   }
   //ich will ja auch die sachen im header auswählen können
   for (j = 0; j < k; j++) {
-    curGraphic = [headerGraphics objectAtIndex:j];
+    curGraphic = headerGraphics[j];
     if (NSIntersectsRect(rect, [curGraphic drawingBounds])) {
       [result addObject:curGraphic];
     }
@@ -609,7 +609,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [gridPatternImage unlockFocus];
     
     [currentContext saveGraphicsState];
-    [currentContext setPatternPhase:NSMakePoint(0, [[drawWindowController window] frame].size.height)];
+    currentContext.patternPhase = NSMakePoint(0, drawWindowController.window.frame.size.height);
     [[NSColor colorWithPatternImage: gridPatternImage] set];
     NSRectFill(rect);
     [currentContext restoreGraphicsState];
@@ -638,10 +638,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   //wenn ja dann ist es eine doppelseite
   //header
   if (twoPageView) {
-    graphics = [[drawWindowController document] graphicsOnPage:0];
-    i = [graphics count];
+    graphics = [drawWindowController.document graphicsOnPage:0];
+    i = graphics.count;
     while (i-- > 0) {
-      curGraphic = [graphics objectAtIndex:i];
+      curGraphic = graphics[i];
       drawingBounds = [curGraphic drawingBounds];
       if (NSIntersectsRect(rect, drawingBounds)) {
         if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
@@ -669,10 +669,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     
   } else {
     //header
-    graphics = [[drawWindowController document] graphicsOnPage:0];
-    i = [graphics count];
+    graphics = [drawWindowController.document graphicsOnPage:0];
+    i = graphics.count;
     while (i-- > 0) {
-      curGraphic = [graphics objectAtIndex:i];
+      curGraphic = graphics[i];
       drawingBounds = [curGraphic drawingBounds];
       if (NSIntersectsRect(rect, drawingBounds)) {
         if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
@@ -697,10 +697,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   //body
-  graphics = [[drawWindowController document] graphicsOnPage:self.currentPage];
-  i = [graphics count];
+  graphics = [drawWindowController.document graphicsOnPage:self.currentPage];
+  i = graphics.count;
   while (i-- > 0) {
-    curGraphic = [graphics objectAtIndex:i];
+    curGraphic = graphics[i];
     drawingBounds = [curGraphic drawingBounds];
     if (NSIntersectsRect(rect, drawingBounds)) {
       if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
@@ -761,18 +761,18 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (pnFont == nil) {
       pnFont = [NSFont fontWithName:@"Arial" size:pnFontSize];
     }
-    [pageNrAttribsDict setObject:pnFont forKey:NSFontAttributeName];
+    pageNrAttribsDict[NSFontAttributeName] = pnFont;
     
     
     //links von der Seitenzahl
-    if (![[pnFormatArr objectAtIndex:0] isEqualTo:@""]) {
-      [pnMutableString insertString:[pnFormatArr objectAtIndex:0] atIndex:0];
+    if (![pnFormatArr[0] isEqualTo:@""]) {
+      [pnMutableString insertString:pnFormatArr[0] atIndex:0];
     }
     //die Seitenzahl
     [pnMutableString appendString:[NSString stringWithFormat:@"%i", pnNumberToShow]];
     //rechts von der Seitenzahl
-    if (![[pnFormatArr objectAtIndex:1] isEqualTo:@""]) {
-      [pnMutableString appendString:[pnFormatArr objectAtIndex:1]];
+    if (![pnFormatArr[1] isEqualTo:@""]) {
+      [pnMutableString appendString:pnFormatArr[1]];
     }
     
     
@@ -782,19 +782,19 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     //NSMutableParagraphStyle *myParaStyle = [[NSMutableParagraphStyle alloc] init];
     //anpassen in X
     if (pageNrAlignment == 0) { //left
-      pnPosition.x = [printInfo rightMargin];
+      pnPosition.x = printInfo.rightMargin;
     } else if (pageNrAlignment == 1) { //center
       pnPosition.x = NSMidX([self pageHeaderRect]) - pnFontSize + 2;
       
     } else if (pageNrAlignment == 2) { //right
-      pnPosition.x = [printInfo paperSize].width - [printInfo rightMargin] - pnFontSize;
+      pnPosition.x = printInfo.paperSize.width - printInfo.rightMargin - pnFontSize;
       //[myParaStyle setAlignment:NSRightTextAlignment];
       
     } else if (pageNrAlignment == 3) { //alternate
       if (pnAlternate == (pnNumberToShow & 1)) {//rechts
-        pnPosition.x = [printInfo paperSize].width - [printInfo rightMargin] - pnFontSize;
+        pnPosition.x = printInfo.paperSize.width - printInfo.rightMargin - pnFontSize;
       } else {//links
-        pnPosition.x = [printInfo rightMargin];
+        pnPosition.x = printInfo.rightMargin;
       }
     } else {
       NSAssert(0, @"Houston we have a problem");
@@ -854,8 +854,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 // ============================= ruler stuff =================================
 
 - (void)beginEchoingMoveToRulers:(NSRect)echoRect {
-  NSRulerView *horizontalRuler = [[self enclosingScrollView] horizontalRulerView];
-  NSRulerView *verticalRuler = [[self enclosingScrollView] verticalRulerView];
+  NSRulerView *horizontalRuler = self.enclosingScrollView.horizontalRulerView;
+  NSRulerView *verticalRuler = self.enclosingScrollView.verticalRulerView;
   
   _horizontalRulerLineRect = [self convertRect:echoRect toView:horizontalRuler];
   _verticalRulerLineRect = [self convertRect:echoRect toView:verticalRuler];
@@ -870,8 +870,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (void)continueEchoingMoveToRulers:(NSRect)echoRect {
-  NSRulerView *horizontalRuler = [[self enclosingScrollView] horizontalRulerView];
-  NSRulerView *verticalRuler = [[self enclosingScrollView] verticalRulerView];
+  NSRulerView *horizontalRuler = self.enclosingScrollView.horizontalRulerView;
+  NSRulerView *verticalRuler = self.enclosingScrollView.verticalRulerView;
   NSRect newHorizontalRect = [self convertRect:echoRect toView:horizontalRuler];
   NSRect newVerticalRect = [self convertRect:echoRect toView:verticalRuler];
   
@@ -888,8 +888,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (void)stopEchoingMoveToRulers {
-  NSRulerView *horizontalRuler = [[self enclosingScrollView] horizontalRulerView];
-  NSRulerView *verticalRuler = [[self enclosingScrollView] verticalRulerView];
+  NSRulerView *horizontalRuler = self.enclosingScrollView.horizontalRulerView;
+  NSRulerView *verticalRuler = self.enclosingScrollView.verticalRulerView;
   
   [horizontalRuler moveRulerlineFromLocation:NSMinX(_horizontalRulerLineRect) toLocation:-1.0];
   [horizontalRuler moveRulerlineFromLocation:NSMidX(_horizontalRulerLineRect) toLocation:-1.0];
@@ -918,7 +918,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if ([_creatingGraphic isEditable]) {
       [self startEditingGraphic:_creatingGraphic withEvent:nil ];
     }
-    [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:NSStringFromClass(theClass) value:@"" table:@"GraphicClassNames"]]];
+    [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:NSStringFromClass(theClass) value:@"" table:@"GraphicClassNames"]]];
   }
   [_creatingGraphic release];
   _creatingGraphic = nil;
@@ -949,7 +949,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       [self startEditingGraphic:_creatingGraphic withEvent:nil ];
     }
     
-    [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
+    [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
   }
   
   //moving the cursor
@@ -985,7 +985,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   self.currentCursorPosition = tempCursor;        
-  [[self window] invalidateCursorRectsForView:self];
+  [self.window invalidateCursorRectsForView:self];
   
   [_creatingGraphic release];
   _creatingGraphic = nil;
@@ -1145,41 +1145,41 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '/') {
         NSLog(@"str1 / str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else if (sgn[1] == '+') {
         NSLog(@"str1 / str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 / str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
     if (sgn[0] == '+') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else if (sgn[1] == '/' && sgn[2] == '+') {
         NSLog(@"str1 + str2 / str3 + str4");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:3] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[3] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1193,34 +1193,34 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '/') {
         NSLog(@"str1 / str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else if (sgn[1] == '+') {
         NSLog(@"str1 / str2 + str3"); //die reihenfolge bei der Ausgabe von str2 + str3 muss umgekehrt sein
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 / str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
     if (sgn[0] == '+') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3"); //die reihenfolge bei der Ausgabe von str1 + str2 muss umgekehrt sein
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1235,34 +1235,34 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 / str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 / str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 / str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
     if (sgn[0] == '+') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1277,34 +1277,34 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 / str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 / str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 / str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
     if (sgn[0] == '+') {
       if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1319,21 +1319,21 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '+') {
       if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 + str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
         
       } else if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 + str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
@@ -1341,14 +1341,14 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 / str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1365,21 +1365,21 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '+') {
       if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 + str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
         
       } else if (sgn[1] == '/' && sgn[2] == '0') {
         NSLog(@"str1 + str2 / str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", obenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenMitte]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       } else {
         NSLog(@"str1 + str2");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteLinks]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", mitteRechts]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
@@ -1387,14 +1387,14 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (sgn[0] == '/') {
       if (sgn[1] == '+' && sgn[2] == '0') {
         NSLog(@"str1 / str2 + str3");
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:1] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
-        [glyphGroupDic setValue:[tempGlyphData objectAtIndex:2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
+        [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", obenMitte]];
+        [glyphGroupDic setValue:tempGlyphData[1] forKey:[NSString stringWithFormat:@"%d", untenRechts]];
+        [glyphGroupDic setValue:tempGlyphData[2] forKey:[NSString stringWithFormat:@"%d", untenLinks]];
         [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
       }
     }
-    if ([tempGlyphData count] == 1) {
-      [glyphGroupDic setValue:[tempGlyphData objectAtIndex:0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
+    if (tempGlyphData.count == 1) {
+      [glyphGroupDic setValue:tempGlyphData[0] forKey:[NSString stringWithFormat:@"%d", mitteMitte]];
       [self createGraphicsOfClassGlyphFromDic:glyphGroupDic];
     } else {
       NSLog(@"error: invalid group");
@@ -1404,7 +1404,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     }
   }
   
-  [[self window] invalidateCursorRectsForView:self];
+  [self.window invalidateCursorRectsForView:self];
   
   //damit das Textfeld als keyView bestehen bleibt
   [sender selectText:self];
@@ -1436,8 +1436,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSEnumerator *enumerator = [glyphGroupDic keyEnumerator];
   id key;
   while ((key = [enumerator nextObject])) {
-    glyphUniChar = (0xF000 + [[[glyphGroupDic objectForKey:key] objectAtIndex:0] intValue]);
-    fontName = [[glyphGroupDic objectForKey:key] objectAtIndex:1];
+    glyphUniChar = (0xF000 + [glyphGroupDic[key][0] intValue]);
+    fontName = glyphGroupDic[key][1];
     
     _creatingGraphic = [[IGGlyph allocWithZone:[document zone]] init];
     //NSLog(@"IGGraphicView(createGraphicsOfClassGlyphFromADic) nach init -> %@", _creatingGraphic);
@@ -1556,7 +1556,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         [_creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
       }
       [document insertGraphic:_creatingGraphic atIndex:0];
-      [[document undoManager] setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
+      [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
     }
     [_creatingGraphic release];
     _creatingGraphic = nil;
@@ -1571,12 +1571,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSLog(@"moving cursor: I'm in down");
     tempCursor.y = mainCursor.y + glyphGroupBounds.size.height + glyphGroupBounds.size.height * 0.25;
     if (glyphGroupBounds.size.height < groupBoundsSize.height) {
-      for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(0,(groupBoundsSize.height - glyphGroupBounds.size.height) * 0.5 + glyphGroupBounds.size.height)];
+      for (i = 0; i < glyphGroupDic.count; i++) {
+        [[self graphicsOnPage:self.currentPage][i] moveBy:NSMakePoint(0,(groupBoundsSize.height - glyphGroupBounds.size.height) * 0.5 + glyphGroupBounds.size.height)];
       }
     } else {
-      for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(0, glyphGroupBounds.size.height)];
+      for (i = 0; i < glyphGroupDic.count; i++) {
+        [[self graphicsOnPage:self.currentPage][i] moveBy:NSMakePoint(0, glyphGroupBounds.size.height)];
       }
     }
   }
@@ -1586,12 +1586,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSLog(@"moving cursor: I'm in left");
     tempCursor.x = mainCursor.x - glyphGroupBounds.size.width - glyphGroupBounds.size.width * 0.25;
     if (glyphGroupBounds.size.width < groupBoundsSize.width) {
-      for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5 - glyphGroupBounds.size.width, 0)];
+      for (i = 0; i < glyphGroupDic.count; i++) {
+        [[self graphicsOnPage:self.currentPage][i] moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5 - glyphGroupBounds.size.width, 0)];
       }
     } else {
-      for (i = 0; i < [glyphGroupDic count]; i++) {
-        [[[self graphicsOnPage:self.currentPage] objectAtIndex:i] moveBy:NSMakePoint(-groupBoundsSize.width, 0)];
+      for (i = 0; i < glyphGroupDic.count; i++) {
+        [[self graphicsOnPage:self.currentPage][i] moveBy:NSMakePoint(-groupBoundsSize.width, 0)];
       }
     }
   }
@@ -1601,8 +1601,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSLog(@"moving cursor: I'm in right");
     tempCursor.x = mainCursor.x + glyphGroupBounds.size.width + glyphGroupBounds.size.width * 0.25;
     if (glyphGroupBounds.size.width < groupBoundsSize.width) {
-      for (i = 0; i < [glyphGroupDic count]; i++) {
-        id tempGraphic = [[self graphicsOnPage:self.currentPage] objectAtIndex:i];
+      for (i = 0; i < glyphGroupDic.count; i++) {
+        id tempGraphic = [self graphicsOnPage:self.currentPage][i];
         [tempGraphic moveBy:NSMakePoint((groupBoundsSize.width - glyphGroupBounds.size.width) * -0.5, 0)];
       }
     }
@@ -1634,15 +1634,15 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSPoint point;
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
-  BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
+  BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
   
   [graphic startBoundsManipulation];
   if (echoToRulers) {
     [self beginEchoingMoveToRulers:[graphic bounds]];
   }
   while (1) {
-    theEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-    point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    point = [self convertPoint:theEvent.locationInWindow fromView:nil];
     [self invalidateGraphic:graphic];
     if (snapsToGrid) {
       point.x = floor((point.x / spacing) + 0.5) * spacing;
@@ -1653,7 +1653,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (echoToRulers) {
       [self continueEchoingMoveToRulers:[graphic bounds]];
     }
-    if ([theEvent type] == NSLeftMouseUp) {
+    if (theEvent.type == NSLeftMouseUp) {
       break;
     }
   }
@@ -1663,7 +1663,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   
   [graphic stopBoundsManipulation];
   
-  [[[self drawDocument] undoManager] setActionName:NSLocalizedStringFromTable(@"Resize", @"UndoStrings", @"Action name for resizes.")];
+  [[self drawDocument].undoManager setActionName:NSLocalizedStringFromTable(@"Resize", @"UndoStrings", @"Action name for resizes.")];
 }
 
 - (void)rubberbandSelectWithEvent:(NSEvent *)theEvent {
@@ -1671,12 +1671,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSEnumerator *objEnum;
   IGGraphic *curGraphic;
   
-  _gvFlags.rubberbandIsDeselecting = (([theEvent modifierFlags] & NSAlternateKeyMask) ? YES : NO);
-  origPoint = curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  _gvFlags.rubberbandIsDeselecting = ((theEvent.modifierFlags & NSAlternateKeyMask) ? YES : NO);
+  origPoint = curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   
   while (1) {
-    theEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-    curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     if (NSEqualPoints(origPoint, curPoint)) {
       if (!NSEqualRects(_rubberbandRect, NSZeroRect)) {
         [self setNeedsDisplayInRect:_rubberbandRect];
@@ -1698,7 +1698,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         [self performSelector:@selector(invalidateGraphic:) withEachObjectInSet:_rubberbandGraphics];
       }
     }
-    if ([theEvent type] == NSLeftMouseUp) {
+    if (theEvent.type == NSLeftMouseUp) {
       break;
     }
   }
@@ -1729,13 +1729,13 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSPoint boundsOrigin;
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
-  BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
+  BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
   //++NSRect selBounds = NSMakeRect(self.currentCursorPosition.x, self.currentCursorPosition.y, 0, 0);
   NSPoint selPoint = self.currentCursorPosition;
-  lastPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  lastPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   
   //wenn ctrl gedrückt, kann ich den cursor in alle richtungen verschieben
-  BOOL ctrlKeyDown = (([theEvent modifierFlags] & NSControlKeyMask) ? YES : NO);
+  BOOL ctrlKeyDown = ((theEvent.modifierFlags & NSControlKeyMask) ? YES : NO);
   
   int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
   
@@ -1748,8 +1748,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   while (1) {
-    theEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-    curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     
     //hier wird die bewegung in der x-Achse oder der y-Achse beschränkt je nach schreibrichtung
     if (!ctrlKeyDown && (wd == leftToRight || wd == rightToLeft)) {
@@ -1786,9 +1786,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       lastPoint = curPoint;
     }
     
-    [[self window] invalidateCursorRectsForView:self];
+    [self.window invalidateCursorRectsForView:self];
     
-    if ([theEvent type] == NSLeftMouseUp) {
+    if (theEvent.type == NSLeftMouseUp) {
       break;
     }
   }
@@ -1808,12 +1808,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSPoint boundsOrigin;
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
-  BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
+  BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
   NSRect selBounds = [[self drawDocument] boundsForGraphics:selGraphics];
   
-  c = [selGraphics count];
+  c = selGraphics.count;
   
-  lastPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  lastPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   if (snapsToGrid || echoToRulers) {
     selOriginOffset = NSMakePoint((lastPoint.x - selBounds.origin.x), (lastPoint.y - selBounds.origin.y));
   }
@@ -1822,9 +1822,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   while (1) {
-    c = [selGraphics count];
-    theEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-    curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    c = selGraphics.count;
+    theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     if (!isMoving && ((fabs(curPoint.x - lastPoint.x) >= 2.0) || (fabs(curPoint.y - lastPoint.y) >= 2.0))) {
       isMoving = YES;
       [selGraphics makeObjectsPerformSelector:@selector(startBoundsManipulation)];
@@ -1841,7 +1841,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       }
       if (!NSEqualPoints(lastPoint, curPoint)) {
         for (i = 0; i < c; i++) {
-          graphic = [selGraphics objectAtIndex:i];
+          graphic = selGraphics[i];
           [self invalidateGraphic:graphic];
           [graphic moveBy:NSMakePoint(curPoint.x - lastPoint.x, curPoint.y - lastPoint.y)];
           if (NSContainsRect([self pageHeaderSmalerRect],[graphic bounds]) || NSContainsRect([self pageFooterSmalerRect],[graphic bounds])) {
@@ -1876,7 +1876,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         }
       lastPoint = curPoint;
       }
-    if ([theEvent type] == NSLeftMouseUp) {
+    if (theEvent.type == NSLeftMouseUp) {
       break;
     }
     }
@@ -1890,7 +1890,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     
     if (didMove) {
       // Only if we really moved.
-      [[[self drawDocument] undoManager] setActionName:NSLocalizedStringFromTable(@"Move", @"UndoStrings", @"Action name for moves.")];
+      [[self drawDocument].undoManager setActionName:NSLocalizedStringFromTable(@"Move", @"UndoStrings", @"Action name for moves.")];
     }
   }
   }
@@ -1902,9 +1902,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   BOOL cursorSelected;
   
   //mit shift key kann ich sachen dazu selecten/deselecten
-  BOOL shiftKeyDown = (([theEvent modifierFlags] & NSShiftKeyMask) ? YES : NO);
+  BOOL shiftKeyDown = ((theEvent.modifierFlags & NSShiftKeyMask) ? YES : NO);
   
-  curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   graphic = [self graphicUnderPoint:curPoint onPage:self.currentPage] ? [self graphicUnderPoint:curPoint onPage:self.currentPage] : [self graphicUnderPoint:curPoint onPage:0];
   
   NSLog(@"graphic under point %@", graphic);
@@ -1957,8 +1957,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   
   // If we got here then there must be nothing else to do.  Just track until mouseUp:.
   while (1) {
-    theEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-    if ([theEvent type] == NSLeftMouseUp) {
+    theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    if (theEvent.type == NSLeftMouseUp) {
       break;
     }
   }
@@ -1973,7 +1973,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 - (void)mouseDown:(NSEvent *)theEvent {
   //Class theClass = [[ObjectsController sharedObjectsController] currentGraphicClass];
   
-  BOOL ctrlKeyDown = (([theEvent modifierFlags] & NSControlKeyMask) ? YES : NO);
+  BOOL ctrlKeyDown = ((theEvent.modifierFlags & NSControlKeyMask) ? YES : NO);
   //BOOL shiftKeyDown = (([theEvent modifierFlags] & NSShiftKeyMask) ? YES : NO);
   
   //passiert nur beim text object
@@ -1981,8 +1981,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [self endEditing];
   }
   //ist nur für das text objekt interessant da dieses nur editable ist
-  if ([theEvent clickCount] > 1) {
-    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  if (theEvent.clickCount > 1) {
+    NSPoint curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     IGGraphic *graphic = [self graphicUnderPoint:curPoint onPage:self.currentPage];
     if (graphic && [graphic isEditable]) {
       [self startEditingGraphic:graphic withEvent:theEvent];
@@ -1991,9 +1991,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   }
   
   //ctrl-klick um den cursor auf diese position zu setzen
-  if ([theEvent clickCount] == 1 && ctrlKeyDown) {
+  if (theEvent.clickCount == 1 && ctrlKeyDown) {
     NSLog(@"IGGraphicView(mouseDown) -> ctrl-click sollte es sein");
-    NSPoint curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSPoint curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     self.currentCursorPosition = curPoint;
     [self setNeedsDisplay:YES];
   }
@@ -2059,10 +2059,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSPoint boundsOrigin;
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
-  BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
+  BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
   
   NSPoint selPoint = self.currentCursorPosition;
-  lastPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  lastPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   
   if (snapsToGrid || echoToRulers) {
     //++selOriginOffset = NSMakePoint((lastPoint.x - selBounds.origin.x), (lastPoint.y - selBounds.origin.y));
@@ -2089,11 +2089,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   NSPoint boundsOrigin;
   BOOL snapsToGrid = [self snapsToGrid];
   float spacing = [self gridSpacing];
-  BOOL echoToRulers = [[self enclosingScrollView] rulersVisible];
+  BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
   
   
-  theEvent = [[self window] nextEventMatchingMask:(NSRightMouseDraggedMask | NSRightMouseUpMask)];
-  curPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  theEvent = [self.window nextEventMatchingMask:(NSRightMouseDraggedMask | NSRightMouseUpMask)];
+  curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
   
   //damit der cursor beim rechts-click auch dorthin springt
   //[self.currentCursorPosition = curPoint];
@@ -2121,7 +2121,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     lastPoint = curPoint;
   }
   
-  [[self window] invalidateCursorRectsForView:self];
+  [self.window invalidateCursorRectsForView:self];
   
   /*
    if ([theEvent type] == NSRightMouseUp) {
@@ -2137,7 +2137,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent {
-  NSPoint mousePos = [self convertPoint:[theEvent locationInWindow] toView:nil];
+  NSPoint mousePos = [self convertPoint:theEvent.locationInWindow toView:nil];
   //die mousePos umrechnen so das ich es gebrauchen kann
   
   if (mousePos.x < 0.0f) mousePos.x = 0.0f;
@@ -2161,7 +2161,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSImage *contents = [[NSImage allocWithZone:[[self drawDocument] zone]] initWithPasteboard:pboard];
     if (contents) {
       IGImage *newImage = [[IGImage allocWithZone:[[self drawDocument] zone]] init];
-      [newImage setBounds:NSMakeRect(point.x, point.y - [contents size].height, [contents size].width, [contents size].height)];
+      [newImage setBounds:NSMakeRect(point.x, point.y - contents.size.height, contents.size.width, contents.size.height)];
       [newImage setImage:contents];
       [contents release];
       [[self drawDocument] insertGraphic:newImage atIndex:0];
@@ -2175,12 +2175,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 }
 
 - (BOOL)makeNewImageFromContentsOfFile:(NSString *)filename atPoint:(NSPoint)point {
-  NSString *extension = [filename pathExtension];
+  NSString *extension = filename.pathExtension;
   if ([[NSImage imageFileTypes] containsObject:extension]) {
     NSImage *contents = [[NSImage allocWithZone:[[self drawDocument] zone]] initWithContentsOfFile:filename];
     if (contents) {
       IGImage *newImage = [[IGImage allocWithZone:[[self drawDocument] zone]] init];
-      [newImage setBounds:NSMakeRect(point.x, point.y, [contents size].width, [contents size].height)];
+      [newImage setBounds:NSMakeRect(point.x, point.y, contents.size.width, contents.size.height)];
       [newImage setImage:contents];
       [contents release];
       [[self drawDocument] insertGraphic:newImage atIndex:0];
@@ -2257,7 +2257,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (unsigned int)dragOperationForDraggingInfo:(id <NSDraggingInfo>)sender {
   NSPasteboard *pboard = [sender draggingPasteboard];
-  NSString *type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSColorPboardType, NSFilenamesPboardType, nil]];
+  NSString *type = [pboard availableTypeFromArray:@[NSColorPboardType, NSFilenamesPboardType]];
   
   if (type) {
     if ([type isEqualToString:NSColorPboardType]) {
@@ -2301,7 +2301,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender {
   NSPasteboard *pboard = [sender draggingPasteboard];
-  NSString *type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSColorPboardType, NSFilenamesPboardType, nil]];
+  NSString *type = [pboard availableTypeFromArray:@[NSColorPboardType, NSFilenamesPboardType]];
   NSPoint point = [self convertPoint:[sender draggingLocation] fromView:nil];
   NSPoint draggedImageLocation = [self convertPoint:[sender draggedImageLocation] fromView:nil];
   
@@ -2311,14 +2311,14 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       
       if (hitGraphic) {
         NSColor *color = [[NSColor colorFromPasteboard:pboard] colorWithAlphaComponent:1.0];
-        [hitGraphic setFillColor:color];
-        [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Set Fill Color", @"UndoStrings", @"Action name for setting fill color.")];
+        hitGraphic.fillColor = color;
+        [self.undoManager setActionName:NSLocalizedStringFromTable(@"Set Fill Color", @"UndoStrings", @"Action name for setting fill color.")];
       }
     } else if ([type isEqualToString:NSFilenamesPboardType]) {
       NSArray *filenames = [pboard propertyListForType:NSFilenamesPboardType];
       // Handle multiple files (cascade them?)
-      if ([filenames count] == 1) {
-        NSString *filename = [filenames objectAtIndex:0];
+      if (filenames.count == 1) {
+        NSString *filename = filenames[0];
         [self makeNewImageFromContentsOfFile:filename atPoint:point];
       }
     }
@@ -2334,11 +2334,11 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 // ============================ Ruler support ================================
 
 - (void)updateRulers {
-  NSScrollView *enclosingScrollView = [self enclosingScrollView];
-  if ([enclosingScrollView rulersVisible]) {
+  NSScrollView *enclosingScrollView = self.enclosingScrollView;
+  if (enclosingScrollView.rulersVisible) {
     // MF: Eventually, it'd be nice if we added ruler markers for the selection, but for now we just clear them.  By clearing the markers we make sure that no markers from text editing are left over when the editing stops.
-    [[enclosingScrollView verticalRulerView] setMarkers:nil];
-    [[enclosingScrollView horizontalRulerView] setMarkers:nil];
+    [enclosingScrollView.verticalRulerView setMarkers:nil];
+    [enclosingScrollView.horizontalRulerView setMarkers:nil];
   }
 }
 
@@ -2362,17 +2362,17 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 #define IG_RULER_ACCESSORY_THICKNESS 10.0
 
 - (IBAction)toggleRuler:(id)sender {
-  NSScrollView *enclosingScrollView = [self enclosingScrollView];
-  BOOL rulersAreVisible = [enclosingScrollView rulersVisible];
+  NSScrollView *enclosingScrollView = self.enclosingScrollView;
+  BOOL rulersAreVisible = enclosingScrollView.rulersVisible;
   if (rulersAreVisible) {
     [enclosingScrollView setRulersVisible:NO];
   } else {
     if (!_gvFlags.initedRulers) {
       NSRulerView *ruler;
-      ruler = [enclosingScrollView horizontalRulerView];
+      ruler = enclosingScrollView.horizontalRulerView;
       [ruler setReservedThicknessForMarkers:IG_RULER_MARKER_THICKNESS];
       [ruler setReservedThicknessForAccessoryView:IG_RULER_ACCESSORY_THICKNESS];
-      ruler = [enclosingScrollView verticalRulerView];
+      ruler = enclosingScrollView.verticalRulerView;
       [ruler setReservedThicknessForMarkers:IG_RULER_MARKER_THICKNESS];
       [ruler setReservedThicknessForAccessoryView:IG_RULER_ACCESSORY_THICKNESS];
       _gvFlags.initedRulers = YES;
@@ -2389,17 +2389,17 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)changeColor:(id)sender {
   NSArray *selGraphics = [self selectedGraphics];
-  unsigned i, c = [selGraphics count];
+  unsigned i, c = selGraphics.count;
   if (c > 0) {
     IGGraphic *curGraphic;
     NSColor *color = [sender color];
     
     for (i=0; i<c; i++) {
-      curGraphic = [selGraphics objectAtIndex:i];
-      [curGraphic setFillColor:color];
+      curGraphic = selGraphics[i];
+      curGraphic.fillColor = color;
       [curGraphic setDrawsFill:YES];
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Set Fill Color", @"UndoStrings", @"Action name for setting fill color.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Set Fill Color", @"UndoStrings", @"Action name for setting fill color.")];
   }
 }
 
@@ -2415,195 +2415,195 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IBAction)delete:(id)sender {
   NSArray *selCopy = [[NSArray allocWithZone:[self zone]] initWithArray:[self selectedGraphics]];
-  if ([selCopy count] > 0) {
+  if (selCopy.count > 0) {
     [[self drawDocument] performSelector:@selector(removeGraphic:) withEachObjectInArray:selCopy];
     [selCopy release];
-    [[[self drawDocument] undoManager] setActionName:NSLocalizedStringFromTable(@"Delete", @"UndoStrings", @"Action name for deletions.")];
+    [[self drawDocument].undoManager setActionName:NSLocalizedStringFromTable(@"Delete", @"UndoStrings", @"Action name for deletions.")];
   }
 }
 
 - (IBAction)bringToFront:(id)sender {
   NSArray *orderedSelection = [self orderedSelectedGraphics];
-  unsigned c = [orderedSelection count];
+  unsigned c = orderedSelection.count;
   if (c > 0) {
     IGDrawDocument *document = [self drawDocument];
     while (c-- > 0) {
-      [document moveGraphic:[orderedSelection objectAtIndex:c] toIndex:0];
+      [document moveGraphic:orderedSelection[c] toIndex:0];
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Bring To Front", @"UndoStrings", @"Action name for bring to front.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Bring To Front", @"UndoStrings", @"Action name for bring to front.")];
   }
 }
 
 - (IBAction)sendToBack:(id)sender {
   NSArray *orderedSelection = [self orderedSelectedGraphics];
-  unsigned i, c = [orderedSelection count];
+  unsigned i, c = orderedSelection.count;
   if (c > 0) {
     IGDrawDocument *document = [self drawDocument];
-    unsigned lastIndex = [[self graphicsOnPage:self.currentPage] count];
+    unsigned lastIndex = [self graphicsOnPage:self.currentPage].count;
     for (i=0; i<c; i++) {
-      [document moveGraphic:[orderedSelection objectAtIndex:i] toIndex:lastIndex];
+      [document moveGraphic:orderedSelection[i] toIndex:lastIndex];
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Send To Back", @"UndoStrings", @"Action name for send to back.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Send To Back", @"UndoStrings", @"Action name for send to back.")];
   }
 }
 
 - (IBAction)alignLeftEdges:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (curBounds.origin.x != firstBounds.origin.x) {
         curBounds.origin.x = firstBounds.origin.x;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Left Edges", @"UndoStrings", @"Action name for align left edges.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Left Edges", @"UndoStrings", @"Action name for align left edges.")];
   }
 }
 
 - (IBAction)alignRightEdges:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (NSMaxX(curBounds) != NSMaxX(firstBounds)) {
         curBounds.origin.x = NSMaxX(firstBounds) - curBounds.size.width;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Right Edges", @"UndoStrings", @"Action name for align right edges.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Right Edges", @"UndoStrings", @"Action name for align right edges.")];
   }
 }
 
 - (IBAction)alignTopEdges:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (curBounds.origin.y != firstBounds.origin.y) {
         curBounds.origin.y = firstBounds.origin.y;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Top Edges", @"UndoStrings", @"Action name for align top edges.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Top Edges", @"UndoStrings", @"Action name for align top edges.")];
   }
 }
 
 - (IBAction)alignBottomEdges:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (NSMaxY(curBounds) != NSMaxY(firstBounds)) {
         curBounds.origin.y = NSMaxY(firstBounds) - curBounds.size.height;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Bottom Edges", @"UndoStrings", @"Action name for align bottom edges.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Bottom Edges", @"UndoStrings", @"Action name for align bottom edges.")];
   }
 }
 
 - (IBAction)alignHorizontalCenters:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (NSMidX(curBounds) != NSMidX(firstBounds)) {
         curBounds.origin.x = NSMidX(firstBounds) - (curBounds.size.width / 2.0);
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Horizontal Centers", @"UndoStrings", @"Action name for align horizontal centers.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Horizontal Centers", @"UndoStrings", @"Action name for align horizontal centers.")];
   }
 }
 
 - (IBAction)alignVerticalCenters:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (NSMidY(curBounds) != NSMidY(firstBounds)) {
         curBounds.origin.y = NSMidY(firstBounds) - (curBounds.size.height / 2.0);
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Align Vertical Centers", @"UndoStrings", @"Action name for align vertical centers.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Vertical Centers", @"UndoStrings", @"Action name for align vertical centers.")];
   }
 }
 
 - (IBAction)makeSameWidth:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (curBounds.size.width != firstBounds.size.width) {
         curBounds.size.width = firstBounds.size.width;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
   }
 }
 
 - (IBAction)makeSameHeight:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 1) {
-    NSRect firstBounds = [[selection objectAtIndex:0] bounds];
+    NSRect firstBounds = [selection[0] bounds];
     IGGraphic *curGraphic;
     NSRect curBounds;
     for (i=1; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       if (curBounds.size.height != firstBounds.size.height) {
         curBounds.size.height = firstBounds.size.height;
         [curGraphic setBounds:curBounds];
       }
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
   }
 }
 
 - (IBAction)makeNaturalSize:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  if ([selection count] > 0) {
+  if (selection.count > 0) {
     [selection makeObjectsPerformSelector:@selector(makeNaturalSize)];
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Make Natural Size", @"UndoStrings", @"Action name for natural size.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Natural Size", @"UndoStrings", @"Action name for natural size.")];
   }
 }
 
@@ -2614,21 +2614,21 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 // ============================== menu stuff =================================
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item {
-  SEL action = [item action];
+  SEL action = item.action;
   
   if (action == @selector(snapsToGridMenuAction:)) {
-    [item setState:([self snapsToGrid] ? NSOnState : NSOffState)];
+    item.state = ([self snapsToGrid] ? NSOnState : NSOffState);
     return YES;
   } else if (action == @selector(showsGridMenuAction:)) {
-    [item setState:([self showsGrid] ? NSOnState : NSOffState)];
+    item.state = ([self showsGrid] ? NSOnState : NSOffState);
     return YES;
   } else if (action == @selector(makeNaturalSize:)) {
     // Return YES if we have at least one selected graphic that has a natural size.
     NSArray *selectedGraphics = [self selectedGraphics];
-    unsigned i, c = [selectedGraphics count];
+    unsigned i, c = selectedGraphics.count;
     if (c > 0) {
       for (i=0; i<c; i++) {
-        if ([[selectedGraphics objectAtIndex:i] hasNaturalSize]) {
+        if ([selectedGraphics[i] hasNaturalSize]) {
           return YES;
         }
       }
@@ -2636,10 +2636,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     return NO;
   } else if ((action == @selector(gridSelectedGraphicsAction:)) || (action == @selector(delete:)) || (action == @selector(bringToFront:)) || (action == @selector(sendToBack:)) || (action == @selector(cut:)) || (action == @selector(copy:))) {
     // These only apply if there is a selection
-    return (([[self selectedGraphics] count] > 0) ? YES : NO);
+    return (([self selectedGraphics].count > 0) ? YES : NO);
   } else if ((action == @selector(alignLeftEdges:)) || (action == @selector(alignRightEdges:)) || (action == @selector(alignTopEdges:)) || (action == @selector(alignBottomEdges:)) || (action == @selector(alignHorizontalCenters:)) || (action == @selector(alignVerticalCenters:)) || (action == @selector(alignTextBaselines:)) || (action == @selector(makeSameWidth:)) || (action == @selector(makeSameHeight:))) {
     // These only apply to multiple selection
-    return (([[self selectedGraphics] count] > 1) ? YES : NO);
+    return (([self selectedGraphics].count > 1) ? YES : NO);
   } else {
     return YES;
   }
@@ -2647,12 +2647,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IBAction)copy:(id)sender {
   NSArray *orderedSelection = [self orderedSelectedGraphics];
-  if ([orderedSelection count] > 0)
+  if (orderedSelection.count > 0)
   {
     int i;
-    for (i = 0; i < [orderedSelection count]; i++)
+    for (i = 0; i < orderedSelection.count; i++)
     {
-      NSLog(@"IGGraphicView(copy) -> %@", [orderedSelection objectAtIndex:i]);
+      NSLog(@"IGGraphicView(copy) -> %@", orderedSelection[i]);
     }
     
     IGDrawDocument *document = [self drawDocument];
@@ -2662,13 +2662,13 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     //[pboard declareTypes:[NSArray arrayWithObjects:IGDrawDocumentType, NSPDFPboardType, NSPostScriptPboardType, NSTIFFPboardType, nil] owner:nil];
     
     //pasteboard für innerhalb der Applikation
-    [privatePBoard declareTypes:[NSArray arrayWithObjects: IGDrawDocumentType, nil] owner:nil];
+    [privatePBoard declareTypes:@[IGDrawDocumentType] owner:nil];
     
     [privatePBoard setData:[document drawDocumentDataForGraphicsSinglePage:orderedSelection] forType:IGDrawDocumentType];
     NSLog(@"nach setData drawDocument....");
     
     //pasteboard für ausserhalb der Applikation
-    [generalPBoard declareTypes:[NSArray arrayWithObjects: NSPDFPboardType, NSPICTPboardType, NSTIFFPboardType, nil] owner:nil];
+    [generalPBoard declareTypes:@[NSPDFPboardType, NSPICTPboardType, NSTIFFPboardType] owner:nil];
     
     [generalPBoard setData:[document PDFRepresentationForGraphics:orderedSelection] forType:NSPDFPboardType];
     NSLog(@"nach setData PDFRep....");
@@ -2684,7 +2684,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     [generalPBoard setData:[document PICTRepresentationForGraphics:orderedSelection] forType:NSPICTPboardType];
     NSLog(@"nach setData PICTRep....");
     
-    _pasteboardChangeCount = [privatePBoard changeCount];
+    _pasteboardChangeCount = privatePBoard.changeCount;
     _pasteCascadeNumber = 1;
     _pasteCascadeDelta = NSMakePoint(IGDefaultPasteCascadeDelta, IGDefaultPasteCascadeDelta);
   }
@@ -2693,15 +2693,15 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 - (IBAction)cut:(id)sender {
   [self copy:sender];
   [self delete:sender];
-  [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Cut", @"UndoStrings", @"Action name for cut.")];
+  [self.undoManager setActionName:NSLocalizedStringFromTable(@"Cut", @"UndoStrings", @"Action name for cut.")];
 }
 
 - (IBAction)paste:(id)sender {
   NSPasteboard *generalPBoard = [NSPasteboard generalPasteboard];
   NSPasteboard *privatePBoard = [NSPasteboard pasteboardWithName:@"IGGlyphPasteboard"];
   
-  NSString *privateType = [privatePBoard availableTypeFromArray:[NSArray arrayWithObjects:IGDrawDocumentType, NSFilenamesPboardType, nil]];
-  NSString *generalType = [generalPBoard availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
+  NSString *privateType = [privatePBoard availableTypeFromArray:@[IGDrawDocumentType, NSFilenamesPboardType]];
+  NSString *generalType = [generalPBoard availableTypeFromArray:@[NSFilenamesPboardType]];
   
   if (privateType) {
     if ([privateType isEqualToString:IGDrawDocumentType]) {
@@ -2714,12 +2714,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       pastePositionDelta.y = self.currentCursorPosition.y - [document boundsForGraphics:array].origin.y;
       pastePositionDelta.y -= [document boundsForGraphics:array].size.height;
       
-      int i = [array count];
+      int i = array.count;
       if (i > 0) {
         id curGraphic;
         [self clearSelection];
         while (i-- > 0) {
-          curGraphic = [array objectAtIndex:i];
+          curGraphic = array[i];
           
           [curGraphic setPageNr:self.currentPage];
           [curGraphic moveBy:pastePositionDelta];
@@ -2727,17 +2727,17 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
           [document insertGraphic:curGraphic atIndex:0];
           [self selectGraphic:curGraphic];
         }
-        [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
+        [self.undoManager setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
       }
     }
   }
   if (generalType) {
     if ([generalType isEqualToString:NSFilenamesPboardType]) {
       NSArray *filenames = [generalPBoard propertyListForType:NSFilenamesPboardType];
-      if ([filenames count] == 1) {
-        NSString *filename = [filenames objectAtIndex:0];
+      if (filenames.count == 1) {
+        NSString *filename = filenames[0];
         if ([self makeNewImageFromContentsOfFile:filename atPoint:self.currentCursorPosition]) {
-          [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
+          [self.undoManager setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
         }
       }
     }
@@ -2756,26 +2756,26 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   IGDrawDocument *document = [self drawDocument];
   NSPasteboard *pboard = [NSPasteboard generalPasteboard];
   
-  if ([orderedSelection count] > 0)
+  if (orderedSelection.count > 0)
   {
     int i;
-    for (i = 0; i < [orderedSelection count]; i++)
+    for (i = 0; i < orderedSelection.count; i++)
     {
-      NSLog(@"IGGraphicView(copy) -> %@", [orderedSelection objectAtIndex:i]);
+      NSLog(@"IGGraphicView(copy) -> %@", orderedSelection[i]);
     }
     
-    [pboard declareTypes:[NSArray arrayWithObjects:IGDrawDocumentType, nil] owner:nil];
+    [pboard declareTypes:@[IGDrawDocumentType] owner:nil];
     
     [pboard setData:[document drawDocumentDataForGraphicsSinglePage:orderedSelection] forType:IGDrawDocumentType];
-    _pasteboardChangeCount = [pboard changeCount];
+    _pasteboardChangeCount = pboard.changeCount;
     _pasteCascadeNumber = 1;
     _pasteCascadeDelta = NSMakePoint(IGDefaultPasteCascadeDelta, IGDefaultPasteCascadeDelta);
   }
   
   NSDictionary *docDict = [document drawDocumentDictionaryFromData:[pboard dataForType:IGDrawDocumentType]];
   NSArray *array = [document graphicsFromDrawDocumentDictionarySinglePage:docDict];
-  int i = [array count];
-  int currentChangeCount = [pboard changeCount];
+  int i = array.count;
+  int currentChangeCount = pboard.changeCount;
   
   if (_pasteboardChangeCount != currentChangeCount) {
     _pasteboardChangeCount = currentChangeCount;
@@ -2789,7 +2789,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     
     [self clearSelection];
     while (i-- > 0) {
-      curGraphic = [array objectAtIndex:i];
+      curGraphic = array[i];
       if (_pasteCascadeNumber > 0) {
         [curGraphic setPageNr:self.currentPage];
         [curGraphic moveBy:NSMakePoint(_pasteCascadeNumber * savedPasteCascadeDelta.x, _pasteCascadeNumber * savedPasteCascadeDelta.y)];
@@ -2800,7 +2800,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     }
     _pasteCascadeNumber++;
     _pasteCascadeDelta = savedPasteCascadeDelta;
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Paste", @"UndoStrings", @"Action name for paste.")];
   }
 }
 
@@ -2813,7 +2813,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)keyDown:(NSEvent *)event {
   // Pass on the key binding manager.  This will end up calling insertText: or some command selector.
-  [self interpretKeyEvents:[NSArray arrayWithObject:event]];
+  [self interpretKeyEvents:@[event]];
 }
 
 - (void)insertText:(NSString *)str {
@@ -2839,13 +2839,13 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)moveSelectedGraphicsByPoint:(NSPoint)delta {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 0) {
     [self hideKnobsMomentarily];
     for (i=0; i<c; i++) {
-      [[selection objectAtIndex:i] moveBy:delta];
+      [selection[i] moveBy:delta];
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Nudge", @"UndoStrings", @"Action name for nudge keyboard commands.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Nudge", @"UndoStrings", @"Action name for nudge keyboard commands.")];
   }
 }
 
@@ -2912,7 +2912,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IBAction)gridSelectedGraphicsAction:(id)sender {
   NSArray *selection = [self selectedGraphics];
-  unsigned i, c = [selection count];
+  unsigned i, c = selection.count;
   if (c > 0) {
     IGGraphic *curGraphic;
     NSRect curBounds;
@@ -2920,7 +2920,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     float spacing = [self gridSpacing];
     
     for (i=0; i<c; i++) {
-      curGraphic = [selection objectAtIndex:i];
+      curGraphic = selection[i];
       curBounds = [curGraphic bounds];
       curMaxPoint = NSMakePoint(NSMaxX(curBounds), NSMaxY(curBounds));
       curBounds.origin.x = floor((curBounds.origin.x / spacing) + 0.5) * spacing;
@@ -2931,7 +2931,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       curBounds.size.height = curMaxPoint.y - curBounds.origin.y;
       [curGraphic setBounds:curBounds];
     }
-    [[self undoManager] setActionName:NSLocalizedStringFromTable(@"Grid Selected Graphics", @"UndoStrings", @"Action name for grid selected graphics.")];
+    [self.undoManager setActionName:NSLocalizedStringFromTable(@"Grid Selected Graphics", @"UndoStrings", @"Action name for grid selected graphics.")];
   }
 }
 
@@ -3163,7 +3163,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)updateCurrentPageField {
   
-  [currentPageField setStringValue:[[NSString alloc] initWithFormat:@"%d of %d", self.currentPage, [self pageCount]]];
+  currentPageField.stringValue = [[NSString alloc] initWithFormat:@"%d of %d", self.currentPage, [self pageCount]];
 }
 
 

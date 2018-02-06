@@ -43,9 +43,9 @@
     NSView *_controlledView;
 }
 
-+ (id)sharedCartoucheController;
++ (CartoucheController*)sharedCartoucheController;
 
-- (NSView *)controlledView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *controlledView;
 
 - (IBAction)xEdgeChange:(id)sender;
 - (IBAction)yEdgeChange:(id)sender;
@@ -53,30 +53,25 @@
 - (IBAction)endAlignmentChange:(id)sender;
 - (IBAction)rubricCartoucheChange:(id)sender;
 
-- (int)xEdge;
-- (void)setXEdge:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int xEdge;
 
-- (int)yEdge;
-- (void)setYEdge:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int yEdge;
 
-- (int)cartoucheBorderType;
-- (void)setCartoucheBorderType:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int cartoucheBorderType;
 
-- (int)endAlignment;
-- (void)setEndAlignment:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int endAlignment;
 
-- (BOOL)rubricCartouche;
-- (void)setRubricCartouche:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricCartouche;
 
   //cartouche formating
 - (void)showSelectedCartoucheFormating;
 - (void)restoreTmpFormating;
 
   //the key window stuff
-- (NSWindow *)theMainWindow;
-- (IGDrawWindowController *)theMainWindowController;
-- (IGGraphicView *)theMainView;
-- (IGCartouche *)theOnlySelectedCartouche;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGCartouche *theOnlySelectedCartouche;
 
 //- (IGGraphic *)content;
 

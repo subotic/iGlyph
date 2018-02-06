@@ -18,11 +18,11 @@
 
 @implementation TipsController
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithWindowNibName:@"Tips"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"Tips"];
+        self.windowFrameAutosaveName = @"Tips";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -32,15 +32,15 @@
 {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"Tips"];
+    [self.window setFrameUsingName:@"Tips"];
 }
 
-+ (id)sharedTipsController
++ (TipsController*)sharedTipsController
 {
     static TipsController *_sharedTipsController = nil;
     
     if (!_sharedTipsController) {
-        _sharedTipsController = [[TipsController allocWithZone:[self zone]] init];
+        _sharedTipsController = [[TipsController allocWithZone:nil] init];
     }
     return _sharedTipsController;
 }

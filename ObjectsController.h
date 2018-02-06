@@ -20,10 +20,10 @@
 
 }
 
-+ (id)sharedObjectsController;
++ (ObjectsController*)sharedObjectsController;
 
 - (IBAction)selectToolAction:(id)sender;
-- (Class)currentGraphicClass;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) Class currentGraphicClass;
 
 - (void)selectArrowTool;
 

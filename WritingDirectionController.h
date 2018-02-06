@@ -42,15 +42,14 @@ enum {
 
 }
 
-+ (id)sharedWritingDirectionController;
++ (WritingDirectionController*)sharedWritingDirectionController;
 
-- (NSView *)controlledView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *controlledView;
 
 - (void)mainWindowChanged:(NSNotification *)notification;
 
 - (IBAction)writtingDirectionChanged:(id)sender;
-- (int)writingDirection;
-- (void)setWritingDirection:(int)direction;
+@property (NS_NONATOMIC_IOSONLY) int writingDirection;
 
 
 - (IBAction)charSpacingStepperAction:(id)sender;

@@ -12,41 +12,41 @@
 @implementation IGCircle
 
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    [self setBounds:NSMakeRect(250, 300, 100, 100)];
+    self.bounds = NSMakeRect(250, 300, 100, 100);
   }
   return self;
 }
 
 - (NSBezierPath *)bezierPath {
     
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     if (bounds.size.width < bounds.size.height) {
         bounds.size.height = bounds.size.width;
-        [self setBounds:bounds];
+        self.bounds = bounds;
     } else if (bounds.size.width > bounds.size.height) {
         bounds.size.width = bounds.size.height;
-        [self setBounds:bounds];
+        self.bounds = bounds;
     }
 
     NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:bounds];
     
-    [path setLineWidth:[self strokeLineWidth]];
+    path.lineWidth = self.strokeLineWidth;
     
     return path;
 }
 
 - (void)makeNaturalSize {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     if (bounds.size.width < bounds.size.height) {
         bounds.size.height = bounds.size.width;
-        [self setBounds:bounds];
+        self.bounds = bounds;
     } else if (bounds.size.width > bounds.size.height) {
         bounds.size.width = bounds.size.height;
-        [self setBounds:bounds];
+        self.bounds = bounds;
     }
 }
 
@@ -54,7 +54,7 @@
 //hier werden die dx und dy bewegungen abgefangen und umgebogen so das immer
 //ein Kreis resultiert.
 - (int)resizeByMovingKnob:(int)knob toPoint:(NSPoint)point {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     if (bounds.size.width < bounds.size.height) {
         bounds.size.height = bounds.size.width;
@@ -133,13 +133,13 @@
         bounds.origin.y -= bounds.size.height;
         [self flipVertically];
     }
-    [self setBounds:bounds];
+    self.bounds = bounds;
     return knob;
 }
 
 - (void)setStartsAtLowerLeft:(BOOL)flag {
     if (_startsAtLowerLeft != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setStartsAtLowerLeft:_startsAtLowerLeft];
+        [[self.undoManager prepareWithInvocationTarget:self] setStartsAtLowerLeft:_startsAtLowerLeft];
         _startsAtLowerLeft = flag;
         [self didChange];
     }

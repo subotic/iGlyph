@@ -16,7 +16,7 @@
 @synthesize pageCount;
 @synthesize drawDocument;
 
-- (id)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document {
+- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document {
     self = [super initWithFrame:frame];
     if (self) {
         self.graphics = graphicsArr;
@@ -31,23 +31,23 @@
 }
 
 - (NSPrintInfo *)drawDocumentPrintInfo {
-    return [self.drawDocument printInfo];
+    return (self.drawDocument).printInfo;
 }
 
 - (NSRect)pageHeaderRect {
     NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
     NSRect rect = NSZeroRect;
-    rect.size.width = [printInfo paperSize].width;
-    rect.size.height = [printInfo topMargin];
+    rect.size.width = printInfo.paperSize.width;
+    rect.size.height = printInfo.topMargin;
     return rect;
 }
 
 - (NSRect)pageFooterRect {
     NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
     NSRect rect = NSZeroRect;
-    rect.size.width = [printInfo paperSize].width;
-    rect.size.height = [printInfo bottomMargin];
-    rect.origin.y = [printInfo paperSize].height - rect.size.height;
+    rect.size.width = printInfo.paperSize.width;
+    rect.size.height = printInfo.bottomMargin;
+    rect.origin.y = printInfo.paperSize.height - rect.size.height;
     return rect;
 }
 
@@ -69,12 +69,12 @@
     
     if (self.pageCount) { //hier will ich mehrere Seiten darstellen
         int curPage;
-        curPage = [[NSPrintOperation currentOperation] currentPage];
+        curPage = [NSPrintOperation currentOperation].currentPage;
         //header
-        curPageGraphics = [self.graphics objectAtIndex:0];
-        i = [curPageGraphics count];
+        curPageGraphics = (self.graphics)[0];
+        i = curPageGraphics.count;
         while (i-- > 0) {
-            curGraphic = [curPageGraphics objectAtIndex:i];
+            curGraphic = curPageGraphics[i];
             drawingBounds = [curGraphic drawingBounds];
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
@@ -84,10 +84,10 @@
             }
         }
         //body
-        curPageGraphics = [self.graphics objectAtIndex:curPage];
-        i = [curPageGraphics count];
+        curPageGraphics = (self.graphics)[curPage];
+        i = curPageGraphics.count;
         while (i-- > 0) {
-            curGraphic = [curPageGraphics objectAtIndex:i];
+            curGraphic = curPageGraphics[i];
             drawingBounds = [curGraphic drawingBounds];
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
@@ -136,18 +136,18 @@
             if (pnFont == nil) {
                 pnFont = [NSFont fontWithName:@"Arial" size:pnFontSize];
             }
-            [pageNrAttribsDict setObject:pnFont forKey:NSFontAttributeName];
+            pageNrAttribsDict[NSFontAttributeName] = pnFont;
             
             
             //links von der Seitenzahl
-            if (![[pnFormatArr objectAtIndex:0] isEqualTo:@""]) {
-                [pnMutableString insertString:[pnFormatArr objectAtIndex:0] atIndex:0];
+            if (![pnFormatArr[0] isEqualTo:@""]) {
+                [pnMutableString insertString:pnFormatArr[0] atIndex:0];
             }
             //die Seitenzahl
             [pnMutableString appendString:[NSString stringWithFormat:@"%i", pnNumberToShow]];
             //rechts von der Seitenzahl
-            if (![[pnFormatArr objectAtIndex:1] isEqualTo:@""]) {
-                [pnMutableString appendString:[pnFormatArr objectAtIndex:1]];
+            if (![pnFormatArr[1] isEqualTo:@""]) {
+                [pnMutableString appendString:pnFormatArr[1]];
             }
             
             
@@ -157,19 +157,19 @@
             //NSMutableParagraphStyle *myParaStyle = [[NSMutableParagraphStyle alloc] init];
             //anpassen in X
             if (pageNrAlignment == 0) { //left
-                pnPosition.x = [printInfo rightMargin];
+                pnPosition.x = printInfo.rightMargin;
             } else if (pageNrAlignment == 1) { //center
                 pnPosition.x = NSMidX([self pageHeaderRect]) - pnFontSize + 2;
                 
             } else if (pageNrAlignment == 2) { //right
-                pnPosition.x = [printInfo paperSize].width - [printInfo rightMargin] - pnFontSize;
+                pnPosition.x = printInfo.paperSize.width - printInfo.rightMargin - pnFontSize;
                 //[myParaStyle setAlignment:NSRightTextAlignment];
                 
             } else if (pageNrAlignment == 3) { //alternate
                 if (pnAlternate == (pnNumberToShow & 1)) {//rechts
-                    pnPosition.x = [printInfo paperSize].width - [printInfo rightMargin] - pnFontSize;
+                    pnPosition.x = printInfo.paperSize.width - printInfo.rightMargin - pnFontSize;
                 } else {//links
-                    pnPosition.x = [printInfo rightMargin];
+                    pnPosition.x = printInfo.rightMargin;
                 }
             } else {
                 NSAssert(0, @"Houston we have a problem");
@@ -206,9 +206,9 @@
         
         
     } else { //der fall wo ich nur eine auswahl von graphics darstellen will zBsp bei der PDFRepresantation
-        i = [self.graphics count];
+        i = (self.graphics).count;
         while (i-- > 0) {
-            curGraphic = [self.graphics objectAtIndex:i];
+            curGraphic = (self.graphics)[i];
             drawingBounds = [curGraphic drawingBounds];
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
@@ -221,7 +221,7 @@
 }
 
 - (NSRect)rectForPage:(int)page {
-    return NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height);
+    return NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
 - (BOOL)knowsPageRange:(NSRangePointer)aRange {

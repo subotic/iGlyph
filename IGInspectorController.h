@@ -12,7 +12,7 @@
     
 }
 
-+ (id)sharedInspectorController;
++ (IGInspectorController*)sharedInspectorController;
 
 - (void)setInitialInspectorView;
 

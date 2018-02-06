@@ -15,9 +15,9 @@
 }
 
 + (IGPICTCreator *) IGPICTCreatorWithSize:(NSSize)PICTSSize;
-- (id) initWithSize:(NSSize)PICTSSize;
+- (instancetype) initWithSize:(NSSize)PICTSSize;
 - (void) lockFocus;
 - (void) unlockFocus;
-- (NSData *) PICTRepresentation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *PICTRepresentation;
 
 @end

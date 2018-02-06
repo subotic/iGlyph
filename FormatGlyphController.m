@@ -23,7 +23,7 @@
 
 @implementation FormatGlyphController
 
-+ (id)sharedFormatGlyphController
++ (FormatGlyphController*)sharedFormatGlyphController
 {
     static FormatGlyphController *_sharedFormatGlyphController = nil;
     
@@ -33,11 +33,11 @@
     return _sharedFormatGlyphController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithWindowNibName:@"FormatGlyph"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"FormatGlyph"];
+        self.windowFrameAutosaveName = @"FormatGlyph";
     }
     [self setShouldCascadeWindows:NO];
     
@@ -51,7 +51,7 @@
 
 - (void) convertToViewController
 {
-    controlledView = [[[self window] contentView] retain];
+    controlledView = [self.window.contentView retain];
     //[[self window] orderOut:nil];
     [self setWindow: nil];
 }
@@ -69,9 +69,9 @@
 
 - (void)awakeFromNib
 {
-    [angleTextField setStringValue:@"0"];
+    angleTextField.stringValue = @"0";
     [angleTextField setEditable:TRUE];
-    [sizeTextField setStringValue:@"25"];
+    sizeTextField.stringValue = @"25";
     [sizeTextField setEditable:TRUE];
     
     //NSLog(@"(FormatGlyphController.m)->awakeFromNib ----");
@@ -81,21 +81,22 @@
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    NSLog(@"FormatGlyphController(mainWindowChanged)-> %@", [[NSApp mainWindow] title]);
+    NSLog(@"FormatGlyphController(mainWindowChanged)-> %@", NSApp.mainWindow.title);
     [self restoreTmpFormating];
 }
 
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"FormatGlyph"];
+    [self.window setFrameUsingName:@"FormatGlyph"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(FormatGlyphController.m)->Notification received - %@\n", [notification name]);
-    [[NSApp delegate] resetMenuItemFlag:FORMATGLYPH_MENU_TAG];
+    NSLog(@"(FormatGlyphController.m)->Notification received - %@\n", notification.name);
+    
+    [NSApp.delegate resetMenuItemFlag:FORMATGLYPH_MENU_TAG];
 }
 
 - (IBAction)glyphAngleTextFieldAction:(id)sender
@@ -105,28 +106,28 @@
   IGGraphic *tmpGlyph = [self theOnlySelectedGlyph];
   
   //den slider verschieben
-  [angleSlider setFloatValue:[sender intValue]];
+  angleSlider.floatValue = [sender intValue];
   
   //den richtigen knopf auswŠhlen
   [angleButtonMatrix deselectAllCells];
   
   if ([sender intValue] == 0) {
     [angleButtonMatrix deselectSelectedCell];
-    [[angleButtonMatrix cellWithTag:[sender intValue]] setState:NSOnState];
+    [angleButtonMatrix cellWithTag:[sender intValue]].state = NSOnState;
   } else if ([sender intValue] == 90) {
     [angleButtonMatrix deselectSelectedCell];
-    [[angleButtonMatrix cellWithTag:[sender intValue]] setState:NSOnState];
+    [angleButtonMatrix cellWithTag:[sender intValue]].state = NSOnState;
   } else if ([sender intValue] == 180) {
     [angleButtonMatrix deselectSelectedCell];
-    [[angleButtonMatrix cellWithTag:[sender intValue]] setState:NSOnState];
+    [angleButtonMatrix cellWithTag:[sender intValue]].state = NSOnState;
   } else if ([sender intValue] == 270) {
     [angleButtonMatrix deselectSelectedCell];
-    [[angleButtonMatrix cellWithTag:[sender intValue]] setState:NSOnState];
+    [angleButtonMatrix cellWithTag:[sender intValue]].state = NSOnState;
   }
   
   //zum schluss die glyphe abŠndern
   if (tmpGlyph) {
-    [tmpGlyph setAngle:[sender intValue]];
+    tmpGlyph.angle = [sender intValue];
     [[self theMainView] invalidateGraphic:tmpGlyph];
     [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
   }
@@ -140,13 +141,13 @@
     if ( [sender tag] == 0) {
         int _cellTag = [[sender selectedCell] tag];
         NSLog(@"angle set %i", _cellTag);
-        [angleSlider setFloatValue:_cellTag];
-        [angleTextField setIntValue:_cellTag];
+        angleSlider.floatValue = _cellTag;
+        angleTextField.intValue = _cellTag;
         [angleButtonMatrix deselectAllCells];
-        [[angleButtonMatrix cellWithTag:_cellTag] setState:NSOnState];
+        [angleButtonMatrix cellWithTag:_cellTag].state = NSOnState;
         
         if (tmpGlyph) {
-            [tmpGlyph setAngle:_cellTag];
+            tmpGlyph.angle = _cellTag;
             [[self theMainView] invalidateGraphic:tmpGlyph];
             [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
         }
@@ -155,25 +156,25 @@
     } else {
         int _sliderIntValue = [sender intValue];
         NSLog(@"angle set %d", _sliderIntValue);
-        [angleTextField setStringValue:[[NSString alloc] initWithFormat:@"%d", _sliderIntValue]];
+        angleTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", _sliderIntValue];
         [angleButtonMatrix deselectAllCells];
         
         if (_sliderIntValue == 0) {
             [angleButtonMatrix deselectSelectedCell];
-            [[angleButtonMatrix cellWithTag:_sliderIntValue] setState:NSOnState];
+            [angleButtonMatrix cellWithTag:_sliderIntValue].state = NSOnState;
         } else if (_sliderIntValue == 90) {
             [angleButtonMatrix deselectSelectedCell];
-            [[angleButtonMatrix cellWithTag:_sliderIntValue] setState:NSOnState];
+            [angleButtonMatrix cellWithTag:_sliderIntValue].state = NSOnState;
         } else if (_sliderIntValue == 180) {
             [angleButtonMatrix deselectSelectedCell];
-            [[angleButtonMatrix cellWithTag:_sliderIntValue] setState:NSOnState];
+            [angleButtonMatrix cellWithTag:_sliderIntValue].state = NSOnState;
         } else if (_sliderIntValue == 270) {
             [angleButtonMatrix deselectSelectedCell];
-            [[angleButtonMatrix cellWithTag:_sliderIntValue] setState:NSOnState];
+            [angleButtonMatrix cellWithTag:_sliderIntValue].state = NSOnState;
         }
             
         if (tmpGlyph) {
-            [tmpGlyph setAngle:[sender intValue]];
+            tmpGlyph.angle = [sender intValue];
             [[self theMainView] invalidateGraphic:tmpGlyph];
             [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
         }
@@ -182,11 +183,11 @@
 
 - (IBAction)glyphSizeStepperAction:(id)sender
 {
-    [sizeTextField setStringValue:[[NSString alloc] initWithFormat:@"%d", [sender intValue]]];
+    sizeTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", [sender intValue]];
     
     IGGraphic *tmpGlyph = [self theOnlySelectedGlyph];
     if (tmpGlyph) {
-        [tmpGlyph setFontSize:(float)[sender intValue]];
+        tmpGlyph.fontSize = (float)[sender intValue];
         [[self theMainView] invalidateGraphic:tmpGlyph];
         [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
     }
@@ -195,11 +196,11 @@
 - (IBAction)glyphSizeTextFieldAction:(id)sender
 {   
     if ([sender intValue] > 7 && [sender intValue] < 151) {
-        [stepperButton setIntValue:[sender intValue]];
+        stepperButton.intValue = [sender intValue];
         
         IGGraphic *tmpGlyph = [self theOnlySelectedGlyph];
         if (tmpGlyph) {
-            [tmpGlyph setFontSize:(float)[sender intValue]];
+            tmpGlyph.fontSize = (float)[sender intValue];
             [[self theMainView] invalidateGraphic:tmpGlyph];
             [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
         }
@@ -251,7 +252,7 @@
     tempGlyphData = [[IGFontData sharedFontData] getGlyphForSymbol:[sender stringValue]];
     if (tempGlyphData) {
         NSLog(@"%@",tempGlyphData);
-        [[self theOnlySelectedGlyph] replaceGlyph:(unichar)(0xF000 + [[tempGlyphData objectAtIndex:0] intValue]) withFont:[tempGlyphData objectAtIndex:1]];
+        [[self theOnlySelectedGlyph] replaceGlyph:(unichar)(0xF000 + [tempGlyphData[0] intValue]) withFont:tempGlyphData[1]];
     } else {
         NSRunAlertPanel(@"Replacing Glyph Error",@"Die Glyphe ... gibt es nicht",@"OK",nil,nil);
     }
@@ -259,40 +260,40 @@
 }
 
 - (float)fontSize {
-    return [[sizeTextField stringValue] floatValue];
+    return sizeTextField.stringValue.floatValue;
 }
 
 - (void)setFontSize:(float)value {
-    [stepperButton setIntValue:(int)value];
-    [sizeTextField setStringValue:[[NSString alloc] initWithFormat:@"%d", (int)value]];
+    stepperButton.intValue = (int)value;
+    sizeTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", (int)value];
 }
 
 - (BOOL)rubricColor {
-    return [rubricCheckBoxOutlet state];
+    return rubricCheckBoxOutlet.state;
 }
 - (void)setRubricColor:(BOOL)value {
-    [rubricCheckBoxOutlet setState:value];
+    rubricCheckBoxOutlet.state = value;
 }
 
 - (BOOL)mirrored {
-    return [mirroredCheckBoxOutlet state];
+    return mirroredCheckBoxOutlet.state;
 }
 
 - (void)setMirrored:(BOOL)value {
-    [mirroredCheckBoxOutlet setState:value];
+    mirroredCheckBoxOutlet.state = value;
 }
 
 - (int)angle {
-    return [[angleTextField stringValue] intValue];
+    return angleTextField.stringValue.intValue;
 }
 
 - (void)setAngle:(int)value {
-    [angleTextField setStringValue:[[NSString alloc] initWithFormat:@"%d", value]];
+    angleTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", value];
     [angleButtonMatrix deselectAllCells];
     if (value == 0 || value == 90 || value == 180 || value == 270) {
-        [[angleButtonMatrix cellWithTag:value] setState:NSOnState];
+        [angleButtonMatrix cellWithTag:value].state = NSOnState;
     }
-    [angleSlider setIntValue:value];
+    angleSlider.intValue = value;
 }
 
 //glyph formating
@@ -307,10 +308,10 @@
 
 - (void)showSelectedGlyphFormating {
     NSLog(@"FormatGlyphController(showSelectedGlyphFormating)");
-    [self setFontSize:[[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]] fontSize]];
+    [self setFontSize:[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]].fontSize];
     [self setRubricColor:[[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]] rubricColor]];
-    [self setMirrored:[[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]] mirrored]];
-    [self setAngle:[[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]] angle]];
+    [self setMirrored:[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]].mirrored];
+    [self setAngle:[[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]].angle];
 }
 
 - (void)restoreTmpFormating {
@@ -330,15 +331,15 @@
 
 
 -(void)setMainWindowAsKey {
-  if (![[NSApp mainWindow] isKeyWindow]) [[NSApp mainWindow] makeKeyWindow];
+  if (!NSApp.mainWindow.keyWindow) [NSApp.mainWindow makeKeyWindow];
 }
 
 - (NSWindow *)theMainWindow {
-    return [NSApp mainWindow];
+    return NSApp.mainWindow;
 }
 
 - (IGDrawWindowController *)theMainWindowController {
-    return [[self theMainWindow] windowController];
+    return [self theMainWindow].windowController;
 }
 
 - (IGGraphicView *)theMainView {

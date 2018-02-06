@@ -41,9 +41,9 @@
     
 }
 
-+ (id)sharedLineController;
++ (LineController*)sharedLineController;
 
-- (NSView *)controlledView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *controlledView;
 
 - (IBAction)lineTypeChange:(id)sender;
 - (IBAction)lineWidthChange:(id)sender;
@@ -53,23 +53,17 @@
 - (IBAction)arrowHeadSizeChange:(id)sender;
 - (IBAction)doReverseArrow:(id)sender;
 
-- (void)setLineType:(int)aType;
-- (int)lineType;
+@property (NS_NONATOMIC_IOSONLY) int lineType;
 
-- (void)setLineWidth:(float)aWidth;
-- (float)lineWidth;
+@property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
-- (void)setRubricLine:(BOOL)aValue;
-- (BOOL)rubricLine;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-- (void)setArrowType:(int)aType;
-- (int)arrowType;
+@property (NS_NONATOMIC_IOSONLY) int arrowType;
 
-- (void)setArrowHead:(float)aHead;
-- (float)arrowHead;
+@property (NS_NONATOMIC_IOSONLY) float arrowHead;
 
-- (void)setArrowHeadSize:(float)aHeadSize;
-- (float)arrowHeadSize;
+@property (NS_NONATOMIC_IOSONLY) float arrowHeadSize;
 
 
 //line tmp formating saving
@@ -78,8 +72,8 @@
 
 
 //the key window stuff
-- (NSWindow *)theMainWindow;
-- (IGDrawWindowController *)theMainWindowController;
-- (IGGraphicView *)theMainView;
-- (IGGraphic *)theOnlySelectedLine;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *theOnlySelectedLine;
 @end

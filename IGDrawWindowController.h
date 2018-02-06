@@ -13,7 +13,7 @@
 
 
 
-typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROLL } ScrollingBehavior;
+typedef NS_ENUM(unsigned int, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROLL };
 
 #import <Cocoa/Cocoa.h>
 
@@ -51,7 +51,7 @@ typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROL
     IBOutlet NSTextField *glyphGroupTextField;
 }
 
-- (IGGraphicView *)graphicView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *graphicView;
 
 // Creating Graphics
 //- (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
@@ -61,7 +61,7 @@ typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROL
 
 - (void)invalidateGraphic:(IGGraphic *)graphic;
 
-- (NSMutableArray *)selectedGraphics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSMutableArray *selectedGraphics;
 - (void)selectGraphic:(IGGraphic *)graphic;
 - (void)deselectGraphic:(IGGraphic *)graphic;
 - (void)clearSelection;
@@ -70,7 +70,7 @@ typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROL
 
 - (void)updateViewFromPreferences;
 
-- (NSPrintInfo *)documentPrintInfo;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSPrintInfo *documentPrintInfo;
 
     /*!
     @method documentSize
@@ -78,8 +78,8 @@ typedef enum { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROL
      @discussion Gets the size of the document (paper size minus the margins) from the designated document class or if there is none then calculates the document size
      @result     Gives NSSize back
      */
-- (NSSize)documentSize;
-- (NSSize)paperSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize documentSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize paperSize;
 
 
 - (IBAction)pageMargins:(id)sender;

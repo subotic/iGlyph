@@ -11,16 +11,16 @@
 
 @implementation IGDestroyed
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    [self setBounds:NSMakeRect(250, 350, 100, 50)];
+    self.bounds = NSMakeRect(250, 350, 100, 50);
   }
   return self;
 }
 
 - (NSBezierPath *)bezierPath {
-    NSRect localBounds = [self bounds];
+    NSRect localBounds = self.bounds;
     float abstand = 3;
     NSPoint linkerPunkt;
     NSPoint rechterPunkt;
@@ -44,7 +44,7 @@
         [path moveToPoint:linkerPunkt];
         [path lineToPoint:rechterPunkt];
     }
-    [path setLineWidth:0.5];
+    path.lineWidth = 0.5;
     return path;
 }
 
@@ -52,14 +52,14 @@
     if (isSelected && ([self knobUnderPoint:point] != NoKnob)) {
         return YES;
     } else {//jeder klick innerhalb soll die Graphic markieren. würde ich den original bezPath nehmen, dann würde dies nur passieren wenn ich die schrafur treffe
-        NSBezierPath *path = [NSBezierPath bezierPathWithRect:[self bounds]]; 
+        NSBezierPath *path = [NSBezierPath bezierPathWithRect:self.bounds]; 
         
         if (path) {
             if ([path containsPoint:point]) {
                 return YES;
             }
         } else {
-            if (NSPointInRect(point, [self bounds])) {
+            if (NSPointInRect(point, self.bounds)) {
                 return YES;
             }
         }

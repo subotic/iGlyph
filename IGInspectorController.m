@@ -8,21 +8,21 @@
 
 @implementation IGInspectorController
 
-+ (id)sharedInspectorController
++ (IGInspectorController*)sharedInspectorController
 {
   static IGInspectorController *_sharedObjectsController = nil;
   
   if (!_sharedObjectsController) {
-    _sharedObjectsController = [[IGInspectorController allocWithZone:[self zone]] init];
+    _sharedObjectsController = [[IGInspectorController allocWithZone:nil] init];
   }
   return _sharedObjectsController;
 }
 
-- (id)init
+- (instancetype)init
 {
   self = [self initWithWindowNibName:@"Inspector"];
   if (self) {
-    [self setWindowFrameAutosaveName:@"Inspector"];
+    self.windowFrameAutosaveName = @"Inspector";
   }
   [self setShouldCascadeWindows:NO];
   
@@ -37,7 +37,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-  NSLog(@"(InspectorController.m)->Notification received - %@\n", [notification name]);
+  NSLog(@"(InspectorController.m)->Notification received - %@\n", notification.name);
   //[[NSApp delegate] resetMenuItemFlag:INSPECTOR_MENU_TAG];
 }
 
@@ -102,67 +102,67 @@
   {
     case 0:
       NSLog(@"Tag 0 -> Writing Direction");
-      [[self window] setTitle:@"Writing Direction"];
-      newContentView = [[WritingDirectionController sharedWritingDirectionController] controlledView];
+      self.window.title = @"Writing Direction";
+      newContentView = [WritingDirectionController sharedWritingDirectionController].controlledView;
       break;
       
     case 1:
       NSLog(@"Tag 1 -> Format Glyph");
       
-      [[self window] setTitle:@"Format Glyph"];
-      newContentView = [[FormatGlyphController sharedFormatGlyphController] controlledView];
+      self.window.title = @"Format Glyph";
+      newContentView = [FormatGlyphController sharedFormatGlyphController].controlledView;
       break;
       
     case 2:
       NSLog(@"Tag 2 -> Cartouche");
-      [[self window] setTitle:@"Cartouche"];
-      newContentView = [[CartoucheController sharedCartoucheController] controlledView];
+      self.window.title = @"Cartouche";
+      newContentView = [CartoucheController sharedCartoucheController].controlledView;
       
       break;
       
     case 3:
-      [[self window] setTitle:@"Line"];
-      newContentView = [[LineController sharedLineController] controlledView];
+      self.window.title = @"Line";
+      newContentView = [LineController sharedLineController].controlledView;
       
       break;
       
     case 4:
-      [[self window] setTitle:@"Page Nr."];
-      newContentView = [[PageNrController sharedPageNrController] controlledView];
+      self.window.title = @"Page Nr.";
+      newContentView = [PageNrController sharedPageNrController].controlledView;
       
       break;
       
     case 5:
-      [[self window] setTitle:@"Styles"];
+      self.window.title = @"Styles";
       
       break;
       
     case 6:
-      [[self window] setTitle:@"Text"];
+      self.window.title = @"Text";
       
       break;
       
     case 7:
-      [[self window] setTitle:@"Layout"];
+      self.window.title = @"Layout";
       
       break;
   }
   
   [self resizeInspectorForSelectedView:newContentView];
-  [inspectorBox setContentView: newContentView];
-  [[[self window] contentView] setNeedsDisplay:YES];
-  [[self window] setViewsNeedDisplay:YES];
+  inspectorBox.contentView = newContentView;
+  [self.window.contentView setNeedsDisplay:YES];
+  [self.window setViewsNeedDisplay:YES];
 }
 
 
 - (void)resizeInspectorForSelectedView:(NSView *)selectedView 
 {
   
-  NSRect inspectorWindowRect = [[self window] frame];
-  NSRect inspectorBoxRect = [inspectorBox frame];
-  NSSize minimumInspectorSize = [[self window] minSize];
+  NSRect inspectorWindowRect = self.window.frame;
+  NSRect inspectorBoxRect = inspectorBox.frame;
+  NSSize minimumInspectorSize = self.window.minSize;
   
-  NSRect selectedViewRect = [selectedView frame];
+  NSRect selectedViewRect = selectedView.frame;
   if (NSIsEmptyRect(selectedViewRect)) {
     NSLog(@"selectedViewRect is empty!!!");
     selectedViewRect = NSMakeRect(0, 0, minimumInspectorSize.width, minimumInspectorSize.height - 25);
@@ -183,7 +183,7 @@
     inspectorWindowRect.origin.y += inspectorWindowRect.size.height - 41 - minimumInspectorSize.height;
     inspectorWindowRect.size.height = minimumInspectorSize.height + 41;
     
-    [[self window] setFrame:NSMakeRect(inspectorWindowRect.origin.x, inspectorWindowRect.origin.y, inspectorWindowRect.size.width, inspectorWindowRect.size.height) display:YES animate:YES];
+    [self.window setFrame:NSMakeRect(inspectorWindowRect.origin.x, inspectorWindowRect.origin.y, inspectorWindowRect.size.width, inspectorWindowRect.size.height) display:YES animate:YES];
     
     [inspectorBox setFrameSize:minimumInspectorSize];
   } else {
@@ -191,7 +191,7 @@
     
     inspectorWindowRect.origin.y += inspectorWindowRect.size.height - 41 - selectedViewRect.size.height;
     inspectorWindowRect.size.height = selectedViewRect.size.height + 41;
-    [[self window] setFrame:NSMakeRect(inspectorWindowRect.origin.x, inspectorWindowRect.origin.y, inspectorWindowRect.size.width, inspectorWindowRect.size.height) display:YES animate:YES];
+    [self.window setFrame:NSMakeRect(inspectorWindowRect.origin.x, inspectorWindowRect.origin.y, inspectorWindowRect.size.width, inspectorWindowRect.size.height) display:YES animate:YES];
     
     inspectorBoxRect.size.height = selectedViewRect.size.height;
     [inspectorBox setFrameSize:inspectorBoxRect.size];

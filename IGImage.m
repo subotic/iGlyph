@@ -11,7 +11,7 @@
 
 @implementation IGImage
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         _image = nil;
@@ -20,20 +20,13 @@
     return self;
 }
 
-- (void)dealloc {
-    if (_image != _cachedImage) {
-        [_cachedImage release];
-    }
-    [_image release];
-    [super dealloc];
-}
 
 - (id)copyWithZone:(NSZone *)zone {
     id newObj = [super copyWithZone:zone];
     
-    [newObj setImage:[self image]];
-    [newObj setFlippedHorizontally:[self flippedHorizontally]];
-    [newObj setFlippedVertically:[self flippedVertically]];
+    [newObj setImage:self.image];
+    [newObj setFlippedHorizontally:self.flippedHorizontally];
+    [newObj setFlippedVertically:self.flippedVertically];
     
     return newObj;
 }
@@ -44,17 +37,13 @@
 // ====== IGDrawWindowController accessors and convenience methods ===========
 
 - (void)IG_clearCachedImage {
-    if (_cachedImage != _image) {
-        [_cachedImage release];
-    }
     _cachedImage = nil;
 }
 
 - (void)setImage:(NSImage *)image {
     if (image != _image) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setImage:_image];
-        [_image release];
-        _image = [image retain];
+        [[self.undoManager prepareWithInvocationTarget:self] setImage:_image];
+        _image = image;
         [self IG_clearCachedImage];
         [self didChange];
     }
@@ -66,17 +55,17 @@
 
 - (NSImage *)transformedImage {
     if (!_cachedImage) {
-        NSRect bounds = [self bounds];
-        NSImage *image = [self image];
-        NSSize imageSize = [image size];
+        NSRect bounds = self.bounds;
+        NSImage *image = self.image;
+        NSSize imageSize = image.size;
         
         if (NSEqualSizes(bounds.size, imageSize)) {
             _cachedImage = _image;
         } else if (!NSIsEmptyRect(bounds)) {
-            BOOL flippedHorizontally = [self flippedHorizontally];
-            BOOL flippedVertically = [self flippedVertically];
+            BOOL flippedHorizontally = self.flippedHorizontally;
+            BOOL flippedVertically = self.flippedVertically;
             
-            _cachedImage = [[NSImage allocWithZone:[self zone]] initWithSize:bounds.size];
+            _cachedImage = [[NSImage allocWithZone:nil] initWithSize:bounds.size];
             if (!NSIsEmptyRect(bounds)) {
                 // Only draw in the image if it has any content.
                 [_cachedImage lockFocus];
@@ -84,8 +73,8 @@
                 if (flippedHorizontally || flippedVertically) {
                     // If the image needs flipping, we need to play some games with the transform matrix
                     NSAffineTransform *transform = [NSAffineTransform transform];
-                    [transform scaleXBy:([self flippedHorizontally] ? -1.0 : 1.0) yBy:([self flippedVertically] ? -1.0 : 1.0)];
-                    [transform translateXBy:([self flippedHorizontally] ? -bounds.size.width : 0.0) yBy:([self flippedVertically] ? -bounds.size.height : 0.0)];
+                    [transform scaleXBy:(self.flippedHorizontally ? -1.0 : 1.0) yBy:(self.flippedVertically ? -1.0 : 1.0)];
+                    [transform translateXBy:(self.flippedHorizontally ? -bounds.size.width : 0.0) yBy:(self.flippedVertically ? -bounds.size.height : 0.0)];
                     [transform concat];
                 }
                 
@@ -99,7 +88,7 @@
 
 - (void)setFlippedHorizontally:(BOOL)flag {
     if (_flippedHorizontally != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setFlippedHorizontally:_flippedHorizontally];
+        [[self.undoManager prepareWithInvocationTarget:self] setFlippedHorizontally:_flippedHorizontally];
         _flippedHorizontally = flag;
         [self IG_clearCachedImage];
         [self didChange];
@@ -112,7 +101,7 @@
 
 - (void)setFlippedVertically:(BOOL)flag {
     if (_flippedVertically != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setFlippedVertically:_flippedVertically];
+        [[self.undoManager prepareWithInvocationTarget:self] setFlippedVertically:_flippedVertically];
         _flippedVertically = flag;
         [self IG_clearCachedImage];
         [self didChange];
@@ -124,18 +113,18 @@
 }
 
 - (void)flipHorizontally {
-    [self setFlippedHorizontally:([self flippedHorizontally] ? NO : YES)];
+    self.flippedHorizontally = (self.flippedHorizontally ? NO : YES);
 }
 
 - (void)flipVertically {
-    [self setFlippedVertically:([self flippedVertically] ? NO : YES)];
+    self.flippedVertically = (self.flippedVertically ? NO : YES);
 }
 
 - (void)setBounds:(NSRect)bounds {
-    if (!NSEqualSizes([self bounds].size, bounds.size)) {
+    if (!NSEqualSizes(self.bounds.size, bounds.size)) {
         [self IG_clearCachedImage];
     }
-    [super setBounds:bounds];
+    super.bounds = bounds;
 }
 
 - (BOOL)drawsStroke {
@@ -149,14 +138,14 @@
 }
 
 - (void)drawInView:(IGGraphicView *)view isSelected:(BOOL)flag {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     NSImage *image;
     
-    if ([self drawsFill]) {
-        [[self fillColor] set];
+    if (self.drawsFill) {
+        [self.fillColor set];
         NSRectFill(bounds);
     }
-    image = [self transformedImage];
+    image = self.transformedImage;
     if (image) {
         [image compositeToPoint:NSMakePoint(NSMinX(bounds), NSMaxY(bounds)) operation:NSCompositeSourceOver];
     }
@@ -164,12 +153,12 @@
 }
 
 - (void)makeNaturalSize {
-    NSRect bounds = [self bounds];
-    NSImage *image = [self image];
-    NSSize requiredSize = (image ? [image size] : NSMakeSize(10.0, 10.0));
+    NSRect bounds = self.bounds;
+    NSImage *image = self.image;
+    NSSize requiredSize = (image ? image.size : NSMakeSize(10.0, 10.0));
     
     bounds.size = requiredSize;
-    [self setBounds:bounds];
+    self.bounds = bounds;
     [self setFlippedHorizontally:NO];
     [self setFlippedVertically:NO];
 }
@@ -179,10 +168,10 @@ NSString *IGFlippedHorizontallyKey = @"FlippedHorizontally";
 NSString *IGFlippedVerticallyKey = @"FlippedVertically";
 
 - (NSMutableDictionary *)propertyListRepresentation {
-    NSMutableDictionary *dict = [super propertyListRepresentation];
-    [dict setObject:[NSArchiver archivedDataWithRootObject:[self image]] forKey:IGImageContentsKey];
-    [dict setObject:([self flippedHorizontally] ? @"YES" : @"NO") forKey:IGFlippedHorizontallyKey];
-    [dict setObject:([self flippedVertically] ? @"YES" : @"NO") forKey:IGFlippedVerticallyKey];
+    NSMutableDictionary *dict = super.propertyListRepresentation;
+    dict[IGImageContentsKey] = [NSArchiver archivedDataWithRootObject:self.image];
+    dict[IGFlippedHorizontallyKey] = (self.flippedHorizontally ? @"YES" : @"NO");
+    dict[IGFlippedVerticallyKey] = (self.flippedVertically ? @"YES" : @"NO");
     return dict;
 }
 
@@ -191,29 +180,28 @@ NSString *IGFlippedVerticallyKey = @"FlippedVertically";
     
     [super loadPropertyListRepresentation:dict];
     
-    obj = [dict objectForKey:IGImageContentsKey];
+    obj = dict[IGImageContentsKey];
     if (obj) {
-        [self setImage:[NSUnarchiver unarchiveObjectWithData:obj]];
+        self.image = [NSUnarchiver unarchiveObjectWithData:obj];
     }
-    obj = [dict objectForKey:IGFlippedHorizontallyKey];
+    obj = dict[IGFlippedHorizontallyKey];
     if (obj) {
-        [self setFlippedHorizontally:[obj isEqualToString:@"YES"]];
+        self.flippedHorizontally = [obj isEqualToString:@"YES"];
     }
-    obj = [dict objectForKey:IGFlippedVerticallyKey];
+    obj = dict[IGFlippedVerticallyKey];
     if (obj) {
-        [self setFlippedVertically:[obj isEqualToString:@"YES"]];
+        self.flippedVertically = [obj isEqualToString:@"YES"];
     }
     _cachedImage = nil;
 }
 
 - (void)setImageFile:(NSString *)filePath {
     NSImage *newImage;
-    filePath = [filePath stringByStandardizingPath];
-    filePath = [filePath stringByExpandingTildeInPath];
-    newImage = [[NSImage allocWithZone:[self zone]] initWithContentsOfFile:filePath];
+    filePath = filePath.stringByStandardizingPath;
+    filePath = filePath.stringByExpandingTildeInPath;
+    newImage = [[NSImage allocWithZone:nil] initWithContentsOfFile:filePath];
     if (newImage) {
-        [self setImage:newImage];
-        [newImage release];
+        self.image = newImage;
     }
 }
 

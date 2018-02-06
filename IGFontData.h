@@ -30,17 +30,17 @@
    @result  Returns the newly initialized date object or nil on error.
 */
 
-+ (id)sharedFontData;
++ (instancetype)sharedFontData;
 
 - (void)readVGGlyphCodes;
 
-- (NSMutableArray *)getGlyphGroups;
-- (NSMutableDictionary *)getFontData;
+@property (NS_NONATOMIC_IOSONLY, getter=getGlyphGroups, readonly, copy) NSMutableArray *glyphGroups;
+@property (NS_NONATOMIC_IOSONLY, getter=getFontData, readonly, copy) NSMutableDictionary *fontData;
 
 - (NSString *)getFontNameFromIntValue:(NSString *)fontNameIntValue;
 
-- (NSMutableDictionary *)getGGGlyphDic;
-- (NSMutableDictionary *)getGlyphLauteDic;
+@property (NS_NONATOMIC_IOSONLY, getter=getGGGlyphDic, readonly, copy) NSMutableDictionary *GGGlyphDic;
+@property (NS_NONATOMIC_IOSONLY, getter=getGlyphLauteDic, readonly, copy) NSMutableDictionary *glyphLauteDic;
 
 - (NSArray *)getGlyphForSymbols:(NSArray *)symbolStringArray;
 - (NSArray *)getGlyphForSymbol:(NSString *)symbolString;

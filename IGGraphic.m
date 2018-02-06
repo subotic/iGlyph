@@ -40,17 +40,17 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 #pragma mark -- init stuff --
 // =================================== Initialization ===================================
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         _document = nil;
-        [self setBounds:NSMakeRect(0.0, 0.0, 1.0, 1.0)];
-        [self setFillColor:[NSColor whiteColor]];
+        self.bounds = NSMakeRect(0.0, 0.0, 1.0, 1.0);
+        self.fillColor = [NSColor whiteColor];
         [self setDrawsFill:NO];
-        [self setStrokeColor:[NSColor blackColor]];
+        self.strokeColor = [NSColor blackColor];
         [self setDrawsStroke:YES];
-        [self setStrokeLineWidth:1.0];
-        [self setPageNr:1];
+        self.strokeLineWidth = 1.0;
+        self.pageNr = 1;
         
         _origBounds = NSZeroRect;
         _gFlags.manipulatingBounds = NO;
@@ -73,22 +73,18 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
     return self;
 }
 
-- (void)dealloc {
-    [super dealloc];
-
-}
 
 - (id)copyWithZone:(NSZone *)zone {
     id newObj = [[[self class] allocWithZone:zone] init];
     
     // Document is not "copied".  The new graphic will need to be inserted into a document.
-    [newObj setBounds:[self bounds]];
-    [newObj setFillColor:[self fillColor]];
-    [newObj setDrawsFill:[self drawsFill]];
-    [newObj setStrokeColor:[self strokeColor]];
-    [newObj setDrawsStroke:[self drawsStroke]];
-    [newObj setStrokeLineWidth:[self strokeLineWidth]];
-    [newObj setPageNr:[self pageNr]];
+    [newObj setBounds:self.bounds];
+    [newObj setFillColor:self.fillColor];
+    [newObj setDrawsFill:self.drawsFill];
+    [newObj setStrokeColor:self.strokeColor];
+    [newObj setDrawsStroke:self.drawsStroke];
+    [newObj setStrokeLineWidth:self.strokeLineWidth];
+    [newObj setPageNr:self.pageNr];
     
     return newObj;
 }
@@ -115,7 +111,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 }
 
 - (NSUndoManager *)undoManager {
-    return [[self document] undoManager];
+    return self.document.undoManager;
 }
 
 - (NSString *)graphicType {
@@ -149,7 +145,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
             // wind up invalidating both the original rect and the new one.
             if ([self class] == [IGGlyph class]) [self setGlypBezPathShouldRecalculate:NO]; //damit die glyphe beim verschieben nicht neu gerechnet wird sondern nur verschoben wird
             [self didChange];
-            [[[self undoManager] prepareWithInvocationTarget:self] setBounds:_bounds];
+            [[self.undoManager prepareWithInvocationTarget:self] setBounds:_bounds];
         }
         _bounds = bounds;
         if (!_gFlags.manipulatingBounds) {
@@ -173,7 +169,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 
 - (void)setDrawsFill:(BOOL)flag {
     if (_gFlags.drawsFill != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setDrawsFill:_gFlags.drawsFill];
+        [[self.undoManager prepareWithInvocationTarget:self] setDrawsFill:_gFlags.drawsFill];
         _gFlags.drawsFill = (flag ? YES : NO);
         [self didChange];
     }
@@ -205,7 +201,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 
 - (void)setDrawsStroke:(BOOL)flag {
     if (_gFlags.drawsStroke != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setDrawsStroke:_gFlags.drawsStroke];
+        [[self.undoManager prepareWithInvocationTarget:self] setDrawsStroke:_gFlags.drawsStroke];
         _gFlags.drawsStroke = (flag ? YES : NO);
         [self didChange];
     }
@@ -237,7 +233,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 
 - (void)setStrokeLineWidth:(float)width {
     if (_strokeLineWidth != width) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setStrokeLineWidth:_strokeLineWidth];
+        [[self.undoManager prepareWithInvocationTarget:self] setStrokeLineWidth:_strokeLineWidth];
         if (width >= 0.0) {
             [self setDrawsStroke:YES];
             _strokeLineWidth = width;
@@ -273,7 +269,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
             _gFlags.manipulatingBounds = NO;
             temp = _bounds;
             _bounds = _origBounds;
-            [self setBounds:temp];
+            self.bounds = temp;
         } else {
             _gFlags.manipulatingBounds = NO;
         }
@@ -281,11 +277,11 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 }
 
 - (void)moveBy:(NSPoint)vector {
-    [self setBounds:NSOffsetRect([self bounds], vector.x, vector.y)];
+    self.bounds = NSOffsetRect(self.bounds, vector.x, vector.y);
 }
 
 - (void)moveTo:(NSPoint)position {
-    [self setBounds:NSMakeRect(position.x,position.y,[self bounds].size.width,[self bounds].size.height)];
+    self.bounds = NSMakeRect(position.x,position.y,self.bounds.size.width,self.bounds.size.height);
 }
 
 - (void)flipHorizontally {
@@ -331,7 +327,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 }
 
 - (int)resizeByMovingKnob:(int)knob toPoint:(NSPoint)point {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     if ((knob == UpperLeftKnob) || (knob == MiddleLeftKnob) || (knob == LowerLeftKnob)) {
         // Adjust left edge
@@ -362,7 +358,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
         bounds.origin.y -= bounds.size.height;
         [self flipVertically];
     }
-    [self setBounds:bounds];
+    self.bounds = bounds;
     return knob;
 }
 
@@ -410,28 +406,28 @@ NSString *IGPageNum = @"PageNr";
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSString *className = NSStringFromClass([self class]);
 
-    [dict setObject:className forKey:IGClassKey];
-    [dict setObject:NSStringFromRect([self bounds]) forKey:IGBoundsKey];
-    [dict setObject:([self drawsFill] ? @"YES" : @"NO") forKey:IGDrawsFillKey];
-    if ([self fillColor]) {
-        [dict setObject:[NSArchiver archivedDataWithRootObject:[self fillColor]] forKey:IGFillColorKey];
+    dict[IGClassKey] = className;
+    dict[IGBoundsKey] = NSStringFromRect(self.bounds);
+    dict[IGDrawsFillKey] = (self.drawsFill ? @"YES" : @"NO");
+    if (self.fillColor) {
+        dict[IGFillColorKey] = [NSArchiver archivedDataWithRootObject:self.fillColor];
     }
-    [dict setObject:([self drawsStroke] ? @"YES" : @"NO") forKey:IGDrawsStrokeKey];
-    if ([self strokeColor]) {
-        [dict setObject:[NSArchiver archivedDataWithRootObject:[self strokeColor]] forKey:IGStrokeColorKey];
+    dict[IGDrawsStrokeKey] = (self.drawsStroke ? @"YES" : @"NO");
+    if (self.strokeColor) {
+        dict[IGStrokeColorKey] = [NSArchiver archivedDataWithRootObject:self.strokeColor];
     }
-    [dict setObject:[NSString stringWithFormat:@"%.2f", [self strokeLineWidth]] forKey:IGStrokeLineWidthKey];
-    [dict setObject:[NSString stringWithFormat:@"%d", [self pageNr]] forKey:IGPageNum];
+    dict[IGStrokeLineWidthKey] = [NSString stringWithFormat:@"%.2f", self.strokeLineWidth];
+    dict[IGPageNum] = [NSString stringWithFormat:@"%d", self.pageNr];
     
     return dict;
 }
 
-+ (id)graphicWithPropertyListRepresentation:(NSDictionary *)dict {
-    Class theClass = NSClassFromString([dict objectForKey:IGClassKey]);
++ (instancetype)graphicWithPropertyListRepresentation:(NSDictionary *)dict {
+    Class theClass = NSClassFromString(dict[IGClassKey]);
     id theGraphic = nil;
     
     if (theClass) {
-        theGraphic = [[[theClass allocWithZone:NULL] init] autorelease];
+        theGraphic = [[theClass allocWithZone:NULL] init];
         if (theGraphic) {
             [theGraphic loadPropertyListRepresentation:dict];
         }
@@ -440,12 +436,12 @@ NSString *IGPageNum = @"PageNr";
 }
 
 //wenn ich das PC file einlese, muss ich noch gewisse abfragen machen, die ich am besten beim Objekt erstellen mache, da dort schon alles vorhanden ist
-+ (id)graphicWithPropertyListRepresentationFromPC:(NSDictionary *)dict {
-    Class theClass = NSClassFromString([dict objectForKey:IGClassKey]);
++ (instancetype)graphicWithPropertyListRepresentationFromPC:(NSDictionary *)dict {
+    Class theClass = NSClassFromString(dict[IGClassKey]);
     id theGraphic = nil;
     
     if (theClass) {
-        theGraphic = [[[theClass allocWithZone:NULL] init] autorelease];
+        theGraphic = [[theClass allocWithZone:NULL] init];
         if (theGraphic) {
             [theGraphic loadPropertyListRepresentationFromPC:dict];
         }
@@ -459,39 +455,39 @@ NSString *IGPageNum = @"PageNr";
 - (void)loadPropertyListRepresentation:(NSDictionary *)dict {
     id obj;
     
-    obj = [dict objectForKey:IGBoundsKey];
+    obj = dict[IGBoundsKey];
     if (obj) {
-        if ([[dict objectForKey:IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
+        if ([dict[IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
             NSRect tmpRect = NSRectFromString(obj);
             [self setOldGlyphBoundsSize:tmpRect.size];
-            [self setBounds:tmpRect];
+            self.bounds = tmpRect;
         } else {
-        [self setBounds:NSRectFromString(obj)];
+        self.bounds = NSRectFromString(obj);
         }
     }
-    obj = [dict objectForKey:IGFillColorKey];
+    obj = dict[IGFillColorKey];
     if (obj) {
-        [self setFillColor:[NSUnarchiver unarchiveObjectWithData:obj]];
+        self.fillColor = [NSUnarchiver unarchiveObjectWithData:obj];
     }
-    obj = [dict objectForKey:IGDrawsFillKey];
+    obj = dict[IGDrawsFillKey];
     if (obj) {
-        [self setDrawsFill:[obj isEqualToString:@"YES"]];
+        self.drawsFill = [obj isEqualToString:@"YES"];
     }
-    obj = [dict objectForKey:IGStrokeColorKey];
+    obj = dict[IGStrokeColorKey];
     if (obj) {
-        [self setStrokeColor:[NSUnarchiver unarchiveObjectWithData:obj]];
+        self.strokeColor = [NSUnarchiver unarchiveObjectWithData:obj];
     }
-    obj = [dict objectForKey:IGStrokeLineWidthKey];
+    obj = dict[IGStrokeLineWidthKey];
     if (obj) {
-        [self setStrokeLineWidth:[obj floatValue]];
+        self.strokeLineWidth = [obj floatValue];
     }
-    obj = [dict objectForKey:IGDrawsStrokeKey];
+    obj = dict[IGDrawsStrokeKey];
     if (obj) {
-        [self setDrawsStroke:[obj isEqualToString:@"YES"]];
+        self.drawsStroke = [obj isEqualToString:@"YES"];
     }
-    obj = [dict objectForKey:IGPageNum];
+    obj = dict[IGPageNum];
     if (obj) {
-        [self setPageNr:(unsigned)[obj intValue]];
+        self.pageNr = (unsigned)[obj intValue];
     }
     
     return;
@@ -500,39 +496,39 @@ NSString *IGPageNum = @"PageNr";
 - (void)loadPropertyListRepresentationFromPC:(NSDictionary *)dict {
     id obj;
     
-    obj = [dict objectForKey:IGBoundsKey];
+    obj = dict[IGBoundsKey];
     if (obj) {
-        if ([[dict objectForKey:IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
+        if ([dict[IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
             NSRect tmpRect = NSRectFromString(obj);
             [self setOldGlyphBoundsSize:tmpRect.size];
-            [self setBounds:tmpRect];
+            self.bounds = tmpRect;
         } else {
-            [self setBounds:NSRectFromString(obj)];
+            self.bounds = NSRectFromString(obj);
         }
     }
-    obj = [dict objectForKey:IGFillColorKey];
+    obj = dict[IGFillColorKey];
     if (obj) {
-        [self setFillColor:[NSUnarchiver unarchiveObjectWithData:obj]];
+        self.fillColor = [NSUnarchiver unarchiveObjectWithData:obj];
     }
-    obj = [dict objectForKey:IGDrawsFillKey];
+    obj = dict[IGDrawsFillKey];
     if (obj) {
-        [self setDrawsFill:[obj isEqualToString:@"YES"]];
+        self.drawsFill = [obj isEqualToString:@"YES"];
     }
-    obj = [dict objectForKey:IGStrokeColorKey];
+    obj = dict[IGStrokeColorKey];
     if (obj) {
-        [self setStrokeColor:[NSUnarchiver unarchiveObjectWithData:obj]];
+        self.strokeColor = [NSUnarchiver unarchiveObjectWithData:obj];
     }
-    obj = [dict objectForKey:IGStrokeLineWidthKey];
+    obj = dict[IGStrokeLineWidthKey];
     if (obj) {
-        [self setStrokeLineWidth:[obj floatValue]];
+        self.strokeLineWidth = [obj floatValue];
     }
-    obj = [dict objectForKey:IGDrawsStrokeKey];
+    obj = dict[IGDrawsStrokeKey];
     if (obj) {
-        [self setDrawsStroke:[obj isEqualToString:@"YES"]];
+        self.drawsStroke = [obj isEqualToString:@"YES"];
     }
-    obj = [dict objectForKey:IGPageNum];
+    obj = dict[IGPageNum];
     if (obj) {
-        [self setPageNr:(unsigned)[obj intValue]];
+        self.pageNr = (unsigned)[obj intValue];
     }
     
     return;
@@ -547,15 +543,15 @@ NSString *IGPageNum = @"PageNr";
 
 - (NSRect)drawingBounds {
     float inset = -IG_HALF_HANDLE_WIDTH;
-    if ([self drawsStroke]) {
-        float halfLineWidth = ([self strokeLineWidth] / 2.0) + 1.0;
+    if (self.drawsStroke) {
+        float halfLineWidth = (self.strokeLineWidth / 2.0) + 1.0;
         if (-halfLineWidth < inset) {
             inset = -halfLineWidth;
         }
     }
     //inset += -1.0; //weggemacht da ansonsten beim arc unter den knöpfen noch linie erscheint da ich bescheisse
     //NSLog(@"IGGraphic(drawingBounds) -> inset = %f", inset);
-    return NSInsetRect([self bounds], inset, inset);
+    return NSInsetRect(self.bounds, inset, inset);
 }
 
 - (NSBezierPath *)bezierPath {
@@ -570,14 +566,14 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (void)drawInView:(IGGraphicView *)view isSelected:(BOOL)flag { //wird für IGGlyph überladen
-    NSBezierPath *path = [self bezierPath];
+    NSBezierPath *path = self.bezierPath;
     if (path) {
-        if ([self drawsFill]) {
-            [[self fillColor] set];
+        if (self.drawsFill) {
+            [self.fillColor set];
             [path fill];
         }
-        if ([self drawsStroke]) {
-            [[self strokeColor] set];
+        if (self.drawsStroke) {
+            [self.strokeColor set];
             [path stroke];
         }
     }
@@ -591,8 +587,8 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (int)knobUnderPoint:(NSPoint)point {
-    NSRect bounds = [self bounds];
-    unsigned knobMask = [self knobMask];
+    NSRect bounds = self.bounds;
+    unsigned knobMask = self.knobMask;
     NSRect handleRect;
     
     handleRect.size.width = IG_HANDLE_WIDTH;
@@ -682,9 +678,9 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (void)drawHandlesInView:(IGGraphicView *)view {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     //NSLog(@"IGGraphic(drawHandlesInView) -> handleBounds x: %f, y: %f, w: %f, h: %f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-    unsigned knobMask = [self knobMask];
+    unsigned knobMask = self.knobMask;
     
     if (knobMask & UpperLeftKnobMask) {
         [self drawHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMinY(bounds)) inView:view];
@@ -724,44 +720,44 @@ NSString *IGPageNum = @"PageNr";
     static NSCursor *crosshairCursor = nil;
     if (!crosshairCursor) {
         NSImage *crosshairImage = [NSImage imageNamed:@"Cross"];
-        NSSize imageSize = [crosshairImage size];
-        crosshairCursor = [[NSCursor allocWithZone:[self zone]] initWithImage:crosshairImage hotSpot:NSMakePoint((imageSize.width / 2.0), (imageSize.height / 2.0))];
+        NSSize imageSize = crosshairImage.size;
+        crosshairCursor = [[NSCursor allocWithZone:nil] initWithImage:crosshairImage hotSpot:NSMakePoint((imageSize.width / 2.0), (imageSize.height / 2.0))];
     }
     return crosshairCursor;
 }
 
 - (BOOL)createWithEvent:(NSEvent *)theEvent inView:(IGGraphicView *)view {
     // default implementation tracks until mouseUp: just setting the bounds of the new graphic.
-    NSPoint point = [view convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSPoint point = [view convertPoint:theEvent.locationInWindow fromView:nil];
     int knob = LowerRightKnob;
     NSRect bounds;
-    BOOL snapsToGrid = [view snapsToGrid];
-    float spacing = [view gridSpacing];
-    BOOL echoToRulers = [[view enclosingScrollView] rulersVisible];
+    BOOL snapsToGrid = view.snapsToGrid;
+    float spacing = view.gridSpacing;
+    BOOL echoToRulers = view.enclosingScrollView.rulersVisible;
     
     [self startBoundsManipulation];
     if (snapsToGrid) {
         point.x = floor((point.x / spacing) + 0.5) * spacing;
         point.y = floor((point.y / spacing) + 0.5) * spacing;
     }
-    [self setBounds:NSMakeRect(point.x, point.y, 0.0, 0.0)];
+    self.bounds = NSMakeRect(point.x, point.y, 0.0, 0.0);
     if (echoToRulers) {
-        [view beginEchoingMoveToRulers:[self bounds]];
+        [view beginEchoingMoveToRulers:self.bounds];
     }
     while (1) {
-        theEvent = [[view window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        point = [view convertPoint:[theEvent locationInWindow] fromView:nil];
+        theEvent = [view.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        point = [view convertPoint:theEvent.locationInWindow fromView:nil];
         if (snapsToGrid) {
             point.x = floor((point.x / spacing) + 0.5) * spacing;
             point.y = floor((point.y / spacing) + 0.5) * spacing;
         }
-        [view setNeedsDisplayInRect:[self drawingBounds]];
+        [view setNeedsDisplayInRect:self.drawingBounds];
         knob = [self resizeByMovingKnob:knob toPoint:point];
-        [view setNeedsDisplayInRect:[self drawingBounds]];
+        [view setNeedsDisplayInRect:self.drawingBounds];
         if (echoToRulers) {
-            [view continueEchoingMoveToRulers:[self bounds]];
+            [view continueEchoingMoveToRulers:self.bounds];
         }
-        if ([theEvent type] == NSLeftMouseUp) {
+        if (theEvent.type == NSLeftMouseUp) {
             break;
         }
     }
@@ -771,7 +767,7 @@ NSString *IGPageNum = @"PageNr";
     
     [self stopBoundsManipulation];
     
-    bounds = [self bounds];
+    bounds = self.bounds;
     if ((bounds.size.width > 0.0) || (bounds.size.height > 0.0)) {
         return YES;
     } else {
@@ -805,14 +801,14 @@ NSString *IGPageNum = @"PageNr";
     if (isSelected && ([self knobUnderPoint:point] != NoKnob)) {
         return YES;
     } else {
-        NSBezierPath *path = [self bezierPath];
+        NSBezierPath *path = self.bezierPath;
         
         if (path) {
             if ([path containsPoint:point]) {
                 return YES;
             }
         } else {
-            if (NSPointInRect(point, [self bounds])) {
+            if (NSPointInRect(point, self.bounds)) {
                 return YES;
             }
         }
@@ -821,7 +817,7 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (NSString *)description {
-    return [[self propertyListRepresentation] description];
+    return self.propertyListRepresentation.description;
 }
 
 @end
@@ -831,54 +827,54 @@ NSString *IGPageNum = @"PageNr";
 // These are methods that we probably wouldn't bother with if we weren't scriptable.
 
 - (NSScriptObjectSpecifier *)objectSpecifier {
-    NSArray *graphics = [[self document] graphicsOnPage:[self pageNr]];
+    NSArray *graphics = [self.document graphicsOnPage:self.pageNr];
     unsigned index = [graphics indexOfObjectIdenticalTo:self];
     if (index != NSNotFound) {
-        NSScriptObjectSpecifier *containerRef = [[self document] objectSpecifier];
-        return [[[NSIndexSpecifier allocWithZone:[self zone]] initWithContainerClassDescription:[containerRef keyClassDescription] containerSpecifier:containerRef key:@"graphics" index:index] autorelease];
+        NSScriptObjectSpecifier *containerRef = self.document.objectSpecifier;
+        return [[NSIndexSpecifier allocWithZone:nil] initWithContainerClassDescription:containerRef.keyClassDescription containerSpecifier:containerRef key:@"graphics" index:index];
     } else {
         return nil;
     }
 }
 
 - (float)xPosition {
-    return [self bounds].origin.x;
+    return self.bounds.origin.x;
 }
 
 - (void)setXPosition:(float)newVal {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     bounds.origin.x = newVal;
-    [self setBounds:bounds];
+    self.bounds = bounds;
 }
 
 - (float)yPosition {
-    return [self bounds].origin.y;
+    return self.bounds.origin.y;
 }
 
 - (void)setYPosition:(float)newVal {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     bounds.origin.y = newVal;
-    [self setBounds:bounds];
+    self.bounds = bounds;
 }
 
 - (float)width {
-    return [self bounds].size.width;
+    return self.bounds.size.width;
 }
 
 - (void)setWidth:(float)newVal {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     bounds.size.width = newVal;
-    [self setBounds:bounds];
+    self.bounds = bounds;
 }
 
 - (float)height {
-    return [self bounds].size.height;
+    return self.bounds.size.height;
 }
 
 - (void)setHeight:(float)newVal {
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     bounds.size.height = newVal;
-    [self setBounds:bounds];
+    self.bounds = bounds;
 }
 
 @end
@@ -911,8 +907,7 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (void)setGlyphBezPath:(NSBezierPath *)path {
-    [_theGlyphBezPath autorelease];
-    _theGlyphBezPath = [path retain];
+    _theGlyphBezPath = path;
 }
 
 //---------
@@ -932,8 +927,7 @@ NSString *IGPageNum = @"PageNr";
 }
 
 - (void)setFontName:(NSString *)fontName {
-    [_fontName autorelease];
-    _fontName = [fontName retain];
+    _fontName = fontName;
     [self setGlypBezPathShouldRecalculate:YES];
     [self didChange];
 }
@@ -1115,13 +1109,13 @@ NSString *IGPageNum = @"PageNr";
 
 - (int)arrowType
 {
-   	NSLog(@"IGGraphic(arrowType) -> %i", _lineGraphicFlags.arrowType);
+       NSLog(@"IGGraphic(arrowType) -> %i", _lineGraphicFlags.arrowType);
     return  _lineGraphicFlags.arrowType;
 }
 
 - (void)setArrowType:(int)value
 {
-   	_lineGraphicFlags.arrowType = value;
+       _lineGraphicFlags.arrowType = value;
     
     NSLog(@"++++++++++++++++++++++++++++++++++");
     NSLog(@"IGGraphic(setArrowType)->%i", _lineGraphicFlags.arrowType);
@@ -1144,7 +1138,7 @@ NSString *IGPageNum = @"PageNr";
 
 - (void)doReverseArrow
 {
-    _lineGraphicFlags.reverseArrow = ([self reverseArrow]) ?  0 : 1;
+    _lineGraphicFlags.reverseArrow = (self.reverseArrow) ?  0 : 1;
     [self didChange];
     NSLog(@"-----------------------------------------------");
     NSLog(@"IGGraphic(reverseArrow) -> true?:%i", _lineGraphicFlags.reverseArrow);

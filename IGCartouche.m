@@ -12,7 +12,7 @@
 @implementation IGCartouche
 
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -23,13 +23,13 @@
       [self setRubricCartouche:[[CartoucheController sharedCartoucheController] rubricCartouche]];
       [self setEndCartoucheAlignment:[[CartoucheController sharedCartoucheController] endAlignment]];
       */  
-      [self setXEdge:100];
-      [self setYEdge:50];
-      [self setCartoucheBorderType:1];
-      [self setEndCartoucheAlignment:4];
+      self.xEdge = 100;
+      self.yEdge = 50;
+      self.cartoucheBorderType = 1;
+      self.endCartoucheAlignment = 4;
       [self setRubricCartouche:FALSE];
       
-      [self setBounds:NSMakeRect(250, 350, 100, 50)];
+      self.bounds = NSMakeRect(250, 350, 100, 50);
       
       self.cornerRadius = 30;
       self.cartoucheOrientation = 0;
@@ -48,27 +48,32 @@
 {    
     NSLog(@"IGCartouche(bezierPath)");
     
-    NSRect bounds = [self bounds];
-    float xEdge = [self xEdge];
-    float yEdge = [self yEdge];
+    NSRect bounds = self.bounds;
+    float xEdge = self.xEdge;
+    float yEdge = self.yEdge;
     
-    ([self rubricCartouche] ? [self setStrokeColor:[NSColor redColor]] : [self setStrokeColor:[NSColor blackColor]]);
-    [self setStrokeLineWidth:[self cartoucheBorderType]];
+    if (self.rubricCartouche) {
+        self.strokeColor = [NSColor redColor];
+    } else {
+        self.strokeColor = [NSColor blackColor];
+    }
+    
+    self.strokeLineWidth = self.cartoucheBorderType;
     
     //Linie
     NSBezierPath *path = [NSBezierPath bezierPath];
-    if ([self endCartoucheAlignment] == 1) {
-        [path moveToPoint:NSMakePoint([self xPosition] , [self yPosition])];
-        [path lineToPoint:NSMakePoint([self xPosition] + [self width] , [self yPosition])];
-    } else if ([self endCartoucheAlignment] == 2) {
-        [path moveToPoint:NSMakePoint([self xPosition] + [self width] , [self yPosition])];
-        [path lineToPoint:NSMakePoint([self xPosition] + [self width] , [self yPosition] + [self height])];
-    } else if ([self endCartoucheAlignment] == 3) {
-        [path moveToPoint:NSMakePoint([self xPosition] + [self width] , [self yPosition] + [self height])];
-        [path lineToPoint:NSMakePoint([self xPosition], [self height] + [self yPosition])];
-    } else if ([self endCartoucheAlignment] == 4){
-        [path moveToPoint:NSMakePoint([self xPosition], [self height] + [self yPosition])];
-        [path lineToPoint:NSMakePoint([self xPosition] , [self yPosition])];
+    if (self.endCartoucheAlignment == 1) {
+        [path moveToPoint:NSMakePoint(self.xPosition , self.yPosition)];
+        [path lineToPoint:NSMakePoint(self.xPosition + self.width , self.yPosition)];
+    } else if (self.endCartoucheAlignment == 2) {
+        [path moveToPoint:NSMakePoint(self.xPosition + self.width , self.yPosition)];
+        [path lineToPoint:NSMakePoint(self.xPosition + self.width , self.yPosition + self.height)];
+    } else if (self.endCartoucheAlignment == 3) {
+        [path moveToPoint:NSMakePoint(self.xPosition + self.width , self.yPosition + self.height)];
+        [path lineToPoint:NSMakePoint(self.xPosition, self.height + self.yPosition)];
+    } else if (self.endCartoucheAlignment == 4){
+        [path moveToPoint:NSMakePoint(self.xPosition, self.height + self.yPosition)];
+        [path lineToPoint:NSMakePoint(self.xPosition , self.yPosition)];
     }
     
     if (bounds.size.width < (2 * xEdge)) {
@@ -98,7 +103,7 @@
     [path lineToPoint:NSMakePoint(bounds.origin.x , bounds.origin.y + yEdge)];
     
     //NSLog(@"x: %f, y: %f, w: %f, h: %f", [self bounds].origin.x, [self bounds].origin.y, [self bounds].size.width, [self bounds].size.height); 
-    [path setLineWidth:[self strokeLineWidth]];
+    path.lineWidth = self.strokeLineWidth;
     
     
     return path;

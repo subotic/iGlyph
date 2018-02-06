@@ -45,7 +45,7 @@
 @property (copy) NSMutableArray *selectedGraphics;
 @property (copy) NSMutableArray *documentGraphics;
 
-- (id)init;
+- (instancetype)init;
 
 - (void)makeWindowControllers;
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController;
@@ -69,13 +69,13 @@
 - (NSData *)dataRepresentationOfType:(NSString *)type;
 - (BOOL)loadDataRepresentation:(NSData *)data ofType:(NSString *)type;
 
-- (NSSize)documentSize;   // Returns usable document size based on print info paper size and margins.
-- (NSSize)paperSize; //Just the paper size
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize documentSize;   // Returns usable document size based on print info paper size and margins.
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize paperSize; //Just the paper size
 
 - (void)printShowingPrintPanel:(BOOL)flag;
 - (void)printSelection:(NSArray *)graphics;
 
-- (int)pageCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) int pageCount;
 
 - (NSArray *)graphicsOnPage:(unsigned)pageNr;
 
@@ -112,47 +112,36 @@
 #pragma mark -
 #pragma mark default document values
 // ====================== default document values ============================
-- (void)setDocumentFontSize:(float)value;
-- (float)documentFontSize;
+@property (NS_NONATOMIC_IOSONLY) float documentFontSize;
 
-- (void)setDocumentCharSpacing:(int)value;
-- (int)documentCharSpacing;
+@property (NS_NONATOMIC_IOSONLY) int documentCharSpacing;
 
-- (void)setDocumentLineSpacing:(float)value;
-- (float)documentLineSpacing;
+@property (NS_NONATOMIC_IOSONLY) float documentLineSpacing;
 
 //page numbering stuff
-- (void)setShowPageNumbers:(BOOL)value;
-- (BOOL)showPageNumbers;
+@property (NS_NONATOMIC_IOSONLY) BOOL showPageNumbers;
 
 - (void)setPageNrFont:(NSString *)fontName;
-- (NSString *)pageNumberFont;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pageNumberFont;
 
-- (void)setPageNumberSize:(float)size;
-- (float)pageNumberSize;
+@property (NS_NONATOMIC_IOSONLY) float pageNumberSize;
 
-- (void)setPageNumberStyle:(int)style;
-- (int)pageNumberStyle;
+@property (NS_NONATOMIC_IOSONLY) int pageNumberStyle;
 
-- (void)setPageNumberFormatArr:(NSMutableArray *)array;
-- (NSMutableArray *)pageNumberFormatArr;
+@property (NS_NONATOMIC_IOSONLY, copy) NSMutableArray *pageNumberFormatArr;
 
-- (void)setInitialPageNr:(int)value;
-- (int)initialPageNr;
+@property (NS_NONATOMIC_IOSONLY) int initialPageNr;
 
-- (void)setPageNrAlignment:(int)value;
-- (int)pageNrAlignment;
+@property (NS_NONATOMIC_IOSONLY) int pageNrAlignment;
 
-- (void)setPageNrPosition:(int)position;
-- (int)pageNrPosition;
+@property (NS_NONATOMIC_IOSONLY) int pageNrPosition;
 
-- (void)setFirstPageNumberToShow:(int)value;
-- (int)firstPageNumberToShow;
+@property (NS_NONATOMIC_IOSONLY) int firstPageNumberToShow;
 
 - (void)finetuneXParameter:(float)xValue;
 - (void)finetuneYParameter:(float)yValue;
 - (void)finetuneReset;
-- (NSSize)pnDeltaPosition;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSSize pnDeltaPosition;
 
 @end
 

@@ -12,9 +12,9 @@
 @implementation IGGridView
 
 - (void)drawRect:(NSRect)rect {
-    NSDrawWhiteBezel([self bounds], rect);
-    rect = NSIntersectionRect(NSInsetRect([self bounds], 2.0, 2.0), rect);
-    IGDrawGridWithSettingsInRect([controller gridSpacing], [controller gridColor], rect, NSMakePoint(2.0, 2.0));
+    NSDrawWhiteBezel(self.bounds, rect);
+    rect = NSIntersectionRect(NSInsetRect(self.bounds, 2.0, 2.0), rect);
+    IGDrawGridWithSettingsInRect(controller.gridSpacing, controller.gridColor, rect, NSMakePoint(2.0, 2.0));
 }
 
 - (BOOL)isFlipped {

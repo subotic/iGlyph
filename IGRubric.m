@@ -13,18 +13,18 @@
 
 @implementation IGRubric
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    [self setFillColor:[NSColor colorWithCalibratedRed:0.15 green:0.15 blue:0.15 alpha:0.15]];
-    [self setBounds:NSMakeRect(250, 350, 100, 50)];
+    self.fillColor = [NSColor colorWithCalibratedRed:0.15 green:0.15 blue:0.15 alpha:0.15];
+    self.bounds = NSMakeRect(250, 350, 100, 50);
   }
   return self;
 }
 
 - (NSBezierPath *)bezierPath {
     
-    NSBezierPath *path = [NSBezierPath bezierPathWithRect:[self bounds]];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:self.bounds];
     return path;
 }
 

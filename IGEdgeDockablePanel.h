@@ -18,6 +18,6 @@
 
 }
 
-- (BOOL)canBecomeKeyWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL canBecomeKeyWindow;
 
 @end

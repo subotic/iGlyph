@@ -18,9 +18,9 @@ static float _NSScaleMenuFontSize = 10.0;
 
 @implementation IGZoomScrollView
 
-- (id)initWithFrame:(NSRect)theFrame {
+- (instancetype)initWithFrame:(NSRect)theFrame {
     self = [super initWithFrame:theFrame];
-    [self setBackgroundColor:[NSColor lightGrayColor]];
+    self.backgroundColor = [NSColor lightGrayColor];
     scaleFactor = 1.0;
     return self;
 }
@@ -31,36 +31,36 @@ static float _NSScaleMenuFontSize = 10.0;
         id curItem;
         
         // create it
-        _scalePopUpButton = [[NSPopUpButton allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, 1.0, 1.0) pullsDown:NO];
-        [[_scalePopUpButton cell] setBezelStyle:NSShadowlessSquareBezelStyle];
-        [[_scalePopUpButton cell] setArrowPosition:NSPopUpArrowAtBottom];
+        _scalePopUpButton = [[NSPopUpButton allocWithZone:nil] initWithFrame:NSMakeRect(0.0, 0.0, 1.0, 1.0) pullsDown:NO];
+        _scalePopUpButton.bezelStyle = NSShadowlessSquareBezelStyle;
+        NSPopUpButtonCell *popupCell = _scalePopUpButton.cell;
+        popupCell.arrowPosition = NSPopUpArrowAtBottom;
         
         // fill it
         for (cnt = 0; cnt < numberOfDefaultItems; cnt++) {
             [_scalePopUpButton addItemWithTitle:NSLocalizedStringFromTable(_NSDefaultScaleMenuLabels[cnt], @"ZoomValues", nil)];
             curItem = [_scalePopUpButton itemAtIndex:cnt];
             if (_NSDefaultScaleMenuFactors[cnt] != 0.0) {
-                [curItem setRepresentedObject:[NSNumber numberWithFloat:_NSDefaultScaleMenuFactors[cnt]]];
+                [curItem setRepresentedObject:@(_NSDefaultScaleMenuFactors[cnt])];
             }
         }
         [_scalePopUpButton selectItemAtIndex:_NSDefaultScaleMenuSelectedItemIndex];
         
         // hook it up
-        [_scalePopUpButton setTarget:self];
-        [_scalePopUpButton setAction:@selector(scalePopUpAction:)];
+        _scalePopUpButton.target = self;
+        _scalePopUpButton.action = @selector(scalePopUpAction:);
         
         // set a suitable font
-        [_scalePopUpButton setFont:[NSFont toolTipsFontOfSize:_NSScaleMenuFontSize]];
+        _scalePopUpButton.font = [NSFont toolTipsFontOfSize:_NSScaleMenuFontSize];
         
         // Make sure the popup is big enough to fit the cells.
         [_scalePopUpButton sizeToFit];
         
-	// don't let it become first responder
-	[_scalePopUpButton setRefusesFirstResponder:YES];
+    // don't let it become first responder
+    [_scalePopUpButton setRefusesFirstResponder:YES];
         
         // put it in the scrollview
         [self addSubview:_scalePopUpButton];
-        [_scalePopUpButton release];
     }
 }
 
@@ -70,7 +70,7 @@ static float _NSScaleMenuFontSize = 10.0;
     [self setHasVerticalRuler:YES];
     [self setHasHorizontalScroller:YES];
     [self setHasVerticalScroller:YES];
-    [self setBorderType:((NSInterfaceStyleForKey(nil, self) == NSWindows95InterfaceStyle) ? NSBezelBorder : NSNoBorder)];
+    self.borderType = ((NSInterfaceStyleForKey(nil, self) == NSWindows95InterfaceStyle) ? NSBezelBorder : NSNoBorder);
     
     /**
     int count = [[[self documentView] subviews] count];
@@ -87,19 +87,19 @@ static float _NSScaleMenuFontSize = 10.0;
     [[self documentView] setFrame:NSMakeRect(0.0,0.0,[[self documentView] frame].size.width,250.0*(count+1))];
     **/ 
     
-    [self setDocumentView:graphicView];
+    self.documentView = graphicView;
     
     
     //[graphicView setPrintInfo:[self printInfo]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:[self window]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification { 
     //NSLog(@"IGZoomScrollView(windowDidResize)"); // yes, this does run. 
     
-    NSWindow *window = [aNotification object];
-    NSSize windowSize = [window frame].size; 
-    NSSize contentSize = [[self documentView] frame].size; 
+    NSWindow *window = aNotification.object;
+    NSSize windowSize = window.frame.size; 
+    NSSize contentSize = self.documentView.frame.size; 
     NSPoint frameOrigin; 
     
     frameOrigin.x = frameOrigin.y = 0.0; 
@@ -122,18 +122,18 @@ static float _NSScaleMenuFontSize = 10.0;
     // Let the superclass do most of the work.
     [super tile];
     
-    if (![self hasHorizontalScroller]) {
+    if (!self.hasHorizontalScroller) {
         if (_scalePopUpButton) [_scalePopUpButton removeFromSuperview];
         _scalePopUpButton = nil;
     } else {
-	NSScroller *horizScroller;
-	NSRect horizScrollerFrame, buttonFrame;
-	
+    NSScroller *horizScroller;
+    NSRect horizScrollerFrame, buttonFrame;
+    
         if (!_scalePopUpButton) [self makeScalePopUpButton];
         
-        horizScroller = [self horizontalScroller];
-        horizScrollerFrame = [horizScroller frame];
-        buttonFrame = [_scalePopUpButton frame];
+        horizScroller = self.horizontalScroller;
+        horizScrollerFrame = horizScroller.frame;
+        buttonFrame = _scalePopUpButton.frame;
         
         // Now we'll just adjust the horizontal scroller size and set the button size and location.
         horizScrollerFrame.size.width = horizScrollerFrame.size.width - buttonFrame.size.width;
@@ -141,8 +141,8 @@ static float _NSScaleMenuFontSize = 10.0;
         
         buttonFrame.origin.x = NSMaxX(horizScrollerFrame);
         buttonFrame.size.height = horizScrollerFrame.size.height + 1.0;
-        buttonFrame.origin.y = [self bounds].size.height - buttonFrame.size.height + 1.0;
-        [_scalePopUpButton setFrame:buttonFrame];
+        buttonFrame.origin.y = self.bounds.size.height - buttonFrame.size.height + 1.0;
+        _scalePopUpButton.frame = buttonFrame;
     }
 }
 
@@ -151,8 +151,8 @@ static float _NSScaleMenuFontSize = 10.0;
     
     [super drawRect:rect];
     
-    if ([_scalePopUpButton superview]) {
-        verticalLineRect = [_scalePopUpButton frame];
+    if (_scalePopUpButton.superview) {
+        verticalLineRect = _scalePopUpButton.frame;
         verticalLineRect.origin.x -= 1.0;
         verticalLineRect.size.width = 1.0;
         if (NSIntersectsRect(rect, verticalLineRect)) {
@@ -169,7 +169,7 @@ static float _NSScaleMenuFontSize = 10.0;
         NSLog(@"Scale popup action: setting arbitrary zoom factors is not yet supported.");
         return;
     } else {
-        [self setScaleFactor:[selectedFactorObject floatValue] adjustPopup:NO];
+        [self setScaleFactor:selectedFactorObject.floatValue adjustPopup:NO];
     }
 }
 
@@ -179,10 +179,10 @@ static float _NSScaleMenuFontSize = 10.0;
 
 - (void)setScaleFactor:(float)newScaleFactor adjustPopup:(BOOL)flag {
     if (scaleFactor != newScaleFactor) {
-	NSSize curDocFrameSize, newDocBoundsSize;
-	NSView *clipView = [[self documentView] superview];
-	
-        if (flag) {	// Coming from elsewhere, first validate it
+    NSSize curDocFrameSize, newDocBoundsSize;
+    NSView *clipView = self.documentView.superview;
+    
+        if (flag) {    // Coming from elsewhere, first validate it
             unsigned cnt = 0, numberOfDefaultItems = (sizeof(_NSDefaultScaleMenuFactors) / sizeof(float));
             
             // We only work with some preset zoom values, so choose one of the appropriate values (Fudge a little for floating point == to work)
@@ -193,21 +193,21 @@ static float _NSScaleMenuFontSize = 10.0;
         } else {
             scaleFactor = newScaleFactor;
         }
-	
-	// Get the frame.  The frame must stay the same.
-	curDocFrameSize = [clipView frame].size;
-	
-	// The new bounds will be frame divided by scale factor
-	newDocBoundsSize.width = curDocFrameSize.width / scaleFactor;
-	newDocBoundsSize.height = curDocFrameSize.height / scaleFactor;
-	
-	[clipView setBoundsSize:newDocBoundsSize];
+    
+    // Get the frame.  The frame must stay the same.
+    curDocFrameSize = clipView.frame.size;
+    
+    // The new bounds will be frame divided by scale factor
+    newDocBoundsSize.width = curDocFrameSize.width / scaleFactor;
+    newDocBoundsSize.height = curDocFrameSize.height / scaleFactor;
+    
+    [clipView setBoundsSize:newDocBoundsSize];
     }
 }
 
 - (void)setHasHorizontalScroller:(BOOL)flag {
     if (!flag) [self setScaleFactor:1.0 adjustPopup:NO];
-    [super setHasHorizontalScroller:flag];
+    super.hasHorizontalScroller = flag;
 }
 
 @end

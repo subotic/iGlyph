@@ -30,7 +30,7 @@
 @synthesize selectedTitle;
 
 
-+ (id)sharedHieroglyphsController
++ (HieroglyphsController*)sharedHieroglyphsController
 {
     static HieroglyphsController *_sharedHieroglyphsController = nil;
     
@@ -40,11 +40,11 @@
     return _sharedHieroglyphsController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithWindowNibName:@"Hieroglyphs"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"Hieroglyphs"];
+        self.windowFrameAutosaveName = @"Hieroglyphs";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -61,14 +61,14 @@
 {
     NSLog(@"HieroglyphsController(awakeFromNib) -> start");
     
-    fontData = [[NSApp delegate] sharedFontData];
+    fontData = [NSApp.delegate sharedFontData];
     fontDataDic = [fontData getFontData];
     glyphGroupsArr = [fontData getGlyphGroups];
     headerSelected = 0;
     
-    self.selectedTitle = [glyphGroupsArr objectAtIndex:0];
-    self.colNumber = [myTableView numberOfColumns];
-    self.glyphNumber = [[fontDataDic objectForKey:self.selectedTitle] count];
+    self.selectedTitle = glyphGroupsArr[0];
+    self.colNumber = myTableView.numberOfColumns;
+    self.glyphNumber = [fontDataDic[self.selectedTitle] count];
     
     //[myTableView 
     
@@ -89,7 +89,7 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"Hieroglyphs"];
+    [self.window setFrameUsingName:@"Hieroglyphs"];
 }
 
 - (void)addGlyphGroupPopUpItems
@@ -100,11 +100,11 @@
 
 
 - (IBAction)glyphGroupPopUpChanged:(id)sender {
-  NSString *groupTitle = [glyphGroupPopUp titleOfSelectedItem];
+  NSString *groupTitle = glyphGroupPopUp.titleOfSelectedItem;
   NSLog(@"HieroglyphsController(glyphGroupPopUpChanged)->Ausgewahlter Titel: %@", groupTitle);
   
   self.selectedTitle = groupTitle;
-  self.glyphNumber = [[fontDataDic objectForKey:groupTitle] count];
+  self.glyphNumber = [fontDataDic[groupTitle] count];
   
   [self calculateNumberOfRowsInTableView];
   [myTableView reloadData];
@@ -127,10 +127,10 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
     //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
-    int column = [[tableColumn identifier] intValue];
+    int column = tableColumn.identifier.intValue;
     int neededValue = (column + row * self.colNumber);
     
-    NSMutableArray *titleData = [fontDataDic objectForKey:self.selectedTitle];
+    NSMutableArray *titleData = fontDataDic[self.selectedTitle];
     
     //NSLog(@"HieroglyphsController(tableView) titleData ==> %@", titleData);
     
@@ -140,33 +140,33 @@
     NSAttributedString *attribStringGlyph = [[NSAttributedString alloc] init];
     NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] init];
     NSMutableParagraphStyle *myPara = [[NSMutableParagraphStyle alloc] init];
-    [myPara setAlignment:NSCenterTextAlignment];
+    myPara.alignment = NSCenterTextAlignment;
     unichar newChar;
     
     //Dynamische Vergršsserung des Textes und der Glyphen bei €nderung der Tabellengršsse
-    int deltaSize = floor([[myTableView tableColumnWithIdentifier:@"0"] width] / 5);
+    int deltaSize = floor([myTableView tableColumnWithIdentifier:@"0"].width / 5);
     
     if (neededValue < self.glyphNumber) {
         //text Teil
         NSMutableString *txt = [[NSMutableString alloc] init];
-        [txt setString:[[titleData objectAtIndex:neededValue] objectAtIndex:headerSelected]];
+        [txt setString:titleData[neededValue][headerSelected]];
         [txt appendString:@"\n"];
             
-        [attrsTxt setObject:[NSFont systemFontOfSize:(deltaSize * 1)] forKey:NSFontAttributeName];
-        [attrsTxt setObject:myPara forKey:NSParagraphStyleAttributeName];
+        attrsTxt[NSFontAttributeName] = [NSFont systemFontOfSize:(deltaSize * 1)];
+        attrsTxt[NSParagraphStyleAttributeName] = myPara;
 
         [attribStringTxt initWithString:txt attributes:attrsTxt];
             
         //glyphen Teil
-        newChar = (0xF000 + [[[titleData objectAtIndex:neededValue] objectAtIndex:2] intValue]);
+        newChar = (0xF000 + [titleData[neededValue][2] intValue]);
         unichar *pNewChar = &newChar;
         NSString *glyph = [NSString stringWithCharacters:pNewChar length:1];
-        NSString *font = [[titleData objectAtIndex:neededValue] objectAtIndex:1];
+        NSString *font = titleData[neededValue][1];
         
-        NSAssert([NSFont fontWithName:font size:40], @"Unable to load Font. Are they installed?");	
-		
-        [attrsGlyph setObject:[NSFont fontWithName:font size:(deltaSize * 4)] forKey:NSFontAttributeName];
-        [attrsGlyph setObject:myPara forKey:NSParagraphStyleAttributeName];
+        NSAssert([NSFont fontWithName:font size:40], @"Unable to load Font. Are they installed?");    
+        
+        attrsGlyph[NSFontAttributeName] = [NSFont fontWithName:font size:(deltaSize * 4)];
+        attrsGlyph[NSParagraphStyleAttributeName] = myPara;
             
         [attribStringGlyph initWithString:glyph attributes:attrsGlyph];
             
@@ -176,7 +176,7 @@
         //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 1");
         return attribString;
     } else {
-       	//NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 2");
+           //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 2");
         return attribString;
     }
 }
@@ -196,16 +196,16 @@
     int r = rowValue;
     int c = columnValue;
     //[myTableView deselectAll:sender];
-	
+    
     NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
     
     int glyphPosInArray = (c + (r * colNumber));
-    NSArray *titleData = [fontDataDic objectForKey:self.selectedTitle];
-    unichar glyphUniChar = (0xF000 + [[[titleData objectAtIndex:glyphPosInArray] objectAtIndex:2] intValue]);
+    NSArray *titleData = fontDataDic[self.selectedTitle];
+    unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
     
     NSLog(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
     
-    NSString *fontName = [[titleData objectAtIndex:glyphPosInArray] objectAtIndex:1];
+    NSString *fontName = titleData[glyphPosInArray][1];
     
     //[[self theMainView] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
     [[self theMainWindowController] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
@@ -221,12 +221,12 @@
     NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
 
     int glyphPosInArray = (c + (r * colNumber));
-    NSArray *titleData = [fontDataDic objectForKey:self.selectedTitle];
-    unichar glyphUniChar = (0xF000 + [[[titleData objectAtIndex:glyphPosInArray] objectAtIndex:2] intValue]);
+    NSArray *titleData = fontDataDic[self.selectedTitle];
+    unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
 
     NSLog(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
 
-    NSString *fontName = [[titleData objectAtIndex:glyphPosInArray] objectAtIndex:1];
+    NSString *fontName = titleData[glyphPosInArray][1];
 
     [[self theOnlySelectedGlyph] replaceGlyph:glyphUniChar withFont:fontName];
     [[self theOnlySelectedGlyph] didChange];
@@ -277,25 +277,25 @@
 //notifications Stuff
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", [notification name]);
-    [[NSApp delegate] resetMenuItemFlag:HYEROGLYPHS_MENU_TAG];
+    NSLog(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
+    [NSApp.delegate resetMenuItemFlag:HYEROGLYPHS_MENU_TAG];
 }
 
 - (void)windowDidResize:(NSNotification *)notification
 {
     //[self resizeTable];
-    [myTableView setRowHeight:[[myTableView tableColumnWithIdentifier:@"0"] width]];
+    myTableView.rowHeight = [myTableView tableColumnWithIdentifier:@"0"].width;
     [myTableView reloadData];
 }
 
 //the main window stuff
 - (NSWindow *)theMainWindow {
-    if (![[NSApp mainWindow] isKeyWindow]) [[NSApp mainWindow] makeKeyWindow];
-    return [NSApp mainWindow];
+    if (!NSApp.mainWindow.keyWindow) [NSApp.mainWindow makeKeyWindow];
+    return NSApp.mainWindow;
 }
 
 - (IGDrawWindowController *)theMainWindowController {
-    return [[self theMainWindow] windowController];
+    return [self theMainWindow].windowController;
 }
 
 - (IGGraphicView *)theMainView {

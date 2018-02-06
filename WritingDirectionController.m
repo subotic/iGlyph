@@ -20,7 +20,7 @@
 
 @implementation WritingDirectionController
 
-+ (id)sharedWritingDirectionController
++ (WritingDirectionController*)sharedWritingDirectionController
 {
     static WritingDirectionController *_sharedWritingDirectionController = nil;
     
@@ -30,11 +30,11 @@
     return _sharedWritingDirectionController;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [self initWithWindowNibName:@"WritingDirection"];
     if (self) {
-        [self setWindowFrameAutosaveName:@"WritingDirection"];
+        self.windowFrameAutosaveName = @"WritingDirection";
     }
     [self setShouldCascadeWindows:NO];
     return self;
@@ -42,7 +42,7 @@
 
 - (void) convertToViewController
 {
-    controlledView = [[[self window] contentView] retain];
+    controlledView = [self.window.contentView retain];
     [self setWindow: nil];
 }
 
@@ -62,7 +62,7 @@
 {
     [verticalButtonMatrix deselectAllCells];
     [horizontalButtonMatrix deselectAllCells];
-    [[horizontalButtonMatrix cellWithTag:10] setState:NSOnState];
+    [horizontalButtonMatrix cellWithTag:10].state = NSOnState;
     [self setWritingDirection:leftToRight];
     
     [self convertToViewController];
@@ -70,20 +70,20 @@
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    NSLog(@"WritingDirectionController(mainWindowChanged)-> %@", [[NSApp mainWindow] title]);
+    NSLog(@"WritingDirectionController(mainWindowChanged)-> %@", NSApp.mainWindow.title);
     //jedes document kann hier andere einstellungen habe
-    [charSpacingTextField setStringValue:[[NSString alloc] initWithFormat:@"%i", [[[[NSApp mainWindow] windowController] document] documentCharSpacing]]];
-    [charSpacingStepperButton setIntValue:[[[[NSApp mainWindow] windowController] document] documentCharSpacing]];
+    charSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%i", [NSApp.mainWindow.windowController.document documentCharSpacing]];
+    charSpacingStepperButton.intValue = [NSApp.mainWindow.windowController.document documentCharSpacing];
     
-    [lineSpacingTextField setStringValue:[[NSString alloc] initWithFormat:@"%f", [[[[NSApp mainWindow] windowController] document] documentLineSpacing]]];
-    [lineSpacingStepperButton setFloatValue:[[[[NSApp mainWindow] windowController] document] documentLineSpacing]];
+    lineSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%f", [NSApp.mainWindow.windowController.document documentLineSpacing]];
+    lineSpacingStepperButton.floatValue = [NSApp.mainWindow.windowController.document documentLineSpacing];
 }
 
 
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self window] setFrameUsingName:@"WritingDirection"];
+    [self.window setFrameUsingName:@"WritingDirection"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 }
@@ -91,8 +91,8 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(WritingDirectionController.m)->Notification received - %@\n", [notification name]);
-    [[NSApp delegate] resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG];
+    NSLog(@"(WritingDirectionController.m)->Notification received - %@\n", notification.name);
+    [NSApp.delegate resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG];
 }
 
 - (IBAction)writtingDirectionChanged:(id)sender
@@ -102,7 +102,7 @@
         NSLog(@"WritingDirection: leftToRight");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[horizontalButtonMatrix cellWithTag:10] setState:NSOnState];
+        [horizontalButtonMatrix cellWithTag:10].state = NSOnState;
         
         [self setWritingDirection:leftToRight];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:NO];
@@ -113,7 +113,7 @@
         NSLog(@"WritingDirection: rightToLeft");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[horizontalButtonMatrix cellWithTag:11] setState:NSOnState];
+        [horizontalButtonMatrix cellWithTag:11].state = NSOnState;
         
         [self setWritingDirection:rightToLeft];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:YES];
@@ -124,7 +124,7 @@
         NSLog(@"WritingDirection: upToDownMirr");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[verticalButtonMatrix cellWithTag:20] setState:NSOnState];
+        [verticalButtonMatrix cellWithTag:20].state = NSOnState;
         
         [self setWritingDirection:upToDownMirr];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:YES];
@@ -135,7 +135,7 @@
         NSLog(@"WritingDirection: upToDown");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[verticalButtonMatrix cellWithTag:21] setState:NSOnState];
+        [verticalButtonMatrix cellWithTag:21].state = NSOnState;
         
         [self setWritingDirection:upToDown];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:NO];
@@ -146,7 +146,7 @@
         NSLog(@"WritingDirection: upToDownVert");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[verticalButtonMatrix cellWithTag:22] setState:NSOnState];
+        [verticalButtonMatrix cellWithTag:22].state = NSOnState;
         
         [self setWritingDirection:upToDownVert];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:NO];
@@ -157,7 +157,7 @@
         NSLog(@"WritingDirection: upToDownVertMirr");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
-        [[verticalButtonMatrix cellWithTag:23] setState:NSOnState];
+        [verticalButtonMatrix cellWithTag:23].state = NSOnState;
         
         [self setWritingDirection:upToDownVertMirr];
         [[FormatGlyphController sharedFormatGlyphController] setMirrored:YES];
@@ -178,15 +178,15 @@
 //IBAction methoden fŸr spacing von char und line
 - (IBAction)charSpacingStepperAction:(id)sender
 {
-    [charSpacingTextField setStringValue:[[NSString alloc] initWithFormat:@"%i", [sender intValue]]];
-    [[[[NSApp mainWindow] windowController] document] setDocumentCharSpacing:[sender intValue]];
+    charSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%i", [sender intValue]];
+    [NSApp.mainWindow.windowController.document setDocumentCharSpacing:[sender intValue]];
 }
 
 - (IBAction)charSpacingTextFieldAction:(id)sender
 {   
     if ([sender intValue] >= 1 && [sender intValue] <= 30) {
-        [charSpacingStepperButton setIntValue:[sender intValue]];
-        [[[[NSApp mainWindow] windowController] document] setDocumentCharSpacing:[sender intValue]];
+        charSpacingStepperButton.intValue = [sender intValue];
+        [NSApp.mainWindow.windowController.document setDocumentCharSpacing:[sender intValue]];
     } else {
       NSBeep();
     }
@@ -194,15 +194,15 @@
 
 - (IBAction)lineSpacingStepperAction:(id)sender
 {
-    [lineSpacingTextField setStringValue:[[NSString alloc] initWithFormat:@"%f", [sender floatValue]]];
-    [[[[NSApp mainWindow] windowController] document] setDocumentLineSpacing:[sender floatValue]];
+    lineSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%f", [sender floatValue]];
+    [NSApp.mainWindow.windowController.document setDocumentLineSpacing:[sender floatValue]];
 }
 
 - (IBAction)lineSpacingTextFieldAction:(id)sender
 {   
     if ([sender intValue] >= 1.0 && [sender intValue] <= 4.0) {
-        [lineSpacingStepperButton setIntValue:[sender floatValue]];
-        [[[[NSApp mainWindow] windowController] document] setDocumentLineSpacing:[sender floatValue]];
+        lineSpacingStepperButton.intValue = [sender floatValue];
+        [NSApp.mainWindow.windowController.document setDocumentLineSpacing:[sender floatValue]];
     } else {
       NSBeep();
     }

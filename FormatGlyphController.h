@@ -44,9 +44,9 @@
     
 }
 
-+ (id)sharedFormatGlyphController;
++ (FormatGlyphController*)sharedFormatGlyphController;
 
-- (NSView *)controlledView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *controlledView;
 
 - (IBAction)glyphAngleTextFieldAction:(id)sender;
 - (IBAction)glyphAngle:(id)sender;
@@ -60,17 +60,13 @@
 
 - (IBAction)changeGlyphAction:(id)sender;
 
-- (float)fontSize;
-- (void)setFontSize:(float)value;
+@property (NS_NONATOMIC_IOSONLY) float fontSize;
 
-- (BOOL)rubricColor;
-- (void)setRubricColor:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 
-- (BOOL)mirrored;
-- (void)setMirrored:(BOOL)value;
+@property (NS_NONATOMIC_IOSONLY) BOOL mirrored;
 
-- (int)angle;
-- (void)setAngle:(int)value;
+@property (NS_NONATOMIC_IOSONLY) int angle;
 
 //glyph formating
 - (void)saveTmpFormating;
@@ -80,9 +76,9 @@
 
 //key window stuff
 - (void)setMainWindowAsKey;
-- (NSWindow *)theMainWindow;
-- (IGDrawWindowController *)theMainWindowController;
-- (IGGraphicView *)theMainView;
-- (IGGraphic *)theOnlySelectedGlyph;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *theOnlySelectedGlyph;
 
 @end
