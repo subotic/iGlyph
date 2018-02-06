@@ -25,7 +25,7 @@
     static WritingDirectionController *_sharedWritingDirectionController = nil;
     
     if (!_sharedWritingDirectionController) {
-        _sharedWritingDirectionController = [[WritingDirectionController allocWithZone:[self zone]] init];
+        _sharedWritingDirectionController = [[WritingDirectionController alloc] init];
     }
     return _sharedWritingDirectionController;
 }
@@ -42,19 +42,13 @@
 
 - (void) convertToViewController
 {
-    controlledView = [self.window.contentView retain];
+    controlledView = self.window.contentView;
     [self setWindow: nil];
 }
 
 - (NSView *)controlledView
 {
-    return [controlledView retain];
-}
-
-- (void) dealloc
-{
-    [super dealloc];
-    [controlledView release];
+    return controlledView;
 }
 
 
@@ -92,7 +86,8 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     NSLog(@"(WritingDirectionController.m)->Notification received - %@\n", notification.name);
-    [NSApp.delegate resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG];
+    IGlyphDelegate *delegate = NSApplication.sharedApplication.delegate;
+    delegate.resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG;
 }
 
 - (IBAction)writtingDirectionChanged:(id)sender

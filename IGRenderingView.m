@@ -26,9 +26,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 - (NSPrintInfo *)drawDocumentPrintInfo {
     return (self.drawDocument).printInfo;
@@ -125,11 +122,9 @@
             NSFont *pnFont = [NSFont fontWithName:pnFontName size:pnFontSize];
             if (pnStyle == 1) {
                 NSLog(@"IGGraphicView(drawRect) -> BoldFontFace");
-                [pnFont autorelease];
                 pnFont = [[NSFontManager sharedFontManager] convertFont:pnFont toHaveTrait:NSBoldFontMask];
             } else if (pnStyle == 2) {
                 NSLog(@"IGGraphicView(drawRect) -> ItalicFontFace");
-                [pnFont autorelease];
                 pnFont = [[NSFontManager sharedFontManager] convertFont:pnFont toHaveTrait:NSItalicFontMask];
             }
             
@@ -199,8 +194,7 @@
             if (curPage >= firstPageNumberToShow) {
                 [pageNumberObject drawAtPoint:pnPosition];
             }
-            
-            [pnMutableString release];
+        
         }
         //----------------ende pagenumers---------------- 
         

@@ -53,9 +53,9 @@ static float IGDefaultPasteCascadeDelta = 10.0;
   self = [super initWithFrame:frame];
   if (self) {
     NSMutableArray *dragTypes = [NSMutableArray arrayWithObjects:NSColorPboardType, NSFilenamesPboardType, nil];
-    [dragTypes addObjectsFromArray:[NSImage imagePasteboardTypes]];
+    [dragTypes addObjectsFromArray:[NSImage imageTypes]];
     [self registerForDraggedTypes:dragTypes];
-    _selectedGraphics = [[NSMutableArray allocWithZone:[self zone]] init];
+    _selectedGraphics = [[NSMutableArray alloc] init];
     _creatingGraphic = nil;
     _rubberbandRect = NSZeroRect;
     _rubberbandGraphics = nil;
@@ -85,9 +85,9 @@ static float IGDefaultPasteCascadeDelta = 10.0;
     _gvFlags.showsGrid = NO;
     _gvFlags.snapsToGrid = NO;
     _gvFlags.gridSpacing = 8.0;
-    _gridColor = [[NSColor lightGrayColor] retain];
+    _gridColor = NSColor.lightGrayColor;
     
-    [self setPageBackgroundColor:[NSColor whiteColor]];
+    [self setPageBackgroundColor:NSColor.whiteColor];
     
     NSLog(@"IGGraphicView(init)");
   }
@@ -97,7 +97,6 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 - (void)dealloc {
   [self endEditing];
-  [super dealloc];
 }
 
 // ===========================================================================
@@ -254,7 +253,7 @@ return rect;
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 { // works just like menu item validation, but for the toolbar.
-  int tag = toolbarItem.tag;
+  NSInteger tag = toolbarItem.tag;
   if (tag == 31) { //BackToFront
                    //NSLog(@"tag 31 validate");
     if ([self selectedGraphics].count == 0) {
@@ -305,7 +304,7 @@ return rect;
       NSLog(@"IGGraphicView(cartoucheSelectedGraphics) -> xEdge: %@", [item valueForKey:@"xEdge"]);
     }
   }
-  return [filteredObjects retain];
+  return filteredObjects;
 }
 
 
@@ -488,7 +487,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IGGraphic *)graphicUnderPoint:(NSPoint)point onPage:(unsigned)pageNr {
   NSArray *graphics = [self graphicsOnPage:pageNr];
-  unsigned i, c = graphics.count;
+  NSUInteger i, c = graphics.count;
   IGGraphic *curGraphic = nil;
   
   for (i=0; i<c; i++) {
@@ -507,8 +506,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 - (NSSet *)graphicsIntersectingRect:(NSRect)rect onPage:(unsigned)pageNr {
   NSArray *graphics = [self graphicsOnPage:pageNr];
   NSArray *headerGraphics = [self graphicsOnPage:0];
-  unsigned i, c = graphics.count;
-  unsigned j, k = headerGraphics.count;
+  NSUInteger i, c = graphics.count;
+  NSUInteger j, k = headerGraphics.count;
   NSMutableSet *result = [NSMutableSet set];
   IGGraphic *curGraphic;
   
@@ -750,11 +749,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSFont *pnFont = [NSFont fontWithName:pnFontName size:pnFontSize];
     if (pnStyle == 1) {
       //NSLog(@"IGGraphicView(drawRect) -> BoldFontFace");
-      [pnFont autorelease];
       pnFont = [[NSFontManager sharedFontManager] convertFont:pnFont toHaveTrait:NSBoldFontMask];
     } else if (pnStyle == 2) {
       //NSLog(@"IGGraphicView(drawRect) -> ItalicFontFace");
-      [pnFont autorelease];
       pnFont = [[NSFontManager sharedFontManager] convertFont:pnFont toHaveTrait:NSItalicFontMask];
     }
     
@@ -824,8 +821,6 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     if (self.currentPage >= firstPageNumberToShow) {
       [pageNumberObject drawAtPoint:pnPosition];
     }
-    
-    [pnMutableString release];
   }
   //----------------ende pagenumers----------------    
   
@@ -910,7 +905,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent {
   IGDrawDocument *document = [self drawDocument];
-  _creatingGraphic = [[theClass allocWithZone:[document zone]] init];
+  _creatingGraphic = [theClass init];
   if ([_creatingGraphic createWithEvent:theEvent inView:self]) {
     [_creatingGraphic setPageNr:self.currentPage];
     [document insertGraphic:_creatingGraphic atIndex:0];
@@ -920,7 +915,6 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     }
     [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:NSStringFromClass(theClass) value:@"" table:@"GraphicClassNames"]]];
   }
-  [_creatingGraphic release];
   _creatingGraphic = nil;
 }
 
@@ -931,7 +925,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   [[FormatGlyphController sharedFormatGlyphController] restoreTmpFormating];
   
   IGDrawDocument *document = [self drawDocument];
-  _creatingGraphic = [[IGGlyph allocWithZone:[document zone]] init];
+  _creatingGraphic = [IGGlyph init];
   //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach init -> %@", _creatingGraphic);
   if ([_creatingGraphic createGlyph:glyphUniChar withFont:fontName InView:self]) {
     //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach createGlyph -> %@", _creatingGraphic);
@@ -987,7 +981,6 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
   self.currentCursorPosition = tempCursor;        
   [self.window invalidateCursorRectsForView:self];
   
-  [_creatingGraphic release];
   _creatingGraphic = nil;
 }
 
@@ -1558,7 +1551,6 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
       [document insertGraphic:_creatingGraphic atIndex:0];
       [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
     }
-    [_creatingGraphic release];
     _creatingGraphic = nil;
   }
   

@@ -20,21 +20,16 @@
 @class IGGraphic;
 
 @interface HieroglyphsController : NSWindowController {
-  
-  IBOutlet NSPopUpButton *glyphGroupPopUp;
-  IBOutlet NSTableView *myTableView;
-  
-  IGFontData *fontData;
-  NSMutableDictionary *fontDataDic;
-  NSMutableArray *glyphGroupsArr;
     
-  NSInteger rowNumber;
-  NSInteger colNumber;
-  NSInteger glyphNumber;
-  
-  int headerSelected;
-  
-  NSString *selectedTitle;
+    IBOutlet NSPopUpButton *glyphGroupPopUp;
+    IBOutlet NSTableView *myTableView;
+    
+    IGFontData *fontData;
+    NSMutableDictionary *fontDataDic;
+    NSMutableArray *glyphGroupsArr;
+    
+    int headerSelected;
+    
 }
 
 @property (assign) NSInteger rowNumber;
@@ -45,7 +40,6 @@
 
 - (instancetype)init;
 - (void)awakeFromNib;
-- (void)dealloc;
 
 + (HieroglyphsController*)sharedHieroglyphsController;
 
@@ -58,12 +52,12 @@
 - (void)glyphClickedAtRow:(int)rowValue andColumn:(int)columnValue;
 - (void)replaceSelectedGlyphWithThisOneAtRow:(int)rowValue andColumn:(int)columnValue;   
 
-  //Data Source stuff
+//Data Source stuff
 - (void)calculateNumberOfRowsInTableView;
 - (int)numberOfRowsInTableView:(NSTableView *)tableView;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 
-  //key window stuff
+//key window stuff
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;

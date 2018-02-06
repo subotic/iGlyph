@@ -28,7 +28,7 @@
     static FormatGlyphController *_sharedFormatGlyphController = nil;
     
     if (!_sharedFormatGlyphController) {
-        _sharedFormatGlyphController = [[FormatGlyphController allocWithZone:[self zone]] init];
+        _sharedFormatGlyphController = [[FormatGlyphController alloc] init];
     }
     return _sharedFormatGlyphController;
 }
@@ -51,7 +51,7 @@
 
 - (void) convertToViewController
 {
-    controlledView = [self.window.contentView retain];
+    controlledView = self.window.contentView;
     //[[self window] orderOut:nil];
     [self setWindow: nil];
 }
@@ -139,7 +139,7 @@
     
     
     if ( [sender tag] == 0) {
-        int _cellTag = [[sender selectedCell] tag];
+        NSInteger _cellTag = sender.selectedCell.tag;
         NSLog(@"angle set %i", _cellTag);
         angleSlider.floatValue = _cellTag;
         angleTextField.intValue = _cellTag;

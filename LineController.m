@@ -28,7 +28,7 @@
     static LineController *_sharedLineController = nil;
     
     if (!_sharedLineController) {
-        _sharedLineController = [[LineController allocWithZone:[self zone]] init];
+        _sharedLineController = [LineController init];
     }
     return _sharedLineController;
 }
@@ -46,7 +46,7 @@
 
 - (void) convertToViewController
 {
-    controlledView = [self.window.contentView retain];
+    controlledView = self.window.contentView;
     //[[self window] orderOut:nil];
     [self setWindow: nil];
 }
@@ -56,11 +56,6 @@
     return controlledView;
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-    [controlledView release];
-}
 
 - (void)awakeFromNib
 {

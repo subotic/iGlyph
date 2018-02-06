@@ -35,7 +35,7 @@
     static HieroglyphsController *_sharedHieroglyphsController = nil;
     
     if (!_sharedHieroglyphsController) {
-        _sharedHieroglyphsController = [[HieroglyphsController allocWithZone:[self zone]] init];
+        _sharedHieroglyphsController = [[HieroglyphsController alloc] init];
     }
     return _sharedHieroglyphsController;
 }
@@ -50,20 +50,14 @@
     return self;
 }
 
-
-- (void) dealloc
-{
-    [super dealloc];
-}
-
-
 - (void)awakeFromNib
 {
     NSLog(@"HieroglyphsController(awakeFromNib) -> start");
+    IGlyphDelegate *delegate = NSApplication.sharedApplication.delegate;
     
-    fontData = [NSApp.delegate sharedFontData];
-    fontDataDic = [fontData getFontData];
-    glyphGroupsArr = [fontData getGlyphGroups];
+    fontData = delegate.sharedFontData;
+    fontDataDic = fontData.getFontData;
+    glyphGroupsArr = fontData.getGlyphGroups;
     headerSelected = 0;
     
     self.selectedTitle = glyphGroupsArr[0];

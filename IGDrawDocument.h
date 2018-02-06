@@ -77,7 +77,7 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly) int pageCount;
 
-- (NSArray *)graphicsOnPage:(unsigned)pageNr;
+- (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 
 - (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page;
 
@@ -88,7 +88,7 @@
 - (void)redisplayTweak:(IGGraphic *)graphic;
 
 - (void)insertGraphic:(IGGraphic *)graphic atIndex:(unsigned)index;
-- (void)removeGraphicAtIndex:(unsigned)index onPage:(unsigned)pageNr;
+- (void)removeGraphicAtIndex:(NSUInteger)index onPage:(unsigned)pageNr;
 - (void)removeGraphic:(IGGraphic *)graphic;
 - (void)moveGraphic:(IGGraphic *)graphic toIndex:(unsigned)newIndex;
 - (void)moveGraphic:(IGGraphic *)graphic toPage:(unsigned)pageNr;
