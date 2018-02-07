@@ -19,7 +19,7 @@
   
 @private
   
-  int _pageCount; //nummber of pages in this document
+  NSUInteger _pageCount; //nummber of pages in this document
   
   //needed for the PageNr Stuff
   BOOL _showPageNumbers;
@@ -37,7 +37,7 @@
   int _documentCharSpacing;
   float _documentLineSpacing;
   
-  int _autoSaveInterval;
+  NSInteger _autoSaveInterval;
   NSTimer *_autoSaveTimer;
     
 }
@@ -75,26 +75,26 @@
 - (void)printShowingPrintPanel:(BOOL)flag;
 - (void)printSelection:(NSArray *)graphics;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) int pageCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger pageCount;
 
 - (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 
 - (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page;
 
 - (void)setGraphics:(NSArray *)graphics;
-- (void)setGraphics:(NSArray *)graphics onPage:(unsigned)pageNr;
+- (void)setGraphics:(NSArray *)graphics onPage:(NSUInteger)pageNr;
 
 - (void)invalidateGraphic:(IGGraphic *)graphic;
 - (void)redisplayTweak:(IGGraphic *)graphic;
 
-- (void)insertGraphic:(IGGraphic *)graphic atIndex:(unsigned)index;
-- (void)removeGraphicAtIndex:(NSUInteger)index onPage:(unsigned)pageNr;
+- (void)insertGraphic:(IGGraphic *)graphic atIndex:(NSUInteger)index;
+- (void)removeGraphicAtIndex:(NSUInteger)index onPage:(NSUInteger)pageNr;
 - (void)removeGraphic:(IGGraphic *)graphic;
-- (void)moveGraphic:(IGGraphic *)graphic toIndex:(unsigned)newIndex;
-- (void)moveGraphic:(IGGraphic *)graphic toPage:(unsigned)pageNr;
+- (void)moveGraphic:(IGGraphic *)graphic toIndex:(NSUInteger)newIndex;
+- (void)moveGraphic:(IGGraphic *)graphic toPage:(NSUInteger)pageNr;
 
-- (void)insertPageAtPage:(unsigned)pageNr;
-- (void)removePage:(unsigned)pageNr;
+- (void)insertPageAtPage:(NSUInteger)pageNr;
+- (void)removePage:(NSUInteger)pageNr;
 
 
 // ===========================================================================

@@ -87,7 +87,7 @@
 {
     NSLog(@"(WritingDirectionController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = NSApplication.sharedApplication.delegate;
-    delegate.resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG;
+    [delegate resetMenuItemFlag:WRITINGDIRECTION_MENU_TAG];
 }
 
 - (IBAction)writtingDirectionChanged:(id)sender

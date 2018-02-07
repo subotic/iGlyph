@@ -49,10 +49,10 @@
     [newObj setFontName:[self fontName]];
     [newObj setTheGlyph:[self theGlyph]];
     [newObj setGlyphASC:[self glyphASC]];
-    [newObj setFontSize:self.fontSize];
+    [newObj setFontSize:[self fontSize]];
     [newObj setRubricColor:[self rubricColor]];
     [newObj setMirrored:self.mirrored];
-    [newObj setAngle:self.angle];
+    [newObj setAngle:[self angle]];
     [newObj setGlyphBezPath:[self getOldGlyphBezPath]];
     
     return newObj;
@@ -391,7 +391,7 @@ NSString *IGAngleKey = @"Angle";
     return [NSFont systemFontOfSize:size];
 }
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     return LowerLeftKnobMask;
     //return AllKnobsMask;
 }

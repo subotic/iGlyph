@@ -31,10 +31,10 @@
     IBOutlet NSSlider *arrowHeadSizeSlider;
     
     struct __lineFlags {
-        unsigned int lineType;
-        unsigned int rubricLine:1;
+        NSUInteger lineType;
+        NSUInteger rubricLine:1;
         float lineWidth;
-        unsigned int arrowType;
+        NSUInteger arrowType;
         float arrowHead;        
         float arrowHeadSize;
     } _lineFlags;

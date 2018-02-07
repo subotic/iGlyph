@@ -31,11 +31,11 @@
   
   //dies ist der Zwischenspeicher für diese Werte
   struct __cartoucheFlags {
-    unsigned int xEdge;
-    unsigned int yEdge;
-    unsigned int borderTyp;
-    unsigned int rubricCartouche:1;
-    unsigned int endAlignment;
+    NSUInteger xEdge;
+    NSUInteger yEdge;
+    NSUInteger borderTyp;
+    NSUInteger rubricCartouche:1;
+    NSUInteger endAlignment;
   } _cartoucheFlags;
   
   

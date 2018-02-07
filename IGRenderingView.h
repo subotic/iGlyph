@@ -21,6 +21,6 @@
 @property NSInteger pageCount;
 @property IGDrawDocument *drawDocument;
 
-- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(NSUInteger)count document:(IGDrawDocument *)document NS_DESIGNATED_INITIALIZER;
 
 @end

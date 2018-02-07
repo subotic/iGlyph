@@ -48,7 +48,7 @@
     return path;
 }
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     return UpperRightKnobMask + LowerLeftKnobMask;
 }
 

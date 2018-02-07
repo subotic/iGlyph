@@ -13,7 +13,7 @@
 
 static NSString *_NSDefaultScaleMenuLabels[] = {/* @"Set...", */ @"10%", @"25%", @"50%", @"75%", @"100%", @"128%", @"200%", @"400%", @"800%", @"1600%"};
 static float _NSDefaultScaleMenuFactors[] = {/* 0.0, */ 0.1, 0.25, 0.5, 0.75, 1.0, 1.28, 2.0, 4.0, 8.0, 16.0};
-static unsigned _NSDefaultScaleMenuSelectedItemIndex = 4;
+static NSUInteger _NSDefaultScaleMenuSelectedItemIndex = 4;
 static float _NSScaleMenuFontSize = 10.0;
 
 @implementation IGZoomScrollView
@@ -27,7 +27,7 @@ static float _NSScaleMenuFontSize = 10.0;
 
 - (void)makeScalePopUpButton {
     if (_scalePopUpButton == nil) {
-        unsigned cnt, numberOfDefaultItems = (sizeof(_NSDefaultScaleMenuLabels) / sizeof(NSString *));
+        NSUInteger cnt, numberOfDefaultItems = (sizeof(_NSDefaultScaleMenuLabels) / sizeof(NSString *));
         id curItem;
         
         // create it
@@ -183,7 +183,7 @@ static float _NSScaleMenuFontSize = 10.0;
     NSView *clipView = self.documentView.superview;
     
         if (flag) {    // Coming from elsewhere, first validate it
-            unsigned cnt = 0, numberOfDefaultItems = (sizeof(_NSDefaultScaleMenuFactors) / sizeof(float));
+            NSUInteger cnt = 0, numberOfDefaultItems = (sizeof(_NSDefaultScaleMenuFactors) / sizeof(float));
             
             // We only work with some preset zoom values, so choose one of the appropriate values (Fudge a little for floating point == to work)
             while (cnt < numberOfDefaultItems && newScaleFactor * .99 > _NSDefaultScaleMenuFactors[cnt]) cnt++;

@@ -109,7 +109,7 @@
     return path;
 }
 
-- (unsigned)knobMask
+- (NSUInteger)knobMask
 {
     return LowerLeftKnobMask + UpperRightKnobMask + UpperLeftKnobMask + LowerRightKnobMask;
 }

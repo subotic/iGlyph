@@ -17,7 +17,7 @@
 
 @implementation IGEdgeDockablePanel
 
-- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(unsigned int)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
     
     //NSLog(@"(EdgeDockablePanel.m)->EdgeDockablePanel is going to init");

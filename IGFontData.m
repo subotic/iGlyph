@@ -41,7 +41,7 @@ static IGFontData *_sharedFontData = nil;
     
     NSString *filePath, *resPath, *fileString, *zeilenString;
     NSRange r, rr;
-    unsigned start, end1, end2;
+    NSUInteger start, end1, end2;
     int part, linecnt;
     
     resPath = [NSBundle mainBundle].resourcePath;

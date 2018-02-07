@@ -49,8 +49,8 @@
 
 - (IBAction)headerChanged:(id)sender;
 
-- (void)glyphClickedAtRow:(int)rowValue andColumn:(int)columnValue;
-- (void)replaceSelectedGlyphWithThisOneAtRow:(int)rowValue andColumn:(int)columnValue;   
+- (void)glyphClickedAtRow:(NSInteger)rowValue andColumn:(NSInteger)columnValue;
+- (void)replaceSelectedGlyphWithThisOneAtRow:(NSInteger)rowValue andColumn:(NSInteger)columnValue;
 
 //Data Source stuff
 - (void)calculateNumberOfRowsInTableView;

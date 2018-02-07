@@ -209,7 +209,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 
 - (NSArray *)graphicsFromDrawDocumentDictionarySinglePage:(NSDictionary *)doc {
     NSArray *graphicDicts = doc[IGGraphicsListKey];
-    //unsigned i, pCount = [graphicDicts count]; //pages
+    //NSUInteger i, pCount = [graphicDicts count]; //pages
     NSUInteger j, gCount = graphicDicts.count; //graphics per page
     //NSMutableArray *pageArray = [NSMutableArray arrayWithCapacity:pCount]; //all pages
     NSMutableArray *graphicsArray = [NSMutableArray arrayWithCapacity:gCount];
@@ -749,11 +749,11 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 //the page array index is the same as the page nummber and a header which is on page 0.
 //I make the page arrays 0 and 1 at init
 
-- (int)pageCount {
+- (NSUInteger)pageCount {
     return _pageCount;
 }
 
-- (NSArray *)graphicsOnPage:(unsigned)pageNr {
+- (NSArray *)graphicsOnPage:(NSUInteger)pageNr {
     return (self.documentGraphics)[pageNr];
 }
 
@@ -801,7 +801,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     _pageCount = self.documentGraphics.count - 1;
 }
 
-- (void)setGraphics:(NSArray *)graphics onPage:(unsigned)pageNr {
+- (void)setGraphics:(NSArray *)graphics onPage:(NSUInteger)pageNr {
     NSUInteger i = [(self.documentGraphics)[pageNr] count];
     while (i-- > 0) {
         [self removeGraphicAtIndex:i onPage:pageNr];
@@ -823,9 +823,9 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [windowControllers makeObjectsPerformSelector:@selector(redisplayTweak:) withObject:graphic];
 }
 
-- (void)insertGraphic:(IGGraphic *)graphic atIndex:(unsigned)index {
+- (void)insertGraphic:(IGGraphic *)graphic atIndex:(NSUInteger)index {
     NSAssert([graphic pageNr], @"Unable to get PageNr");
-    unsigned pageNr = [graphic pageNr];
+    NSUInteger pageNr = [graphic pageNr];
     [[self.undoManager prepareWithInvocationTarget:self] removeGraphicAtIndex:index onPage:pageNr];
     [(self.documentGraphics)[pageNr] insertObject:graphic atIndex:index];
     [graphic setDocument:self];
@@ -843,16 +843,16 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (void)removeGraphic:(IGGraphic *)graphic {
     NSLog(@"IGDrawDocument(removeGraphics)");
     //NSAssert([graphic pageNr], @"Unable to get PageNr");
-    unsigned pageNr = [graphic pageNr];
-    unsigned index = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
+    NSUInteger pageNr = [graphic pageNr];
+    NSUInteger index = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
     //if (index != NSNotFound) {
     [self removeGraphicAtIndex:index onPage:pageNr];
     //}
 }
 
-- (void)moveGraphic:(IGGraphic *)graphic toIndex:(unsigned)newIndex {
-    unsigned pageNr = [graphic pageNr];
-    unsigned curIndex = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
+- (void)moveGraphic:(IGGraphic *)graphic toIndex:(NSUInteger)newIndex {
+    NSUInteger pageNr = [graphic pageNr];
+    NSUInteger curIndex = [(self.documentGraphics)[pageNr] indexOfObjectIdenticalTo:graphic];
     if (curIndex != newIndex) {
         [[self.undoManager prepareWithInvocationTarget:self] moveGraphic:graphic toIndex:((curIndex > newIndex) ? curIndex+1 : curIndex)];
         if (curIndex < newIndex) {
@@ -864,20 +864,20 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     }
 }
 
-- (void)moveGraphic:(IGGraphic *)graphic toPage:(unsigned)pageNr {
+- (void)moveGraphic:(IGGraphic *)graphic toPage:(NSUInteger)pageNr {
     [self removeGraphic:graphic];
     [graphic setPageNr:pageNr];
     [(self.documentGraphics)[pageNr] addObject:graphic];
 }
 
-- (void)insertPageAtPage:(unsigned)pageNr {
-    if (pageNr == nil) {
+- (void)insertPageAtPage:(NSUInteger)pageNr {
+    if (!pageNr) {
         [self.documentGraphics addObject:[[NSMutableArray alloc] init]];
     } else {
         [self.documentGraphics insertObject:[[NSMutableArray alloc] init] atIndex:pageNr];
         //da alle grafischen Objecte die Seite gewechselt haben, müssen sie mit der richtigen Seitenzahl geupdated werden
-        int i;
-        int count = [self graphicsOnPage:(pageNr + 1)].count;
+        NSUInteger i;
+        NSUInteger count = [self graphicsOnPage:(pageNr + 1)].count;
         for (i = 0; i < count; i++) {
             [[self graphicsOnPage:(pageNr + 1)][i] setPageNr:(pageNr + 1)];
         }
@@ -885,7 +885,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     _pageCount++;
 }
 
-- (void)removePage:(unsigned)pageNr {
+- (void)removePage:(NSUInteger)pageNr {
     if (pageNr == 1) {
         [self.documentGraphics removeObjectAtIndex:pageNr];
         [self.documentGraphics addObject:[[NSMutableArray alloc] init]];

@@ -87,7 +87,8 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     NSLog(@"(LineController.m)->Notification received - %@\n", notification.name);
-    [NSApp.delegate resetMenuItemFlag:LINE_MENU_TAG];
+    IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    [delegate resetMenuItemFlag:LINE_MENU_TAG];
 }
 
 

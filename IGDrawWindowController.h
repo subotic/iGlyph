@@ -13,7 +13,7 @@
 
 
 
-typedef NS_ENUM(unsigned int, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROLL };
+typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL_SCROLL, AUTO_SCROLL, MANUAL_SCROLL };
 
 #import <Cocoa/Cocoa.h>
 

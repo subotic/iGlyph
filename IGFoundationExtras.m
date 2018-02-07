@@ -12,7 +12,7 @@
 @implementation NSObject (IGPerformExtras)
 
 - (void)performSelector:(SEL)sel withEachObjectInArray:(NSArray *)array {
-    unsigned i, c = array.count;
+    NSUInteger i, c = array.count;
     for (i=0; i<c; i++) {
         [self performSelector:sel withObject:array[i]];
     }

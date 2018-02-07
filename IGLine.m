@@ -441,7 +441,7 @@
     return path;
 }
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     if ([self startsAtLowerLeft]) {
         return (LowerLeftKnobMask | UpperRightKnobMask);
     } else {

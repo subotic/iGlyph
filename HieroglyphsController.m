@@ -184,11 +184,11 @@
 
 
 //wird vom IGHieroglyphsTableView aufgerufen
-- (void)glyphClickedAtRow:(int)rowValue andColumn:(int)columnValue
+- (void)glyphClickedAtRow:(NSInteger)rowValue andColumn:(NSInteger)columnValue
 {
     NSLog(@"glyphClicked action");
-    int r = rowValue;
-    int c = columnValue;
+    NSInteger r = rowValue;
+    NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
     
     NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
@@ -206,10 +206,10 @@
 }
 
 //wird vom IGHieroglyphsTableView aufgerufen wenn right-click oder ctr-click
-- (void)replaceSelectedGlyphWithThisOneAtRow:(int)rowValue andColumn:(int)columnValue {
+- (void)replaceSelectedGlyphWithThisOneAtRow:(NSInteger)rowValue andColumn:(NSInteger)columnValue {
     
-    int r = rowValue;
-    int c = columnValue;
+    NSInteger r = rowValue;
+    NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
 
     NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
@@ -272,7 +272,8 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     NSLog(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
-    [NSApp.delegate resetMenuItemFlag:HYEROGLYPHS_MENU_TAG];
+    IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    [delegate resetMenuItemFlag:HYEROGLYPHS_MENU_TAG];
 }
 
 - (void)windowDidResize:(NSNotification *)notification

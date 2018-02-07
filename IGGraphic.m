@@ -159,11 +159,11 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
     return _bounds;
 }
 
-- (void)setPageNr:(unsigned)page {
+- (void)setPageNr:(NSUInteger)page {
     pageNr = page;
 }
 
-- (unsigned)pageNr {
+- (NSUInteger)pageNr {
     return pageNr;
 }
 
@@ -487,7 +487,7 @@ NSString *IGPageNum = @"PageNr";
     }
     obj = dict[IGPageNum];
     if (obj) {
-        self.pageNr = (unsigned)[obj intValue];
+        self.pageNr = (NSUInteger)[obj intValue];
     }
     
     return;
@@ -528,7 +528,7 @@ NSString *IGPageNum = @"PageNr";
     }
     obj = dict[IGPageNum];
     if (obj) {
-        self.pageNr = (unsigned)[obj intValue];
+        self.pageNr = (NSUInteger)[obj intValue];
     }
     
     return;
@@ -582,13 +582,13 @@ NSString *IGPageNum = @"PageNr";
     }
 }
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     return LowerLeftKnobMask + UpperRightKnobMask;
 }
 
 - (int)knobUnderPoint:(NSPoint)point {
     NSRect bounds = self.bounds;
-    unsigned knobMask = self.knobMask;
+    NSUInteger knobMask = self.knobMask;
     NSRect handleRect;
     
     handleRect.size.width = IG_HANDLE_WIDTH;
@@ -680,7 +680,7 @@ NSString *IGPageNum = @"PageNr";
 - (void)drawHandlesInView:(IGGraphicView *)view {
     NSRect bounds = self.bounds;
     //NSLog(@"IGGraphic(drawHandlesInView) -> handleBounds x: %f, y: %f, w: %f, h: %f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-    unsigned knobMask = self.knobMask;
+    NSUInteger knobMask = self.knobMask;
     
     if (knobMask & UpperLeftKnobMask) {
         [self drawHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMinY(bounds)) inView:view];
@@ -828,7 +828,7 @@ NSString *IGPageNum = @"PageNr";
 
 - (NSScriptObjectSpecifier *)objectSpecifier {
     NSArray *graphics = [self.document graphicsOnPage:self.pageNr];
-    unsigned index = [graphics indexOfObjectIdenticalTo:self];
+    NSUInteger index = [graphics indexOfObjectIdenticalTo:self];
     if (index != NSNotFound) {
         NSScriptObjectSpecifier *containerRef = self.document.objectSpecifier;
         return [[NSIndexSpecifier allocWithZone:nil] initWithContainerClassDescription:containerRef.keyClassDescription containerSpecifier:containerRef key:@"graphics" index:index];

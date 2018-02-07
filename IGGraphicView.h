@@ -54,15 +54,15 @@ enum {
     
     //die Zahl nach dem namen deklariert Bit Fields, dh. das ist die Anzahl Bits die in diesem member gespeichert werden
     struct __gvFlags {
-        unsigned int rubberbandIsDeselecting:1;
-        unsigned int initedRulers:1;
-        unsigned int snapsToGrid:1;
-        unsigned int showsGrid:1;
+        NSUInteger rubberbandIsDeselecting:1;
+        NSUInteger initedRulers:1;
+        NSUInteger snapsToGrid:1;
+        NSUInteger showsGrid:1;
         float gridSpacing;
-        unsigned int guidelineType;
-        unsigned int guidelineCount;
-        unsigned int knobsHidden:1;
-        unsigned int _pad:27;
+        NSUInteger guidelineType;
+        NSUInteger guidelineCount;
+        NSUInteger knobsHidden:1;
+        NSUInteger _pad:27;
     } _gvFlags;
     
     //float _gridSpacing;
@@ -73,12 +73,12 @@ enum {
     NSRect _horizontalRulerLineRect;
     
     
-    unsigned int _writingDirection;
+    NSUInteger _writingDirection;
     struct __glyphFlags {
-        unsigned int fontSize;
-        unsigned int rubricColor;
-        unsigned int mirrored;
-        unsigned int angle;
+        NSUInteger fontSize;
+        NSUInteger rubricColor;
+        NSUInteger mirrored;
+        NSUInteger angle;
     } _glyphFlags;
     
     NSColor *_cursorColor;
@@ -103,17 +103,17 @@ enum {
 // IGDrawWindowController accessors and convenience methods
 @property (NS_NONATOMIC_IOSONLY, strong) IGDrawWindowController *drawWindowController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawDocument *drawDocument;
-- (NSArray *)graphicsOnPage:(unsigned)pageNr;
+- (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSSize drawDocumentSize;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSSize drawDocumentPaperSize;
 
-- (NSRect)documentRectForPageNumber:(unsigned)pageNumber;
-- (NSRect)pageRectForPageNumber:(unsigned)pageNumber;
+- (NSRect)documentRectForPageNumber:(NSUInteger)pageNumber;
+- (NSRect)pageRectForPageNumber:(NSUInteger)pageNumber;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageHeaderRect;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageHeaderSmalerRect;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageFooterRect;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect pageFooterSmalerRect;
-- (NSRect)marginRectForSide:(unsigned)side;
+- (NSRect)marginRectForSide:(NSUInteger)side;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSPrintInfo *drawDocumentPrintInfo;
 @property (NS_NONATOMIC_IOSONLY, readonly) float pageSeparatorHeight;
 
@@ -147,8 +147,8 @@ enum {
 - (void)endEditing;
 
 // Geometry calculations
-- (IGGraphic *)graphicUnderPoint:(NSPoint)point onPage:(unsigned)pageNr;
-- (NSSet *)graphicsIntersectingRect:(NSRect)rect onPage:(unsigned)pageNr;
+- (IGGraphic *)graphicUnderPoint:(NSPoint)point onPage:(NSUInteger)pageNr;
+- (NSSet *)graphicsIntersectingRect:(NSRect)rect onPage:(NSUInteger)pageNr;
 - (BOOL)cursorUnderPoint:(NSPoint)point;
 
 // Drawing and mouse tracking
@@ -183,9 +183,9 @@ enum {
 -(IBAction)newRowButtonAction:(id)sender; 
 
 // Dragging
-- (unsigned int)dragOperationForDraggingInfo:(id <NSDraggingInfo>)sender;
-- (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender;
-- (unsigned int)draggingUpdated:(id <NSDraggingInfo>)sender;
+- (NSUInteger)dragOperationForDraggingInfo:(id <NSDraggingInfo>)sender;
+- (NSUInteger)draggingEntered:(id <NSDraggingInfo>)sender;
+- (NSUInteger)draggingUpdated:(id <NSDraggingInfo>)sender;
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;

@@ -16,7 +16,7 @@
 @synthesize pageCount;
 @synthesize drawDocument;
 
-- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(unsigned)count document:(IGDrawDocument *)document {
+- (instancetype)initWithFrame:(NSRect)frame graphics:(NSArray *)graphicsArr pageCount:(NSUInteger)count document:(IGDrawDocument *)document {
     self = [super initWithFrame:frame];
     if (self) {
         self.graphics = graphicsArr;

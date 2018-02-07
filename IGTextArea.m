@@ -142,7 +142,7 @@ static const float IGRightMargin = 36.0;
     NSTextStorage *contents = [self contents];
     NSSize minSize = [self minSize];
     NSSize maxSize = [self maxSize];
-    unsigned len = contents.length;
+    NSUInteger len = contents.length;
     
     if (len > 0) {
         NSLayoutManager *lm = sharedDrawingLayoutManager();

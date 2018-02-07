@@ -61,12 +61,6 @@
     return controlledView;
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-    [controlledView release];
-}
-
 - (void)awakeFromNib
 {
     angleTextField.stringValue = @"0";
@@ -87,7 +81,6 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
     [self.window setFrameUsingName:@"FormatGlyph"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
 }
@@ -95,8 +88,8 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     NSLog(@"(FormatGlyphController.m)->Notification received - %@\n", notification.name);
-    
-    [NSApp.delegate resetMenuItemFlag:FORMATGLYPH_MENU_TAG];
+    IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    [delegate resetMenuItemFlag:FORMATGLYPH_MENU_TAG];
 }
 
 - (IBAction)glyphAngleTextFieldAction:(id)sender
@@ -139,7 +132,7 @@
     
     
     if ( [sender tag] == 0) {
-        NSInteger _cellTag = sender.selectedCell.tag;
+        NSInteger _cellTag = [[sender selectedCell] tag];
         NSLog(@"angle set %i", _cellTag);
         angleSlider.floatValue = _cellTag;
         angleTextField.intValue = _cellTag;

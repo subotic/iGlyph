@@ -20,7 +20,7 @@
     return self;
 }
 
-- (void)drawRow:(int)row clipRect:(NSRect)rect {
+- (void)drawRow:(NSInteger)row clipRect:(NSRect)rect {
     [super drawRow:row clipRect:rect]; 
 }
 
@@ -60,8 +60,8 @@
 - (void)rightMouseDown:(NSEvent *)theEvent {
     NSLog(@"Bin in meiner IGNSTableView subclase bei rightMouseDown");
     NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
-    int r = [self rowAtPoint:clickAtPoint];
-    int c = [self columnAtPoint:clickAtPoint];
+    NSInteger r = [self rowAtPoint:clickAtPoint];
+    NSInteger c = [self columnAtPoint:clickAtPoint];
     NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
     
     [self.delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
@@ -73,8 +73,8 @@
     if (ctrlKeyDown) {
         NSLog(@"Bin in meiner IGNSTableView subclase bei mouseDown aber mit ctrl gedrueckt");
         NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
-        int r = [self rowAtPoint:clickAtPoint];
-        int c = [self columnAtPoint:clickAtPoint];
+        NSInteger r = [self rowAtPoint:clickAtPoint];
+        NSInteger c = [self columnAtPoint:clickAtPoint];
         NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
         
         [self.delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];    
@@ -82,8 +82,8 @@
     } else {
         NSLog(@"Bin in meiner IGNSTableView subclase bei mouseDown");
         NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
-        int r = [self rowAtPoint:clickAtPoint];
-        int c = [self columnAtPoint:clickAtPoint];
+        NSInteger r = [self rowAtPoint:clickAtPoint];
+        NSInteger c = [self columnAtPoint:clickAtPoint];
         NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
         
         [self.delegate glyphClickedAtRow:r andColumn:c];

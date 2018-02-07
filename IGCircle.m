@@ -163,7 +163,7 @@
 }
 
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     return LowerLeftKnobMask + UpperLeftKnobMask + LowerRightKnobMask + UpperRightKnobMask;
 }
 

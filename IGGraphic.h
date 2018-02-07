@@ -6,7 +6,7 @@
 //  Copyright (c) 2004 Ivan Subotic. All rights reserved.
 //
 /*!
-@header IGGraphic
+ @header IGGraphic
  @abstract   (description)
  @discussion (description)
  */
@@ -17,155 +17,155 @@
 @class IGDrawDocument;
 
 enum {
-  NoKnob = 0,
-  UpperLeftKnob,
-  UpperMiddleKnob,
-  UpperRightKnob,
-  MiddleLeftKnob,
-  MiddleRightKnob,
-  LowerLeftKnob,
-  LowerMiddleKnob,
-  LowerRightKnob,
+    NoKnob = 0,
+    UpperLeftKnob,
+    UpperMiddleKnob,
+    UpperRightKnob,
+    MiddleLeftKnob,
+    MiddleRightKnob,
+    LowerLeftKnob,
+    LowerMiddleKnob,
+    LowerRightKnob,
 };
 
 enum {
-  NoKnobsMask = 0,
-  UpperLeftKnobMask = 1 << UpperLeftKnob,
-  UpperMiddleKnobMask = 1 << UpperMiddleKnob,
-  UpperRightKnobMask = 1 << 
-  UpperRightKnob,
-  MiddleLeftKnobMask = 1 << MiddleLeftKnob,
-  MiddleRightKnobMask = 1 << MiddleRightKnob,
-  LowerLeftKnobMask = 1 << LowerLeftKnob,
-  LowerMiddleKnobMask = 1 << LowerMiddleKnob,
-  LowerRightKnobMask = 1 << LowerRightKnob,
-  AllKnobsMask = 0xffffffff,
+    NoKnobsMask = 0,
+    UpperLeftKnobMask = 1 << UpperLeftKnob,
+    UpperMiddleKnobMask = 1 << UpperMiddleKnob,
+    UpperRightKnobMask = 1 <<
+    UpperRightKnob,
+    MiddleLeftKnobMask = 1 << MiddleLeftKnob,
+    MiddleRightKnobMask = 1 << MiddleRightKnob,
+    LowerLeftKnobMask = 1 << LowerLeftKnob,
+    LowerMiddleKnobMask = 1 << LowerMiddleKnob,
+    LowerRightKnobMask = 1 << LowerRightKnob,
+    AllKnobsMask = 0xffffffff,
 };
 
 extern NSString *IGGraphicDidChangeNotification;
 extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic : NSObject <NSCopying> {
-  
-  //neue gemeinsame Variablen
-  CGFloat strokeThickness;
-  NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
-  NSColor *__weak strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
-  NSColor *__weak fillColor; //Füllfarbe
-  NSInteger fillType; //Schattierung
-  NSInteger angle;
-  NSInteger cornerRadius;
-  
-  BOOL mirrored;
-  BOOL filled;
-  BOOL stroked;
-  
-  CGFloat fontSize;  //nur für Hieroglyphen
-  NSInteger cartoucheOrientation; //nur für die Cartouche
-  
-  NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
-  BOOL arrowReversed;
-  NSInteger arrowHeadAngle;
-  NSInteger arrowHeadSize;
-  
-  //ende neue gemeinsame Variablen
-  
-  @private
-  IGDrawDocument *_document;
-  NSRect _bounds;
-  NSRect _origBounds;
-  float _strokeLineWidth;
-  NSColor *_fillColor;
-  NSColor *_strokeColor;
-  struct __gFlags {
-    unsigned int drawsFill:1;
-    unsigned int drawsStroke:1;
-    unsigned int manipulatingBounds:1;
-    unsigned int _pad:29;
-  } _gFlags;
-  
-  @protected
+    
+    //neue gemeinsame Variablen
+    CGFloat strokeThickness;
+    NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
+    NSColor *__weak strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+    NSColor *__weak fillColor; //Füllfarbe
+    NSInteger fillType; //Schattierung
+    NSInteger angle;
+    NSInteger cornerRadius;
+    
+    BOOL mirrored;
+    BOOL filled;
+    BOOL stroked;
+    
+    CGFloat fontSize;  //nur für Hieroglyphen
+    NSInteger cartoucheOrientation; //nur für die Cartouche
+    
+    NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+    BOOL arrowReversed;
+    NSInteger arrowHeadAngle;
+    NSInteger arrowHeadSize;
+    
+    //ende neue gemeinsame Variablen
+    
+@private
+    IGDrawDocument *_document;
+    NSRect _bounds;
+    NSRect _origBounds;
+    float _strokeLineWidth;
+    NSColor *_fillColor;
+    NSColor *_strokeColor;
+    struct __gFlags {
+        NSUInteger drawsFill:1;
+        NSUInteger drawsStroke:1;
+        NSUInteger manipulatingBounds:1;
+        NSUInteger _pad:29;
+    } _gFlags;
+    
+@protected
     //------------------------------------------
     
     struct __glyphGraphicFlags {
-      float fontSize;
-      BOOL rubricColor;
-      BOOL mirrored;
-      int angle;
+        float fontSize;
+        BOOL rubricColor;
+        BOOL mirrored;
+        int angle;
     } _glyphGraphicFlags;
-  
-  NSString *_fontName;
-  int _glyphASC;
-  NSGlyph _theGlyph;
-  NSBezierPath *_theGlyphBezPath;
-  NSSize _oldGlyphBoundsSize;
-  BOOL _glyphIsCreating;
-  BOOL _glyphBezPathShouldRecalculate;
-  
-  //------------------------------------------    
-  
-  struct __cartoucheGraphicFlags {
-    unsigned int xEdge;
-    unsigned int yEdge;
-    unsigned int borderTyp;
-    unsigned int rubricCartouche:1;
-    unsigned int endCartoucheAlignment;
-  } _cartoucheGraphicFlags;
-  
-  //------------------------------------------
-  
-  struct __lineGraphicFlags {
-    unsigned int lineType;
-    unsigned int rubricLine:1;
-    float lineWidth;
-    unsigned int arrowType;
-    float arrowHead;        
-    float arrowHeadSize;
-    unsigned int reverseArrow:1;
-  } _lineGraphicFlags;
-  
-  //------------------------------------------
-  
-  unsigned pageNr;
-  
+    
+    NSString *_fontName;
+    int _glyphASC;
+    NSGlyph _theGlyph;
+    NSBezierPath *_theGlyphBezPath;
+    NSSize _oldGlyphBoundsSize;
+    BOOL _glyphIsCreating;
+    BOOL _glyphBezPathShouldRecalculate;
+    
+    //------------------------------------------
+    
+    struct __cartoucheGraphicFlags {
+        NSUInteger xEdge;
+        NSUInteger yEdge;
+        NSUInteger borderTyp;
+        NSUInteger rubricCartouche:1;
+        NSUInteger endCartoucheAlignment;
+    } _cartoucheGraphicFlags;
+    
+    //------------------------------------------
+    
+    struct __lineGraphicFlags {
+        NSUInteger lineType;
+        NSUInteger rubricLine:1;
+        float lineWidth;
+        NSUInteger arrowType;
+        float arrowHead;
+        float arrowHeadSize;
+        NSUInteger reverseArrow:1;
+    } _lineGraphicFlags;
+    
+    //------------------------------------------
+    
+    NSUInteger pageNr;
+    
 }
 
-  @property (assign) CGFloat strokeThickness;
-  @property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
-  @property (weak) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
-  @property (weak) NSColor *fillColor; //Füllfarbe
-  @property (assign) NSInteger fillType; //Schattierung
-  @property (assign) NSInteger angle;
-  @property (assign) NSInteger cornerRadius;
-  
-  @property (assign) BOOL mirrored;
-  @property (assign) BOOL filled;
-  @property (assign) BOOL stroked;
-  
-  @property (assign) CGFloat fontSize;  //nur für Hieroglyphen
-  @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
-  
-  @property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
-  @property (assign) BOOL arrowReversed;
-  @property (assign) NSInteger arrowHeadAngle;
-  @property (assign) NSInteger arrowHeadSize;
+@property (assign) CGFloat strokeThickness;
+@property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
+@property (weak) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
+@property (weak) NSColor *fillColor; //Füllfarbe
+@property (assign) NSInteger fillType; //Schattierung
+@property (assign) NSInteger angle;
+@property (assign) NSInteger cornerRadius;
+
+@property (assign) BOOL mirrored;
+@property (assign) BOOL filled;
+@property (assign) BOOL stroked;
+
+@property (assign) CGFloat fontSize;  //nur für Hieroglyphen
+@property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
+
+@property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+@property (assign) BOOL arrowReversed;
+@property (assign) NSInteger arrowHeadAngle;
+@property (assign) NSInteger arrowHeadSize;
 
 - (instancetype)init;
 
-  // ========================= Binding Stuff =========================
+// ========================= Binding Stuff =========================
 
 
-  // ========================= Document accessors and conveniences =========================
+// ========================= Document accessors and conveniences =========================
 @property (NS_NONATOMIC_IOSONLY, strong) IGDrawDocument *document;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) NSUndoManager *undoManager;
 - (void)updateToolboxes;
 
-  // =================================== Primitives ===================================
+// =================================== Primitives ===================================
 - (void)didChange;
-  // This sends the did change notification.  All change primitives should call it.
+// This sends the did change notification.  All change primitives should call it.
 
 @property (NS_NONATOMIC_IOSONLY) NSRect bounds;
-@property (NS_NONATOMIC_IOSONLY) unsigned int pageNr;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger pageNr;
 @property (NS_NONATOMIC_IOSONLY) BOOL drawsFill;
 - (void)setFillColor:(NSColor *)fillColor;
 - (NSColor *)fillColor;
@@ -174,7 +174,7 @@ extern NSString *IGGlyphDidChangeNotification;
 - (NSColor *)strokeColor;
 @property (NS_NONATOMIC_IOSONLY) float strokeLineWidth;
 
-  // =================================== Extended mutation ===================================
+// =================================== Extended mutation ===================================
 - (void)startBoundsManipulation;
 - (void)stopBoundsManipulation;
 - (void)moveBy:(NSPoint)vector;
@@ -185,12 +185,12 @@ extern NSString *IGGlyphDidChangeNotification;
 - (int)resizeByMovingKnob:(int)knob toPoint:(NSPoint)point;
 - (void)makeNaturalSize;
 
-  // =================================== Subclass capabilities ===================================
+// =================================== Subclass capabilities ===================================
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canDrawStroke;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canDrawFill;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasNaturalSize;
 
-  // =================================== Persistence ===================================
+// =================================== Persistence ===================================
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSMutableDictionary *propertyListRepresentation;
 + (instancetype)graphicWithPropertyListRepresentation:(NSDictionary *)dict;
 + (instancetype)graphicWithPropertyListRepresentationFromPC:(NSDictionary *)dict;
@@ -206,7 +206,7 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSBezierPath *bezierPath;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSBezierPath *glyphBezierPath;
 - (void)drawInView:(IGGraphicView *)view isSelected:(BOOL)flag;
-@property (NS_NONATOMIC_IOSONLY, readonly) unsigned int knobMask;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger knobMask;
 - (int)knobUnderPoint:(NSPoint)point;
 - (void)drawHandleAtPoint:(NSPoint)point inView:(IGGraphicView *)view;
 - (void)drawHandlesInView:(IGGraphicView *)view;
@@ -276,25 +276,25 @@ extern NSString *IGGlyphDidChangeNotification;
 @end
 
 /*
-@interface IGGraphic (IGCartoucheExtraStuff)
-
-- (int)xEdge;
-- (void)setXEdge:(int)value;
-
-- (int)yEdge;
-- (void)setYEdge:(int)value;
-
-- (int)cartoucheBorderType;
-- (void)setCartoucheBorderType:(int)value;
-
-- (int)endCartoucheAlignment;
-- (void)setEndCartoucheAlignment:(int)value;
-
-- (BOOL)rubricCartouche;
-- (void)setRubricCartouche:(BOOL)value;
-
-@end
-*/
+ @interface IGGraphic (IGCartoucheExtraStuff)
+ 
+ - (int)xEdge;
+ - (void)setXEdge:(int)value;
+ 
+ - (int)yEdge;
+ - (void)setYEdge:(int)value;
+ 
+ - (int)cartoucheBorderType;
+ - (void)setCartoucheBorderType:(int)value;
+ 
+ - (int)endCartoucheAlignment;
+ - (void)setEndCartoucheAlignment:(int)value;
+ 
+ - (BOOL)rubricCartouche;
+ - (void)setRubricCartouche:(BOOL)value;
+ 
+ @end
+ */
 
 @interface IGGraphic (IGLineExtraStuff)
 

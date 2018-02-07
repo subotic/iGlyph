@@ -92,7 +92,7 @@
     return NO;
 }
 
-- (unsigned)knobMask {
+- (NSUInteger)knobMask {
     return UpperRightKnobMask + LowerLeftKnobMask;
 }
 

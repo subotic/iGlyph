@@ -35,10 +35,10 @@
     IBOutlet NSStepper *stepperButton;
     
     struct __glyphTmpFormat {
-        unsigned int fontSize;
-        unsigned int rubricColor:1;
-        unsigned int mirrored:1;
-        unsigned int angle;
+        NSUInteger fontSize;
+        NSUInteger rubricColor:1;
+        NSUInteger mirrored:1;
+        NSUInteger angle;
     } _glyphTmpFormat;
     
     
