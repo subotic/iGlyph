@@ -42,19 +42,19 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-    id newObj = [super copyWithZone:zone];
-      
+- (instancetype)copy {
+    id newObj = [super copy];
+
     // Document is not "copied".  The new graphic will need to be inserted into a document.
     [newObj setFontName:[self fontName]];
     [newObj setTheGlyph:[self theGlyph]];
     [newObj setGlyphASC:[self glyphASC]];
-    [newObj setFontSize:[self fontSize]];
+    // [newObj setFontSize:[self fontSize]];
     [newObj setRubricColor:[self rubricColor]];
     [newObj setMirrored:self.mirrored];
-    [newObj setAngle:[self angle]];
+    // [newObj setAngle:[self angle]];
     [newObj setGlyphBezPath:[self getOldGlyphBezPath]];
-    
+
     return newObj;
 }
 
@@ -102,7 +102,7 @@
                 self.fillColor = [NSColor blackColor];
             }
         } else { //mehrere selected
-                 //NSLog(@"mehrere selected");
+            //NSLog(@"mehrere selected");
             self.fillColor = [NSColor blueColor];
         }
     } else {
@@ -137,7 +137,7 @@
     //Sie Idee ist das ein bezierPath zu erstellen, welcher unabhängig ist vom Erstellungsort und der fill Farbe
     //So kann ich Ihn dann Verschieben und anders Färben ohne neu erstellen zu müssen
     NSBezierPath *glyphBezPath = [NSBezierPath bezierPath];
-    [glyphBezPath setCachesBezierPath:YES];
+    // [glyphBezPath setCachesBezierPath:YES];
     [glyphBezPath moveToPoint:NSMakePoint(0,0)];
     [glyphBezPath appendBezierPathWithGlyph:theGlyph inFont:[self getFont:[self fontName] withSize:self.fontSize]];
     
@@ -197,12 +197,13 @@
     return YES;
 }
 
-- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page {
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(NSUInteger)page
+{
     // Hier wollen wir die Graphic (in unserem Fall immer eine Glyphe) auf die Cursorposition setzen
     // Dafür müssen wir die aktuelle Cursorposition aus der view abfragen und damit die bounds setzen.
     NSPoint mainCursor = pos;
     //NSLog(@"mainCursor und boundsOrigin müssen gleich sein");
-    //NSLog(@"IGGlyph(createGlyph) -> mainCursor x: %f, y: %f", mainCursor.x, mainCursor.y); 
+    //NSLog(@"IGGlyph(createGlyph) -> mainCursor x: %f, y: %f", mainCursor.x, mainCursor.y);
     //damit wir die Glyphe auch später (nach save/load, copy/paste, usw.) noch Zeichnen können, muss
     //das Object alle dafür nötigen Angaben in sich speichern.
     [self setFontName:fontName];
@@ -266,6 +267,12 @@
     }
 }
 
+// FIXME: this implementation is missing but I don't know why and how it should be correctly implemented
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName inView:(IGGraphicView *)view
+{
+    return [self createGlyph:glyphUniChar withFont:fontName onPosition:NSZeroPoint onPage:view.currentPage];
+}
+
 
 NSString *IGFontNameKey = @"FontName";
 NSString *IGTheGlyphKey = @"TheGlyph";
@@ -285,7 +292,7 @@ NSString *IGAngleKey = @"Angle";
     dict[IGFontSizeKey] = [NSString stringWithFormat:@"%f", self.fontSize];
     dict[IGGlyphRubricColorKey] = ([self rubricColor] ? @"YES" : @"NO");
     dict[IGMirroredKey] = (self.mirrored ? @"YES" : @"NO");
-    dict[IGAngleKey] = [NSString stringWithFormat:@"%i", self.angle];
+    dict[IGAngleKey] = [NSString stringWithFormat:@"%ld", (long)self.angle];
     
     return dict;
 }
@@ -367,9 +374,6 @@ NSString *IGAngleKey = @"Angle";
     
     return;
 }
-
-
-
 
 - (NSGlyph)getTheGlyph:(unichar)glyphUniChar forFont:(NSString *)fontName andSize:(float)size
 {

@@ -142,46 +142,46 @@
 }
 
 
-- (int)xEdge
+- (NSUInteger)xEdge
 {
   return xEdgeSlider.intValue;
 }
 
-- (void)setXEdge:(int)value
+- (void)setXEdge:(NSUInteger)value
 {
-  xTextField.intValue = value;
-  xEdgeSlider.intValue = value;
+  xTextField.integerValue = value;
+  xEdgeSlider.integerValue = value;
 }
 
-- (int)yEdge
+- (NSUInteger)yEdge
 {
   return yEdgeSlider.intValue;
 }
 
-- (void)setYEdge:(int)value
+- (void)setYEdge:(NSUInteger)value
 {
-  yTextField.intValue = value;
-  yEdgeSlider.intValue = value;
+  yTextField.integerValue = value;
+  yEdgeSlider.integerValue = value;
 }
 
-- (int)cartoucheBorderType
+- (NSUInteger)cartoucheBorderType
 {
   return borderTypeMatrix.selectedCell.tag;
 }
 
-- (void)setCartoucheBorderType:(int)value
+- (void)setCartoucheBorderType:(NSUInteger)value
 {
   [borderTypeMatrix selectCellWithTag:value];
 }
 
-- (int)endAlignment
+- (NSUInteger)endAlignment
 {
   //1 - Up, 2 - Right, 3 - Down, 4 - Left
   
   return endAlignmentMatrix.selectedCell.tag;
 }
 
-- (void)setEndAlignment:(int)value
+- (void)setEndAlignment:(NSUInteger)value
 {
   [endAlignmentMatrix selectCellWithTag:value];
 }

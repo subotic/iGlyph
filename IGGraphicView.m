@@ -232,7 +232,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
     return [self drawDocument].printInfo;
 }
 
-- (int)tag {
+- (NSInteger)tag {
     return 12345;
 }
 
@@ -347,12 +347,13 @@ static float IGDefaultPasteCascadeDelta = 10.0;
     return nil;
 }
 
-static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
-    NSArray *graphics = (NSArray *)gArray;
-    NSUInteger index1, index2;
+static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2, void *context)
+{
+    IGGraphicView *currentView = (__bridge IGGraphicView *) context;
+    NSArray *graphics = [currentView graphicsOnPage: currentView.currentPage];
     
-    index1 = [graphics indexOfObjectIdenticalTo:graphic1];
-    index2 = [graphics indexOfObjectIdenticalTo:graphic2];
+    NSUInteger index1 = [graphics indexOfObjectIdenticalTo:graphic1];
+    NSUInteger index2 = [graphics indexOfObjectIdenticalTo:graphic2];
     if (index1 == index2) {
         return NSOrderedSame;
     } else if (index1 < index2) {
@@ -364,7 +365,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (NSArray *)orderedSelectedGraphics  {
     //NSAssert([[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:self.currentPage]], @"orderedSelectedGraphics: probleme eine geordneten Array mit den Graphics zur zu geben");
-    return [[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:self.currentPage]];
+    return [[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:(__bridge void*) self];
 }
 
 - (BOOL)graphicIsSelected:(IGGraphic *)graphic {
@@ -750,7 +751,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         int pageNrAlignment = [[self drawDocument] pageNrAlignment];
         int pageNrPosition = [[self drawDocument] pageNrPosition];
         
-        signed int pnNumberToShow = self.currentPage - firstPageNumberToShow + initialPageNumber;
+        NSInteger pnNumberToShow = self.currentPage - firstPageNumberToShow + initialPageNumber;
         
         //NSLog(@"IGGraphicView(drawRect) -> pnStyle= %i", pnStyle);
         //Fontname and Size... fehlt nur noch Style
@@ -774,7 +775,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
             [pnMutableString insertString:pnFormatArr[0] atIndex:0];
         }
         //die Seitenzahl
-        [pnMutableString appendString:[NSString stringWithFormat:@"%i", pnNumberToShow]];
+        [pnMutableString appendString:[NSString stringWithFormat:@"%ld", (long)pnNumberToShow]];
         //rechts von der Seitenzahl
         if (![pnFormatArr[1] isEqualTo:@""]) {
             [pnMutableString appendString:pnFormatArr[1]];
@@ -926,29 +927,34 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     _creatingGraphic = nil;
 }
 
-- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar WithFont:(NSString *)fontName {
+- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar WithFont:(NSString *)fontName
+{
     [self clearSelection];
+    
     //wenn ich eine neue glyphe erstelle, will ich sie mit den standard eigenschaften erstellen und nicht wie die letzte die ich verändert habe
     //ich muss dann ins leere klicken und dann die einstellungen ändern, welche für alle neuen glyphen gelten
     [[FormatGlyphController sharedFormatGlyphController] restoreTmpFormating];
     
     IGDrawDocument *document = self.drawDocument;
+    
     _creatingGraphic = [[IGGlyph alloc] init];
+    IGGlyph *creatingGraphic = (IGGlyph *)_creatingGraphic;
+    
     //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach init -> %@", _creatingGraphic);
-    if ([_creatingGraphic createGlyph:glyphUniChar withFont:fontName InView:self]) {
+    if ([creatingGraphic createGlyph:glyphUniChar withFont:fontName onPosition:NSZeroPoint onPage:0]) { // FIXME: onPosition and onPage are hardcoded
         //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach createGlyph -> %@", _creatingGraphic);
         
-        if (NSPointInRect([_creatingGraphic bounds].origin, [self pageHeaderRect])) {
-            [_creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+        if (NSPointInRect([creatingGraphic bounds].origin, [self pageHeaderRect])) {
+            [creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
         } else {
-            [_creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
+            [creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
         }
-        [document insertGraphic:_creatingGraphic atIndex:0];
-        [self selectGraphic:_creatingGraphic];
+        [document insertGraphic:creatingGraphic atIndex:0];
+        [self selectGraphic:creatingGraphic];
         
         //nur für den textblock interessant
-        if ([_creatingGraphic isEditable]) {
-            [self startEditingGraphic:_creatingGraphic withEvent:nil ];
+        if ([creatingGraphic isEditable]) {
+            [self startEditingGraphic:creatingGraphic withEvent:nil ];
         }
         
         [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
@@ -958,7 +964,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     NSPoint mainCursor = self.currentCursorPosition;
     NSPoint tempCursor = mainCursor;
     int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
-    NSRect glyphBounds = [_creatingGraphic bounds];
+    NSRect glyphBounds = [creatingGraphic bounds];
     
     if (wd == upToDown | wd == upToDownMirr | wd == upToDownVert | wd == upToDownVertMirr)
     {
@@ -1028,7 +1034,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     groupString = [groupString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     //hier werden die klamern und leerzeichen entfernt
-    const char *cGroupStr = [groupString cString];
+    const char *cGroupStr = [groupString cStringUsingEncoding:NSUTF8StringEncoding];
     int i;
     for (i = 0; i < strlen(cGroupStr); i++) {
         if (cGroupStr[i] == ' ') {
@@ -1046,7 +1052,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     }
     
     //hier finde ich die position von "+" und "/"
-    const char *cCleanGroupStr = [cleanGroupString cString];
+    const char *cCleanGroupStr = [cleanGroupString cStringUsingEncoding:NSUTF8StringEncoding];
     int j = 0;
     for (i = 0; i < strlen(cCleanGroupStr); i++) {
         if (cCleanGroupStr[i] == '+') {
@@ -1078,7 +1084,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     while (1) {
         
         if (sgn[0] == '0') { //keine signs
-            if (cleanGroupString == @"") {
+            if ([cleanGroupString isEqualToString:@""]) {
                 NSLog(@"leerer cleanGroupString");
                 break;
             } else {
@@ -1439,10 +1445,12 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         fontName = glyphGroupDic[key][1];
         
         _creatingGraphic = [[IGGlyph alloc] init];
+        IGGlyph * creatingGraphic = (IGGlyph *)_creatingGraphic;
+        
         //NSLog(@"IGGraphicView(createGraphicsOfClassGlyphFromADic) nach init -> %@", _creatingGraphic);
-        if ([_creatingGraphic createGlyph:glyphUniChar withFont:fontName InView:self]) {
+        if ([creatingGraphic createGlyph:glyphUniChar withFont:fontName inView:self]) {
             //NSLog(@"IGGraphicView(createGraphicsOfClassGlyphFromArray) nach createGlyph -> %@", _creatingGraphic);
-            glyphBounds = [_creatingGraphic bounds]; //dies muss ich nun anpassen so das sie in der groupBounds an der richtigen Stelle liegt
+            glyphBounds = [creatingGraphic bounds]; //dies muss ich nun anpassen so das sie in der groupBounds an der richtigen Stelle liegt
             
             int temp = [key intValue];
             switch (temp)
@@ -1454,7 +1462,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1465,7 +1473,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1476,7 +1484,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1487,7 +1495,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1498,7 +1506,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1509,7 +1517,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1520,7 +1528,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1531,7 +1539,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1542,7 +1550,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [_creatingGraphic setBounds:glyphBounds];
+                    [creatingGraphic setBounds:glyphBounds];
                     
                     break;
                     
@@ -1550,9 +1558,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
             //damite der cursor nacher richtig verschoben werden kann.
             glyphGroupBounds = NSUnionRect(glyphGroupBounds, glyphBounds);
             if (NSPointInRect([_creatingGraphic bounds].origin, [self pageHeaderRect])) {
-                [_creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+                [creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
             } else {
-                [_creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
+                [creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
             }
             [document insertGraphic:_creatingGraphic atIndex:0];
             [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
@@ -2048,12 +2056,9 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 //mit einem rechts-click setze ich den cursor oder verschiebe ihn beliebig
 - (void)rightMouseDown:(NSEvent *)theEvent {
     //NSLog(@"IGGraphicView(mouseDown) -> rechts-click sollte es sein");
-    NSPoint lastPoint, curPoint;
-    BOOL didMove = NO, isMoving = NO;
+    NSPoint lastPoint;
     NSPoint selPointOffset = NSZeroPoint;
-    NSPoint boundsOrigin;
     BOOL snapsToGrid = [self snapsToGrid];
-    float spacing = [self gridSpacing];
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
     
     NSPoint selPoint = self.currentCursorPosition;
@@ -2169,7 +2174,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (BOOL)makeNewImageFromContentsOfFile:(NSString *)filename atPoint:(NSPoint)point {
     NSString *extension = filename.pathExtension;
-    if ([[NSImage imageFileTypes] containsObject:extension]) {
+    if ([[NSImage imageTypes] containsObject:extension]) {
         NSImage *contents = [[NSImage alloc] initWithContentsOfFile:filename];
         if (contents) {
             IGImage *newImage = [[IGImage alloc] init];
@@ -2262,7 +2267,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         }
     }
     
-    type = [pboard availableTypeFromArray:[NSImage imagePasteboardTypes]];
+    type = [pboard availableTypeFromArray:[NSImage imageTypes]];
     if (type) {
         return NSDragOperationCopy;
     }
@@ -2704,7 +2709,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
             pastePositionDelta.y = self.currentCursorPosition.y - [document boundsForGraphics:array].origin.y;
             pastePositionDelta.y -= [document boundsForGraphics:array].size.height;
             
-            int i = array.count;
+            NSUInteger i = array.count;
             if (i > 0) {
                 id curGraphic;
                 [self clearSelection];
@@ -2764,8 +2769,8 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     
     NSDictionary *docDict = [document drawDocumentDictionaryFromData:[pboard dataForType:IGDrawDocumentType]];
     NSArray *array = [document graphicsFromDrawDocumentDictionarySinglePage:docDict];
-    int i = array.count;
-    int currentChangeCount = pboard.changeCount;
+    NSUInteger i = array.count;
+    NSInteger currentChangeCount = pboard.changeCount;
     
     if (_pasteboardChangeCount != currentChangeCount) {
         _pasteboardChangeCount = currentChangeCount;
@@ -2984,22 +2989,22 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     }
 }
 
-- (int)guidelineType {
+- (NSUInteger)guidelineType {
     return _gvFlags.guidelineType;
 }
 
-- (void)setGuidelineType:(int)value {
+- (void)setGuidelineType:(NSUInteger)value {
     if (_gvFlags.guidelineType != value) {
         _gvFlags.guidelineType = value;
         [self setNeedsDisplay:YES];
     }
 }
 
-- (int)guidelineCount {
+- (NSUInteger)guidelineCount {
     return _gvFlags.guidelineCount;
 }
 
-- (void)setGuidelineCount:(int)value {
+- (void)setGuidelineCount:(NSUInteger)value {
     if (_gvFlags.guidelineCount != value) {
         _gvFlags.guidelineCount = value;
         [self setNeedsDisplay:YES];
@@ -3037,14 +3042,15 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
     return pageBackgroundColor;
 }
 
-- (int)pageCount {
+- (NSUInteger)pageCount {
     return [[self drawDocument] pageCount];
 }
 
 
 - (IBAction)pageDown:(id)sender
 {
-    if ([sender tag] == 19 && self.currentPage > 1)
+    NSView *senderView = sender;
+    if ([senderView tag] == 19 && self.currentPage > 1)
     {
         NSLog(@"pageDown to first page");
         self.currentPage = 1;
@@ -3053,7 +3059,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         [self updateCurrentPageField];
         [self setNeedsDisplay:YES];
         
-    } else if ([sender tag] == 11 && self.currentPage > 1) {
+    } else if ([senderView tag] == 11 && self.currentPage > 1) {
         
         NSLog(@"pageDown one page");
         self.currentPage--;
@@ -3067,9 +3073,10 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
 
 - (IBAction)pageUp:(id)sender
 {
-    int pageCount = [self pageCount];
+    NSInteger pageCount = [self pageCount];
     
-    if ([sender tag] == 29 && self.currentPage < pageCount)
+    NSView *senderView = sender;
+    if ([senderView tag] == 29 && self.currentPage < pageCount)
     {
         NSLog(@"pageUp to last page");
         self.currentPage = pageCount;
@@ -3078,7 +3085,7 @@ static int IG_orderGraphicsFrontToBack(id graphic1, id graphic2, void *gArray) {
         [self updateCurrentPageField];
         [self setNeedsDisplay:YES];
         
-    } else if ([sender tag] == 21 && self.currentPage < pageCount) {
+    } else if ([senderView tag] == 21 && self.currentPage < pageCount) {
         
         NSLog(@"pageUp one page");
         self.currentPage++;

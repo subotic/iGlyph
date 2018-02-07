@@ -112,7 +112,7 @@
     self.rowNumber = ceil(self.glyphNumber / self.colNumber);
 }
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     NSLog(@"numberOfRowsInTableView");
     return self.rowNumber;
@@ -122,7 +122,7 @@
 {
     //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
     int column = tableColumn.identifier.intValue;
-    int neededValue = (column + row * self.colNumber);
+    NSInteger neededValue = (column + row * self.colNumber);
     
     NSMutableArray *titleData = fontDataDic[self.selectedTitle];
     
@@ -178,7 +178,7 @@
 - (IBAction)headerChanged:(id)sender //wechselt zwischen den H'Glyph Namen oder Lauten
 {
     headerSelected = (headerSelected == 0) ? 3 : 0;
-    NSLog(@"HieroglyphsController(headerChanged) headerSelected = %d", headerSelected);
+    NSLog(@"HieroglyphsController(headerChanged) headerSelected = %ld", (long)headerSelected);
     [myTableView reloadData];
 }
 
@@ -191,9 +191,9 @@
     NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
     
-    NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
+    NSLog(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
     
-    int glyphPosInArray = (c + (r * colNumber));
+    NSInteger glyphPosInArray = (c + (r * colNumber));
     NSArray *titleData = fontDataDic[self.selectedTitle];
     unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
     
@@ -212,9 +212,9 @@
     NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
 
-    NSLog(@"HieroglyphsController(glyphClicked) Row: %d, Column: %d",r,c);
+    NSLog(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
 
-    int glyphPosInArray = (c + (r * colNumber));
+    NSInteger glyphPosInArray = (c + (r * colNumber));
     NSArray *titleData = fontDataDic[self.selectedTitle];
     unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
 

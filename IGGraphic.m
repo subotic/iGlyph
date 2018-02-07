@@ -1071,15 +1071,15 @@ NSString *IGPageNum = @"PageNr";
 
 @implementation IGGraphic (IGLineExtraStuff)
 
-- (int)lineType
+- (NSUInteger)lineType
 {
     return _lineGraphicFlags.lineType;
 }
 
-- (void)setLineType:(int)value
+- (void)setLineType:(NSUInteger)value
 {
     _lineGraphicFlags.lineType = value;
-    NSLog(@"IGGraphic(setLineType)->%i", _lineGraphicFlags.lineType);
+    NSLog(@"IGGraphic(setLineType)->%ld", (long)_lineGraphicFlags.lineType);
     [self didChange];
 }
 
@@ -1107,18 +1107,18 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 
-- (int)arrowType
+- (NSUInteger)arrowType
 {
-       NSLog(@"IGGraphic(arrowType) -> %i", _lineGraphicFlags.arrowType);
+       NSLog(@"IGGraphic(arrowType) -> %ld", (long)_lineGraphicFlags.arrowType);
     return  _lineGraphicFlags.arrowType;
 }
 
-- (void)setArrowType:(int)value
+- (void)setArrowType:(NSUInteger)value
 {
        _lineGraphicFlags.arrowType = value;
     
     NSLog(@"++++++++++++++++++++++++++++++++++");
-    NSLog(@"IGGraphic(setArrowType)->%i", _lineGraphicFlags.arrowType);
+    NSLog(@"IGGraphic(setArrowType)->%ld", (long)_lineGraphicFlags.arrowType);
     NSLog(@"++++++++++++++++++++++++++++++++++");
     [self didChange];
 }

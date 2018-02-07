@@ -757,13 +757,13 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     return (self.documentGraphics)[pageNr];
 }
 
-- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page {
+- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(NSUInteger)page {
     [self clearSelection];
     //wenn ich eine neue glyphe erstelle, will ich sie mit den standard eigenschaften erstellen und nicht wie die letzte die ich verändert habe
     //ich muss dann ins leere klicken und dann die einstellungen ändern, welche für alle neuen glyphen gelten
     [[FormatGlyphController sharedFormatGlyphController] restoreTmpFormating];
     
-    IGGraphic *newGraphic = [[IGGlyph alloc] init];
+    IGGlyph *newGraphic = [[IGGlyph alloc] init];
     //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach init -> %@", _creatingGraphic);
     if ([newGraphic createGlyph:glyphUniChar withFont:fontName onPosition:pos onPage:page]) {
         //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach createGlyph -> %@", _creatingGraphic);

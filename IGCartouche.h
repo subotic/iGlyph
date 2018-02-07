@@ -10,20 +10,20 @@
 
 
 @interface IGCartouche : IGGraphic {
-  int _xEdge;
-  int _yEdge;
-  int _cartoucheBorderType;
-  int _endCartoucheAlignment;
+  NSInteger _xEdge;
+  NSInteger _yEdge;
+  NSInteger _cartoucheBorderType;
+  NSInteger _endCartoucheAlignment;
   BOOL _rubricCartouche;
   
 }
-@property (NS_NONATOMIC_IOSONLY) int xEdge;
+@property (NS_NONATOMIC_IOSONLY) NSInteger xEdge;
 
-@property (NS_NONATOMIC_IOSONLY) int yEdge;
+@property (NS_NONATOMIC_IOSONLY) NSInteger yEdge;
 
-@property (NS_NONATOMIC_IOSONLY) int cartoucheBorderType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger cartoucheBorderType;
 
-@property (NS_NONATOMIC_IOSONLY) int endCartoucheAlignment;
+@property (NS_NONATOMIC_IOSONLY) NSInteger endCartoucheAlignment;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricCartouche;
 

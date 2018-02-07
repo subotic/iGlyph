@@ -63,7 +63,7 @@ extern NSString *IGGlyphDidChangeNotification;
     CGFloat fontSize;  //nur für Hieroglyphen
     NSInteger cartoucheOrientation; //nur für die Cartouche
     
-    NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+    NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
     BOOL arrowReversed;
     NSInteger arrowHeadAngle;
     NSInteger arrowHeadSize;
@@ -271,7 +271,7 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL mirrored;
 
-@property (NS_NONATOMIC_IOSONLY) int angle;
+@property (NS_NONATOMIC_IOSONLY) NSInteger angle;
 
 @end
 
@@ -298,13 +298,13 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic (IGLineExtraStuff)
 
-@property (NS_NONATOMIC_IOSONLY) int lineType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger lineType;
 
 @property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-@property (NS_NONATOMIC_IOSONLY) int arrowType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowType;
 
 @property (NS_NONATOMIC_IOSONLY) float arrowHead;
 

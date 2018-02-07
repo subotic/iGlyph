@@ -19,10 +19,10 @@
   NSRect tmpBezPathBounds;
   NSSize tmpDeltaWH;
   
-  int _lineType;
+  NSUInteger _lineType;
   float _lineWidth;
   BOOL _rubricLine;
-  int _arrowType;
+  NSUInteger _arrowType;
   float _arrowHead;
   float _arrowHeadSize;
   BOOL _reverseArrow;
@@ -31,13 +31,13 @@
 
 @property (NS_NONATOMIC_IOSONLY) BOOL startsAtLowerLeft;
 
-@property (NS_NONATOMIC_IOSONLY) int lineType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger lineType;
 
 @property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-@property (NS_NONATOMIC_IOSONLY) int arrowType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowType;
 
 @property (NS_NONATOMIC_IOSONLY) float arrowHead;
 

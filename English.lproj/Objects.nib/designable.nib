@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ObjectsController">
+            <connections>
+                <outlet property="toolButtons" destination="86" id="106"/>
+                <outlet property="window" destination="5" id="140"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="objects" animationBehavior="default" id="5" userLabel="Panel" customClass="IGEdgeDockablePanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="136" y="231" width="66" height="221"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="66" height="221"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box verticalHuggingPriority="750" boxType="separator" id="84">
+                        <rect key="frame" x="0.0" y="220" width="66" height="5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </box>
+                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="86">
+                        <rect key="frame" x="0.0" y="-7" width="66" height="232"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="66" height="24.600000000000001"/>
+                        <size key="intercellSpacing" width="1" height="0.40000000000000002"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="151">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="bevel" title="Pointer" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" borderStyle="border" inset="2" id="141">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Text" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="1" inset="2" id="142">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Cartouche" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="2" inset="2" id="143">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Line" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="3" inset="2" id="144">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Rubric" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="4" inset="2" id="145">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Destroyed" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="5" inset="2" id="146">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Rectangle" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="6" inset="2" id="147">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Circle" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="7" inset="2" id="148">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <buttonCell type="square" title="Arc" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" controlSize="small" borderStyle="border" tag="8" inset="2" id="149">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="selectToolAction:" target="-2" id="118"/>
+                        </connections>
+                    </matrix>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="7"/>
+            </connections>
+        </window>
+        <view id="85">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
+    </objects>
+</document>

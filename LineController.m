@@ -88,7 +88,7 @@
 {
     NSLog(@"(LineController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
-    [delegate resetMenuItemFlag:LINE_MENU_TAG];
+    [delegate resetMenuItemFlag:IGMenuLineTag];
 }
 
 
@@ -188,12 +188,12 @@
 }
 
 
-- (void)setLineType:(int)aType
+- (void)setLineType:(NSUInteger)aType
 {
     [lineTypeMatrix selectCellWithTag:aType];
 }
 
-- (int)lineType
+- (NSUInteger)lineType
 {
     return lineTypeMatrix.selectedCell.tag;
 }
@@ -218,12 +218,12 @@
     return lineRubricButton.state;
 }
 
-- (void)setArrowType:(int)aType
+- (void)setArrowType:(NSUInteger)aType
 {
     [arrowTypeMatrix selectCellWithTag:aType];
 }
 
-- (int)arrowType
+- (NSUInteger)arrowType
 {
     return arrowTypeMatrix.selectedCell.tag;
 }

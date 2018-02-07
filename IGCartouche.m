@@ -134,29 +134,29 @@
 #pragma mark -- bindings stuff --
 // ============================== bindings stuff=====================================
 
-- (int)xEdge { return _xEdge; }
-- (void)setXEdge:(int)value
+- (NSInteger)xEdge { return _xEdge; }
+- (void)setXEdge:(NSInteger)value
 {
   _xEdge = value;
 }
 
 
-- (int)yEdge { return _yEdge; }
-- (void)setYEdge:(int)value
+- (NSInteger)yEdge { return _yEdge; }
+- (void)setYEdge:(NSInteger)value
 {
   _yEdge = value;
 }
 
 
-- (int)cartoucheBorderType { return _cartoucheBorderType; }
-- (void)setCartoucheBorderType:(int)value
+- (NSInteger)cartoucheBorderType { return _cartoucheBorderType; }
+- (void)setCartoucheBorderType:(NSInteger)value
 {
   _cartoucheBorderType = value;
 }
 
 
-- (int)endCartoucheAlignment { return _endCartoucheAlignment; }
-- (void)setEndCartoucheAlignment:(int)value
+- (NSInteger)endCartoucheAlignment { return _endCartoucheAlignment; }
+- (void)setEndCartoucheAlignment:(NSInteger)value
 {
   _endCartoucheAlignment = value;
 }

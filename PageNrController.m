@@ -101,8 +101,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
     
     //Loading the Fonts
     NSArray *availableFontsArr = [NSFontManager sharedFontManager].availableFontFamilies;
-    NSArray *sortedArray;
-    sortedArray = [availableFontsArr sortedArrayUsingFunction:myStringSort context:NULL];
+    NSArray *sortedArray = [availableFontsArr sortedArrayUsingFunction:myStringSort context:NULL];
     
     NSEnumerator *enumerator = [sortedArray objectEnumerator];
     id anObject;

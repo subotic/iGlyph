@@ -47,8 +47,8 @@ enum {
     NSSet *_rubberbandGraphics;
     IGGraphic *_editingGraphic;
     NSView *_editorView;
-    int _pasteboardChangeCount;
-    int _pasteCascadeNumber;
+    NSInteger _pasteboardChangeCount;
+    NSInteger _pasteCascadeNumber;
     NSPoint _pasteCascadeDelta;
     NSTimer *_unhideKnobsTimer;
     
@@ -227,15 +227,14 @@ enum {
 @property (NS_NONATOMIC_IOSONLY) float gridSpacing;
 @property (NS_NONATOMIC_IOSONLY, copy) NSColor *gridColor;
 
-@property (NS_NONATOMIC_IOSONLY) int guidelineType;
-
-@property (NS_NONATOMIC_IOSONLY) int guidelineCount;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger guidelineType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger guidelineCount;
 
 // Multiple page view stuff
 @property (NS_NONATOMIC_IOSONLY, copy) NSColor *marginLineColor;
 @property (NS_NONATOMIC_IOSONLY, copy) NSColor *pageBackgroundColor;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) int pageCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger pageCount;
 - (IBAction)pageDown:(id)sender;
 - (IBAction)pageUp:(id)sender;
 - (IBAction)insertPageBeforeThisOne:(id)sender;

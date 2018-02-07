@@ -53,13 +53,13 @@
 - (IBAction)endAlignmentChange:(id)sender;
 - (IBAction)rubricCartoucheChange:(id)sender;
 
-@property (NS_NONATOMIC_IOSONLY) int xEdge;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger xEdge;
 
-@property (NS_NONATOMIC_IOSONLY) int yEdge;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger yEdge;
 
-@property (NS_NONATOMIC_IOSONLY) int cartoucheBorderType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger cartoucheBorderType;
 
-@property (NS_NONATOMIC_IOSONLY) int endAlignment;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger endAlignment;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricCartouche;
 

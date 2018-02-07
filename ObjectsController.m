@@ -117,7 +117,7 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 {
     NSLog(@"(ObjectsController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [NSApplication sharedApplication].delegate;
-    [delegate resetMenuItemFlag:OBJECTS_MENU_TAG];
+    [delegate resetMenuItemFlag:IGMenuObjectsTag];
 }
 
 - (void)selectArrowTool {

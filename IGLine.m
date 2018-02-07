@@ -12,6 +12,8 @@
 
 #import "IGGraphicView.h"
 #import "IGDrawWindowController.h"
+
+#import "math.h"
 //#import "fp.h"
 
 #import "IGGlyph.h"
@@ -38,15 +40,15 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-    id newObj = [super copyWithZone:zone];
+- (instancetype)copy {
+    id newObj = [super copy];
     
     [newObj setStartsAtLowerLeft:[self startsAtLowerLeft]];
     [newObj setLineType:[self lineType]];
-    [newObj setLineWidth:[self lineWidth]];
+    // [newObj setLineWidth:[self lineWidth]]; // has problems finding
     [newObj setRubricLine:[self rubricLine]];
     [newObj setArrowHead:[self arrowHead]];
-    [newObj setArrowHeadSize:[self arrowHeadSize]];
+    // [newObj setArrowHeadSize:[self arrowHeadSize]]; // has problems finding
     [newObj setReverseArrow:[self reverseArrow]];
     
     return newObj;
@@ -107,12 +109,12 @@
     BOOL shiftKeyDown = ((NSApp.currentEvent.modifierFlags & NSShiftKeyMask) ? YES : NO);
     //NSLog(@"Shift key is %i", shiftKeyDown);
     
-    float dashPattern[2];
+    CGFloat dashPattern[2];
     dashPattern[0] = 5.0;
     dashPattern [1] = 5.0;
     
     double alphaWinkel = [self arrowHead]; //Oeffnungswinkel vom Pfeil
-    alphaWinkel = alphaWinkel * pi / 180.0; //Umwandlung in Rad
+    alphaWinkel = alphaWinkel * M_PI / 180.0; //Umwandlung in Rad
     float arrowHS = [self arrowHeadSize]; //grösse des Pfeiles
     
     double deltaX = -cos(alphaWinkel) * arrowHS;
@@ -262,7 +264,7 @@
             float XNull = NSMinX(bounds);
             float YNull = NSMaxY(bounds);
             
-            double phi = atan2(bounds.size.width, -bounds.size.height) - pi/2;
+            double phi = atan2(bounds.size.width, -bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -283,7 +285,7 @@
             float XNull = NSMaxX(bounds);
             float YNull = NSMinY(bounds);
             
-            double phi = atan2(-bounds.size.width, bounds.size.height) - pi/2;
+            double phi = atan2(-bounds.size.width, bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -303,7 +305,7 @@
             float XNull = NSMinX(bounds);
             float YNull = NSMaxY(bounds);
             
-            double phi = atan2(bounds.size.width, -bounds.size.height) - pi/2;
+            double phi = atan2(bounds.size.width, -bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -323,7 +325,7 @@
             XNull = NSMaxX(bounds);
             YNull = NSMinY(bounds);
             
-            phi = atan2(-bounds.size.width, bounds.size.height) - pi/2;
+            phi = atan2(-bounds.size.width, bounds.size.height) - M_PI/2;
             
             xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -351,7 +353,7 @@
             float XNull = NSMinX(bounds);
             float YNull = NSMinY(bounds);
             
-            double phi = atan2(bounds.size.width, bounds.size.height) - pi/2;
+            double phi = atan2(bounds.size.width, bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -373,7 +375,7 @@
             float XNull = NSMaxX(bounds);
             float YNull = NSMaxY(bounds);
             
-            double phi = atan2(-bounds.size.width, -bounds.size.height) - pi/2;
+            double phi = atan2(-bounds.size.width, -bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -395,7 +397,7 @@
             float XNull = NSMinX(bounds);
             float YNull = NSMinY(bounds);
             
-            double phi = atan2(bounds.size.width, bounds.size.height) - pi/2;
+            double phi = atan2(bounds.size.width, bounds.size.height) - M_PI/2;
             
             float xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             float yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -415,7 +417,7 @@
             XNull = NSMaxX(bounds);
             YNull = NSMaxY(bounds);
             
-            phi = atan2(-bounds.size.width, -bounds.size.height) - pi/2;
+            phi = atan2(-bounds.size.width, -bounds.size.height) - M_PI/2;
             
             xArrowPos = -deltaX * cos(phi) + deltaY * sin(phi) + XNull;
             yArrowPos = deltaX * sin(phi) + deltaY * cos(phi) + YNull;
@@ -590,15 +592,15 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
 }
 
 
-- (int)lineType
+- (NSUInteger)lineType
 {
     return _lineType;
 }
 
-- (void)setLineType:(int)value
+- (void)setLineType:(NSUInteger)value
 {
     _lineType = value;
-    NSLog(@"IGLine(setLineType)->%i", _lineType);
+    NSLog(@"IGLine(setLineType)->%ld", (long)_lineType);
     //[self didChange];
 }
 
@@ -626,18 +628,18 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     //[self didChange];
 }
 
-- (int)arrowType
+- (NSUInteger)arrowType
 {
-    NSLog(@"IGLine(arrowType) -> %i", _arrowType);
+    NSLog(@"IGLine(arrowType) -> %ld", (long)_arrowType);
     return  _arrowType;
 }
 
-- (void)setArrowType:(int)value
+- (void)setArrowType:(NSUInteger)value
 {
     _arrowType = value;
     
     NSLog(@"++++++++++++++++++++++++++++++++++");
-    NSLog(@"IGLine(setArrowType)->%i", _arrowType);
+    NSLog(@"IGLine(setArrowType)->%ld", (long)_arrowType);
     NSLog(@"++++++++++++++++++++++++++++++++++");
     //[self didChange];
 }

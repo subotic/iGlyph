@@ -152,7 +152,7 @@ static IGFontData *_sharedFontData = nil;
                                 
                                     [rows addObject:items];
                                     _ggGlyphDic[items[0]] = @[items[2], items[1]];
-                                    if (items[3] != @"") _ggGlyphDic[items[3]] = @[items[2], items[1]];
+                                    if ([items[3] isNotEqualTo:@""]) _ggGlyphDic[items[3]] = @[items[2], items[1]];
                                 }
                         }
         }

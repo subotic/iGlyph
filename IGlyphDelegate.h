@@ -15,14 +15,14 @@
 @class IGGraphicView;
 @class WebDownload;
 
-enum {
-    OBJECTS_MENU_TAG = 41,
-    HYEROGLYPHS_MENU_TAG = 42,
-    WRITINGDIRECTION_MENU_TAG = 43,
-    FORMATGLYPH_MENU_TAG = 44,
-    CARTOUCHE_MENU_TAG = 45,
-    LINE_MENU_TAG = 46,
-    INSPECTOR_MENU_TAG = 51,
+typedef NS_ENUM(NSUInteger, IGMenu) {
+    IGMenuObjectsTag = 41,
+    IGMenuHieroglyphsTag = 42,
+    IGMenuWritingDirectionTag = 43,
+    IGMenuFormatGlypTag = 44,
+    IGMenuCartoucheTag = 45,
+    IGMenuLineTag = 46,
+    IGMenuInspectorTag = 51,
 };
 
 extern NSString *IGMarginUnitsKey;

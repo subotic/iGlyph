@@ -98,7 +98,7 @@ static NSLayoutManager *sharedDrawingLayoutManager() {
         [self.fillColor set];
         NSRectFill(bounds);
     }
-    if (view && (view.editingGraphic == self) || (view.creatingGraphic == self)) {
+    if ((view && (view.editingGraphic == self)) || (view.creatingGraphic == self)) {
         [[NSColor knobColor] set];
         NSFrameRect(NSInsetRect(bounds, -1.0, -1.0));
         // If we are creating we have no text.  If we are editing, the editor (ie NSTextView) will draw the text.

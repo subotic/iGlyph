@@ -127,23 +127,23 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 // if the toolbar is just text, then this method is used!!!
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-  int tag = menuItem.tag;
-  if (tag == OBJECTS_MENU_TAG) { //Menu Item Toolboxes/Objects
+  NSUInteger tag = menuItem.tag;
+  if (tag == IGMenuObjectsTag) { //Menu Item Toolboxes/Objects
     menuItem.state = (currentObjectsMenuFlagSetting ? NSOnState : NSOffState);
     return YES;
-  } else if (tag == HYEROGLYPHS_MENU_TAG) { //Menu Item Toolboxes/Hieroglyphs
+  } else if (tag == IGMenuHieroglyphsTag) { //Menu Item Toolboxes/Hieroglyphs
     menuItem.state = (currentHieroglyphsMenuFlagSetting ? NSOnState : NSOffState);
     return YES;
-  } else if (tag == WRITINGDIRECTION_MENU_TAG) { //Menu Item Toolboxes/Writing Direction
+  } else if (tag == IGMenuWritingDirectionTag) { //Menu Item Toolboxes/Writing Direction
     menuItem.state = (currentWritingDirectionMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
-  } else if (tag == FORMATGLYPH_MENU_TAG) { //Menu Item Toolboxes/Format Glyph
+  } else if (tag == IGMenuFormatGlypTag) { //Menu Item Toolboxes/Format Glyph
     menuItem.state = (currentFormatGlyphMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
-  } else if (tag == CARTOUCHE_MENU_TAG) { //Menu Item Toolboxes/Cartouche
+  } else if (tag == IGMenuCartoucheTag) { //Menu Item Toolboxes/Cartouche
     menuItem.state = (currentCartoucheMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
-  } else if (tag == LINE_MENU_TAG) { //Menu Item Toolboxes/Line
+  } else if (tag == IGMenuLineTag) { //Menu Item Toolboxes/Line
     menuItem.state = (currentLineMenuFlagSetting ? NSOnState : NSOffState);
     return YES;    
   }
@@ -193,19 +193,19 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 }
 
 
-- (void)resetMenuItemFlag:(int)value
+- (void)resetMenuItemFlag:(NSUInteger)value
 {
-  if (value == OBJECTS_MENU_TAG) {
+  if (value == IGMenuObjectsTag) {
     currentObjectsMenuFlagSetting = NO;
-  } else if (value == HYEROGLYPHS_MENU_TAG) {
+  } else if (value == IGMenuHieroglyphsTag) {
     currentHieroglyphsMenuFlagSetting = NO;
-  } else if (value == WRITINGDIRECTION_MENU_TAG){
+  } else if (value == IGMenuWritingDirectionTag){
     currentWritingDirectionMenuFlagSetting = NO;
-  } else if (value == FORMATGLYPH_MENU_TAG){
+  } else if (value == IGMenuFormatGlypTag){
     currentFormatGlyphMenuFlagSetting = NO;
-  } else if (value == CARTOUCHE_MENU_TAG){
+  } else if (value == IGMenuCartoucheTag){
     currentCartoucheMenuFlagSetting = NO;
-  } else if (value == LINE_MENU_TAG){
+  } else if (value == IGMenuLineTag){
     currentLineMenuFlagSetting = NO;
   }
 }

@@ -66,7 +66,7 @@
 
 @property (NS_NONATOMIC_IOSONLY) BOOL mirrored;
 
-@property (NS_NONATOMIC_IOSONLY) int angle;
+@property (NS_NONATOMIC_IOSONLY) NSInteger angle;
 
 //glyph formating
 - (void)saveTmpFormating;

@@ -31,8 +31,8 @@
     NSEnumerator *colEnumerator;
     NSNumber *rowIndex;
     NSNumber *colIndex;
-    rowEnumerator = [self selectedRowEnumerator];
-    colEnumerator = [self selectedColumnEnumerator];
+    rowEnumerator = [self selectedRowEnumerator]; // should use selectedRowIndexes
+    colEnumerator = [self selectedColumnEnumerator]; // should use selectedColumnIndexes
     
     while ((rowIndex = [rowEnumerator nextObject]) != nil) { 
         NSRect rowFrame; 
@@ -62,9 +62,10 @@
     NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
     NSInteger r = [self rowAtPoint:clickAtPoint];
     NSInteger c = [self columnAtPoint:clickAtPoint];
-    NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
+    NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
     
-    [self.delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
+    HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+    [delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
@@ -75,18 +76,20 @@
         NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
         NSInteger r = [self rowAtPoint:clickAtPoint];
         NSInteger c = [self columnAtPoint:clickAtPoint];
-        NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
+        NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
         
-        [self.delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];    
+        HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+        [delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
         
     } else {
         NSLog(@"Bin in meiner IGNSTableView subclase bei mouseDown");
         NSPoint clickAtPoint = [self convertPoint: theEvent.locationInWindow fromView: nil];
         NSInteger r = [self rowAtPoint:clickAtPoint];
         NSInteger c = [self columnAtPoint:clickAtPoint];
-        NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %d, Column: %d",r,c);
+        NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
         
-        [self.delegate glyphClickedAtRow:r andColumn:c];
+        HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+        [delegate glyphClickedAtRow:r andColumn:c];
     }
 }
 @end

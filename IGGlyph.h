@@ -13,7 +13,8 @@
 
 - (NSGlyph)getTheGlyph:(unichar)glyphUniChar forFont:(NSString *)fontName andSize:(float)size;
 - (NSFont *)getFont:(NSString *)fontName withSize:(float)fontSize;
-- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page;
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(NSUInteger)page;
+- (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName inView:(IGGraphicView *)view;
 @end
 
 extern NSString *IGFontNameKey;

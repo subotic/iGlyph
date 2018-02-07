@@ -133,9 +133,9 @@
     
     if ( [sender tag] == 0) {
         NSInteger _cellTag = [[sender selectedCell] tag];
-        NSLog(@"angle set %i", _cellTag);
+        NSLog(@"angle set %ld", (long)_cellTag);
         angleSlider.floatValue = _cellTag;
-        angleTextField.intValue = _cellTag;
+        angleTextField.integerValue = _cellTag;
         [angleButtonMatrix deselectAllCells];
         [angleButtonMatrix cellWithTag:_cellTag].state = NSOnState;
         
@@ -276,12 +276,12 @@
     mirroredCheckBoxOutlet.state = value;
 }
 
-- (int)angle {
-    return angleTextField.stringValue.intValue;
+- (NSInteger)angle {
+    return angleTextField.stringValue.integerValue;
 }
 
-- (void)setAngle:(int)value {
-    angleTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", value];
+- (void)setAngle:(NSInteger)value {
+    angleTextField.stringValue = [[NSString alloc] initWithFormat:@"%ld", (long)value];
     [angleButtonMatrix deselectAllCells];
     if (value == 0 || value == 90 || value == 180 || value == 270) {
         [angleButtonMatrix cellWithTag:value].state = NSOnState;

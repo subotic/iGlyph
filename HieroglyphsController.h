@@ -28,7 +28,7 @@
     NSMutableDictionary *fontDataDic;
     NSMutableArray *glyphGroupsArr;
     
-    int headerSelected;
+    NSInteger headerSelected;
     
 }
 
@@ -54,7 +54,7 @@
 
 //Data Source stuff
 - (void)calculateNumberOfRowsInTableView;
-- (int)numberOfRowsInTableView:(NSTableView *)tableView;
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 
 //key window stuff

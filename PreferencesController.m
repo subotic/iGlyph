@@ -193,11 +193,11 @@
     snapsToGridCheckbox.state = [userDef integerForKey:IGPrefSnapsToGridKey];
     showsGridCheckbox.state = [userDef integerForKey:IGPrefShowsGridKey];
     gridSpacingSlider.floatValue = [userDef floatForKey:IGPrefGridSpacingKey];
-    gridSpacingTextField.intValue = [userDef integerForKey:IGPrefGridSpacingKey];
+    gridSpacingTextField.integerValue = [userDef integerForKey:IGPrefGridSpacingKey];
     //[gridColorWell setColor:[userDef objectForKey:IGPrefGridColorKey]];
     
     [guidelineTypeMatrix selectCellWithTag:[userDef integerForKey:IGPrefGuideLineTypeKey]];
-    guidelineCountTextField.intValue = [userDef integerForKey:IGPrefGuideLineCountKey];
+    guidelineCountTextField.integerValue = [userDef integerForKey:IGPrefGuideLineCountKey];
     
     
     [autoSaveIntervalPopup selectItemWithTitle:[userDef objectForKey:IGPrefAutoSaveIntervalKey]];
@@ -207,8 +207,8 @@
 
 - (IBAction)selectedViewChanged:(id)sender
 {
-  int tag = [[sender selectedCell] tag];
-  NSLog(@"Tag = %i", tag);
+  NSInteger tag = [[sender selectedCell] tag];
+  NSLog(@"Tag = %ld", (long)tag);
   
   //[self changeToSelectedTab: tag];
 }
