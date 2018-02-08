@@ -4,15 +4,10 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+iGlyph is a hieroglyphic text processing application that enables the user to write hieroclyphic texts on the computer. It is build for the Apple macOS operating system.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Gesamtcopyright: [Ägyptologisches Seminar der Universität Basel](https://aegyptologie.philhist.unibas.ch/de/forschung/werkzeuge/iglyph/)
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+Programmierung: Ivan Subotic, [Digital Humanities Lab](http://dhlab.unibas.ch), Universität Basel
 
-
-[jekyll-organization]: https://github.com/jekyll
+Grundkonzept: Günther Lapp
