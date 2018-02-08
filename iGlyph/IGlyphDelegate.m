@@ -239,23 +239,4 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
     }
 }
 
-//- (void)loadLocalFonts
-//{
-//  NSString *fontsFolder = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"IGFonts"];
-//  if (fontsFolder) {
-//    NSURL *fontsURL = [NSURL fileURLWithPath:fontsFolder];
-//    if (fontsURL) {
-//      FSRef fsRef;
-//      FSSpec fsSpec;
-//      (void)CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
-//      OSStatus status = FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL);
-//      if (noErr == status) {
-//        FMGeneration generationCount = FMGetGeneration();
-//        status = ATSFontActivateFromFileSpecification(&fsSpec, kATSFontContextLocal, kATSFontFormatUnspecified, NULL, kATSOptionFlagsDefault, NULL);
-//        generationCount = FMGetGeneration() - generationCount;
-//      }
-//    }
-//  }
-//}
-
 @end
