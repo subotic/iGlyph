@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title:  "Welcome to Jekyll!"
 date:   2018-02-08 17:38:51 +0100
 categories: iGlyph update
