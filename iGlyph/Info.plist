@@ -81,8 +81,6 @@
 	<string>iGlyphHelp</string>
 	<key>CFBundleHelpBookName</key>
 	<string>iGlyph MacOSX Help</string>
-	<key>CFBundleIconFile</key>
-	<string>iGlyphIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
     @abstract    (brief description) what is it?
     @discussion  (comprehensive description) who knows
 */
-@interface IGDrawWindowController : NSWindowController {
+@interface IGDrawWindowController : NSWindowController <NSToolbarDelegate> {
     @public
     IBOutlet NSWindow *window;
     IBOutlet IGGraphicView *graphicView;
@@ -89,7 +89,6 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
 
 - (void)prepareMarginView;
 - (void)setPageMargins;
-- (void)marginSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (float)convertToPoints:(float)width;
 
 - (void)initializeToolbar;

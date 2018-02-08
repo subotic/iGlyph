@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
-// $Source: /Volumes/data1/cvsroot/VisualGlyph/EdgeDockablePanelWithKey.m,v $
-// $Revision: 1.1 $ $Date: 2005/02/01 14:58:48 $ $State: Exp $
+// $Source: /Volumes/data1/cvsroot/VisualGlyph/EdgeDockablePanel.m,v $
+// $Revision: 1.2 $ $Date: 2004/07/26 14:24:33 $ $State: Exp $
 //-----------------------------------------------------------------------------
 // Description
 // ===========
-// EdgeDockablePanelWithKey.m
+// EdgeDockablePanel.m
 // VisualGlyphApp
 //
 // Created by Ivan Subotic on Tue Aug 12 2003.
@@ -12,12 +12,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#import "IGEdgeDockablePanelWithKey.h"
+#import "IGEdgeDockablePanel.h"
 #include <unistd.h>
 
-@implementation IGEdgeDockablePanelWithKey
+@implementation IGEdgeDockablePanel
 
-- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
     
     //NSLog(@"(EdgeDockablePanel.m)->EdgeDockablePanel is going to init");
@@ -34,10 +34,6 @@
     return self;
 }
 
-- (BOOL)setFrameUsingName:(NSString *)name {
-    return [super setFrameUsingName:name];
-}
-
 - (void)windowMoved:(id)notification
 {
     //NSLog(@"(EdgeDockablePanel.m)->Notification received - %@\n", [notification name]);
@@ -51,8 +47,9 @@
 }
 
 
-- (BOOL)becomesKeyOnlyIfNeeded {
-    return YES;
+- (BOOL)canBecomeKeyWindow
+{
+    return NO;
 }
 
 - (void)dealloc

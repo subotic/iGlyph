@@ -310,7 +310,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setPageNrPosition:(int)position
+- (void)setPageNrPosition:(NSUInteger)position
 {
     [pnPagePositionMatrix selectCellWithTag:position];
 }
@@ -322,9 +322,9 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setFirstPageNumberToShow:(int)value
+- (void)setFirstPageNumberToShow:(NSUInteger)value
 {
-    firstPageNumberToShowField.stringValue = [NSString stringWithFormat:@"%i",value];
+    firstPageNumberToShowField.stringValue = [NSString stringWithFormat:@"%ld", (long)value];
 }
 
 /*

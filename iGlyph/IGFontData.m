@@ -9,7 +9,7 @@ static IGFontData *_sharedFontData = nil;
 {
     if (!_sharedFontData)
     {
-        _sharedFontData = [[self allocWithZone:nil] init];
+        _sharedFontData = [[self alloc] init];
     }
     
     return _sharedFontData;
@@ -23,7 +23,7 @@ static IGFontData *_sharedFontData = nil;
     //int n = [_fontDataDic count];
     //NSLog(@"Die Anzahl der Einträge ist: %d", n);
     
-    _glyphGroupsArr = [[NSMutableArray alloc]init];
+    _glyphGroupsArr = [[NSMutableArray alloc] init];
     _fontDataDic = [[NSMutableDictionary alloc] init];
     _ggGlyphDic = [[NSMutableDictionary alloc] init];
     _glyphLauteDic = [[NSMutableDictionary alloc] init];
@@ -47,7 +47,7 @@ static IGFontData *_sharedFontData = nil;
     resPath = [NSBundle mainBundle].resourcePath;
     filePath = [resPath stringByAppendingString:@"/IG_GlyphCodes.txt"];
     
-    fileString = [NSString stringWithContentsOfFile:filePath];
+    fileString = [NSString stringWithContentsOfFile:filePath encoding: NSUTF8StringEncoding error: nil];
     
     if (!fileString) {
         NSLog(@"IG_GlyphCodes.txt not found at path: %@", filePath);
@@ -89,7 +89,7 @@ static IGFontData *_sharedFontData = nil;
                 //
                 // process the header info (e.g. version string...)
                 //
-                const char *cstr = [zeilenString cString];
+                const char *cstr = [zeilenString cStringUsingEncoding:NSUTF8StringEncoding];
                 char version[32];
                 
                 if (sscanf (cstr, "Version=%s", version) == 1) {
@@ -117,7 +117,7 @@ static IGFontData *_sharedFontData = nil;
             }
         }
         else if (part == 3) {
-            const char *cstr = [zeilenString cString];
+            const char *cstr = [zeilenString cStringUsingEncoding:NSUTF8StringEncoding];
             if (cstr[0] == '*') {
                 //
                 // we found a new group

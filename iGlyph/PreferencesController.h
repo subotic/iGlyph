@@ -19,7 +19,7 @@
 @class IGDrawDocument;
 
 
-@interface PreferencesController : NSWindowController {
+@interface PreferencesController : NSWindowController <NSToolbarDelegate> {
     @private
     IBOutlet NSButton *showsGridCheckbox;
     IBOutlet NSButton *snapsToGridCheckbox;

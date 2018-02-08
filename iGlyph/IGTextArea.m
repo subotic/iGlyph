@@ -281,7 +281,7 @@ static BOOL sharedEditorInUse = NO;
     [view addSubview:editor];
     [view setEditingGraphic:self editorView:editor];
     [editor setSelectedRange:NSMakeRange(0, contents.length)];
-    editor.delegate = self;
+    // editor.delegate = self;
     
     // Make sure we redisplay
     [self didChange];
@@ -301,7 +301,7 @@ static BOOL sharedEditorInUse = NO;
         if (editor == sharedEditor) {
             sharedEditorInUse = NO;
         } else {
-            editor.layoutManager;
+            // editor.layoutManager;
         }
         [view setEditingGraphic:nil editorView:nil];
         [self makeNaturalSize];

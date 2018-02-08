@@ -35,8 +35,8 @@
         NSUInteger rubricLine:1;
         float lineWidth;
         NSUInteger arrowType;
-        float arrowHead;        
-        float arrowHeadSize;
+        NSUInteger arrowHead;
+        NSUInteger arrowHeadSize;
     } _lineFlags;
     
 }
@@ -61,7 +61,7 @@
 
 @property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
 
-@property (NS_NONATOMIC_IOSONLY) float arrowHeadSize;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHeadSize;
 
 
 //line tmp formating saving

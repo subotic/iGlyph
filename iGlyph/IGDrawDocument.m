@@ -27,7 +27,6 @@
 #import "IGGraphicView.h"
 #import "PreferencesController.h"
 #import "IGlyphDelegate.h"
-#import "IGPICTCreator.h"
 #import "FormatGlyphController.h"
 
 #import <Carbon/Carbon.h>
@@ -347,185 +346,6 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     return pdfData;
 }
 
-- (NSData *)PICTRepresentationForGraphics:(NSArray *)graphics {
-    
-    IGGraphic *curGraphic;
-    NSRect allGraphicsBounds = [self wordEportBoundsForGraphics:graphics];
-    NSRect curGraphicBounds;
-    
-    NSUInteger i = graphics.count;
-    
-    IGPICTCreator* thePICT=[IGPICTCreator IGPICTCreatorWithSize:NSMakeSize(allGraphicsBounds.size.width * 50, allGraphicsBounds.size.height * 50)];
-    [thePICT lockFocus];
-    // do some QuickDraw drawing here
-    
-    NSBezierPath* oldBP = NULL;
-    NSBezierPath* newBP = NULL;
-    
-    //Dies darf für den ganzen Glyphenblock nur einmal berechnet werden, damit die glyphen ihre relative position behalten
-    //NSPoint NewTestBezOrigin = [newBP bounds].origin;
-    //NSLog(@"NewTestBezOrigin x:%f, y: %f", NewTestBezOrigin.x, NewTestBezOrigin.y);
-    
-    while (i-- > 0) {
-        // The only reason a graphic knows what view it is drawing in is so that it can draw differently
-        // when being created or edited or selected.  A nil view means to draw in the standard way.
-        curGraphic = graphics[i];
-        curGraphicBounds = [curGraphic bounds];
-        
-        NSSize deltaXY = NSMakeSize((curGraphicBounds.origin.x - allGraphicsBounds.origin.x) * 50 , (curGraphicBounds.origin.y - allGraphicsBounds.origin.y) * 50);
-        
-        //wir müssen alles aufblasen damit wir die praezision bekommen
-        //leider ist die stift dicke minimal 1px (einschränkung von quickdraw) wie müssen aber kleiner runter
-        NSAffineTransform * scaleTrans = [NSAffineTransform transform];
-        [scaleTrans scaleBy:50.0];
-        
-        oldBP = [[curGraphic glyphBezierPath] copy];
-        [oldBP transformUsingAffineTransform:scaleTrans];
-        
-        //NSLog(@"old bezPath fuer eine glyphe: %@", oldBP);
-        
-        //newBP = [oldBP bezierPathByFlatteningPath];
-        newBP = oldBP;
-        //NSLog(@"new bezPath fuer eine glyphe: %@", newBP);
-        
-        //Dies darf für den ganzen Glyphenblock nur einmal berechnet werden, damit die glyphen ihre relative position behalten
-        NSPoint bezOrigin = newBP.bounds.origin;
-        
-        NSAffineTransform *moveToZero = [NSAffineTransform transform];
-        [moveToZero translateXBy: (-bezOrigin.x + deltaXY.width) yBy: (-bezOrigin.y + deltaXY.height)];
-        
-        [newBP transformUsingAffineTransform:moveToZero];
-        
-        NSPoint associatedPts[3];
-        NSPoint startPolyPt;
-        NSPoint currentPt=NSMakePoint(0.0,0.0);  // in case no initial moveToPoint
-        
-        BOOL drawingAPoly=NO;
-        
-        RgnHandle myRgn = NewRgn();
-        OpenRgn();
-        
-        PenSize(1.0, 1.0);
-        
-        //const whiteColor = 30;
-        //const blackColor = 33;
-        
-        //Anzahl Segmente für die Bezierkurve
-        float segments = 30;
-        float dt = 0.033333333333333;
-        int k;
-        float t;
-        NSPoint result;
-        
-        int j;
-        NSUInteger elementCount=newBP.elementCount;
-        
-        for(j = 0; j < elementCount; j++) {
-            switch ([newBP elementAtIndex:j associatedPoints:associatedPts]) {
-                case NSMoveToBezierPathElement:
-                    MoveTo(associatedPts[0].x, associatedPts[0].y);
-                    currentPt = associatedPts[0];
-                    break;
-                case NSLineToBezierPathElement:
-                    if(!drawingAPoly) {
-                        drawingAPoly = YES;
-                        startPolyPt = currentPt;
-                    }
-                    LineTo(associatedPts[0].x, associatedPts[0].y);
-                    currentPt = associatedPts[0];
-                    break;
-                case NSCurveToBezierPathElement:
-                {
-                    /*
-                     A cubic Bezier curve is defined by four points. Two are endpoints.
-                     (x0,y0) is the origin endpoint.
-                     (x3,y3) is the destination endpoint.
-                     The points (x1,y1) and (x2,y2) are control points.
-                     
-                     Two equations define the points on the curve. Both are evaluated for an arbitrary number of values
-                     of t between 0 and 1. One equation yields values for x, the other yields values for y.
-                     As increasing values for t are supplied to the equations, the point defined by x(t),y(t) moves from
-                     the origin to the destination.
-                     
-                     x(t) = ax * t^3 + bx * t^2 + cx * t + x0
-                     y(t) = ay * t^3 + by * t^2 + cy * t + y0
-                     */
-                    
-                    float   ax = 0, bx = 0, cx = 0;
-                    float   ay = 0, by = 0, cy = 0;
-                    
-                    float x0 = currentPt.x;
-                    float x1 = associatedPts[0].x;
-                    float x2 = associatedPts[1].x;
-                    float x3 = associatedPts[2].x;
-                    
-                    float y0 = currentPt.y;
-                    float y1 = associatedPts[0].y;
-                    float y2 = associatedPts[1].y;
-                    float y3 = associatedPts[2].y;
-                    
-                    cx = 3 * (x1 - x0);
-                    bx = 3 * (x2 - x1) - cx;
-                    ax = x3 - x0 - cx - bx;
-                    
-                    cy = 3 * (y1 - y0);
-                    by = 3 * (y2 - y1) - cy;
-                    ay = y3 - y0 - cy - by;
-                    
-                    
-                    if(!drawingAPoly) {                 // here's the start of a new poly
-                        drawingAPoly=YES;
-                        startPolyPt=currentPt;
-                    }
-                    for (k = 0, t = 0; k < segments; k++, t += dt) {
-                        result.x = ax * pow(t, 3) + bx * pow(t, 2) + cx * t + currentPt.x;
-                        result.y = ay * pow(t, 3) + by * pow(t, 2) + cy * t + currentPt.y;
-                        
-                        LineTo(result.x, result.y);
-                    }
-                    
-                    //Ich muss kompensieren da es rundungsfehler gibt. Mein letzter berechneter Punkt liegt nicht genau
-                    //dort wo ich am schluss sein muss. Deshalb mache ich einfach noch eine kleine Linie genau dort hin
-                    //wo ich enden muss.
-                    LineTo(associatedPts[2].x, associatedPts[2].y);
-                    currentPt=associatedPts[2];
-                }
-                    break;
-                case NSClosePathBezierPathElement:
-                    if(drawingAPoly) {
-                        //NSLog(@"start poly point: %f, current point: %f", startPolyPt, currentPt);
-                        if (NSEqualPoints(startPolyPt, currentPt)) {
-                            drawingAPoly=NO;
-                        } else {
-                            LineTo(startPolyPt.x, startPolyPt.y);
-                            drawingAPoly=NO;
-                        }
-                    }
-                    currentPt = startPolyPt;
-                    break;
-            }
-        }
-        CloseRgn(myRgn);
-        ForeColor(kCGColorBlack);
-        /*
-         Rect srcRct;
-         SetRect(&srcRct, 0, 0, allGraphicsBounds.size.width * 50, allGraphicsBounds.size.height * 50);
-         
-         Rect dstRct;
-         SetRect(&dstRct, 0, 0, allGraphicsBounds.size.width, allGraphicsBounds.size.height);
-         
-         MapRgn(myRgn, &srcRct, &dstRct);
-         */
-        PaintRgn(myRgn);
-        DisposeRgn(myRgn);
-    }
-    
-    [thePICT unlockFocus];
-    
-    NSData *thePICTData = [thePICT PICTRepresentation];
-    return thePICTData;
-}
-
 - (NSData *)EPSRepresentationForGraphics:(NSArray *)graphics {
     NSRect bounds = [self drawingBoundsForGraphics:graphics];
     
@@ -539,7 +359,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     NSPrintOperation *printOp;
     
     printOp = [NSPrintOperation PDFOperationWithView:view insideRect:bounds toData:epsData];
-    [printOp setShowPanels:NO];
+    [printOp setShowsPrintPanel:NO];
     [printOp setCanSpawnSeparateThread:YES];
     
     [printOp runOperation];
@@ -572,7 +392,8 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 - (BOOL)loadDataRepresentation:(NSData *)data ofType:(NSString *)type {
     if ([type isEqualToString:IGDrawDocumentType]) {
         NSDictionary *doc = [self drawDocumentDictionaryFromData:data];
-        self.documentGraphics = [self graphicsFromDrawDocumentDictionary:doc];
+        self.documentGraphics = [[NSMutableArray alloc] init];
+        [self.documentGraphics addObjectsFromArray:[self graphicsFromDrawDocumentDictionary:doc]];
         
         data = doc[IGPrintInfoKey];
         if (data) {

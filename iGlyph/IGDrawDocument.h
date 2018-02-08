@@ -63,7 +63,6 @@
 - (NSRect)wordEportBoundsForGraphics:(NSArray *)graphics;
 - (NSData *)TIFFRepresentationForGraphics:(NSArray *)graphics;
 - (NSData *)PDFRepresentationForGraphics:(NSArray *)graphics;
-- (NSData *)PICTRepresentationForGraphics:(NSArray *)graphics;
 - (NSData *)EPSRepresentationForGraphics:(NSArray *)graphics;
 
 - (NSData *)dataRepresentationOfType:(NSString *)type;

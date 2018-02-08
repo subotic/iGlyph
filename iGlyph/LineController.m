@@ -28,7 +28,7 @@
     static LineController *_sharedLineController = nil;
     
     if (!_sharedLineController) {
-        _sharedLineController = [LineController init];
+        _sharedLineController = [[LineController alloc] init];
     }
     return _sharedLineController;
 }
@@ -228,24 +228,24 @@
     return arrowTypeMatrix.selectedCell.tag;
 }
 
-- (void)setArrowHead:(float)aHead
+- (void)setArrowHead:(NSUInteger)aHead
 {
-    arrowHeadSlider.floatValue = aHead;
+    arrowHeadSlider.integerValue = aHead;
 }
 
-- (float)arrowHead
+- (NSUInteger)arrowHead
 {
-    return arrowHeadSlider.floatValue;
+    return arrowHeadSlider.integerValue;
 }
 
-- (void)setArrowHeadSize:(float)aHeadSize
+- (void)setArrowHeadSize:(NSUInteger)aHeadSize
 {
-    arrowHeadSizeSlider.floatValue = aHeadSize;
+    arrowHeadSizeSlider.integerValue = aHeadSize;
 }
 
-- (float)arrowHeadSize
+- (NSUInteger)arrowHeadSize
 {
-    return arrowHeadSizeSlider.floatValue;
+    return arrowHeadSizeSlider.integerValue;
 }
 
 //line tmp formating saving

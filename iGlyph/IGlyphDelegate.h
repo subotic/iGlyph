@@ -72,9 +72,9 @@ extern NSString *IGPrefShowToolTipsKey;
 
 - (IBAction)openHomeWebsite:(id)sender;
 
-- (void)resetMenuItemFlag:(int)value;
+- (void)resetMenuItemFlag:(NSUInteger)value;
 
-- (id)sharedFontData;
+- (IGFontData *)sharedFontData;
 - (void)loadLocalFonts;
 
 @end

@@ -2663,21 +2663,21 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSLog(@"nach setData drawDocument....");
         
         //pasteboard für ausserhalb der Applikation
-        [generalPBoard declareTypes:@[NSPDFPboardType, NSPICTPboardType, NSTIFFPboardType] owner:nil];
+        [generalPBoard declareTypes:@[NSPDFPboardType, NSTIFFPboardType] owner:nil];
         
         [generalPBoard setData:[document PDFRepresentationForGraphics:orderedSelection] forType:NSPDFPboardType];
         NSLog(@"nach setData PDFRep....");
         
-        //[document EPSRepresentationForGraphics:orderedSelection];
-        //[pboard setData:[document EPSRepresentationForGraphics:orderedSelection] forType:NSPostScriptPboardType];
+        // [document EPSRepresentationForGraphics:orderedSelection];
+        // [pboard setData:[document EPSRepresentationForGraphics:orderedSelection] forType:NSPostScriptPboardType];
         
-        //NSLog(@"nach setData EPSRep....");
+        // NSLog(@"nach setData EPSRep....");
         
         [generalPBoard setData:[document TIFFRepresentationForGraphics:orderedSelection] forType:NSTIFFPboardType];
         NSLog(@"nach setData TIFFRep....");
         
-        [generalPBoard setData:[document PICTRepresentationForGraphics:orderedSelection] forType:NSPICTPboardType];
-        NSLog(@"nach setData PICTRep....");
+        // [generalPBoard setData:[document PICTRepresentationForGraphics:orderedSelection] forType:NSPICTPboardType];
+        // NSLog(@"nach setData PICTRep....");
         
         _pasteboardChangeCount = privatePBoard.changeCount;
         _pasteCascadeNumber = 1;
