@@ -4,3 +4,7 @@ osx_image: xcode9.2
 language: objective-c
 xcode_workspace: iGlyph.xcworkspace
 xcode_scheme: iGlyph
+
+
+script:
+    - xcodebuild clean build test -workspace iGlyph.xcworkspace -scheme iGlyph -destination 'platform=OS X,arch=x86_64'
