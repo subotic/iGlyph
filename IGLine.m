@@ -541,12 +541,12 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
 - (NSMutableDictionary *)propertyListRepresentation {
     NSMutableDictionary *dict = [super propertyListRepresentation];
     dict[IGLineStartsAtLowerLeftKey] = ([self startsAtLowerLeft] ? @"YES" : @"NO");
-    dict[IGLineTypeKey] = [NSString stringWithFormat:@"%i", [self lineType]];
+    dict[IGLineTypeKey] = [NSString stringWithFormat:@"%ld", (long)[self lineType]];
     dict[IGLineRubricKey] = ([self rubricLine] ? @"YES" : @"NO");
     dict[IGLineWidthKey] = [NSString stringWithFormat:@"%f", [self lineWidth]];
-    dict[IGLineArrowTypeKey] = [NSString stringWithFormat:@"%i", [self arrowType]];
-    dict[IGLineArrowHeadKey] = [NSString stringWithFormat:@"%f", [self arrowHead]];
-    dict[IGLineArrowHeadSizeKey] = [NSString stringWithFormat:@"%f", [self arrowHeadSize]];
+    dict[IGLineArrowTypeKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowType]];
+    dict[IGLineArrowHeadKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowHead]];
+    dict[IGLineArrowHeadSizeKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowHeadSize]];
     dict[IGLineReverseArrowKey] = ([self reverseArrow] ? @"YES" : @"NO");
     return dict;
 }
@@ -644,27 +644,27 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     //[self didChange];
 }
 
-- (float)arrowHead
+- (NSUInteger)arrowHead
 {
     return _arrowHead;
 }
 
-- (void)setArrowHead:(float)value
+- (void)setArrowHead:(NSUInteger)value
 {
     _arrowHead = value;
-    NSLog(@"IGLine(setArrowHead)->%f", _arrowHead);
+    NSLog(@"IGLine(setArrowHead)->%ld", (long)_arrowHead);
     //[self didChange];
 }
 
-- (float)arrowHeadSize
+- (NSUInteger)arrowHeadSize
 {
     return _arrowHeadSize;
 }
 
-- (void)setArrowHeadSize:(float)value
+- (void)setArrowHeadSize:(NSUInteger)value
 {
     _arrowHeadSize = value;
-    NSLog(@"IGLine(setArrowHeadSize)->%f", _arrowHeadSize);
+    NSLog(@"IGLine(setArrowHeadSize)->%ld", (long)_arrowHeadSize);
     //[self didChange];
 }
 

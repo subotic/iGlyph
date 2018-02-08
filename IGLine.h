@@ -23,7 +23,7 @@
   float _lineWidth;
   BOOL _rubricLine;
   NSUInteger _arrowType;
-  float _arrowHead;
+  NSUInteger _arrowHead;
   NSInteger _arrowHeadSize;
   BOOL _reverseArrow;
   
@@ -39,9 +39,9 @@
 
 @property (NS_NONATOMIC_IOSONLY) NSUInteger arrowType;
 
-@property (NS_NONATOMIC_IOSONLY) float arrowHead;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
 
-@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHeadSize;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHeadSize;
 
 - (void)doReverseArrow;
 @property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;

@@ -55,25 +55,25 @@
 - (void)setPageNrFont:(NSString *)fontName;
 //- (NSString *)pageNumberFont;
 
-- (void)setPageNumberSize:(float)size;
+- (void)setPageNumberSize:(NSUInteger)size;
 //- (float)pageNumberSize;
 
-- (void)setPageNumberStyle:(int)style;
+- (void)setPageNumberStyle:(NSUInteger)style;
 //- (int)pageNumberStyle;
 
 - (void)setPageNumberFormatArr:(NSMutableArray *)array;
 //- (NSArray *)pageNumberFormatArr;
 
-- (void)setInitialPageNr:(int)value;
+- (void)setInitialPageNr:(NSUInteger)value;
 //- (int)firstPageNumberToShow;
 
-- (void)setPageNrAlignment:(int)value;
+- (void)setPageNrAlignment:(NSUInteger)value;
 //- (int)pageNrAlignment;
 
-- (void)setPageNrPosition:(int)position;
+- (void)setPageNrPosition:(NSUInteger)position;
 //- (int)pageNrPosition;
 
-- (void)setFirstPageNumberToShow:(int)value;
+- (void)setFirstPageNumberToShow:(NSUInteger)value;
 //- (int)firstPageNrNumber;
 
 - (void)setShowPageNumbers:(BOOL)value;

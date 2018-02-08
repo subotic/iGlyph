@@ -333,7 +333,7 @@
   /*
    This action is invoked when the user switches units, e.g., from inches to points.  It converts all the values in the text fields to the new units and stores the new unit type in NSUserDefaults.
    */
-  int newUnits = marginUnits.selectedCell.tag;
+  NSUInteger newUnits = marginUnits.selectedCell.tag;
   float factor = [self convertToPoints:1.0];
   
   switch(newUnits)        

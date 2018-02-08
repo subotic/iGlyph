@@ -66,8 +66,8 @@
 - (void)mainWindowChanged:(NSNotification *)notification {
     NSLog(@"WritingDirectionController(mainWindowChanged)-> %@", NSApp.mainWindow.title);
     //jedes document kann hier andere einstellungen habe
-    charSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%i", [NSApp.mainWindow.windowController.document documentCharSpacing]];
-    charSpacingStepperButton.intValue = [NSApp.mainWindow.windowController.document documentCharSpacing];
+    charSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%ld", [NSApp.mainWindow.windowController.document documentCharSpacing]];
+    charSpacingStepperButton.integerValue = [NSApp.mainWindow.windowController.document documentCharSpacing];
     
     lineSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%f", [NSApp.mainWindow.windowController.document documentLineSpacing]];
     lineSpacingStepperButton.floatValue = [NSApp.mainWindow.windowController.document documentLineSpacing];

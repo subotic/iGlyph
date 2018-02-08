@@ -743,13 +743,13 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         
         NSString *pnFontName = [[self drawDocument] pageNumberFont];
         float pnFontSize = [[self drawDocument] pageNumberSize];
-        int pnStyle = [[self drawDocument] pageNumberStyle];
+        NSUInteger pnStyle = [[self drawDocument] pageNumberStyle];
         NSMutableArray *pnFormatArr = [[self drawDocument] pageNumberFormatArr];
-        int initialPageNumber = [[self drawDocument] initialPageNr]; //die Zahl ab welcher gezählt werden soll
-        int firstPageNumberToShow = [[self drawDocument] firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
+        NSUInteger initialPageNumber = [[self drawDocument] initialPageNr]; //die Zahl ab welcher gezählt werden soll
+        NSUInteger firstPageNumberToShow = [[self drawDocument] firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
         
-        int pageNrAlignment = [[self drawDocument] pageNrAlignment];
-        int pageNrPosition = [[self drawDocument] pageNrPosition];
+        NSUInteger pageNrAlignment = [[self drawDocument] pageNrAlignment];
+        NSUInteger pageNrPosition = [[self drawDocument] pageNrPosition];
         
         NSInteger pnNumberToShow = self.currentPage - firstPageNumberToShow + initialPageNumber;
         
@@ -3114,7 +3114,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     NSLog(@"appendPageToEnd:");
     //[pageArr addObject:[[NSMutableArray alloc] init]];
-    [[self drawDocument] insertPageAtPage:nil];
+    self.currentPage = [self pageCount];
+    [[self drawDocument] insertPageAtPage:self.currentPage];
     self.currentPage = [self pageCount];
     [self clearSelection];
     [self updateCurrentPageField];
@@ -3155,7 +3156,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)updateCurrentPageField {
     
-    currentPageField.stringValue = [[NSString alloc] initWithFormat:@"%d of %d", self.currentPage, [self pageCount]];
+    currentPageField.stringValue = [[NSString alloc] initWithFormat:@"%ld of %ld", (long)self.currentPage, (long)[self pageCount]];
 }
 
 

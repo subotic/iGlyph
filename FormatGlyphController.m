@@ -247,9 +247,12 @@
         NSLog(@"%@",tempGlyphData);
         [[self theOnlySelectedGlyph] replaceGlyph:(unichar)(0xF000 + [tempGlyphData[0] intValue]) withFont:tempGlyphData[1]];
     } else {
-        NSRunAlertPanel(@"Replacing Glyph Error",@"Die Glyphe ... gibt es nicht",@"OK",nil,nil);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Replacing Glyph Error"];
+        [alert setInformativeText:@"Die Glyphe ... gibt es nicht."];
+        [alert setAlertStyle:NSWarningAlertStyle];
     }
-    
 }
 
 - (NSUInteger)fontSize {

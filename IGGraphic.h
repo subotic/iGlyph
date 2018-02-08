@@ -16,6 +16,7 @@
 @class IGGraphicView;
 @class IGDrawDocument;
 
+// FIXME: refactor
 enum {
     NoKnob = 0,
     UpperLeftKnob,
@@ -28,6 +29,7 @@ enum {
     LowerRightKnob,
 };
 
+// FIXME: refactor
 enum {
     NoKnobsMask = 0,
     UpperLeftKnobMask = 1 << UpperLeftKnob,
@@ -65,8 +67,8 @@ extern NSString *IGGlyphDidChangeNotification;
     
     NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
     BOOL arrowReversed;
-    NSInteger arrowHeadAngle;
-    NSInteger arrowHeadSize;
+    NSUInteger arrowHeadAngle;
+    NSUInteger arrowHeadSize;
     
     //ende neue gemeinsame Variablen
     
@@ -91,7 +93,7 @@ extern NSString *IGGlyphDidChangeNotification;
         float fontSize;
         BOOL rubricColor;
         BOOL mirrored;
-        int angle;
+        NSInteger angle;
     } _glyphGraphicFlags;
     
     NSString *_fontName;
@@ -119,8 +121,8 @@ extern NSString *IGGlyphDidChangeNotification;
         NSUInteger rubricLine:1;
         float lineWidth;
         NSUInteger arrowType;
-        float arrowHead;
-        float arrowHeadSize;
+        NSUInteger arrowHead;
+        NSUInteger arrowHeadSize;
         NSUInteger reverseArrow:1;
     } _lineGraphicFlags;
     
@@ -147,8 +149,8 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @property (assign) NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
 @property (assign) BOOL arrowReversed;
-@property (assign) NSInteger arrowHeadAngle;
-@property (assign) NSInteger arrowHeadSize;
+@property (assign) NSUInteger arrowHeadAngle;
+@property (assign) NSUInteger arrowHeadSize;
 
 - (instancetype)init;
 
@@ -306,7 +308,7 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @property (NS_NONATOMIC_IOSONLY) NSUInteger arrowType;
 
-@property (NS_NONATOMIC_IOSONLY) float arrowHead;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
 
 - (void)doReverseArrow;
 @property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;

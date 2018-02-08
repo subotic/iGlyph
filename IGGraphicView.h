@@ -35,7 +35,7 @@ enum {
     NSPoint currentCursorPosition;
     NSRect currentCursorRect;
     NSRect oldCursorRect;
-    NSInteger currentPage;
+    NSUInteger currentPage;
     
     @private
     IBOutlet IGDrawWindowController *controller;

@@ -56,7 +56,7 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
         
         //PageNr Stuff
         _showPageNumbers = NO;
-        _pageNumberFont = [[NSString alloc] initWithString:@"Arial"];
+        _pageNumberFont = @"Arial";
         _pageNumberSize = 12;
         _pageNumberStyle = 0;
         _pageNumberFormatArr = [[NSMutableArray alloc] initWithObjects:@"", @"", nil];
@@ -133,18 +133,18 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     //page number stuff
     pnDic[@"showPageNumbers"] = ([self showPageNumbers] ? @"YES" : @"NO");
     pnDic[@"pageNumberFont"] = [self pageNumberFont];
-    pnDic[@"pageNumberSize"] = [NSString stringWithFormat:@"%f", [self pageNumberSize]];
-    pnDic[@"pageNumberStyle"] = [NSString stringWithFormat:@"%i", [self pageNumberStyle]];
+    pnDic[@"pageNumberSize"] = [NSString stringWithFormat:@"%ld", (long)[self pageNumberSize]];
+    pnDic[@"pageNumberStyle"] = [NSString stringWithFormat:@"%ld", (long)[self pageNumberStyle]];
     pnDic[@"pageNumberFormatArr"] = [self pageNumberFormatArr];
-    pnDic[@"firstPageNumberToShow"] = [NSString stringWithFormat:@"%i", [self firstPageNumberToShow]];
-    pnDic[@"pageNrAlignment"] = [NSString stringWithFormat:@"%i", [self pageNrAlignment]];
-    pnDic[@"pageNrPosition"] = [NSString stringWithFormat:@"%i", [self pageNrPosition]];
-    pnDic[@"initialPageNr"] = [NSString stringWithFormat:@"%i", [self initialPageNr]];
+    pnDic[@"firstPageNumberToShow"] = [NSString stringWithFormat:@"%ld", (long)[self firstPageNumberToShow]];
+    pnDic[@"pageNrAlignment"] = [NSString stringWithFormat:@"%ld", (long)[self pageNrAlignment]];
+    pnDic[@"pageNrPosition"] = [NSString stringWithFormat:@"%ld", (long)[self pageNrPosition]];
+    pnDic[@"initialPageNr"] = [NSString stringWithFormat:@"%ld", (long)[self initialPageNr]];
     pnDic[@"pnDeltaPosition"] = NSStringFromSize([self pnDeltaPosition]);
     doc[IGDrawDocumentPageNumberingKey] = pnDic;
     
     //default values
-    dvDic[@"fontSize"] = [NSString stringWithFormat:@"%f", [self documentFontSize]];
+    dvDic[@"fontSize"] = [NSString stringWithFormat:@"%ld", (long)[self documentFontSize]];
     doc[IGDrawDocumentDefaultValuesKey] = dvDic;
     
     return doc;
@@ -418,7 +418,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
         NSPoint result;
         
         int j;
-        int elementCount=newBP.elementCount;
+        NSUInteger elementCount=newBP.elementCount;
         
         for(j = 0; j < elementCount; j++) {
             switch ([newBP elementAtIndex:j associatedPoints:associatedPts]) {
@@ -654,8 +654,6 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 // ===========================================================================
 #pragma mark -
 // ===========================================================================
-
-
 
 - (void)updateChangeCount:(NSDocumentChangeType)change {
     // This clears the undo stack whenever we load or save.
@@ -949,7 +947,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
 #pragma mark default document values
 // ====================== default document values ============================
 
-- (void)setDocumentFontSize:(float)value
+- (void)setDocumentFontSize:(NSUInteger)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setDocumentFontSize:[self documentFontSize]];
     _documentFontSize = value;
@@ -959,15 +957,15 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     //[[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
     //[[FormatGlyphController sharedFormatGlyphController] updatePanel];
     
-    NSLog(@"changed documentFontSize to: %f", _documentFontSize);
+    NSLog(@"changed documentFontSize to: %ld", (long)_documentFontSize);
 }
 
-- (float)documentFontSize
+- (NSUInteger)documentFontSize
 {
     return _documentFontSize;
 }
 
-- (void)setDocumentCharSpacing:(int)value
+- (void)setDocumentCharSpacing:(NSUInteger)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setDocumentCharSpacing:[self documentCharSpacing]];
     _documentCharSpacing = value;
@@ -977,15 +975,15 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     //[[self windowControllers] makeObjectsPerformSelector:@selector(setUpGraphicView)];
     //[[FormatGlyphController sharedFormatGlyphController] updatePanel];
     
-    NSLog(@"changed documentCharSpacing to: %i", _documentCharSpacing);
+    NSLog(@"changed documentCharSpacing to: %ld", (long)_documentCharSpacing);
 }
 
-- (int)documentCharSpacing
+- (NSUInteger)documentCharSpacing
 {
     return _documentCharSpacing;
 }
 
-- (void)setDocumentLineSpacing:(float)value
+- (void)setDocumentLineSpacing:(CGFloat)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setDocumentLineSpacing:[self documentLineSpacing]];
     _documentLineSpacing = value;
@@ -998,7 +996,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     NSLog(@"changed documentLineSpacing to: %f", _documentLineSpacing);
 }
 
-- (float)documentLineSpacing
+- (CGFloat)documentLineSpacing
 {
     return _documentLineSpacing;
 }
@@ -1044,7 +1042,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     return _pageNumberFont;
 }
 
-- (void)setPageNumberSize:(float)size
+- (void)setPageNumberSize:(NSUInteger)size
 {    
     [[self.undoManager prepareWithInvocationTarget:self] setPageNumberSize:[self pageNumberSize]];
     _pageNumberSize = size;
@@ -1054,12 +1052,12 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [[PageNrController sharedPageNrController] updatePanel];
 }
 
-- (float)pageNumberSize
+- (NSUInteger)pageNumberSize
 {
     return _pageNumberSize;
 }
 
-- (void)setPageNumberStyle:(int)style
+- (void)setPageNumberStyle:(NSUInteger)style
 {
     [[self.undoManager prepareWithInvocationTarget:self] setPageNumberStyle:[self pageNumberStyle]];
     _pageNumberStyle = style;
@@ -1069,7 +1067,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [[PageNrController sharedPageNrController] updatePanel];
 }
 
-- (int)pageNumberStyle
+- (NSUInteger)pageNumberStyle
 {
     return _pageNumberStyle;
 }
@@ -1089,7 +1087,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     return _pageNumberFormatArr;
 }
 
-- (void)setInitialPageNr:(int)value
+- (void)setInitialPageNr:(NSUInteger)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setInitialPageNr:[self initialPageNr]];
     _initialPageNr = value;
@@ -1099,12 +1097,12 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [[PageNrController sharedPageNrController] updatePanel];
 }
 
-- (int)initialPageNr
+- (NSUInteger)initialPageNr
 {
     return _initialPageNr;
 }
 
-- (void)setPageNrAlignment:(int)value
+- (void)setPageNrAlignment:(NSUInteger)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setPageNrAlignment:[self pageNrAlignment]];
     _pageNrAlignment = value;
@@ -1114,12 +1112,12 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [[PageNrController sharedPageNrController] updatePanel];
 }
 
-- (int)pageNrAlignment
+- (NSUInteger)pageNrAlignment
 {
     return _pageNrAlignment;
 }
 
-- (void)setPageNrPosition:(int)position
+- (void)setPageNrPosition:(NSUInteger)position
 {
     [[self.undoManager prepareWithInvocationTarget:self] setPageNrPosition:[self pageNrPosition]];
     _pageNrPosition = position;
@@ -1129,13 +1127,13 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     [[PageNrController sharedPageNrController] updatePanel];
 }
 
-- (int)pageNrPosition
+- (NSUInteger)pageNrPosition
 {
     return _pageNrPosition;
 }
 
 //the number of the page on which the first pagenumber should show up
-- (void)setFirstPageNumberToShow:(int)value
+- (void)setFirstPageNumberToShow:(NSUInteger)value
 {
     [[self.undoManager prepareWithInvocationTarget:self] setFirstPageNumberToShow:[self firstPageNumberToShow]];
     _firstPageNrNumber = value;
@@ -1146,7 +1144,7 @@ static NSString *IGDrawDocumentDefaultValuesKey = @"DefaultValues";
     
 }
 
-- (int)firstPageNumberToShow
+- (NSUInteger)firstPageNumberToShow
 {
     return _firstPageNrNumber;
 }

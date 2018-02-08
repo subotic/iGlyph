@@ -417,7 +417,7 @@ NSString *IGPageNum = @"PageNr";
         dict[IGStrokeColorKey] = [NSArchiver archivedDataWithRootObject:self.strokeColor];
     }
     dict[IGStrokeLineWidthKey] = [NSString stringWithFormat:@"%.2f", self.strokeLineWidth];
-    dict[IGPageNum] = [NSString stringWithFormat:@"%d", self.pageNr];
+    dict[IGPageNum] = [NSString stringWithFormat:@"%ld", (long)self.pageNr];
     
     return dict;
 }
@@ -1123,15 +1123,15 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 
-- (float)arrowHead
+- (NSUInteger)arrowHead
 {
     return _lineGraphicFlags.arrowHead;
 }
 
-- (void)setArrowHead:(float)value
+- (void)setArrowHead:(NSUInteger)value
 {
     _lineGraphicFlags.arrowHead = value;
-    NSLog(@"IGGraphic(setArrowHead)->%f", _lineGraphicFlags.arrowHead);
+    NSLog(@"IGGraphic(setArrowHead)->%ld", (long)_lineGraphicFlags.arrowHead);
     [self didChange];
 }
 

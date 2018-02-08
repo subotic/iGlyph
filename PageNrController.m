@@ -248,10 +248,10 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setPageNumberSize:(float)size
+- (void)setPageNumberSize:(NSUInteger)size
 {
-    fontSizeStepper.floatValue = size;
-    fontSizeTextField.floatValue = size;
+    fontSizeStepper.integerValue = size;
+    fontSizeTextField.integerValue = size;
 }
 
 /*
@@ -261,7 +261,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setPageNumberStyle:(int)style
+- (void)setPageNumberStyle:(NSUInteger)style
 {
     [fontStyleBox selectItemAtIndex:style];
 }
@@ -286,9 +286,9 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setInitialPageNr:(int)value
+- (void)setInitialPageNr:(NSUInteger)value
 {
-    initialPageNrField.stringValue = [NSString stringWithFormat:@"%i",value];
+    initialPageNrField.stringValue = [NSString stringWithFormat:@"%ld", (long)value];
 }
 
 /*
@@ -298,7 +298,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 }
 */
 
-- (void)setPageNrAlignment:(int)value
+- (void)setPageNrAlignment:(NSUInteger)value
 {
     [pnAlignmentBox selectItemAtIndex:value];
 }

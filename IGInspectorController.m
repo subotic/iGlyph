@@ -85,14 +85,14 @@
 - (IBAction)selectedViewChanged:(id)sender
 {
   
-  int tag = [[sender selectedCell] tag];
-  NSLog(@"Tag = %i", tag);
+  NSUInteger tag = [[sender selectedCell] tag];
+  NSLog(@"IGInspectorController - selectedViewChanged - tag = %ld", (long)tag);
   
   [self changeToSelectedTab: tag];
   
 }
 
-- (void)changeToSelectedTab:(int)tag
+- (void)changeToSelectedTab:(NSUInteger)tag
 {
   //muss zuerst die contenView reseten, damit ich bei der Grössenanpassung nicht die vorhergehende View clippe
   [inspectorBox setContentView: Nil];

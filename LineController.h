@@ -59,7 +59,7 @@
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-@property (NS_NONATOMIC_IOSONLY) float arrowHead;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
 
 @property (NS_NONATOMIC_IOSONLY) float arrowHeadSize;
 

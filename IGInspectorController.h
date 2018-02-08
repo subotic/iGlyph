@@ -17,7 +17,7 @@
 - (void)setInitialInspectorView;
 
 - (IBAction)selectedViewChanged:(id)sender;
-- (void)changeToSelectedTab:(int)tag;
+- (void)changeToSelectedTab:(NSUInteger)tag;
 
 - (void)resizeInspectorForSelectedView:(NSView *)selectedView;
 

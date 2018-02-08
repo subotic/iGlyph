@@ -54,9 +54,9 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *graphicView;
 
 // Creating Graphics
-//- (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
+// - (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
 - (void)createGraphicOfClassGlyph:(unichar)glyphChar WithFont:(NSString *)fontName;
-//- (void)createGraphicsOfClassGlyphFromDic:(NSDictionary *)glyphGroupDic;
+// - (void)createGraphicsOfClassGlyphFromDic:(NSDictionary *)glyphGroupDic;
 
 
 - (void)invalidateGraphic:(IGGraphic *)graphic;

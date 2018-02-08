@@ -65,7 +65,7 @@
     NSRectFill(rect);
     
     if (self.pageCount) { //hier will ich mehrere Seiten darstellen
-        int curPage;
+        NSUInteger curPage;
         curPage = [NSPrintOperation currentOperation].currentPage;
         //header
         curPageGraphics = (self.graphics)[0];
@@ -106,18 +106,18 @@
             NSMutableString *pnMutableString = [[NSMutableString alloc] init];
             
             NSString *pnFontName = [self.drawDocument pageNumberFont];
-            float pnFontSize = [self.drawDocument pageNumberSize];
-            int pnStyle = [self.drawDocument pageNumberStyle];
+            NSUInteger pnFontSize = [self.drawDocument pageNumberSize];
+            NSUInteger pnStyle = [self.drawDocument pageNumberStyle];
             NSMutableArray *pnFormatArr = [self.drawDocument pageNumberFormatArr];
-            int initialPageNumber = [self.drawDocument initialPageNr]; //die Zahl ab welcher gezählt werden soll
-            int firstPageNumberToShow = [self.drawDocument firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
+            NSUInteger initialPageNumber = [self.drawDocument initialPageNr]; //die Zahl ab welcher gezählt werden soll
+            NSUInteger firstPageNumberToShow = [self.drawDocument firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
             
-            int pageNrAlignment = [self.drawDocument pageNrAlignment];
-            int pageNrPosition = [self.drawDocument pageNrPosition];
+            NSUInteger pageNrAlignment = [self.drawDocument pageNrAlignment];
+            NSUInteger pageNrPosition = [self.drawDocument pageNrPosition];
             
-            signed int pnNumberToShow = curPage - firstPageNumberToShow + initialPageNumber;
+            NSUInteger pnNumberToShow = curPage - firstPageNumberToShow + initialPageNumber;
             
-            NSLog(@"IGGraphicView(drawRect) -> pnStyle= %i", pnStyle);
+            NSLog(@"IGGraphicView(drawRect) -> pnStyle= %ld", (long)pnStyle);
             //Fontname and Size... fehlt nur noch Style
             NSFont *pnFont = [NSFont fontWithName:pnFontName size:pnFontSize];
             if (pnStyle == 1) {
@@ -139,7 +139,7 @@
                 [pnMutableString insertString:pnFormatArr[0] atIndex:0];
             }
             //die Seitenzahl
-            [pnMutableString appendString:[NSString stringWithFormat:@"%i", pnNumberToShow]];
+            [pnMutableString appendString:[NSString stringWithFormat:@"%ld", (long)pnNumberToShow]];
             //rechts von der Seitenzahl
             if (![pnFormatArr[1] isEqualTo:@""]) {
                 [pnMutableString appendString:pnFormatArr[1]];
@@ -214,7 +214,7 @@
     }
 }
 
-- (NSRect)rectForPage:(NSUInteger)page {
+- (NSRect)rectForPage:(NSInteger)page {
     return NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height);
 }
 

@@ -17,7 +17,7 @@
         _contents = [[NSTextStorage allocWithZone:nil] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IG_contentsChanged:) name:NSTextStorageDidProcessEditingNotification object:_contents];
         self.bounds = NSMakeRect(250, 350, 34, 15);
-        [self setContents:[NSString stringWithString:@"Text"]];
+        [self setContents:@"Text"];
     }
     return self;
 }
