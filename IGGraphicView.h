@@ -97,7 +97,7 @@ enum {
   @property NSPoint currentCursorPosition;
   @property NSRect currentCursorRect;
   @property NSRect oldCursorRect;
-  @property NSInteger currentPage;
+  @property NSUInteger currentPage;
 
 
 // IGDrawWindowController accessors and convenience methods

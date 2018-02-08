@@ -60,7 +60,7 @@
 
 - (IBAction)changeGlyphAction:(id)sender;
 
-@property (NS_NONATOMIC_IOSONLY) float fontSize;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger fontSize;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 

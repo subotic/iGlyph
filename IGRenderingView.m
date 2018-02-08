@@ -50,7 +50,7 @@
 
 
 - (void)drawRect:(NSRect)rect {
-    int i;
+    NSUInteger i;
     NSArray *curPageGraphics;
     IGGraphic *curGraphic;
     NSRect drawingBounds;
@@ -214,7 +214,7 @@
     }
 }
 
-- (NSRect)rectForPage:(int)page {
+- (NSRect)rectForPage:(NSUInteger)page {
     return NSMakeRect(0, 0, self.frame.size.width, self.frame.size.height);
 }
 

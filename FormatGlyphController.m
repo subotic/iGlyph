@@ -89,7 +89,7 @@
 {
     NSLog(@"(FormatGlyphController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
-    [delegate resetMenuItemFlag:FORMATGLYPH_MENU_TAG];
+    [delegate resetMenuItemFlag:IGMenuFormatGlypTag];
 }
 
 - (IBAction)glyphAngleTextFieldAction:(id)sender
@@ -180,7 +180,7 @@
     
     IGGraphic *tmpGlyph = [self theOnlySelectedGlyph];
     if (tmpGlyph) {
-        tmpGlyph.fontSize = (float)[sender intValue];
+        tmpGlyph.fontSize = [sender integerValue];
         [[self theMainView] invalidateGraphic:tmpGlyph];
         [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
     }
@@ -193,7 +193,7 @@
         
         IGGraphic *tmpGlyph = [self theOnlySelectedGlyph];
         if (tmpGlyph) {
-            tmpGlyph.fontSize = (float)[sender intValue];
+            tmpGlyph.fontSize = [sender integerValue];
             [[self theMainView] invalidateGraphic:tmpGlyph];
             [[self theMainView] displayRect:NSInsetRect([tmpGlyph drawingBounds], -3, -3)];
         }
@@ -252,13 +252,13 @@
     
 }
 
-- (float)fontSize {
-    return sizeTextField.stringValue.floatValue;
+- (NSUInteger)fontSize {
+    return sizeTextField.stringValue.integerValue;
 }
 
-- (void)setFontSize:(float)value {
-    stepperButton.intValue = (int)value;
-    sizeTextField.stringValue = [[NSString alloc] initWithFormat:@"%d", (int)value];
+- (void)setFontSize:(NSUInteger)value {
+    stepperButton.integerValue = value;
+    sizeTextField.stringValue = [[NSString alloc] initWithFormat:@"%ld", (long)value];
 }
 
 - (BOOL)rubricColor {
@@ -286,13 +286,13 @@
     if (value == 0 || value == 90 || value == 180 || value == 270) {
         [angleButtonMatrix cellWithTag:value].state = NSOnState;
     }
-    angleSlider.intValue = value;
+    angleSlider.integerValue = value;
 }
 
 //glyph formating
 - (void)saveTmpFormating {
     NSLog(@"FormatGlyphController(saveTmpFormating)");
-    _glyphTmpFormat.fontSize = (int)[self fontSize];
+    _glyphTmpFormat.fontSize = [self fontSize];
     [[[self theMainView] drawDocument] setDocumentFontSize:[self fontSize]];
     _glyphTmpFormat.rubricColor = [self rubricColor];
     _glyphTmpFormat.mirrored = [self mirrored];
@@ -309,7 +309,7 @@
 
 - (void)restoreTmpFormating {
     NSLog(@"FormatGlyphController(restoreTmpFormating)");
-    [self setFontSize:(float)_glyphTmpFormat.fontSize];
+    [self setFontSize:_glyphTmpFormat.fontSize];
     [self setFontSize:[[[self theMainView] drawDocument] documentFontSize]];
     [self setRubricColor:_glyphTmpFormat.rubricColor];
     [self setMirrored:_glyphTmpFormat.mirrored];

@@ -273,7 +273,7 @@
 {
     NSLog(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
-    [delegate resetMenuItemFlag:HYEROGLYPHS_MENU_TAG];
+    [delegate resetMenuItemFlag:IGMenuHieroglyphsTag];
 }
 
 - (void)windowDidResize:(NSNotification *)notification

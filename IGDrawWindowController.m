@@ -165,9 +165,9 @@
 }
 
 - (void)createGraphicOfClassGlyph:(unichar)glyphChar withFont:(NSString *)fontName {
-  int page = 0;
+  NSUInteger page = 0;
   if (NSPointInRect(graphicView.currentCursorPosition, graphicView.pageHeaderRect)) {
-      page =0; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+      page =0 ; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
   } else {
       page = graphicView.currentPage; //ansonsten ganz normal
   }
@@ -563,23 +563,23 @@ static NSString *SpecialCharactersTolbarItemIndentifier = @"Special Characters T
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 { // works just like menu item validation, but for the toolbar.
-  int tag = toolbarItem.tag;
+  NSUInteger tag = toolbarItem.tag;
   if (tag == 31) { //BackToFront
     [toolbarItem setEnabled:NO];
     return NO;
   } else if (tag == 32) { //FrontToBack
     [toolbarItem setEnabled:YES];
     return YES;
-  } else if (tag == WRITINGDIRECTION_MENU_TAG) { //Menu Item Toolboxes/Writing Direction
+  } else if (tag == IGMenuWritingDirectionTag) { //Menu Item Toolboxes/Writing Direction
                                                  //[toolbarItem setState:(currentWritingDirectionMenuFlagSetting ? NSOnState : NSOffState)];
     return YES;    
-  } else if (tag == FORMATGLYPH_MENU_TAG) { //Menu Item Toolboxes/Format Glyph
+  } else if (tag == IGMenuFormatGlypTag) { //Menu Item Toolboxes/Format Glyph
                                             //[toolbarItem setState:(currentFormatGlyphMenuFlagSetting ? NSOnState : NSOffState)];
     return YES;    
-  } else if (tag == CARTOUCHE_MENU_TAG) { //Menu Item Toolboxes/Cartouche
+  } else if (tag == IGMenuCartoucheTag) { //Menu Item Toolboxes/Cartouche
                                           //[toolbarItem setState:(currentCartoucheMenuFlagSetting ? NSOnState : NSOffState)];
     return YES;    
-  } else if (tag == LINE_MENU_TAG) { //Menu Item Toolboxes/Line
+  } else if (tag == IGMenuLineTag) { //Menu Item Toolboxes/Line
                                      //[toolbarItem setState:(currentLineMenuFlagSetting ? NSOnState : NSOffState)];
     return YES;    
   }

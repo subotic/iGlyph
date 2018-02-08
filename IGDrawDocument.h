@@ -79,7 +79,7 @@
 
 - (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 
-- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(int)page;
+- (void)createGraphicOfClassGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos onPage:(NSUInteger)page;
 
 - (void)setGraphics:(NSArray *)graphics;
 - (void)setGraphics:(NSArray *)graphics onPage:(NSUInteger)pageNr;

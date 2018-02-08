@@ -49,10 +49,10 @@
     [newObj setFontName:[self fontName]];
     [newObj setTheGlyph:[self theGlyph]];
     [newObj setGlyphASC:[self glyphASC]];
-    // [newObj setFontSize:[self fontSize]];
+    [newObj setFontSize:[self fontSize]];
     [newObj setRubricColor:[self rubricColor]];
     [newObj setMirrored:self.mirrored];
-    // [newObj setAngle:[self angle]];
+    [newObj setAngle:[self angle]];
     [newObj setGlyphBezPath:[self getOldGlyphBezPath]];
 
     return newObj;
@@ -316,7 +316,7 @@ NSString *IGAngleKey = @"Angle";
     }
     obj = dict[IGFontSizeKey];
     if (obj) {
-        self.fontSize = [obj floatValue];
+        self.fontSize = [obj integerValue];
     }
     obj = dict[IGGlyphRubricColorKey];
     if (obj) {
@@ -352,7 +352,7 @@ NSString *IGAngleKey = @"Angle";
     }
     obj = dict[IGFontSizeKey];
     if (obj) {
-        self.fontSize = [obj floatValue];
+        self.fontSize = [obj integerValue];
     }
     obj = dict[IGGlyphRubricColorKey];
     if (obj) {

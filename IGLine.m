@@ -131,7 +131,7 @@
     }
     
     //damit die richtige Seite den Pfeil bekommt auch wenn flippHorizontally passiert
-    int lokalArrowType = [self arrowType];
+    NSUInteger lokalArrowType = [self arrowType];
     int lokalReverseArrow = [self reverseArrow];
     
     if (lokalArrowType == 1) {

@@ -53,13 +53,11 @@
 - (IBAction)arrowHeadSizeChange:(id)sender;
 - (IBAction)doReverseArrow:(id)sender;
 
-@property (NS_NONATOMIC_IOSONLY) int lineType;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger lineType;
 
 @property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
-
-@property (NS_NONATOMIC_IOSONLY) int arrowType;
 
 @property (NS_NONATOMIC_IOSONLY) float arrowHead;
 

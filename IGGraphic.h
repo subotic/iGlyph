@@ -60,7 +60,7 @@ extern NSString *IGGlyphDidChangeNotification;
     BOOL filled;
     BOOL stroked;
     
-    CGFloat fontSize;  //nur für Hieroglyphen
+    NSUInteger fontSize;  //nur für Hieroglyphen
     NSInteger cartoucheOrientation; //nur für die Cartouche
     
     NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
@@ -142,10 +142,10 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (assign) BOOL filled;
 @property (assign) BOOL stroked;
 
-@property (assign) CGFloat fontSize;  //nur für Hieroglyphen
+@property (assign) NSUInteger fontSize;  //nur für Hieroglyphen
 @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
 
-@property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+@property (assign) NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
 @property (assign) BOOL arrowReversed;
 @property (assign) NSInteger arrowHeadAngle;
 @property (assign) NSInteger arrowHeadSize;
@@ -265,7 +265,7 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @property (NS_NONATOMIC_IOSONLY) NSGlyph theGlyph;
 
-@property (NS_NONATOMIC_IOSONLY) float fontSize;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger fontSize;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 

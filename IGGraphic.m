@@ -955,11 +955,11 @@ NSString *IGPageNum = @"PageNr";
 
 //---------
 
-- (float)fontSize {
+- (NSUInteger)fontSize {
     return _glyphGraphicFlags.fontSize;
 }
 
-- (void)setFontSize:(float)size {
+- (void)setFontSize:(NSUInteger)size {
     if (size) {
         _glyphGraphicFlags.fontSize = size;
     } else {
@@ -1003,11 +1003,11 @@ NSString *IGPageNum = @"PageNr";
 
 //---------
 
-- (int)angle {
+- (NSInteger)angle {
     return _glyphGraphicFlags.angle;
 }
 
-- (void)setAngle:(int)value {
+- (void)setAngle:(NSInteger)value {
     if (value) {
         _glyphGraphicFlags.angle = value;
     } else {
