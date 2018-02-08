@@ -26,7 +26,7 @@ github_username:  subotic
 
 # Build settings
 markdown: kramdown
-theme: minima #jekyll-theme-cayman
+#theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
