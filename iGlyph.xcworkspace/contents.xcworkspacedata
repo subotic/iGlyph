@@ -4,4 +4,10 @@
    <FileRef
       location = "container:iGlyph.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:iGlyph.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>

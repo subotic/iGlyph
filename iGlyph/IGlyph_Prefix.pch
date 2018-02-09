@@ -1,7 +1,14 @@
 //
-// Prefix header for all source files of the 'VisualGlyph' target in the 'VisualGlyph' project
+// Prefix header for all source files of the 'iGlyph' target in the 'iGlyph' project
 //
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <CocoaLumberjack/CocoaLumberjack.h>
+#endif
+
+#ifdef DEBUG
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#else
+static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 #endif

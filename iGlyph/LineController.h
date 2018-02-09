@@ -31,12 +31,12 @@
     IBOutlet NSSlider *arrowHeadSizeSlider;
     
     struct __lineFlags {
-        NSUInteger lineType;
-        NSUInteger rubricLine:1;
-        float lineWidth;
-        NSUInteger arrowType;
-        NSUInteger arrowHead;
-        NSUInteger arrowHeadSize;
+        NSInteger lineType;
+        NSInteger rubricLine:1;
+        NSInteger lineWidth;
+        NSInteger arrowType;
+        NSInteger arrowHead;
+        NSInteger arrowHeadSize;
     } _lineFlags;
     
 }
@@ -53,15 +53,15 @@
 - (IBAction)arrowHeadSizeChange:(id)sender;
 - (IBAction)doReverseArrow:(id)sender;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger lineType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger lineType;
 
 @property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHead;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHeadSize;
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHeadSize;
 
 
 //line tmp formating saving

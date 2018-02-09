@@ -18,10 +18,10 @@ static IGFontData *_sharedFontData = nil;
 - (instancetype)init
 {
     self = [super init];
-    NSLog(@"IGFontData(init)");
+    DDLogVerbose(@"IGFontData(init)");
     
     //int n = [_fontDataDic count];
-    //NSLog(@"Die Anzahl der Einträge ist: %d", n);
+    //DDLogVerbose(@"Die Anzahl der Einträge ist: %d", n);
     
     _glyphGroupsArr = [[NSMutableArray alloc] init];
     _fontDataDic = [[NSMutableDictionary alloc] init];
@@ -37,7 +37,7 @@ static IGFontData *_sharedFontData = nil;
 -(void)readVGGlyphCodes
 {
     //should create a few NSMutableArrays with the contents of IG_GlyphCodes.txt
-    NSLog(@"IGFontData(readVGGlyphCodes)");
+    DDLogVerbose(@"IGFontData(readVGGlyphCodes)");
     
     NSString *filePath, *resPath, *fileString, *zeilenString;
     NSRange r, rr;

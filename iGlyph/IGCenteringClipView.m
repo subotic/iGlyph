@@ -3,7 +3,7 @@
 @implementation IGCenteringClipView
 
 - (NSPoint)constrainScrollPoint:(NSPoint)proposedNewOrigin {
-    NSLog(@"IGCenteringClipView(constrainScrollPoint) -> x: %f, y: %f", proposedNewOrigin.x, proposedNewOrigin.y);
+    DDLogVerbose(@"IGCenteringClipView(constrainScrollPoint) -> x: %f, y: %f", proposedNewOrigin.x, proposedNewOrigin.y);
     return proposedNewOrigin;
 }
 

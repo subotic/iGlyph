@@ -16,7 +16,7 @@
 @class IGGraphicView;
 @class IGDrawDocument;
 
-// FIXME: refactor
+// FIXME: modernize
 enum {
     NoKnob = 0,
     UpperLeftKnob,
@@ -29,7 +29,7 @@ enum {
     LowerRightKnob,
 };
 
-// FIXME: refactor
+// FIXME: modernize
 enum {
     NoKnobsMask = 0,
     UpperLeftKnobMask = 1 << UpperLeftKnob,
@@ -62,13 +62,13 @@ extern NSString *IGGlyphDidChangeNotification;
     BOOL filled;
     BOOL stroked;
     
-    NSUInteger fontSize;  //nur für Hieroglyphen
+    NSInteger fontSize;  //nur für Hieroglyphen
     NSInteger cartoucheOrientation; //nur für die Cartouche
     
-    NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+    NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
     BOOL arrowReversed;
-    NSUInteger arrowHeadAngle;
-    NSUInteger arrowHeadSize;
+    NSInteger arrowHeadAngle;
+    NSInteger arrowHeadSize;
     
     //ende neue gemeinsame Variablen
     
@@ -90,7 +90,7 @@ extern NSString *IGGlyphDidChangeNotification;
     //------------------------------------------
     
     struct __glyphGraphicFlags {
-        float fontSize;
+        NSInteger fontSize;
         BOOL rubricColor;
         BOOL mirrored;
         NSInteger angle;
@@ -117,13 +117,13 @@ extern NSString *IGGlyphDidChangeNotification;
     //------------------------------------------
     
     struct __lineGraphicFlags {
-        NSUInteger lineType;
-        NSUInteger rubricLine:1;
-        float lineWidth;
-        NSUInteger arrowType;
-        NSUInteger arrowHead;
-        NSUInteger arrowHeadSize;
-        NSUInteger reverseArrow:1;
+        NSInteger lineType;
+        NSInteger rubricLine:1;
+        NSInteger lineWidth;
+        NSInteger arrowType;
+        NSInteger arrowHead;
+        NSInteger arrowHeadSize;
+        NSInteger reverseArrow:1;
     } _lineGraphicFlags;
     
     //------------------------------------------
@@ -144,13 +144,13 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (assign) BOOL filled;
 @property (assign) BOOL stroked;
 
-@property (assign) NSUInteger fontSize;  //nur für Hieroglyphen
+@property (assign) NSInteger fontSize;  //nur für Hieroglyphen
 @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
 
-@property (assign) NSUInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
+@property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
 @property (assign) BOOL arrowReversed;
-@property (assign) NSUInteger arrowHeadAngle;
-@property (assign) NSUInteger arrowHeadSize;
+@property (assign) NSInteger arrowHeadAngle;
+@property (assign) NSInteger arrowHeadSize;
 
 - (instancetype)init;
 
@@ -267,7 +267,7 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @property (NS_NONATOMIC_IOSONLY) NSGlyph theGlyph;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger fontSize;
+@property (NS_NONATOMIC_IOSONLY) NSInteger fontSize;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 
@@ -300,15 +300,15 @@ extern NSString *IGGlyphDidChangeNotification;
 
 @interface IGGraphic (IGLineExtraStuff)
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger lineType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger lineType;
 
 @property (NS_NONATOMIC_IOSONLY) float lineWidth;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowType;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger arrowHead;
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHead;
 
 - (void)doReverseArrow;
 @property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;

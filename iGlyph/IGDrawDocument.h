@@ -111,9 +111,9 @@
 #pragma mark -
 #pragma mark default document values
 // ====================== default document values ============================
-@property (NS_NONATOMIC_IOSONLY) NSUInteger documentFontSize;
+@property (NS_NONATOMIC_IOSONLY) NSInteger documentFontSize;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger documentCharSpacing;
+@property (NS_NONATOMIC_IOSONLY) NSInteger documentCharSpacing;
 
 @property (NS_NONATOMIC_IOSONLY) CGFloat documentLineSpacing;
 
@@ -123,19 +123,19 @@
 - (void)setPageNrFont:(NSString *)fontName;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pageNumberFont;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger pageNumberSize;
+@property (NS_NONATOMIC_IOSONLY) NSInteger pageNumberSize;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger pageNumberStyle;
+@property (NS_NONATOMIC_IOSONLY) NSInteger pageNumberStyle;
 
 @property (NS_NONATOMIC_IOSONLY, copy) NSMutableArray *pageNumberFormatArr;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger initialPageNr;
+@property (NS_NONATOMIC_IOSONLY) NSInteger initialPageNr;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger pageNrAlignment;
+@property (NS_NONATOMIC_IOSONLY) NSInteger pageNrAlignment;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger pageNrPosition;
+@property (NS_NONATOMIC_IOSONLY) NSInteger pageNrPosition;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger firstPageNumberToShow;
+@property (NS_NONATOMIC_IOSONLY) NSInteger firstPageNumberToShow;
 
 - (void)finetuneXParameter:(float)xValue;
 - (void)finetuneYParameter:(float)yValue;

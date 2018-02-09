@@ -76,7 +76,7 @@
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    NSLog(@"%@", NSApp.mainWindow.title);
+    DDLogVerbose(@"%@", NSApp.mainWindow.title);
     [self setMainWindow:notification.object];
 }
 
@@ -126,7 +126,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pnFontChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController(pnFontChanged) %@",[sender objectValueOfSelectedItem]);
+        DDLogVerbose(@"PageNrController(pnFontChanged) %@",[sender objectValueOfSelectedItem]);
         [_drawDocument setPageNrFont:[sender objectValueOfSelectedItem]];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
@@ -135,7 +135,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pageNumberSizeChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController(pageNumberSizeChanged) %f",[sender floatValue]);
+        DDLogVerbose(@"PageNrController(pageNumberSizeChanged) %f",[sender floatValue]);
         _drawDocument.pageNumberSize = [sender floatValue];
         fontSizeTextField.floatValue = [sender floatValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
@@ -145,7 +145,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pageNumberStyleChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         _drawDocument.pageNumberStyle = [sender indexOfSelectedItem];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
@@ -154,7 +154,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pageNumberFormatLinksChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         [_drawDocument.pageNumberFormatArr removeObjectAtIndex:0];
         [_drawDocument.pageNumberFormatArr insertObject:[sender stringValue] atIndex:0];
         [_inspectingGraphicView setNeedsDisplay:YES];
@@ -164,7 +164,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pageNumberFormatRechtsChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         [_drawDocument.pageNumberFormatArr removeObjectAtIndex:1];
         [_drawDocument.pageNumberFormatArr insertObject:[sender stringValue] atIndex:1];
         [_inspectingGraphicView setNeedsDisplay:YES];
@@ -174,7 +174,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)initialPageNrChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         _drawDocument.initialPageNr = [sender intValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
@@ -183,7 +183,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)pnAlignmentChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         _drawDocument.pageNrAlignment = [sender indexOfSelectedItem];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
@@ -191,9 +191,11 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (IBAction)pnPagePositionChanged:(id)sender
 {
+    NSMatrix *sndr = (NSMatrix *)sender;
+
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
-        _drawDocument.pageNrPosition = [[sender selectedCell] tag];
+        DDLogVerbose(@"PageNrController()");
+        _drawDocument.pageNrPosition = [[sndr selectedCell] tag];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -201,7 +203,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 - (IBAction)firstPageNumberToShowChanged:(id)sender
 {
     if (_drawDocument) {
-        NSLog(@"PageNrController()");
+        DDLogVerbose(@"PageNrController()");
         _drawDocument.firstPageNumberToShow = [sender intValue];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
@@ -218,16 +220,18 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
 - (IBAction)fineTunePosition:(id)sender
 {
+    NSMatrix *sndr = (NSMatrix *)sender;
+
     if (_drawDocument) {
-        if ([[sender selectedCell] tag] == 1) {
+        if ([[sndr selectedCell] tag] == 1) {
             [_drawDocument finetuneYParameter:-0.4];
-        } else if ([[sender selectedCell] tag] == 3) {
+        } else if ([[sndr selectedCell] tag] == 3) {
             [_drawDocument finetuneXParameter:-0.4];
-        } else if ([[sender selectedCell] tag] == 4) {
+        } else if ([[sndr selectedCell] tag] == 4) {
             [_drawDocument finetuneReset];
-        } else if ([[sender selectedCell] tag] == 5) {
+        } else if ([[sndr selectedCell] tag] == 5) {
             [_drawDocument finetuneXParameter:0.4];
-        } else if ([[sender selectedCell] tag] == 7) {
+        } else if ([[sndr selectedCell] tag] == 7) {
             [_drawDocument finetuneYParameter:0.4];
         }
         [_inspectingGraphicView setNeedsDisplay:YES];

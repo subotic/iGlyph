@@ -955,11 +955,11 @@ NSString *IGPageNum = @"PageNr";
 
 //---------
 
-- (NSUInteger)fontSize {
+- (NSInteger)fontSize {
     return _glyphGraphicFlags.fontSize;
 }
 
-- (void)setFontSize:(NSUInteger)size {
+- (void)setFontSize:(NSInteger)size {
     if (size) {
         _glyphGraphicFlags.fontSize = size;
     } else {
@@ -1071,24 +1071,24 @@ NSString *IGPageNum = @"PageNr";
 
 @implementation IGGraphic (IGLineExtraStuff)
 
-- (NSUInteger)lineType
+- (NSInteger)lineType
 {
     return _lineGraphicFlags.lineType;
 }
 
-- (void)setLineType:(NSUInteger)value
+- (void)setLineType:(NSInteger)value
 {
     _lineGraphicFlags.lineType = value;
     NSLog(@"IGGraphic(setLineType)->%ld", (long)_lineGraphicFlags.lineType);
     [self didChange];
 }
 
-- (float)lineWidth
+- (NSInteger)lineWidth
 {
     return _lineGraphicFlags.lineWidth;
 }
 
-- (void)setLineWidth:(float)value
+- (void)setLineWidth:(NSInteger)value
 {
     _lineGraphicFlags.lineWidth = value;
     NSLog(@"IGGraphic(setLineWidth)->%f", _lineGraphicFlags.lineWidth);
@@ -1107,13 +1107,13 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 
-- (NSUInteger)arrowType
+- (NSInteger)arrowType
 {
        NSLog(@"IGGraphic(arrowType) -> %ld", (long)_lineGraphicFlags.arrowType);
     return  _lineGraphicFlags.arrowType;
 }
 
-- (void)setArrowType:(NSUInteger)value
+- (void)setArrowType:(NSInteger)value
 {
        _lineGraphicFlags.arrowType = value;
     
@@ -1123,12 +1123,12 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 
-- (NSUInteger)arrowHead
+- (NSInteger)arrowHead
 {
     return _lineGraphicFlags.arrowHead;
 }
 
-- (void)setArrowHead:(NSUInteger)value
+- (void)setArrowHead:(NSInteger)value
 {
     _lineGraphicFlags.arrowHead = value;
     NSLog(@"IGGraphic(setArrowHead)->%ld", (long)_lineGraphicFlags.arrowHead);

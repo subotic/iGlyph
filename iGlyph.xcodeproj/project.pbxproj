@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		328BCE87202D0B88002C83A2 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */; };
 		32C55048202CE60400EC9B16 /* iGlyphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C55047202CE60400EC9B16 /* iGlyphTests.m */; };
 		32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C55050202CF59200EC9B16 /* Cocoa.framework */; };
 		32E58EAF202CA69300946AF1 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 32E58EAE202CA69300946AF1 /* images */; };
@@ -102,6 +103,7 @@
 		4EB1F57509864F8700D1533D /* IGHieroglyphsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EED813606AD349D00ADEF7E /* IGHieroglyphsTableView.m */; };
 		4EB1F57609864F8700D1533D /* PageNrController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ADB326075E6CBD006329AC /* PageNrController.m */; };
 		4EB1F57909864F8700D1533D /* IGInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDE992087489D700104997 /* IGInspectorController.m */; };
+		72F85081EE2A32267F2843CA /* Pods_iGlyph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,7 +136,8 @@
 		3213781308734531000583E2 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = iGlyph/English.lproj/iGlyphHelp; sourceTree = "<group>"; };
 		3226B91D07E9124E0069519A /* IGFonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = IGFonts; path = iGlyph/IGFonts; sourceTree = "<group>"; };
 		3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = IG_GlyphCodes.txt; path = iGlyph/IG_GlyphCodes.txt; sourceTree = "<group>"; };
-		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
+		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
+		328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32ADB31D075E6C5D006329AC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/PageNr.nib; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
 		32ADB326075E6CBD006329AC /* PageNrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageNrController.m; path = iGlyph/PageNrController.m; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		32C55049202CE60400EC9B16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32C55050202CF59200EC9B16 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* IGlyph_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGlyph_Prefix.pch; path = iGlyph/IGlyph_Prefix.pch; sourceTree = "<group>"; };
+		32D11B46F2DC0892A0F0F74A /* Pods-iGlyph.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGlyph.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph.debug.xcconfig"; sourceTree = "<group>"; };
 		32E58EAE202CA69300946AF1 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = iGlyph/images; sourceTree = "<group>"; };
 		32E58EB0202CA71800946AF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iGlyph/Images.xcassets; sourceTree = "<group>"; };
 		32EDE991087489D700104997 /* IGInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGInspectorController.h; path = iGlyph/IGInspectorController.h; sourceTree = "<group>"; };
@@ -151,7 +155,7 @@
 		4E2B4C6205109AD200666E8E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		4E48DB120650E39100783CB1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/DrawWindow.nib; sourceTree = "<group>"; };
 		4E573BA104FA608700F265BD /* CartoucheController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CartoucheController.h; path = iGlyph/CartoucheController.h; sourceTree = "<group>"; };
-		4E573BA204FA608700F265BD /* CartoucheController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = CartoucheController.m; path = iGlyph/CartoucheController.m; sourceTree = "<group>"; };
+		4E573BA204FA608700F265BD /* CartoucheController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CartoucheController.m; path = iGlyph/CartoucheController.m; sourceTree = "<group>"; };
 		4E573BA504FA608700F265BD /* FormatGlyphController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = FormatGlyphController.h; path = iGlyph/FormatGlyphController.h; sourceTree = "<group>"; };
 		4E573BA604FA608700F265BD /* FormatGlyphController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = FormatGlyphController.m; path = iGlyph/FormatGlyphController.m; sourceTree = "<group>"; };
 		4E573BA704FA608700F265BD /* HieroglyphsController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = HieroglyphsController.h; path = iGlyph/HieroglyphsController.h; sourceTree = "<group>"; };
@@ -175,7 +179,7 @@
 		4E573C2F04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		4E573C3004FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Tips.nib; sourceTree = "<group>"; };
 		4E573C3104FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/WritingDirection.nib; sourceTree = "<group>"; };
-		4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = IGlyphDelegate.m; sourceTree = "<group>"; };
+		4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGlyphDelegate.m; sourceTree = "<group>"; };
 		4E712BAD052195FB00BA812E /* IGFontData.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGFontData.h; path = iGlyph/IGFontData.h; sourceTree = "<group>"; };
 		4E712BAE052195FB00BA812E /* IGFontData.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IGFontData.m; path = iGlyph/IGFontData.m; sourceTree = "<group>"; };
 		4E7573690A665A32001721EE /* IGEdgeDockablePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGEdgeDockablePanel.h; path = iGlyph/IGEdgeDockablePanel.h; sourceTree = "<group>"; };
@@ -228,6 +232,9 @@
 		4EFE35D306747A6800743130 /* IGZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGZoomScrollView.h; path = iGlyph/IGZoomScrollView.h; sourceTree = "<group>"; };
 		4EFE35D406747A6800743130 /* IGZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IGZoomScrollView.m; path = iGlyph/IGZoomScrollView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iGlyph/Info.plist; sourceTree = "<group>"; };
+		90ACD51187A458674F36A69F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		9B90BC13245B35BF9E8F43D6 /* Pods-iGlyph.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGlyph.release.xcconfig"; path = "Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph.release.xcconfig"; sourceTree = "<group>"; };
+		9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iGlyph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,13 +249,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				328BCE87202D0B88002C83A2 /* CocoaLumberjack.framework in Frameworks */,
 				32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */,
+				72F85081EE2A32267F2843CA /* Pods_iGlyph.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C197EF0A6DE5C546B626867 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				32D11B46F2DC0892A0F0F74A /* Pods-iGlyph.debug.xcconfig */,
+				9B90BC13245B35BF9E8F43D6 /* Pods-iGlyph.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +290,8 @@
 				32C55046202CE60400EC9B16 /* iGlyphTests */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				32C5504F202CF59100EC9B16 /* Frameworks */,
+				90ACD51187A458674F36A69F /* Podfile */,
+				0C197EF0A6DE5C546B626867 /* Pods */,
 			);
 			name = VisualGlyph;
 			sourceTree = "<group>";
@@ -311,7 +331,9 @@
 		32C5504F202CF59100EC9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */,
 				32C55050202CF59200EC9B16 /* Cocoa.framework */,
+				9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -541,11 +563,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4EB1F4E209864EDA00D1533D /* Build configuration list for PBXNativeTarget "iGlyph" */;
 			buildPhases = (
+				C200C204BD9A878C849027F5 /* [CP] Check Pods Manifest.lock */,
 				4EB1F4E609864F3000D1533D /* Headers */,
 				4EB1F4DC09864EBB00D1533D /* Resources */,
 				4EB1F4DD09864EBB00D1533D /* Sources */,
 				4EB1F4DE09864EBB00D1533D /* Frameworks */,
 				327B7D360B94E15900BAEB3A /* Copy Frameworks */,
+				E84164B2CD4D339ADDE450E5 /* [CP] Embed Pods Frameworks */,
+				84D17E555084D4CD953CB730 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -579,6 +604,7 @@
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* VisualGlyph */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -622,6 +648,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84D17E555084D4CD953CB730 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C200C204BD9A878C849027F5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iGlyph-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E84164B2CD4D339ADDE450E5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		32C55041202CE60400EC9B16 /* Sources */ = {
@@ -897,7 +977,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SDKROOT = macosx;
@@ -908,6 +988,7 @@
 		};
 		32DC7F5E0DACE3590078AE6F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32D11B46F2DC0892A0F0F74A /* Pods-iGlyph.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -922,6 +1003,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iGlyph/IGlyph_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+					"COCOAPODS=1",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/iGlyph/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = NO;
@@ -959,7 +1045,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SDKROOT = macosx;
@@ -970,6 +1056,7 @@
 		};
 		32DC7F600DACE3670078AE6F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B90BC13245B35BF9E8F43D6 /* Pods-iGlyph.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;

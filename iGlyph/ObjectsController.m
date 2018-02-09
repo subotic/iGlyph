@@ -24,6 +24,7 @@
 #import "IGArc.h"
 #import "IGlyphDelegate.h"
 
+// FIXME: modernize
 enum {
     IGPointerToolRow = 0,
     IGTextToolRow,
@@ -115,7 +116,7 @@ NSString *IGSelectedToolDidChangeNotification = @"IGSelectedToolDidChange";
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(ObjectsController.m)->Notification received - %@\n", notification.name);
+    DDLogVerbose(@"(ObjectsController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [NSApplication sharedApplication].delegate;
     [delegate resetMenuItemFlag:IGMenuObjectsTag];
 }

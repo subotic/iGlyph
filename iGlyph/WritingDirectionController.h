@@ -15,6 +15,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+// FIXME: modernize
 enum {
     leftToRight = 0,
     rightToLeft,

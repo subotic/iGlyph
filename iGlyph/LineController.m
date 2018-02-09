@@ -86,35 +86,46 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(LineController.m)->Notification received - %@\n", notification.name);
-    IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    DDLogVerbose(@"(LineController.m)->Notification received - %@\n", notification.name);
+    IGlyphDelegate *delegate = (IGlyphDelegate *)[[NSApplication sharedApplication] delegate];
     [delegate resetMenuItemFlag:IGMenuLineTag];
 }
 
-
+/**
+ * // Linetype: 0 - Solid, 1 - Dash, 2 - Guidline
+ * @param sender
+ */
 - (IBAction)lineTypeChange:(id)sender
-{ //Linetype: 0 - Solid, 1 - Dash, 2 - Guidline
+{
     IGGraphic *tmpLine = [self theOnlySelectedLine];
+    NSMatrix *_sender = (NSMatrix *)sender;
+
     if (tmpLine) {
-        [[self theOnlySelectedLine] setLineType: [[sender selectedCell] tag]];
+        [[self theOnlySelectedLine] setLineType: [[_sender selectedCell] tag]];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.lineType = [[sender selectedCell] tag];
+        _lineFlags.lineType = [[_sender selectedCell] tag];
     }
     
-    //NSLog(@"LineController(lineTypeChange)->%i", _lineFlags.lineType);
+    //DDLogVerbose(@"LineController(lineTypeChange)->%i", _lineFlags.lineType);
     
 }
 
+/**
+ * // Linewith: 1 , 2
+ * @param sender
+ */
 - (IBAction)lineWidthChange:(id)sender
 {
+    NSMatrix *sndr = (NSMatrix *)sender;
+
     IGGraphic *tmpLine = [self theOnlySelectedLine];
     if (tmpLine) {
-        NSLog(@"LineController(lineWidthChange)->%f", _lineFlags.lineWidth);
-        [[self theOnlySelectedLine] setLineWidth: [[sender selectedCell] tag]];
+        DDLogVerbose(@"LineController(lineWidthChange)->%ld", (long)_lineFlags.lineWidth);
+        [[self theOnlySelectedLine] setLineWidth: [[sndr selectedCell] tag]];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.lineWidth = [[sender selectedCell] tag];
+        _lineFlags.lineWidth = [[sndr selectedCell] tag];
     }
     
      
@@ -131,21 +142,23 @@
         _lineFlags.rubricLine = [sender state];
     }
     
-    //NSLog(@"LineController(lineRubricChange)->%i", _lineFlags.rubricLine);
+    //DDLogVerbose(@"LineController(lineRubricChange)->%i", _lineFlags.rubricLine);
     
 }
 
 - (IBAction)arrowTypeChange:(id)sender
 {
+    NSMatrix *sndr = (NSMatrix *)sender;
+
     IGGraphic *tmpLine = [self theOnlySelectedLine];
     if (tmpLine) {
-        [self theOnlySelectedLine].arrowType = [[sender selectedCell] tag];
+        [self theOnlySelectedLine].arrowType = [[sndr selectedCell] tag];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.arrowType = [[sender selectedCell] tag];
+        _lineFlags.arrowType = [[sndr selectedCell] tag];
     }
     
-    //NSLog(@"LineController(arrowTypeChange)->%i", _lineFlags.arrowType);
+    //DDLogVerbose(@"LineController(arrowTypeChange)->%i", _lineFlags.arrowType);
     
 }
 
@@ -153,14 +166,14 @@
 {
     IGGraphic *tmpLine = [self theOnlySelectedLine];
     if (tmpLine) {
-        [[self theOnlySelectedLine] setArrowHead: [sender floatValue]];
+        [[self theOnlySelectedLine] setArrowHead: [sender integerValue]];
         //[[self theKeyView] invalidateGraphic:tmpLine];
-        NSLog(@"LineController(arrowHeadChange) - hier darf ich nicht sein fals das erste mal auf Linie geklickt");
+        DDLogVerbose(@"LineController(arrowHeadChange) - hier darf ich nicht sein fals das erste mal auf Linie geklickt");
     } else {
-        _lineFlags.arrowHead = [sender floatValue];
+        _lineFlags.arrowHead = [sender integerValue];
     }
     
-    //NSLog(@"LineController(arrowHeadChange)->%f", _lineFlags.arrowHead);
+    //DDLogVerbose(@"LineController(arrowHeadChange)->%f", _lineFlags.arrowHead);
     
 }
 
@@ -168,13 +181,13 @@
 {
     IGGraphic *tmpLine = [self theOnlySelectedLine];
     if (tmpLine) {
-        [self theOnlySelectedLine].arrowHeadSize = [sender floatValue];
+        [self theOnlySelectedLine].arrowHeadSize = [sender integerValue];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.arrowHeadSize = [sender floatValue];
+        _lineFlags.arrowHeadSize = [sender integerValue];
     }
     
-    //NSLog(@"LineController(arrowHeadSizeChange)->%f", _lineFlags.arrowHeadSize);
+    //DDLogVerbose(@"LineController(arrowHeadSizeChange)->%f", _lineFlags.arrowHeadSize);
     
 }
 
@@ -188,12 +201,12 @@
 }
 
 
-- (void)setLineType:(NSUInteger)aType
+- (void)setLineType:(NSInteger)aType
 {
     [lineTypeMatrix selectCellWithTag:aType];
 }
 
-- (NSUInteger)lineType
+- (NSInteger)lineType
 {
     return lineTypeMatrix.selectedCell.tag;
 }
@@ -218,32 +231,32 @@
     return lineRubricButton.state;
 }
 
-- (void)setArrowType:(NSUInteger)aType
+- (void)setArrowType:(NSInteger)aType
 {
     [arrowTypeMatrix selectCellWithTag:aType];
 }
 
-- (NSUInteger)arrowType
+- (NSInteger)arrowType
 {
     return arrowTypeMatrix.selectedCell.tag;
 }
 
-- (void)setArrowHead:(NSUInteger)aHead
+- (void)setArrowHead:(NSInteger)aHead
 {
     arrowHeadSlider.integerValue = aHead;
 }
 
-- (NSUInteger)arrowHead
+- (NSInteger)arrowHead
 {
     return arrowHeadSlider.integerValue;
 }
 
-- (void)setArrowHeadSize:(NSUInteger)aHeadSize
+- (void)setArrowHeadSize:(NSInteger)aHeadSize
 {
     arrowHeadSizeSlider.integerValue = aHeadSize;
 }
 
-- (NSUInteger)arrowHeadSize
+- (NSInteger)arrowHeadSize
 {
     return arrowHeadSizeSlider.integerValue;
 }
@@ -251,7 +264,7 @@
 //line tmp formating saving
 - (void)showSelectedLineFormating
 {
-    NSLog(@"LineControler(showSelectedLineFormating)");
+    DDLogVerbose(@"LineControler(showSelectedLineFormating)");
     [self setLineType:[[self theOnlySelectedLine] lineType]];
     [self setLineWidth:[[self theOnlySelectedLine] lineWidth]];
     [self setRubricLine:[[self theOnlySelectedLine] rubricLine]];
@@ -263,7 +276,7 @@
 
 - (void)restoreTmpFormating
 {
-    NSLog(@"LineControler(restoreTmpFormating)");
+    DDLogVerbose(@"LineControler(restoreTmpFormating)");
     [self setLineType: _lineFlags.lineType];
     [self setLineWidth: _lineFlags.lineWidth];
     [self setRubricLine: _lineFlags.rubricLine];

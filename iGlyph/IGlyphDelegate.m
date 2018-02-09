@@ -18,6 +18,7 @@
 #import "IGFontData.h"
 #import <WebKit/WebKit.h>
 
+
 NSString *IGMarginUnitsKey = @"IGMarginUnitsKey";
 NSString *IGContentKey = @"IGContentKey";
 NSString *IGPrintInfoKey = @"IGPrintInfoKey";
@@ -70,6 +71,9 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 
 - (void)awakeFromNib
 {
+    [DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
+    [DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
+
     [self loadLocalFonts];
     currentObjectsMenuFlagSetting = NO;
     currentHieroglyphsMenuFlagSetting = NO;
@@ -78,41 +82,40 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
     currentCartoucheMenuFlagSetting = NO;
     currentLineMenuFlagSetting = NO;
     
-    NSLog(@"[self showInspectorPanel:self]");
+    DDLogVerbose(@"[self showInspectorPanel:self]");
     [self showInspectorPanel:self];
-    
-    NSLog(@"[self showHieroglyphsPanel:self]");
+
+    DDLogVerbose(@"[self showHieroglyphsPanel:self]");
     [self showHieroglyphsPanel:self];
-    
-    NSLog(@"IGlyphDelegate(awakeFromNib)");
+
+    DDLogVerbose(@"IGlyphDelegate(awakeFromNib)");
     
 } 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSLog(@"IGlyphDelegate(applicationDidFinishLaunching)");
+    DDLogVerbose(@"IGlyphDelegate(applicationDidFinishLaunching)");
     
-    //NSLog(@"[self showHieroglyphsPanel:self]");
+    //DDLogVerbose(@"[self showHieroglyphsPanel:self]");
     //[self showHieroglyphsPanel:self];
     
-    //NSLog(@"[self showInspectorPanel:self]");
+    //DDLogVerbose(@"[self showInspectorPanel:self]");
     //[self showInspectorPanel:self];
     
-    //NSLog(@"[self showObjectsPanel:self]");
+    //DDLogVerbose(@"[self showObjectsPanel:self]");
     //[self showObjectsPanel:self];
     
     //muss wissen wenn ich ein anderes nsdocument angewaehlt habe
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowChanged:) name:NSWindowDidBecomeMainNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mainWindowResigned:) name:NSWindowDidResignMainNotification object:nil];
-    
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    //NSLog(@"IGGlyphDelegate(mainWindowChanged)-> %@", [[NSApp mainWindow] title]);
+    //DDLogVerbose(@"IGGlyphDelegate(mainWindowChanged)-> %@", [[NSApp mainWindow] title]);
 }
 
 - (void)mainWindowResigned:(NSNotification *)notification {
-    //NSLog(@"IGGlyphDelegate(mainWindowResigned)");
+    //DDLogVerbose(@"IGGlyphDelegate(mainWindowResigned)");
 }
 
 
@@ -178,7 +181,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 
 - (IBAction)showHieroglyphsPanel:(id)sender
 {
-    NSLog(@"showHieroglyphsPanel");
+    DDLogVerbose(@"showHieroglyphsPanel");
     currentHieroglyphsMenuFlagSetting = YES;
     [[HieroglyphsController sharedHieroglyphsController] showWindow:sender];
 }
@@ -214,7 +217,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 
 - (IGFontData *)sharedFontData
 {
-    NSLog(@"IGlyphDelegate(sharedFontData)");
+    DDLogVerbose(@"IGlyphDelegate(sharedFontData)");
     return [IGFontData sharedFontData];
 }
 
@@ -223,12 +226,12 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
     NSString *fontsFolder = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"IGFonts"];
     NSError *error = nil;
     NSArray *fontNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fontsFolder error:&error];
-    NSLog(@"loadLocalFonts - fontNames: %@", fontNames);
+    DDLogVerbose(@"loadLocalFonts - fontNames: %@", fontNames);
     
     for (NSString *fontName in fontNames) {
         NSString *fontPath = [fontsFolder stringByAppendingString:[@"/" stringByAppendingString:fontName]];
         NSURL *fontURL = [NSURL URLWithString:fontPath];
-        NSLog(@"loadLocalFonts - fontURL: %@", fontURL);
+        DDLogVerbose(@"loadLocalFonts - fontURL: %@", fontURL);
         assert(fontURL);
         CFErrorRef error = NULL;
         if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, &error))

@@ -281,8 +281,9 @@
 }
 
 - (IBAction)dismissMarginSheet:(id)sender
-{   
-    [window endSheet:marginWindow returnCode:[sender tag]];
+{
+    NSButton *sndr = (NSButton *)sender;
+    [window endSheet:marginWindow returnCode:[sndr tag]];
     [marginWindow orderOut:sender];
     
 }

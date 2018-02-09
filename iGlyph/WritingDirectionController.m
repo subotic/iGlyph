@@ -64,7 +64,7 @@
 }
 
 - (void)mainWindowChanged:(NSNotification *)notification {
-    NSLog(@"WritingDirectionController(mainWindowChanged)-> %@", NSApp.mainWindow.title);
+    DDLogVerbose(@"WritingDirectionController(mainWindowChanged)-> %@", NSApp.mainWindow.title);
     //jedes document kann hier andere einstellungen habe
     charSpacingTextField.stringValue = [[NSString alloc] initWithFormat:@"%ld", [NSApp.mainWindow.windowController.document documentCharSpacing]];
     charSpacingStepperButton.integerValue = [NSApp.mainWindow.windowController.document documentCharSpacing];
@@ -85,16 +85,17 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"(WritingDirectionController.m)->Notification received - %@\n", notification.name);
+    DDLogVerbose(@"(WritingDirectionController.m)->Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = NSApplication.sharedApplication.delegate;
     [delegate resetMenuItemFlag:IGMenuWritingDirectionTag];
 }
 
 - (IBAction)writtingDirectionChanged:(id)sender
 {
-    if ([[sender selectedCell] tag] == 10)
+    NSMatrix *_sender = (NSMatrix *)sender;
+    if ([[_sender selectedCell] tag] == 10)
     {
-        NSLog(@"WritingDirection: leftToRight");
+        DDLogVerbose(@"WritingDirection: leftToRight");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix cellWithTag:10].state = NSOnState;
@@ -104,8 +105,8 @@
         [[FormatGlyphController sharedFormatGlyphController] setAngle:0];
         [[FormatGlyphController sharedFormatGlyphController] saveTmpFormating];
 
-    } else if ([[sender selectedCell] tag] == 11) {
-        NSLog(@"WritingDirection: rightToLeft");
+    } else if ([[_sender selectedCell] tag] == 11) {
+        DDLogVerbose(@"WritingDirection: rightToLeft");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix cellWithTag:11].state = NSOnState;
@@ -115,8 +116,8 @@
         [[FormatGlyphController sharedFormatGlyphController] setAngle:0];
         [[FormatGlyphController sharedFormatGlyphController] saveTmpFormating];
         
-    } else if ([[sender selectedCell] tag] == 20) {
-        NSLog(@"WritingDirection: upToDownMirr");
+    } else if ([[_sender selectedCell] tag] == 20) {
+        DDLogVerbose(@"WritingDirection: upToDownMirr");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [verticalButtonMatrix cellWithTag:20].state = NSOnState;
@@ -126,8 +127,8 @@
         [[FormatGlyphController sharedFormatGlyphController] setAngle:270];
         [[FormatGlyphController sharedFormatGlyphController] saveTmpFormating];
         
-    } else if ([[sender selectedCell] tag] == 21) {
-        NSLog(@"WritingDirection: upToDown");
+    } else if ([[_sender selectedCell] tag] == 21) {
+        DDLogVerbose(@"WritingDirection: upToDown");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [verticalButtonMatrix cellWithTag:21].state = NSOnState;
@@ -137,8 +138,8 @@
         [[FormatGlyphController sharedFormatGlyphController] setAngle:90];
         [[FormatGlyphController sharedFormatGlyphController] saveTmpFormating];
         
-    } else if ([[sender selectedCell] tag] == 22) {
-        NSLog(@"WritingDirection: upToDownVert");
+    } else if ([[_sender selectedCell] tag] == 22) {
+        DDLogVerbose(@"WritingDirection: upToDownVert");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [verticalButtonMatrix cellWithTag:22].state = NSOnState;
@@ -148,8 +149,8 @@
         [[FormatGlyphController sharedFormatGlyphController] setAngle:0];
         [[FormatGlyphController sharedFormatGlyphController] saveTmpFormating];
                 
-    } else if ([[sender selectedCell] tag] == 23) {
-        NSLog(@"WritingDirection: upToDownVertMirr");
+    } else if ([[_sender selectedCell] tag] == 23) {
+        DDLogVerbose(@"WritingDirection: upToDownVertMirr");
         [verticalButtonMatrix deselectAllCells];
         [horizontalButtonMatrix deselectAllCells];
         [verticalButtonMatrix cellWithTag:23].state = NSOnState;

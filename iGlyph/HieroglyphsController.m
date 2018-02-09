@@ -52,7 +52,7 @@
 
 - (void)awakeFromNib
 {
-    NSLog(@"HieroglyphsController(awakeFromNib) -> start");
+    DDLogVerbose(@"HieroglyphsController(awakeFromNib) -> start");
     IGlyphDelegate *delegate = NSApplication.sharedApplication.delegate;
     
     fontData = delegate.sharedFontData;
@@ -69,15 +69,15 @@
     // reset the glyphGroup pop-up
     [self addGlyphGroupPopUpItems];
     
-    NSLog(@"[self calculateNumberOfRowsInTableView] start");
+    DDLogVerbose(@"[self calculateNumberOfRowsInTableView] start");
     [self calculateNumberOfRowsInTableView];
-    NSLog(@"[self calculateNumberOfRowsInTableView] end");
+    DDLogVerbose(@"[self calculateNumberOfRowsInTableView] end");
     
-    NSLog(@"[myTableView reloadData] start");
+    DDLogVerbose(@"[myTableView reloadData] start");
     [myTableView reloadData];
-    NSLog(@"[myTableView reloadData] end");
+    DDLogVerbose(@"[myTableView reloadData] end");
     
-    NSLog(@"HieroglyphsController(awakeFromNib) -> end");
+    DDLogVerbose(@"HieroglyphsController(awakeFromNib) -> end");
 }
 
 - (void)windowDidLoad {
@@ -95,7 +95,7 @@
 
 - (IBAction)glyphGroupPopUpChanged:(id)sender {
   NSString *groupTitle = glyphGroupPopUp.titleOfSelectedItem;
-  NSLog(@"HieroglyphsController(glyphGroupPopUpChanged)->Ausgewahlter Titel: %@", groupTitle);
+  DDLogVerbose(@"HieroglyphsController(glyphGroupPopUpChanged)->Ausgewahlter Titel: %@", groupTitle);
   
   self.selectedTitle = groupTitle;
   self.glyphNumber = [fontDataDic[groupTitle] count];
@@ -114,19 +114,19 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    NSLog(@"numberOfRowsInTableView");
+    DDLogVerbose(@"numberOfRowsInTableView");
     return self.rowNumber;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-    //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
+    //DDLogVerbose(@"tableView:(NSTableView *)tableView objectValueForTableColumn start");
     int column = tableColumn.identifier.intValue;
     NSInteger neededValue = (column + row * self.colNumber);
     
     NSMutableArray *titleData = fontDataDic[self.selectedTitle];
     
-    //NSLog(@"HieroglyphsController(tableView) titleData ==> %@", titleData);
+    //DDLogVerbose(@"HieroglyphsController(tableView) titleData ==> %@", titleData);
     
     NSMutableDictionary *attrsTxt = [NSMutableDictionary dictionary];
     NSMutableDictionary *attrsGlyph = [NSMutableDictionary dictionary];
@@ -167,10 +167,10 @@
         [attribString appendAttributedString:attribStringTxt];
         [attribString appendAttributedString:attribStringGlyph];
             
-        //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 1");
+        //DDLogVerbose(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 1");
         return attribString;
     } else {
-           //NSLog(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 2");
+           //DDLogVerbose(@"tableView:(NSTableView *)tableView objectValueForTableColumn end 2");
         return attribString;
     }
 }
@@ -178,7 +178,7 @@
 - (IBAction)headerChanged:(id)sender //wechselt zwischen den H'Glyph Namen oder Lauten
 {
     headerSelected = (headerSelected == 0) ? 3 : 0;
-    NSLog(@"HieroglyphsController(headerChanged) headerSelected = %ld", (long)headerSelected);
+    DDLogVerbose(@"HieroglyphsController(headerChanged) headerSelected = %ld", (long)headerSelected);
     [myTableView reloadData];
 }
 
@@ -186,18 +186,18 @@
 //wird vom IGHieroglyphsTableView aufgerufen
 - (void)glyphClickedAtRow:(NSInteger)rowValue andColumn:(NSInteger)columnValue
 {
-    NSLog(@"glyphClicked action");
+    DDLogVerbose(@"glyphClicked action");
     NSInteger r = rowValue;
     NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
     
-    NSLog(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
+    DDLogVerbose(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
     
     NSInteger glyphPosInArray = (c + (r * colNumber));
     NSArray *titleData = fontDataDic[self.selectedTitle];
     unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
     
-    NSLog(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
+    DDLogVerbose(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
     
     NSString *fontName = titleData[glyphPosInArray][1];
     
@@ -212,13 +212,13 @@
     NSInteger c = columnValue;
     //[myTableView deselectAll:sender];
 
-    NSLog(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
+    DDLogVerbose(@"HieroglyphsController(glyphClicked) Row: %ld, Column: %ld", (long)r, (long)c);
 
     NSInteger glyphPosInArray = (c + (r * colNumber));
     NSArray *titleData = fontDataDic[self.selectedTitle];
     unichar glyphUniChar = (0xF000 + [titleData[glyphPosInArray][2] intValue]);
 
-    NSLog(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
+    DDLogVerbose(@"HieroglyphsController(glyphClicked) glyphUniChar: %u", glyphUniChar);
 
     NSString *fontName = titleData[glyphPosInArray][1];
 
@@ -248,10 +248,10 @@
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-    //NSLog(@"Sollte bei jeder zelle aufgerufen werden!!!");
+    //DDLogVerbose(@"Sollte bei jeder zelle aufgerufen werden!!!");
     if ([cell respondsToSelector:@selector(setBackgroundColor:)])
     {
-        //NSLog(@"Bin bei der Farbzuweisung drinnen");
+        //DDLogVerbose(@"Bin bei der Farbzuweisung drinnen");
         if (row % 2 == 0)
         {
             [cell setBackgroundColor:[NSColor whiteColor]];
@@ -263,7 +263,7 @@
     }
     else
     {
-        NSLog(@"Bin bei der Farbzuweisung NICHT drinnen");
+        DDLogVerbose(@"Bin bei der Farbzuweisung NICHT drinnen");
     }
 } 
 **/
@@ -271,7 +271,7 @@
 //notifications Stuff
 - (void)windowWillClose:(NSNotification *)notification
 {
-    NSLog(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
+    DDLogVerbose(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
     IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
     [delegate resetMenuItemFlag:IGMenuHieroglyphsTag];
 }

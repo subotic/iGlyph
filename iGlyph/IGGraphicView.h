@@ -17,7 +17,7 @@
 #define IG_HANDLE_WIDTH (IG_HALF_HANDLE_WIDTH * 2.0)
 
 
-
+// FIXME: modernize
 enum {
     obenLinks = 0,
     obenMitte,
@@ -227,8 +227,8 @@ enum {
 @property (NS_NONATOMIC_IOSONLY) float gridSpacing;
 @property (NS_NONATOMIC_IOSONLY, copy) NSColor *gridColor;
 
-@property (NS_NONATOMIC_IOSONLY) NSUInteger guidelineType;
-@property (NS_NONATOMIC_IOSONLY) NSUInteger guidelineCount;
+@property (NS_NONATOMIC_IOSONLY) NSInteger guidelineType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger guidelineCount;
 
 // Multiple page view stuff
 @property (NS_NONATOMIC_IOSONLY, copy) NSColor *marginLineColor;
