@@ -7,4 +7,4 @@ xcode_scheme: iGlyph
 
 
 script:
-    - xcodebuild test -workspace iGlyph.xcworkspace -scheme iGlyphTests -destination 'platform=OS X,arch=x86_64'
+    - xcodebuild test -workspace iGlyph.xcworkspace -scheme iGlyphTests -destination 'platform=OS X,arch=x86_64' CODE_SIGNING_REQUIRED=NO
