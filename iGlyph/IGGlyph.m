@@ -42,8 +42,8 @@
     return self;
 }
 
-- (instancetype)copy {
-    id newObj = [super copy];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    id newObj = [super copyWithZone:zone];
 
     // Document is not "copied".  The new graphic will need to be inserted into a document.
     [newObj setFontName:self.fontName];

@@ -42,8 +42,6 @@
     return self;
 }
 
-
-
 - (NSBezierPath *)bezierPath
 {    
     NSLog(@"IGCartouche(bezierPath)");

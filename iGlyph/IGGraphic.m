@@ -35,7 +35,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 #pragma mark -- init stuff --
 // =================================== Initialization ===================================
 
-- (IGGraphic *)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         _document = nil;
@@ -69,8 +69,8 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 }
 
 
-- (id)copyWithZone:(NSZone *)zone {
-    id newObj = [[[self class] allocWithZone:zone] init];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    id newObj = [[[self class] alloc] init];
     
     // Document is not "copied".  The new graphic will need to be inserted into a document.
     [newObj setBounds:self.bounds];

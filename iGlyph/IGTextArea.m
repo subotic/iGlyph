@@ -11,6 +11,7 @@
 #import "IGDrawDocument.h"
 
 @implementation IGTextArea
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -22,16 +23,16 @@
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (id)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(NSZone *)zone {
     id newObj = [super copyWithZone:zone];
     
     [newObj setContents:[self contents]];
     
     return newObj;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setContents:(id)contents {

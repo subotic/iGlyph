@@ -40,8 +40,8 @@
     return self;
 }
 
-- (instancetype)copy {
-    id newObj = [super copy];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    id newObj = [super copyWithZone:zone];
     
     [newObj setStartsAtLowerLeft:self.startsAtLowerLeft];
     [newObj setLineType:self.lineType];

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="IGDocumentWindowController">
@@ -30,14 +32,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="7" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="226" y="437" width="755" height="533"/>
+            <rect key="contentRect" x="226" y="437" width="757" height="579"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
-            <view key="contentView" id="11">
-                <rect key="frame" x="0.0" y="0.0" width="755" height="533"/>
+            <view key="contentView" misplaced="YES" id="11">
+                <rect key="frame" x="0.0" y="0.0" width="757" height="579"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView misplaced="YES" id="66" customClass="IGZoomScrollView">
-                        <rect key="frame" x="0.0" y="36" width="490" height="497"/>
+                        <rect key="frame" x="0.0" y="34" width="576" height="545"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
                             <outlet property="graphicView" destination="65" id="72"/>
@@ -50,200 +52,222 @@
                             <outlet property="currentPageField" destination="149" id="180"/>
                         </connections>
                     </customView>
-                    <box title="Box" titlePosition="noTitle" id="139">
-                        <rect key="frame" x="291" y="2" width="251" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
-                        <view key="contentView" id="cIF-9x-WLh">
-                            <rect key="frame" x="2" y="2" width="247" height="26"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" id="140">
-                                    <rect key="frame" x="4" y="6" width="46" height="17"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Group" id="196">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField verticalHuggingPriority="750" id="141">
-                                    <rect key="frame" x="51" y="4" width="188" height="19"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="write groups here" drawsBackground="YES" id="197">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" red="0.95408165" green="0.95408165" blue="0.95408165" alpha="1" colorSpace="calibratedRGB"/>
-                                    </textFieldCell>
-                                    <connections>
-                                        <action selector="writeGlyphGroupAction:" target="65" id="173"/>
-                                    </connections>
-                                </textField>
-                            </subviews>
-                        </view>
-                    </box>
-                    <box title="Box" titlePosition="noTitle" id="142">
-                        <rect key="frame" x="635" y="2" width="110" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <view key="contentView" id="rYZ-66-sfk">
-                            <rect key="frame" x="2" y="2" width="106" height="26"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" id="145">
-                                    <rect key="frame" x="15" y="4" width="35" height="15"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="0" id="198">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField verticalHuggingPriority="750" id="175">
-                                    <rect key="frame" x="69" y="4" width="30" height="15"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="0" id="199">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField verticalHuggingPriority="750" id="176">
-                                    <rect key="frame" x="7" y="5" width="21" height="14"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="L:" id="200">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField verticalHuggingPriority="750" id="177">
-                                    <rect key="frame" x="56" y="5" width="21" height="14"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="T:" id="201">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                            </subviews>
-                        </view>
-                    </box>
-                    <box title="Box" titlePosition="noTitle" id="147">
-                        <rect key="frame" x="4" y="2" width="290" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <view key="contentView" id="eEk-1N-F21">
-                            <rect key="frame" x="2" y="2" width="286" height="26"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <button toolTip="Append Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="148">
-                                    <rect key="frame" x="246" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="++" alternateTitle="Append Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="202">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="appendPageToEnd:" target="65" id="168"/>
-                                    </connections>
-                                </button>
-                                <textField verticalHuggingPriority="750" id="149">
-                                    <rect key="frame" x="71" y="4" width="42" height="19"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="Page" placeholderString="1 of 1" drawsBackground="YES" id="203">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" red="0.95408165" green="0.95408165" blue="0.95408165" alpha="1" colorSpace="calibratedRGB"/>
-                                    </textFieldCell>
-                                    <connections>
-                                        <action selector="goToPage:" target="65" id="172"/>
-                                    </connections>
-                                </textField>
-                                <button toolTip="Previous Page (PgDn)" verticalHuggingPriority="750" tag="11" imageHugsTitle="YES" id="150">
-                                    <rect key="frame" x="39" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="&lt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="11" inset="2" id="204">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="pageDown:" target="65" id="166"/>
-                                    </connections>
-                                </button>
-                                <button toolTip="Last Page (Ctrl-PgUp)" verticalHuggingPriority="750" tag="29" imageHugsTitle="YES" id="151">
-                                    <rect key="frame" x="146" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="&gt;&gt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="29" inset="2" id="205">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="pageDown:" target="65" id="171"/>
-                                    </connections>
-                                </button>
-                                <button toolTip="Delete Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="152">
-                                    <rect key="frame" x="184" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="-" alternateTitle="Delete Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="206">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="deleteCurrentPage:" target="65" id="169"/>
-                                    </connections>
-                                </button>
-                                <button toolTip="First Page (Ctrl-PgDn)" verticalHuggingPriority="750" tag="19" imageHugsTitle="YES" id="153">
-                                    <rect key="frame" x="8" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="&lt;&lt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="19" inset="2" id="207">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="pageDown:" target="65" id="165"/>
-                                    </connections>
-                                </button>
-                                <button toolTip="Next Page (PgUp)" verticalHuggingPriority="750" tag="21" imageHugsTitle="YES" id="154">
-                                    <rect key="frame" x="115" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="&gt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="21" inset="2" id="208">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="pageUp:" target="65" id="170"/>
-                                    </connections>
-                                </button>
-                                <button toolTip="Insert Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="155">
-                                    <rect key="frame" x="215" y="4" width="31" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <buttonCell key="cell" type="squareTextured" title="+" alternateTitle="Insert Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="209">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="insertPageBeforeThisOne:" target="65" id="167"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                        </view>
-                    </box>
-                    <button verticalHuggingPriority="750" imageHugsTitle="YES" id="190">
-                        <rect key="frame" x="540" y="0.0" width="98" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
-                        <buttonCell key="cell" type="push" title="New Row" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="193">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="newRowButtonAction:" target="65" id="191"/>
-                        </connections>
-                    </button>
+                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" id="DSc-xe-jl6" userLabel="Side Panels">
+                        <rect key="frame" x="573" y="34" width="184" height="545"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                    </stackView>
+                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" id="h3A-Oi-T38" userLabel="Status Bar">
+                        <rect key="frame" x="0.0" y="0.0" width="757" height="35"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <box title="Box" titlePosition="noTitle" id="147">
+                                <rect key="frame" x="233" y="1" width="290" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="eEk-1N-F21">
+                                    <rect key="frame" x="2" y="2" width="286" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button toolTip="Append Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="148">
+                                            <rect key="frame" x="246" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="++" alternateTitle="Append Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="202">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="appendPageToEnd:" target="65" id="168"/>
+                                            </connections>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" id="149">
+                                            <rect key="frame" x="71" y="4" width="42" height="19"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="Page" placeholderString="1 of 1" drawsBackground="YES" id="203">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.95408165" green="0.95408165" blue="0.95408165" alpha="1" colorSpace="calibratedRGB"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="goToPage:" target="65" id="172"/>
+                                            </connections>
+                                        </textField>
+                                        <button toolTip="Previous Page (PgDn)" verticalHuggingPriority="750" tag="11" imageHugsTitle="YES" id="150">
+                                            <rect key="frame" x="39" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="&lt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="11" inset="2" id="204">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="pageDown:" target="65" id="166"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="Last Page (Ctrl-PgUp)" verticalHuggingPriority="750" tag="29" imageHugsTitle="YES" id="151">
+                                            <rect key="frame" x="146" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="&gt;&gt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="29" inset="2" id="205">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="pageDown:" target="65" id="171"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="Delete Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="152">
+                                            <rect key="frame" x="184" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="-" alternateTitle="Delete Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="206">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="deleteCurrentPage:" target="65" id="169"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="First Page (Ctrl-PgDn)" verticalHuggingPriority="750" tag="19" imageHugsTitle="YES" id="153">
+                                            <rect key="frame" x="8" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="&lt;&lt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="19" inset="2" id="207">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="pageDown:" target="65" id="165"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="Next Page (PgUp)" verticalHuggingPriority="750" tag="21" imageHugsTitle="YES" id="154">
+                                            <rect key="frame" x="115" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="&gt;" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" tag="21" inset="2" id="208">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="pageUp:" target="65" id="170"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="Insert Page" verticalHuggingPriority="750" imageHugsTitle="YES" id="155">
+                                            <rect key="frame" x="215" y="4" width="31" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="squareTextured" title="+" alternateTitle="Insert Page" bezelStyle="texturedSquare" alignment="center" controlSize="small" borderStyle="border" inset="2" id="209">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="insertPageBeforeThisOne:" target="65" id="167"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                            </box>
+                            <box title="Box" titlePosition="noTitle" id="139">
+                                <rect key="frame" x="253" y="3" width="251" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <view key="contentView" id="cIF-9x-WLh">
+                                    <rect key="frame" x="2" y="2" width="247" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" id="140">
+                                            <rect key="frame" x="4" y="6" width="46" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Group" id="196">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="141">
+                                            <rect key="frame" x="51" y="4" width="188" height="19"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="write groups here" drawsBackground="YES" id="197">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.95408165" green="0.95408165" blue="0.95408165" alpha="1" colorSpace="calibratedRGB"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="writeGlyphGroupAction:" target="65" id="173"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </box>
+                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="190">
+                                <rect key="frame" x="329" y="0.0" width="98" height="32"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <buttonCell key="cell" type="push" title="New Row" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="193">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="newRowButtonAction:" target="65" id="191"/>
+                                </connections>
+                            </button>
+                            <box title="Box" titlePosition="noTitle" id="142">
+                                <rect key="frame" x="323" y="3" width="110" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <view key="contentView" id="rYZ-66-sfk">
+                                    <rect key="frame" x="2" y="2" width="106" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" id="145">
+                                            <rect key="frame" x="15" y="4" width="35" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="0" id="198">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="175">
+                                            <rect key="frame" x="69" y="4" width="30" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="0" id="199">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="176">
+                                            <rect key="frame" x="7" y="5" width="21" height="14"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="L:" id="200">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="177">
+                                            <rect key="frame" x="56" y="5" width="21" height="14"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="T:" id="201">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="29"/>
                 <outlet property="initialFirstResponder" destination="65" id="182"/>
             </connections>
-            <point key="canvasLocation" x="132.5" y="117.5"/>
+            <point key="canvasLocation" x="133.5" y="140.5"/>
         </window>
         <window title="Margins and Columns" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="92" userLabel="Margins">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -504,9 +528,10 @@ Gw
             </connections>
             <point key="canvasLocation" x="133" y="651"/>
         </window>
-        <view id="98">
-            <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
+        <view misplaced="YES" id="98">
+            <rect key="frame" x="0.0" y="0.0" width="176" height="88"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="157" y="508"/>
         </view>
     </objects>
 </document>

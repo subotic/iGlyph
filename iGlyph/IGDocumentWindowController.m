@@ -392,10 +392,9 @@
     bottomMargin.floatValue = vert;
 }
 
-// ===========================================================================
-#pragma mark -
-#pragma mark -- toolbar stuff --
-//==================================Toolbar Stuff=============================
+
+// MARK -
+// MARK -- toolbar stuff --
 
 static NSString *MyDocumentToolbarIdentifier = @"MyDocument Toolbar";
 static NSString *CartoucheToolbarItemIdentifier = @"Cartouche ToolbarItem";
