@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		32729C93202F92030016626C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32729C92202F92030016626C /* AppDelegate.swift */; };
 		32729C94202F947A0016626C /* Pods_iGlyph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */; };
+		32B68E622030CEC9000CFA9D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */; };
+		32B68E632030CEC9000CFA9D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E602030CEC8000CFA9D /* MainMenu.xib */; };
+		32B68E742030CF2E000CFA9D /* WritingDirection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E642030CF2D000CFA9D /* WritingDirection.xib */; };
+		32B68E752030CF2E000CFA9D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E662030CF2D000CFA9D /* Inspector.xib */; };
+		32B68E762030CF2E000CFA9D /* Line.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E682030CF2E000CFA9D /* Line.xib */; };
+		32B68E772030CF2E000CFA9D /* Hieroglyphs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E6A2030CF2E000CFA9D /* Hieroglyphs.xib */; };
+		32B68E782030CF2E000CFA9D /* Cartouche.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E6C2030CF2E000CFA9D /* Cartouche.xib */; };
+		32B68E792030CF2E000CFA9D /* Objects.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E6E2030CF2E000CFA9D /* Objects.xib */; };
+		32B68E7A2030CF2E000CFA9D /* PageNr.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E702030CF2E000CFA9D /* PageNr.xib */; };
+		32B68E7B2030CF2E000CFA9D /* FormatGlyph.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E722030CF2E000CFA9D /* FormatGlyph.xib */; };
+		32B68E802030CF3F000CFA9D /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E7C2030CF3F000CFA9D /* Preferences.xib */; };
+		32B68E812030CF3F000CFA9D /* Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E7E2030CF3F000CFA9D /* Tips.xib */; };
 		32C55048202CE60400EC9B16 /* iGlyphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C55047202CE60400EC9B16 /* iGlyphTests.m */; };
 		32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C55050202CF59200EC9B16 /* Cocoa.framework */; };
 		32E58EAF202CA69300946AF1 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 32E58EAE202CA69300946AF1 /* images */; };
@@ -52,22 +64,10 @@
 		4EB1F50A09864F5100D1533D /* IGHieroglyphsTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EED813506AD349D00ADEF7E /* IGHieroglyphsTableView.h */; };
 		4EB1F50B09864F5100D1533D /* PageNrController.h in Headers */ = {isa = PBXBuildFile; fileRef = 32ADB325075E6CBD006329AC /* PageNrController.h */; };
 		4EB1F50E09864F5100D1533D /* IGInspectorController.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EDE991087489D700104997 /* IGInspectorController.h */; };
-		4EB1F50F09864F6800D1533D /* Cartouche.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D44B0510982500F0D238 /* Cartouche.nib */; };
-		4EB1F51009864F6800D1533D /* FormatGlyph.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D4470510981D00F0D238 /* FormatGlyph.nib */; };
-		4EB1F51109864F6800D1533D /* Hieroglyphs.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D4230510969700F0D238 /* Hieroglyphs.nib */; };
-		4EB1F51209864F6800D1533D /* Line.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D44F0510983100F0D238 /* Line.nib */; };
-		4EB1F51309864F6800D1533D /* Objects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D42D051096D800F0D238 /* Objects.nib */; };
-		4EB1F51409864F6800D1533D /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D42F051096E900F0D238 /* Preferences.nib */; };
-		4EB1F51509864F6800D1533D /* Tips.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D431051096F200F0D238 /* Tips.nib */; };
-		4EB1F51609864F6800D1533D /* WritingDirection.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D433051096FB00F0D238 /* WritingDirection.nib */; };
-		4EB1F51709864F6800D1533D /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E2B4C6105109AD200666E8E /* MainMenu.nib */; };
-		4EB1F51809864F6800D1533D /* DocumentWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */; };
-		4EB1F51909864F6800D1533D /* PageNr.nib in Resources */ = {isa = PBXBuildFile; fileRef = 32ADB31F075E6C6E006329AC /* PageNr.nib */; };
 		4EB1F51B09864F6800D1533D /* IGFonts in Resources */ = {isa = PBXBuildFile; fileRef = 3226B91D07E9124E0069519A /* IGFonts */; };
 		4EB1F51C09864F6800D1533D /* IG_GlyphCodes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */; };
 		4EB1F51E09864F6800D1533D /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 3226BE1607E9C1E80069519A /* Credits.html */; };
 		4EB1F51F09864F6800D1533D /* iGlyphHelp in Resources */ = {isa = PBXBuildFile; fileRef = 3213789A0873453B000583E2 /* iGlyphHelp */; };
-		4EB1F52009864F6800D1533D /* Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 32EDE99B08748A7F00104997 /* Inspector.nib */; };
 		4EB1F55309864F8700D1533D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		4EB1F55409864F8700D1533D /* CartoucheController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E573BA204FA608700F265BD /* CartoucheController.m */; };
 		4EB1F55609864F8700D1533D /* FormatGlyphController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E573BA604FA608700F265BD /* FormatGlyphController.m */; };
@@ -139,9 +139,20 @@
 		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
 		32729C91202F92020016626C /* iGlyph-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGlyph-Bridging-Header.h"; sourceTree = "<group>"; };
 		32729C92202F92030016626C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		32ADB31D075E6C5D006329AC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/PageNr.nib; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
 		32ADB326075E6CBD006329AC /* PageNrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageNrController.m; path = iGlyph/PageNrController.m; sourceTree = "<group>"; };
+		32B68E5F2030CEC8000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/DocumentWindow.xib; sourceTree = "<group>"; };
+		32B68E612030CEC8000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		32B68E652030CF2D000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/WritingDirection.xib; sourceTree = "<group>"; };
+		32B68E672030CF2D000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Inspector.xib; sourceTree = "<group>"; };
+		32B68E692030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Line.xib; sourceTree = "<group>"; };
+		32B68E6B2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Hieroglyphs.xib; sourceTree = "<group>"; };
+		32B68E6D2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Cartouche.xib; sourceTree = "<group>"; };
+		32B68E6F2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Objects.xib; sourceTree = "<group>"; };
+		32B68E712030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/PageNr.xib; sourceTree = "<group>"; };
+		32B68E732030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/FormatGlyph.xib; sourceTree = "<group>"; };
+		32B68E7D2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		32B68E7F2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Tips.xib; sourceTree = "<group>"; };
 		32C55045202CE60400EC9B16 /* iGlyphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iGlyphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C55047202CE60400EC9B16 /* iGlyphTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iGlyphTests.m; sourceTree = "<group>"; };
 		32C55049202CE60400EC9B16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -152,9 +163,6 @@
 		32E58EB0202CA71800946AF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iGlyph/Images.xcassets; sourceTree = "<group>"; };
 		32EDE991087489D700104997 /* IGInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGInspectorController.h; path = iGlyph/IGInspectorController.h; sourceTree = "<group>"; };
 		32EDE992087489D700104997 /* IGInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGInspectorController.m; path = iGlyph/IGInspectorController.m; sourceTree = "<group>"; };
-		32EDE99808748A6E00104997 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Inspector.nib; sourceTree = "<group>"; };
-		4E2B4C6205109AD200666E8E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		4E48DB120650E39100783CB1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/DocumentWindow.nib; sourceTree = "<group>"; };
 		4E573BA104FA608700F265BD /* CartoucheController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CartoucheController.h; path = iGlyph/CartoucheController.h; sourceTree = "<group>"; };
 		4E573BA204FA608700F265BD /* CartoucheController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CartoucheController.m; path = iGlyph/CartoucheController.m; sourceTree = "<group>"; };
 		4E573BA504FA608700F265BD /* FormatGlyphController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = FormatGlyphController.h; path = iGlyph/FormatGlyphController.h; sourceTree = "<group>"; };
@@ -172,14 +180,6 @@
 		4E573BB104FA608700F265BD /* WritingDirectionController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = WritingDirectionController.h; path = iGlyph/WritingDirectionController.h; sourceTree = "<group>"; };
 		4E573BB204FA608700F265BD /* WritingDirectionController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = WritingDirectionController.m; path = iGlyph/WritingDirectionController.m; sourceTree = "<group>"; };
 		4E573BE304FA61C300F265BD /* IGlyphDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IGlyphDelegate.h; sourceTree = "<group>"; };
-		4E573C2A04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Cartouche.nib; sourceTree = "<group>"; };
-		4E573C2B04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/FormatGlyph.nib; sourceTree = "<group>"; };
-		4E573C2C04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Hieroglyphs.nib; sourceTree = "<group>"; };
-		4E573C2D04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Line.nib; sourceTree = "<group>"; };
-		4E573C2E04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Objects.nib; sourceTree = "<group>"; };
-		4E573C2F04FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Preferences.nib; sourceTree = "<group>"; };
-		4E573C3004FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Tips.nib; sourceTree = "<group>"; };
-		4E573C3104FA662E00F265BD /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/WritingDirection.nib; sourceTree = "<group>"; };
 		4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGlyphDelegate.m; sourceTree = "<group>"; };
 		4E712BAD052195FB00BA812E /* IGFontData.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGFontData.h; path = iGlyph/IGFontData.h; sourceTree = "<group>"; };
 		4E712BAE052195FB00BA812E /* IGFontData.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IGFontData.m; path = iGlyph/IGFontData.m; sourceTree = "<group>"; };
@@ -394,14 +394,14 @@
 		4E573C3E04FA664A00F265BD /* Toolboxes */ = {
 			isa = PBXGroup;
 			children = (
-				32EDE99B08748A7F00104997 /* Inspector.nib */,
-				4E89D42D051096D800F0D238 /* Objects.nib */,
-				4E89D4230510969700F0D238 /* Hieroglyphs.nib */,
-				4E89D433051096FB00F0D238 /* WritingDirection.nib */,
-				4E89D4470510981D00F0D238 /* FormatGlyph.nib */,
-				4E89D44B0510982500F0D238 /* Cartouche.nib */,
-				4E89D44F0510983100F0D238 /* Line.nib */,
-				32ADB31F075E6C6E006329AC /* PageNr.nib */,
+				32B68E6C2030CF2E000CFA9D /* Cartouche.xib */,
+				32B68E722030CF2E000CFA9D /* FormatGlyph.xib */,
+				32B68E6A2030CF2E000CFA9D /* Hieroglyphs.xib */,
+				32B68E662030CF2D000CFA9D /* Inspector.xib */,
+				32B68E682030CF2E000CFA9D /* Line.xib */,
+				32B68E6E2030CF2E000CFA9D /* Objects.xib */,
+				32B68E702030CF2E000CFA9D /* PageNr.xib */,
+				32B68E642030CF2D000CFA9D /* WritingDirection.xib */,
 			);
 			name = Toolboxes;
 			sourceTree = "<group>";
@@ -409,8 +409,8 @@
 		4E573C4704FA66E600F265BD /* PrefAndTips */ = {
 			isa = PBXGroup;
 			children = (
-				4E89D42F051096E900F0D238 /* Preferences.nib */,
-				4E89D431051096F200F0D238 /* Tips.nib */,
+				32B68E7C2030CF3F000CFA9D /* Preferences.xib */,
+				32B68E7E2030CF3F000CFA9D /* Tips.xib */,
 			);
 			name = PrefAndTips;
 			sourceTree = "<group>";
@@ -418,8 +418,8 @@
 		4E573C4C04FA672600F265BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				4E2B4C6105109AD200666E8E /* MainMenu.nib */,
-				4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */,
+				32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */,
+				32B68E602030CEC8000CFA9D /* MainMenu.xib */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -607,6 +607,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* VisualGlyph */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
@@ -632,23 +633,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				32E58EAF202CA69300946AF1 /* images in Resources */,
-				4EB1F50F09864F6800D1533D /* Cartouche.nib in Resources */,
-				4EB1F51009864F6800D1533D /* FormatGlyph.nib in Resources */,
-				4EB1F51109864F6800D1533D /* Hieroglyphs.nib in Resources */,
-				4EB1F51209864F6800D1533D /* Line.nib in Resources */,
-				4EB1F51309864F6800D1533D /* Objects.nib in Resources */,
-				4EB1F51409864F6800D1533D /* Preferences.nib in Resources */,
-				4EB1F51509864F6800D1533D /* Tips.nib in Resources */,
-				4EB1F51609864F6800D1533D /* WritingDirection.nib in Resources */,
-				4EB1F51709864F6800D1533D /* MainMenu.nib in Resources */,
-				4EB1F51809864F6800D1533D /* DocumentWindow.nib in Resources */,
-				4EB1F51909864F6800D1533D /* PageNr.nib in Resources */,
+				32B68E782030CF2E000CFA9D /* Cartouche.xib in Resources */,
+				32B68E762030CF2E000CFA9D /* Line.xib in Resources */,
+				32B68E792030CF2E000CFA9D /* Objects.xib in Resources */,
+				32B68E772030CF2E000CFA9D /* Hieroglyphs.xib in Resources */,
+				32B68E812030CF3F000CFA9D /* Tips.xib in Resources */,
+				32B68E742030CF2E000CFA9D /* WritingDirection.xib in Resources */,
+				32B68E7A2030CF2E000CFA9D /* PageNr.xib in Resources */,
+				32B68E7B2030CF2E000CFA9D /* FormatGlyph.xib in Resources */,
+				32B68E802030CF3F000CFA9D /* Preferences.xib in Resources */,
+				32B68E632030CEC9000CFA9D /* MainMenu.xib in Resources */,
 				4EB1F51B09864F6800D1533D /* IGFonts in Resources */,
+				32B68E622030CEC9000CFA9D /* DocumentWindow.xib in Resources */,
 				4EB1F51C09864F6800D1533D /* IG_GlyphCodes.txt in Resources */,
 				4EB1F51E09864F6800D1533D /* Credits.html in Resources */,
 				32E58EB1202CA71800946AF1 /* Images.xcassets in Resources */,
+				32B68E752030CF2E000CFA9D /* Inspector.xib in Resources */,
 				4EB1F51F09864F6800D1533D /* iGlyphHelp in Resources */,
-				4EB1F52009864F6800D1533D /* Inspector.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,100 +783,100 @@
 			name = iGlyphHelp;
 			sourceTree = "<group>";
 		};
-		32ADB31F075E6C6E006329AC /* PageNr.nib */ = {
+		32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32ADB31D075E6C5D006329AC /* English */,
+				32B68E5F2030CEC8000CFA9D /* English */,
 			);
-			name = PageNr.nib;
+			name = DocumentWindow.xib;
 			sourceTree = "<group>";
 		};
-		32EDE99B08748A7F00104997 /* Inspector.nib */ = {
+		32B68E602030CEC8000CFA9D /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32EDE99808748A6E00104997 /* English */,
+				32B68E612030CEC8000CFA9D /* English */,
 			);
-			name = Inspector.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		4E2B4C6105109AD200666E8E /* MainMenu.nib */ = {
+		32B68E642030CF2D000CFA9D /* WritingDirection.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E2B4C6205109AD200666E8E /* English */,
+				32B68E652030CF2D000CFA9D /* English */,
 			);
-			name = MainMenu.nib;
+			name = WritingDirection.xib;
 			sourceTree = "<group>";
 		};
-		4E89D4230510969700F0D238 /* Hieroglyphs.nib */ = {
+		32B68E662030CF2D000CFA9D /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2C04FA662E00F265BD /* English */,
+				32B68E672030CF2D000CFA9D /* English */,
 			);
-			name = Hieroglyphs.nib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
-		4E89D42D051096D800F0D238 /* Objects.nib */ = {
+		32B68E682030CF2E000CFA9D /* Line.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2E04FA662E00F265BD /* English */,
+				32B68E692030CF2E000CFA9D /* English */,
 			);
-			name = Objects.nib;
+			name = Line.xib;
 			sourceTree = "<group>";
 		};
-		4E89D42F051096E900F0D238 /* Preferences.nib */ = {
+		32B68E6A2030CF2E000CFA9D /* Hieroglyphs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2F04FA662E00F265BD /* English */,
+				32B68E6B2030CF2E000CFA9D /* English */,
 			);
-			name = Preferences.nib;
+			name = Hieroglyphs.xib;
 			sourceTree = "<group>";
 		};
-		4E89D431051096F200F0D238 /* Tips.nib */ = {
+		32B68E6C2030CF2E000CFA9D /* Cartouche.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C3004FA662E00F265BD /* English */,
+				32B68E6D2030CF2E000CFA9D /* English */,
 			);
-			name = Tips.nib;
+			name = Cartouche.xib;
 			sourceTree = "<group>";
 		};
-		4E89D433051096FB00F0D238 /* WritingDirection.nib */ = {
+		32B68E6E2030CF2E000CFA9D /* Objects.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C3104FA662E00F265BD /* English */,
+				32B68E6F2030CF2E000CFA9D /* English */,
 			);
-			name = WritingDirection.nib;
+			name = Objects.xib;
 			sourceTree = "<group>";
 		};
-		4E89D4470510981D00F0D238 /* FormatGlyph.nib */ = {
+		32B68E702030CF2E000CFA9D /* PageNr.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2B04FA662E00F265BD /* English */,
+				32B68E712030CF2E000CFA9D /* English */,
 			);
-			name = FormatGlyph.nib;
+			name = PageNr.xib;
 			sourceTree = "<group>";
 		};
-		4E89D44B0510982500F0D238 /* Cartouche.nib */ = {
+		32B68E722030CF2E000CFA9D /* FormatGlyph.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2A04FA662E00F265BD /* English */,
+				32B68E732030CF2E000CFA9D /* English */,
 			);
-			name = Cartouche.nib;
+			name = FormatGlyph.xib;
 			sourceTree = "<group>";
 		};
-		4E89D44F0510983100F0D238 /* Line.nib */ = {
+		32B68E7C2030CF3F000CFA9D /* Preferences.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E573C2D04FA662E00F265BD /* English */,
+				32B68E7D2030CF3F000CFA9D /* English */,
 			);
-			name = Line.nib;
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
-		4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */ = {
+		32B68E7E2030CF3F000CFA9D /* Tips.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4E48DB120650E39100783CB1 /* English */,
+				32B68E7F2030CF3F000CFA9D /* English */,
 			);
-			name = DocumentWindow.nib;
+			name = Tips.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

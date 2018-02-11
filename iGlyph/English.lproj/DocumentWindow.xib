@@ -36,8 +36,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="755" height="533"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView id="66" customClass="IGZoomScrollView">
-                        <rect key="frame" x="0.0" y="36" width="755" height="497"/>
+                    <customView misplaced="YES" id="66" customClass="IGZoomScrollView">
+                        <rect key="frame" x="0.0" y="36" width="490" height="497"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
                             <outlet property="graphicView" destination="65" id="72"/>
@@ -243,7 +243,7 @@
                 <outlet property="delegate" destination="-2" id="29"/>
                 <outlet property="initialFirstResponder" destination="65" id="182"/>
             </connections>
-            <point key="canvasLocation" x="133" y="118"/>
+            <point key="canvasLocation" x="132.5" y="117.5"/>
         </window>
         <window title="Margins and Columns" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="92" userLabel="Margins">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -502,6 +502,7 @@ Gw
             <connections>
                 <outlet property="initialFirstResponder" destination="101" id="113"/>
             </connections>
+            <point key="canvasLocation" x="133" y="651"/>
         </window>
         <view id="98">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>

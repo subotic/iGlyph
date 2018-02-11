@@ -31,7 +31,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="8"/>
             </connections>
-            <point key="canvasLocation" x="529" y="130"/>
+            <point key="canvasLocation" x="97" y="64"/>
         </window>
         <customView id="230" userLabel="GeneralPrefsView">
             <rect key="frame" x="0.0" y="0.0" width="450" height="176"/>
@@ -249,7 +249,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" id="UJT-7X-5Vc">
                                     <rect key="frame" x="1" y="1" width="132" height="107"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="252">
                                             <rect key="frame" x="0.0" y="0.0" width="132" height="107"/>

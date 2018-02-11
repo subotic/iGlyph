@@ -11,34 +11,7 @@
 @class IGGraphic;
 @class IGGraphicView;
 
-@interface IGDrawDocument : NSDocument {
-
-@private
-  
-    /*
-  NSUInteger _pageCount; //nummber of pages in this document
-  
-  //needed for the PageNr Stuff
-  BOOL _showPageNumbers;
-  NSString *_pageNumberFont;
-  NSUInteger _pageNumberSize;
-  NSUInteger _pageNumberStyle; //Normal, Bold, Italic
-  NSMutableArray *_pageNumberFormatArr; //-1- oder so
-  NSUInteger _initialPageNr; //starting on which page
-  NSUInteger _pageNrAlignment; //Left, Center, Right
-  NSUInteger _pageNrPosition; //Header , Footer
-  NSUInteger _firstPageNrNumber; //count from 0 or 1 or something else
-  NSSize _pnDeltaPosition; //finetune parameter
-  
-  NSUInteger _documentFontSize;
-  NSUInteger _documentCharSpacing;
-  CGFloat _documentLineSpacing;
-  
-  NSUInteger _autoSaveInterval;
-  NSTimer *_autoSaveTimer;
-     */
-    
-}
+@interface IGDrawDocument : NSDocument
 
 @property (strong) NSMutableArray *selectedPageObjects; // [Objects] -- Objects are IGGraphic subclasses
 @property (strong) NSMutableArray *documentPages; // [Page][Objects] -- Each page holds objects which are IGGraphic subclasses
