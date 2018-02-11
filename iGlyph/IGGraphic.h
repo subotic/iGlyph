@@ -73,7 +73,7 @@ extern NSString *IGGlyphDidChangeNotification;
     //ende neue gemeinsame Variablen
     
 @private
-    NSRect _bounds;
+    
     NSRect _origBounds;
     float _strokeLineWidth;
     NSColor *_fillColor;
@@ -86,7 +86,9 @@ extern NSString *IGGlyphDidChangeNotification;
     } _gFlags;
     
 @protected
-    //------------------------------------------
+    
+    // FIXME: Should this be defined here or in each subclass?
+    NSRect _bounds;
     
     struct __glyphGraphicFlags {
         NSInteger fontSize;

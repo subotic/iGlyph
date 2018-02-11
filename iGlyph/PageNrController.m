@@ -127,7 +127,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 {
     if (_drawDocument) {
         DDLogVerbose(@"PageNrController(pnFontChanged) %@",[sender objectValueOfSelectedItem]);
-        [_drawDocument setPageNrFont:[sender objectValueOfSelectedItem]];
+        _drawDocument.pageNumberFont = [sender objectValueOfSelectedItem];
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }

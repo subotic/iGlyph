@@ -321,10 +321,10 @@
 
 - (void)showSelectedGlyphFormating {
     DDLogVerbose(@"FormatGlyphController(showSelectedGlyphFormating)");
-    self.fontSize = [self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]].fontSize;
-    self.rubricColor = [self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]].rubricColor;
-    self.mirrored = [self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]].mirrored;
-    self.angle = [self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]].angle;
+    self.fontSize = self.theOnlySelectedGlyph.fontSize;
+    self.rubricColor = self.theOnlySelectedGlyph.rubricColor;
+    self.mirrored = self.theOnlySelectedGlyph.mirrored;
+    self.angle = self.theOnlySelectedGlyph.angle;
 }
 
 - (void)restoreTmpFormating {

@@ -71,11 +71,6 @@ NSString *IGDrawPCDocType = @"VisualGlyph PC Format";
         self.documentFontSize = 25;
         self.documentCharSpacing = 10;
         self.documentLineSpacing = 1;
-        
-        
-        
-        
-        
     }
     return self;
 }

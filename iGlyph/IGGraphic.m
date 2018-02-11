@@ -130,14 +130,18 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
         if (!_gFlags.manipulatingBounds) {
             // Send the notification before and after so that observers who invalidate display in views will
             // wind up invalidating both the original rect and the new one.
-            if ([self class] == [IGGlyph class]) [self setGlypBezPathShouldRecalculate:NO]; //damit die glyphe beim verschieben nicht neu gerechnet wird sondern nur verschoben wird
-            [self didChange];
-            [[self.undoManager prepareWithInvocationTarget:self] setBounds:_bounds];
+            if ([self class] == [IGGlyph class]) {
+                [(IGGlyph *)self setGlypBezPathShouldRecalculate:NO]; //damit die glyphe beim verschieben nicht neu gerechnet wird sondern nur verschoben wird
+                [self didChange];
+                [[self.undoManager prepareWithInvocationTarget:self] setBounds:_bounds];
+            }
         }
         _bounds = bounds;
         if (!_gFlags.manipulatingBounds) {
-            if ([self class] == [IGGlyph class]) [self setGlypBezPathShouldRecalculate:NO]; //damit die glyphe beim verschieben nicht neu gerechnet wird sondern nur verschoben wird
-            [self didChange];
+            if ([self class] == [IGGlyph class]) {
+                [(IGGlyph *)self setGlypBezPathShouldRecalculate:NO]; //damit die glyphe beim verschieben nicht neu gerechnet wird sondern nur verschoben wird
+                [self didChange];
+            }
         }
     }
 }
@@ -446,7 +450,7 @@ NSString *IGPageNum = @"PageNr";
     if (obj) {
         if ([dict[IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
             NSRect tmpRect = NSRectFromString(obj);
-            [self setOldGlyphBoundsSize:tmpRect.size];
+            [(IGGlyph *)self setOldGlyphBoundsSize:tmpRect.size];
             self.bounds = tmpRect;
         } else {
         self.bounds = NSRectFromString(obj);
@@ -487,7 +491,7 @@ NSString *IGPageNum = @"PageNr";
     if (obj) {
         if ([dict[IGClassKey] isEqualToString:@"IGGlyph"]) { //bounds tweakink only for IGGlyph
             NSRect tmpRect = NSRectFromString(obj);
-            [self setOldGlyphBoundsSize:tmpRect.size];
+            [(IGGlyph *)self setOldGlyphBoundsSize:tmpRect.size];
             self.bounds = tmpRect;
         } else {
             self.bounds = NSRectFromString(obj);
