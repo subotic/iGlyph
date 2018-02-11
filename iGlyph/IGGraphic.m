@@ -35,7 +35,7 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 #pragma mark -- init stuff --
 // =================================== Initialization ===================================
 
-- (instancetype)init {
+- (IGGraphic *)init {
     self = [super init];
     if (self) {
         _document = nil;
@@ -96,14 +96,6 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
 #pragma mark -
 #pragma mark -- accessors and conveniences --
 // ========================= Document accessors and conveniences ====================
-
-- (void)setDocument:(IGDrawDocument *)document {
-    _document = document;
-}
-
-- (IGDrawDocument *)document {
-    return _document;
-}
 
 - (NSUndoManager *)undoManager {
     return self.document.undoManager;

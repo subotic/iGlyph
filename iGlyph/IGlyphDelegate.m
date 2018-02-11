@@ -88,6 +88,11 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
     DDLogVerbose(@"[self showHieroglyphsPanel:self]");
     [self showHieroglyphsPanel:self];
 
+    
+    self.autoSaveInterval = 60*[[NSUserDefaults standardUserDefaults] integerForKey:IGPrefAutoSaveIntervalKey];
+    
+    
+    
     DDLogVerbose(@"IGlyphDelegate(awakeFromNib)");
     
 } 
@@ -186,7 +191,15 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
     [[HieroglyphsController sharedHieroglyphsController] showWindow:sender];
 }
 
-
+- (void)setAutoSaveInterval:(NSInteger)autoSaveInterval {
+    
+    if (autoSaveInterval > 0) {
+        self.autoSaveTimer = [NSTimer scheduledTimerWithTimeInterval:_autoSaveInterval  target:self selector:@selector(initiateAutoSave:) userInfo:nil repeats:YES];
+    }
+}
+- (void)initiateAutoSave {
+    NSLog(@"IGlyphDelegate - initiateAutoSave -> Doing autosave");
+}
 
 //internet stuff
 

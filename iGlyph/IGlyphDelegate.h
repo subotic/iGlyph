@@ -62,6 +62,12 @@ extern NSString *IGPrefShowToolTipsKey;
     WebDownload *download;
 }
 
+@property (nonatomic) NSInteger autoSaveInterval;
+@property NSTimer *autoSaveTimer;
+
+
+- (void)initiateAutoSave;
+
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
 
 - (IBAction)showPreferencesPanel:(id)sender;

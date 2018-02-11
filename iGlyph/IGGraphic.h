@@ -131,10 +131,6 @@ extern NSString *IGGlyphDidChangeNotification;
     
 }
 
-
-
-
-
 @property (assign) CGFloat strokeThickness;
 @property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
 @property (weak) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
@@ -150,11 +146,11 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (assign) NSInteger fontSize;  //nur für Hieroglyphen
 @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
 
-- (instancetype)init;
+- (IGGraphic *)init;
 
 
 // ========================= Document accessors and conveniences =========================
-@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGDrawDocument *document;
+@property (weak) IGDrawDocument *document;
 @property (NS_NONATOMIC_IOSONLY, readonly, weak) NSUndoManager *undoManager;
 - (void)updateToolboxes;
 

@@ -185,7 +185,7 @@
 
 - (NSMutableArray *)selectedGraphics {
     NSLog(@"IGDrawWindowController(selectedGraphics)");
-    return [self.document selectedGraphics];
+    return [self.document selectedPageObjects];
 }
 
 - (void)invalidateGraphic:(IGGraphic *)graphic {

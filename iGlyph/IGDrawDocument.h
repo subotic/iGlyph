@@ -12,13 +12,10 @@
 @class IGGraphicView;
 
 @interface IGDrawDocument : NSDocument {
-  
-  NSMutableArray *selectedGraphics;
-  NSMutableArray *documentGraphics;
-  
-  
+
 @private
   
+    /*
   NSUInteger _pageCount; //nummber of pages in this document
   
   //needed for the PageNr Stuff
@@ -39,13 +36,34 @@
   
   NSUInteger _autoSaveInterval;
   NSTimer *_autoSaveTimer;
+     */
     
 }
 
-@property (copy) NSMutableArray *selectedGraphics;
-@property (copy) NSMutableArray *documentGraphics;
+@property (strong) NSMutableArray *selectedPageObjects; // [Objects] -- Objects are IGGraphic subclasses
+@property (strong) NSMutableArray *documentPages; // [Page][Objects] -- Each page holds objects which are IGGraphic subclasses
+@property (readonly) NSInteger pageCount;
+@property (readonly) NSSize documentSize;   // Returns usable document size based on print info paper size and margins.
+@property (readonly) NSSize paperSize; //Just the paper size
 
-- (instancetype)init;
+// default document values
+@property (nonatomic) NSInteger documentFontSize;
+@property (nonatomic) NSInteger documentCharSpacing;
+@property (nonatomic) CGFloat documentLineSpacing;
+
+//page numbering
+@property (nonatomic) BOOL showPageNumbers;
+@property (nonatomic) NSString *pageNumberFont;
+@property (nonatomic) NSInteger pageNumberSize;
+@property (nonatomic) NSInteger pageNumberStyle;
+@property (nonatomic) NSMutableArray *pageNumberFormatArr;
+@property (nonatomic) NSInteger initialPageNr;
+@property (nonatomic) NSInteger pageNrAlignment;
+@property (nonatomic) NSInteger pageNrPosition;
+@property (nonatomic) NSInteger firstPageNumberToShow;
+@property (readonly) NSSize pnDeltaPosition;
+
+- (IGDrawDocument *)init;
 
 - (void)makeWindowControllers;
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController;
@@ -60,7 +78,7 @@
 
 - (NSRect)boundsForGraphics:(NSArray *)graphics;
 - (NSRect)drawingBoundsForGraphics:(NSArray *)graphics;
-- (NSRect)wordEportBoundsForGraphics:(NSArray *)graphics;
+- (NSRect)wordExportBoundsForGraphics:(NSArray *)graphics;
 - (NSData *)TIFFRepresentationForGraphics:(NSArray *)graphics;
 - (NSData *)PDFRepresentationForGraphics:(NSArray *)graphics;
 - (NSData *)EPSRepresentationForGraphics:(NSArray *)graphics;
@@ -68,13 +86,8 @@
 - (NSData *)dataRepresentationOfType:(NSString *)type;
 - (BOOL)loadDataRepresentation:(NSData *)data ofType:(NSString *)type;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSSize documentSize;   // Returns usable document size based on print info paper size and margins.
-@property (NS_NONATOMIC_IOSONLY, readonly) NSSize paperSize; //Just the paper size
-
 - (void)printShowingPrintPanel:(BOOL)flag;
 - (void)printSelection:(NSArray *)graphics;
-
-@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger pageCount;
 
 - (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 
@@ -95,52 +108,15 @@
 - (void)insertPageAtPage:(NSUInteger)pageNr;
 - (void)removePage:(NSUInteger)pageNr;
 
-
-// ===========================================================================
-#pragma mark -
-#pragma mark graphic selection
-// =========================== graphic selection =============================
+// graphic selection
 - (void)selectGraphic:(IGGraphic *)graphic;
 - (void)deselectGraphic:(IGGraphic *)graphic;
 - (void)clearSelection;
 
-
-
-
-// ===========================================================================
-#pragma mark -
-#pragma mark default document values
-// ====================== default document values ============================
-@property (NS_NONATOMIC_IOSONLY) NSInteger documentFontSize;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger documentCharSpacing;
-
-@property (NS_NONATOMIC_IOSONLY) CGFloat documentLineSpacing;
-
-//page numbering stuff
-@property (NS_NONATOMIC_IOSONLY) BOOL showPageNumbers;
-
-- (void)setPageNrFont:(NSString *)fontName;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pageNumberFont;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger pageNumberSize;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger pageNumberStyle;
-
-@property (NS_NONATOMIC_IOSONLY, copy) NSMutableArray *pageNumberFormatArr;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger initialPageNr;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger pageNrAlignment;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger pageNrPosition;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger firstPageNumberToShow;
-
+// page number fintune
 - (void)finetuneXParameter:(float)xValue;
 - (void)finetuneYParameter:(float)yValue;
 - (void)finetuneReset;
-@property (NS_NONATOMIC_IOSONLY, readonly) NSSize pnDeltaPosition;
 
 @end
 

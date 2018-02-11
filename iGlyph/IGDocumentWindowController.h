@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *graphicView;
 
+- (void)setUpGraphicView;
 // Creating Graphics
 // - (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent;
 - (void)createGraphicOfClassGlyph:(unichar)glyphChar WithFont:(NSString *)fontName;
@@ -72,14 +73,9 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSPrintInfo *documentPrintInfo;
 
-    /*!
-    @method documentSize
-     @abstract   Gets the Size of the Document
-     @discussion Gets the size of the document (paper size minus the margins) from the designated document class or if there is none then calculates the document size
-     @result     Gives NSSize back
-     */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSSize documentSize;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSSize paperSize;
+
 
 
 - (IBAction)pageMargins:(id)sender;
