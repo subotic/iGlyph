@@ -72,7 +72,7 @@
         i = curPageGraphics.count;
         while (i-- > 0) {
             curGraphic = curPageGraphics[i];
-            drawingBounds = [curGraphic drawingBounds];
+            drawingBounds = curGraphic.drawingBounds;
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
                 [NSBezierPath clipRect:drawingBounds];
@@ -85,7 +85,7 @@
         i = curPageGraphics.count;
         while (i-- > 0) {
             curGraphic = curPageGraphics[i];
-            drawingBounds = [curGraphic drawingBounds];
+            drawingBounds = curGraphic.drawingBounds;
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
                 [NSBezierPath clipRect:drawingBounds];
@@ -98,22 +98,22 @@
         //----------------anfang pagenumers----------------        
         //Page Numbers
         //nicht vergessen die printversion auch anzupassen
-        if ([self.drawDocument showPageNumbers]) {
+        if ((self.drawDocument).showPageNumbers) {
             NSPrintInfo *printInfo = [self drawDocumentPrintInfo]; 
             
             
             NSMutableDictionary *pageNrAttribsDict = [NSMutableDictionary dictionary];
             NSMutableString *pnMutableString = [[NSMutableString alloc] init];
             
-            NSString *pnFontName = [self.drawDocument pageNumberFont];
-            NSUInteger pnFontSize = [self.drawDocument pageNumberSize];
-            NSUInteger pnStyle = [self.drawDocument pageNumberStyle];
-            NSMutableArray *pnFormatArr = [self.drawDocument pageNumberFormatArr];
-            NSUInteger initialPageNumber = [self.drawDocument initialPageNr]; //die Zahl ab welcher gezählt werden soll
-            NSUInteger firstPageNumberToShow = [self.drawDocument firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
+            NSString *pnFontName = (self.drawDocument).pageNumberFont;
+            NSUInteger pnFontSize = (self.drawDocument).pageNumberSize;
+            NSUInteger pnStyle = (self.drawDocument).pageNumberStyle;
+            NSMutableArray *pnFormatArr = (self.drawDocument).pageNumberFormatArr;
+            NSUInteger initialPageNumber = (self.drawDocument).initialPageNr; //die Zahl ab welcher gezählt werden soll
+            NSUInteger firstPageNumberToShow = (self.drawDocument).firstPageNumberToShow; //die erste Seite ab wann angezeigt werden soll
             
-            NSUInteger pageNrAlignment = [self.drawDocument pageNrAlignment];
-            NSUInteger pageNrPosition = [self.drawDocument pageNrPosition];
+            NSUInteger pageNrAlignment = (self.drawDocument).pageNrAlignment;
+            NSUInteger pageNrPosition = (self.drawDocument).pageNrPosition;
             
             NSUInteger pnNumberToShow = curPage - firstPageNumberToShow + initialPageNumber;
             
@@ -183,7 +183,7 @@
             pnPosition.y -= pnFontSize;
             
             //PNr finetune
-            NSSize pnDelta = [self.drawDocument pnDeltaPosition];
+            NSSize pnDelta = (self.drawDocument).pnDeltaPosition;
             pnPosition.x += pnDelta.width;
             pnPosition.y += pnDelta.height;
             
@@ -203,7 +203,7 @@
         i = (self.graphics).count;
         while (i-- > 0) {
             curGraphic = (self.graphics)[i];
-            drawingBounds = [curGraphic drawingBounds];
+            drawingBounds = curGraphic.drawingBounds;
             if (NSIntersectsRect(rect, drawingBounds)) {
                 [currentContext saveGraphicsState];
                 [NSBezierPath clipRect:drawingBounds];

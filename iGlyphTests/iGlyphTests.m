@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import "IGlyphDelegate.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGGraphicView.h"
 
 
@@ -16,7 +16,7 @@
 @private
     NSApplication           *app;
     IGlyphDelegate          *appDelegate;
-    IGDrawWindowController  *drawWindowController;
+    IGDocumentWindowController  *drawWindowController;
     IGGraphicView           *graphicView;
 }
 @end
@@ -47,7 +47,7 @@
 
 - (void)testSomething {
     app                  = [NSApplication sharedApplication];
-    appDelegate          = (IGlyphDelegate *)[app delegate];
+    appDelegate          = (IGlyphDelegate *)app.delegate;
 }
 
 @end

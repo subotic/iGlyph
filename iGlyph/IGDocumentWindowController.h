@@ -1,12 +1,12 @@
 //
-//  IGDrawWindowController.h
+//  IGDocumentWindowController.h
 //  VisualGlyph
 //
 //  Created by Ivan Subotic on Tue May 04 2004.
 //  Copyright (c) 2004 Ivan Subotic. All rights reserved.
 //
 /*!
-    @header IGDrawWindowController
+    @header IGDocumentWindowController
     @abstract   (description)
     @discussion (description)
 */
@@ -26,11 +26,11 @@ typedef NS_ENUM(NSUInteger, ScrollingBehavior) { YES_SCROLL, NO_SCROLL, VERTICAL
 
 
 /*!
-    @class IGDrawWindowController
+    @class IGDocumentWindowController
     @abstract    (brief description) what is it?
     @discussion  (comprehensive description) who knows
 */
-@interface IGDrawWindowController : NSWindowController <NSToolbarDelegate> {
+@interface IGDocumentWindowController : NSWindowController <NSToolbarDelegate> {
     @public
     IBOutlet NSWindow *window;
     IBOutlet IGGraphicView *graphicView;

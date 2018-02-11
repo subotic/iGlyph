@@ -15,7 +15,7 @@
 #import "PreferencesController.h"
 #import "IGGridView.h"
 #import "IGGraphicView.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGlyphDelegate.h"
 
 @implementation PreferencesController
@@ -149,8 +149,8 @@
     NSMatrix *sndr = (NSMatrix *)sender;
 
     if (_inspectingGraphicView) {
-        _inspectingGraphicView.guidelineType = [[sndr selectedCell] tag];
-        [[NSUserDefaults standardUserDefaults] setInteger:[[sndr selectedCell] tag] forKey:IGPrefGuideLineTypeKey];
+        _inspectingGraphicView.guidelineType = sndr.selectedCell.tag;
+        [[NSUserDefaults standardUserDefaults] setInteger:sndr.selectedCell.tag forKey:IGPrefGuideLineTypeKey];
     }
     [_inspectingGraphicView setNeedsDisplay:YES];
 }
@@ -160,8 +160,8 @@
     NSTextField *sndr = (NSTextField *)sender;
 
     if (_inspectingGraphicView) {
-        _inspectingGraphicView.guidelineCount = [sndr integerValue];
-        [[NSUserDefaults standardUserDefaults] setInteger:[[sndr selectedCell] tag] forKey:IGPrefGuideLineCountKey];
+        _inspectingGraphicView.guidelineCount = sndr.integerValue;
+        [[NSUserDefaults standardUserDefaults] setInteger:[sndr selectedCell].tag forKey:IGPrefGuideLineCountKey];
     }
     [_inspectingGraphicView setNeedsDisplay:YES];
 }
@@ -217,7 +217,7 @@
 
     NSButton *sndr = (NSButton *)sender;
 
-    NSInteger tag = [[sndr selectedCell] tag];
+    NSInteger tag = [sndr selectedCell].tag;
     DDLogVerbose(@"Tag = %ld", (long)tag);
     
     //[self changeToSelectedTab: tag];
@@ -233,7 +233,7 @@
     [self.window setContentView:Nil];
     NSView *newContentView = Nil;
     
-    switch ([sndr tag])
+    switch (sndr.tag)
     {
         case 0:
             DDLogVerbose(@"Tag 0 -> General");

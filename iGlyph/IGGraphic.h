@@ -47,6 +47,11 @@ enum {
 extern NSString *IGGraphicDidChangeNotification;
 extern NSString *IGGlyphDidChangeNotification;
 
+
+@protocol IGGraphicProtocol
+// list of methods and properties
+@end
+
 @interface IGGraphic : NSObject <NSCopying> {
     
     //neue gemeinsame Variablen
@@ -65,15 +70,9 @@ extern NSString *IGGlyphDidChangeNotification;
     NSInteger fontSize;  //nur für Hieroglyphen
     NSInteger cartoucheOrientation; //nur für die Cartouche
     
-    NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
-    BOOL arrowReversed;
-    NSInteger arrowHeadAngle;
-    NSInteger arrowHeadSize;
-    
     //ende neue gemeinsame Variablen
     
 @private
-    IGDrawDocument *_document;
     NSRect _bounds;
     NSRect _origBounds;
     float _strokeLineWidth;
@@ -132,6 +131,10 @@ extern NSString *IGGlyphDidChangeNotification;
     
 }
 
+
+
+
+
 @property (assign) CGFloat strokeThickness;
 @property (assign) NSInteger strokeType; //volle Linie, gestrichelte Linie, usw.
 @property (weak) NSColor *strokeColor; //wird dann mit den entsprechenden Werten gesetzt falls rubric
@@ -147,19 +150,12 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (assign) NSInteger fontSize;  //nur für Hieroglyphen
 @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
 
-@property (assign) NSInteger arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
-@property (assign) BOOL arrowReversed;
-@property (assign) NSInteger arrowHeadAngle;
-@property (assign) NSInteger arrowHeadSize;
-
 - (instancetype)init;
-
-// ========================= Binding Stuff =========================
 
 
 // ========================= Document accessors and conveniences =========================
-@property (NS_NONATOMIC_IOSONLY, strong) IGDrawDocument *document;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSUndoManager *undoManager;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGDrawDocument *document;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) NSUndoManager *undoManager;
 - (void)updateToolboxes;
 
 // =================================== Primitives ===================================
@@ -221,8 +217,11 @@ extern NSString *IGGlyphDidChangeNotification;
 + (NSCursor *)creationCursor;
 
 - (BOOL)createWithEvent:(NSEvent *)theEvent inView:(IGGraphicView *)view;
+
+/*
 - (BOOL)replaceGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName;
 - (BOOL)createGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName onPosition:(NSPoint)pos;
+*/
 
 @property (NS_NONATOMIC_IOSONLY, getter=isEditable, readonly) BOOL editable;
 - (void)startEditingWithEvent:(NSEvent *)event inView:(IGGraphicView *)view;
@@ -247,6 +246,7 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (NS_NONATOMIC_IOSONLY) float height;
 @end
 
+/*
 @interface IGGraphic (IGGlyphExtraStuff)
 
 @property (NS_NONATOMIC_IOSONLY) BOOL glyphIsCreating;
@@ -276,6 +276,7 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (NS_NONATOMIC_IOSONLY) NSInteger angle;
 
 @end
+*/
 
 /*
  @interface IGGraphic (IGCartoucheExtraStuff)
@@ -298,6 +299,7 @@ extern NSString *IGGlyphDidChangeNotification;
  @end
  */
 
+/*
 @interface IGGraphic (IGLineExtraStuff)
 
 @property (NS_NONATOMIC_IOSONLY) NSInteger lineType;
@@ -313,6 +315,7 @@ extern NSString *IGGlyphDidChangeNotification;
 - (void)doReverseArrow;
 @property (NS_NONATOMIC_IOSONLY) BOOL reverseArrow;
 @end
+*/
 
 extern NSString *IGClassKey;
 extern NSString *IGBoundsKey;

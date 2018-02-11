@@ -11,7 +11,7 @@
 #import "LineController.h"
 
 #import "IGGraphicView.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 
 #import "math.h"
 //#import "fp.h"
@@ -24,17 +24,17 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setLineType:0];
-        [self setLineWidth:1];
+        self.lineType = 0;
+        self.lineWidth = 1;
         [self setRubricLine:NO];
-        [self setArrowType:0];
-        [self setArrowHead:45.0];
-        [self setArrowHeadSize:15];
+        self.arrowType = 0;
+        self.arrowHeadAngle = 45.0;
+        self.arrowHeadSize = 15;
         [self setReverseArrow:NO];
         
         tmpDeltaWH = NSZeroSize;
         
-        [self setBounds:NSMakeRect(250, 350, 100, 50)];
+        self.bounds = NSMakeRect(250, 350, 100, 50);
         
     }
     return self;
@@ -43,20 +43,20 @@
 - (instancetype)copy {
     id newObj = [super copy];
     
-    [newObj setStartsAtLowerLeft:[self startsAtLowerLeft]];
-    [newObj setLineType:[self lineType]];
+    [newObj setStartsAtLowerLeft:self.startsAtLowerLeft];
+    [newObj setLineType:self.lineType];
     // [newObj setLineWidth:[self lineWidth]]; // has problems finding
-    [newObj setRubricLine:[self rubricLine]];
-    [newObj setArrowHead:[self arrowHead]];
+    [newObj setRubricLine:self.rubricLine];
+    [newObj setArrowHeadAngle:self.arrowHeadAngle];
     // [newObj setArrowHeadSize:[self arrowHeadSize]]; // has problems finding
-    [newObj setReverseArrow:[self reverseArrow]];
+    [newObj setReverseArrow:self.reverseArrow];
     
     return newObj;
 }
 
 - (void)setStartsAtLowerLeft:(BOOL)flag {
     if (_startsAtLowerLeft != flag) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setStartsAtLowerLeft:_startsAtLowerLeft];
+        [[self.undoManager prepareWithInvocationTarget:self] setStartsAtLowerLeft:_startsAtLowerLeft];
         _startsAtLowerLeft = flag;
         [self didChange];
     }
@@ -68,14 +68,14 @@
 
 - (void)flipHorizontally {
     NSLog(@"IGLine(flipHorizontally");
-    [self setStartsAtLowerLeft:![self startsAtLowerLeft]];
+    self.startsAtLowerLeft = !self.startsAtLowerLeft;
     [self doReverseArrow];
     return;
 }
 
 - (void)flipVertically {
     NSLog(@"IGLine(flipVertically");
-    [self setStartsAtLowerLeft:![self startsAtLowerLeft]];
+    self.startsAtLowerLeft = !self.startsAtLowerLeft;
     //[self reverseArrow];
     return;
 }
@@ -98,9 +98,9 @@
 - (NSBezierPath *)bezierPath
 {
     NSBezierPath *path = [NSBezierPath bezierPath];
-    NSRect bounds = [self bounds]; //hier drinnen wird die Linie als Diagonale gezeichnet
+    NSRect bounds = self.bounds; //hier drinnen wird die Linie als Diagonale gezeichnet
     
-    if ([self rubricLine]) {
+    if (self.rubricLine) {
         self.strokeColor = [NSColor redColor];
     } else {
         self.strokeColor = [NSColor blackColor];
@@ -113,26 +113,26 @@
     dashPattern[0] = 5.0;
     dashPattern [1] = 5.0;
     
-    double alphaWinkel = [self arrowHead]; //Oeffnungswinkel vom Pfeil
+    double alphaWinkel = self.arrowHeadAngle; //Oeffnungswinkel vom Pfeil
     alphaWinkel = alphaWinkel * M_PI / 180.0; //Umwandlung in Rad
-    float arrowHS = [self arrowHeadSize]; //grösse des Pfeiles
+    float arrowHS = self.arrowHeadSize; //grösse des Pfeiles
     
     double deltaX = -cos(alphaWinkel) * arrowHS;
     double deltaY = sin(alphaWinkel) * arrowHS;
     
     
-    if ([self lineType] == 0) { // Solid Line
-        [self setStrokeLineWidth:[self lineWidth]];
-    } else if ([self lineType] == 1) { // Dash
-        [self setStrokeLineWidth:[self lineWidth]];
+    if (self.lineType == 0) { // Solid Line
+        self.strokeLineWidth = self.lineWidth;
+    } else if (self.lineType == 1) { // Dash
+        self.strokeLineWidth = self.lineWidth;
         [path setLineDash:dashPattern count:2 phase:0.0];
-    } else if ([self lineType] == 2) { //Guidline
-        [self setStrokeLineWidth:0.25];
+    } else if (self.lineType == 2) { //Guidline
+        self.strokeLineWidth = 0.25;
     }
     
     //damit die richtige Seite den Pfeil bekommt auch wenn flippHorizontally passiert
-    NSUInteger lokalArrowType = [self arrowType];
-    int lokalReverseArrow = [self reverseArrow];
+    NSUInteger lokalArrowType = self.arrowType;
+    int lokalReverseArrow = self.reverseArrow;
     
     if (lokalArrowType == 1) {
         if (lokalReverseArrow) {
@@ -151,7 +151,7 @@
     //ACHTUNG!!! Shift muss auch vorher drückbar sein
     //ACHTUNG!!! Cursor muss sich ändern wenn über verstell Rechteck
     
-    NSPoint curMainViewPoint = [[self theMainView] convertPoint:NSApp.currentEvent.locationInWindow fromView:nil];
+    NSPoint curMainViewPoint = [self.theMainView convertPoint:NSApp.currentEvent.locationInWindow fromView:nil];
     BOOL rightSideOfLineIsMoving = (curMainViewPoint.x > bounds.origin.x ? YES : NO);
     
     if (shiftKeyDown) {
@@ -167,7 +167,7 @@
         
         float dXY = dL/1.41421356; //welches X,Y gibt mir die dL Länge
         
-        if ([self startsAtLowerLeft] && rightSideOfLineIsMoving) {
+        if (self.startsAtLowerLeft && rightSideOfLineIsMoving) {
             NSLog(@"NSLine oben-rechts");
             NSLog(@"dX = %f, dY = %f, dL = %f", dX, dY, dL);
             if (dY < yTief) {
@@ -175,39 +175,39 @@
                 bounds.origin.y += bounds.size.height;
                 bounds.size.height = 0;
                 bounds.size.width = dL;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY >= yTief && dY <= yHoch) {
                 NSLog(@"Snap to 45Grad, dY = %f, yTief = %f, yHoch = %f", dY, yTief, yHoch);
                 bounds.origin.y += bounds.size.height - dXY;
                 bounds.size.height = dXY;
                 bounds.size.width = dXY;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY > yHoch) {
                 NSLog(@"Snap to 90Grad, dY = %f, yHoch = %f", dY, yHoch);
                 bounds.size.width = 0;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             }
-        } else if ([self startsAtLowerLeft] && !rightSideOfLineIsMoving) {
+        } else if (self.startsAtLowerLeft && !rightSideOfLineIsMoving) {
             NSLog(@"NSLine unten-links");
             NSLog(@"dX = %f, dY = %f, dL = %f", dX, dY, dL);
             if (dY < yTief) {
                 NSLog(@"Snap to 0Grad , dY = %f, yTief = %f", dY, yTief);
                 bounds.size.height = 0;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY >= yTief && dY <= yHoch) {
                 NSLog(@"Snap to 45Grad, dY = %f, yTief = %f, yHoch = %f", dY, yTief, yHoch);
                 bounds.origin.x += dX - dXY;
                 bounds.size.height = dXY;
                 bounds.size.width = dXY;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY > yHoch) {
                 NSLog(@"Snap to 90Grad, dY = %f, yHoch = %f", dY, yHoch);
                 bounds.origin.x += dX;
                 bounds.size.width = 0;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             }
             
-        } else if (![self startsAtLowerLeft] && !rightSideOfLineIsMoving) {
+        } else if (!self.startsAtLowerLeft && !rightSideOfLineIsMoving) {
             NSLog(@"NSLine oben-links");
             NSLog(@"dX = %f, dY = %f, dL = %f", dX, dY, dL);
             if (dY < yTief) {
@@ -216,43 +216,43 @@
                 bounds.origin.y += bounds.size.height;
                 bounds.size.height = 0;
                 //bounds.size.width = dL;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY >= yTief && dY <= yHoch) {
                 NSLog(@"Snap to 45Grad, dY = %f, yTief = %f, yHoch = %f", dY, yTief, yHoch);
                 bounds.origin.x += bounds.size.width - dXY;
                 bounds.origin.y += bounds.size.height - dXY;
                 bounds.size.height = dXY;
                 bounds.size.width = dXY;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY > yHoch) {
                 NSLog(@"Snap to 90Grad, dY = %f, yHoch = %f", dY, yHoch);
                 bounds.origin.x += bounds.size.width;
                 bounds.size.width = 0;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             }
-        } else if (![self startsAtLowerLeft] && rightSideOfLineIsMoving) {
+        } else if (!self.startsAtLowerLeft && rightSideOfLineIsMoving) {
             NSLog(@"NSline unten-rechts");
             NSLog(@"dX = %f, dY = %f, dL = %f", dX, dY, dL);
             if (dY < yTief) {
                 NSLog(@"Snap to 0Grad , dY = %f, yTief = %f", dY, yTief);
                 bounds.size.height = 0;
                 bounds.size.width = dL;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY >= yTief && dY <= yHoch) {
                 NSLog(@"Snap to 45Grad, dY = %f, yTief = %f, yHoch = %f", dY, yTief, yHoch);
                 bounds.size.height = dXY;
                 bounds.size.width = dXY;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             } else if (dY > yHoch) {
                 NSLog(@"Snap to 90Grad, dY = %f, yHoch = %f", dY, yHoch);
                 bounds.size.width = 0;
-                [self setBounds:bounds];
+                self.bounds = bounds;
             }
         }
     }
     
     
-    if ([self startsAtLowerLeft]) {
+    if (self.startsAtLowerLeft) {
         //wenn die Linie von unten-links gezeichnet wird
         NSLog(@"IGLine(bezierPath) -> startsAtLoverLeft");
         [path moveToPoint:NSMakePoint(NSMinX(bounds), NSMaxY(bounds))];
@@ -435,7 +435,7 @@
         
     }
     
-    path.lineWidth = [self strokeLineWidth];
+    path.lineWidth = self.strokeLineWidth;
     
     //brauche ich für die Methode drawingBounds
     tmpBezPathBounds = path.bounds;
@@ -444,7 +444,7 @@
 }
 
 - (NSUInteger)knobMask {
-    if ([self startsAtLowerLeft]) {
+    if (self.startsAtLowerLeft) {
         return (LowerLeftKnobMask | UpperRightKnobMask);
     } else {
         return (UpperLeftKnobMask | LowerRightKnobMask);
@@ -455,15 +455,15 @@
     if (isSelected && ([self knobUnderPoint:point] != NoKnob)) {
         return YES;
     } else {
-        NSRect bounds = [self bounds];
-        float halfWidth = [self strokeLineWidth] / 2.0;
+        NSRect bounds = self.bounds;
+        float halfWidth = self.strokeLineWidth / 2.0;
         halfWidth += 2.0;  // Fudge
         if (bounds.size.width == 0.0) {
             if (fabs(point.x - bounds.origin.x) <= halfWidth) {
                 return YES;
             }
         } else {
-            BOOL startsAtLowerLeft = [self startsAtLowerLeft];
+            BOOL startsAtLowerLeft = self.startsAtLowerLeft;
             float slope = bounds.size.height / bounds.size.width;
             
             if (startsAtLowerLeft) {
@@ -481,14 +481,14 @@
 
 - (NSRect)drawingBounds {
     float inset = -3.0;
-    float something = [self arrowHeadSize];
+    float something = self.arrowHeadSize;
     
-    float halfLineWidth = ([self strokeLineWidth] / 2.0) + 1.0;
+    float halfLineWidth = (self.strokeLineWidth / 2.0) + 1.0;
     if (-halfLineWidth < inset) {
         inset = -halfLineWidth;
     }
     
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     
     float dW = bounds.size.width - tmpBezPathBounds.size.width;
     float dH = bounds.size.height - tmpBezPathBounds.size.height;
@@ -525,7 +525,7 @@
     
     //NSLog(@"IGGraphic(drawingBounds) -> inset = %f", inset);
     //NSLog(@"dW: %f, dH:%f", dW, dH);
-    return NSInsetRect([self bounds], dW, dH);
+    return NSInsetRect(self.bounds, dW, dH);
 }
 
 
@@ -539,15 +539,15 @@ NSString *IGLineArrowHeadSizeKey = @"LineArrowHeadSize";
 NSString *IGLineReverseArrowKey = @"LineReverseArrow";
 
 - (NSMutableDictionary *)propertyListRepresentation {
-    NSMutableDictionary *dict = [super propertyListRepresentation];
-    dict[IGLineStartsAtLowerLeftKey] = ([self startsAtLowerLeft] ? @"YES" : @"NO");
-    dict[IGLineTypeKey] = [NSString stringWithFormat:@"%ld", (long)[self lineType]];
-    dict[IGLineRubricKey] = ([self rubricLine] ? @"YES" : @"NO");
-    dict[IGLineWidthKey] = [NSString stringWithFormat:@"%f", [self lineWidth]];
-    dict[IGLineArrowTypeKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowType]];
-    dict[IGLineArrowHeadKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowHead]];
-    dict[IGLineArrowHeadSizeKey] = [NSString stringWithFormat:@"%ld", (long)[self arrowHeadSize]];
-    dict[IGLineReverseArrowKey] = ([self reverseArrow] ? @"YES" : @"NO");
+    NSMutableDictionary *dict = super.propertyListRepresentation;
+    dict[IGLineStartsAtLowerLeftKey] = (self.startsAtLowerLeft ? @"YES" : @"NO");
+    dict[IGLineTypeKey] = [NSString stringWithFormat:@"%ld", (long)self.lineType];
+    dict[IGLineRubricKey] = (self.rubricLine ? @"YES" : @"NO");
+    dict[IGLineWidthKey] = [NSString stringWithFormat:@"%ld", (long)self.lineWidth];
+    dict[IGLineArrowTypeKey] = [NSString stringWithFormat:@"%ld", (long)self.arrowType];
+    dict[IGLineArrowHeadKey] = [NSString stringWithFormat:@"%ld", (long)self.arrowHeadAngle];
+    dict[IGLineArrowHeadSizeKey] = [NSString stringWithFormat:@"%ld", (long)self.arrowHeadSize];
+    dict[IGLineReverseArrowKey] = (self.reverseArrow ? @"YES" : @"NO");
     return dict;
 }
 
@@ -558,61 +558,61 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     
     obj = dict[IGLineStartsAtLowerLeftKey];
     if (obj) {
-        [self setStartsAtLowerLeft:[obj isEqualToString:@"YES"]];
+        self.startsAtLowerLeft = [obj isEqualToString:@"YES"];
     }
     obj = dict[IGLineTypeKey];
     if (obj) {
-        [self setLineType:[obj intValue]];
+        self.lineType = [obj integerValue];
     }
     obj = dict[IGLineRubricKey];
     if (obj) {
-        [self setRubricLine:[obj isEqualToString:@"YES"]];
+        self.rubricLine = [obj isEqualToString:@"YES"];
     }
     obj = dict[IGLineWidthKey];
     if (obj) {
-        [self setLineWidth:[obj floatValue]];
+        self.lineWidth = [obj integerValue];
     }
     obj = dict[IGLineArrowTypeKey];
     if (obj) {
-        [self setArrowType:[obj intValue]];
+        self.arrowType = [obj integerValue];
     }
     obj = dict[IGLineArrowHeadKey];
     if (obj) {
-        [self setArrowHead:[obj floatValue]];
+        self.arrowHeadAngle = [obj integerValue];
     }
     obj = dict[IGLineArrowHeadSizeKey];
     if (obj) {
-        [self setArrowHeadSize:[obj floatValue]];
+        self.arrowHeadSize = [obj integerValue];
     }
     obj = dict[IGLineReverseArrowKey];
     if (obj) {
-        [self setReverseArrow:[obj isEqualToString:@"YES"]];
+        self.reverseArrow = [obj isEqualToString:@"YES"];
     }
     
 }
 
 
-- (NSUInteger)lineType
+- (NSInteger)lineType
 {
     return _lineType;
 }
 
-- (void)setLineType:(NSUInteger)value
+- (void)setLineType:(NSInteger)value
 {
     _lineType = value;
     NSLog(@"IGLine(setLineType)->%ld", (long)_lineType);
     //[self didChange];
 }
 
-- (float)lineWidth
+- (NSInteger)lineWidth
 {
     return _lineWidth;
 }
 
-- (void)setLineWidth:(float)value
+- (void)setLineWidth:(NSInteger)value
 {
     _lineWidth = value;
-    NSLog(@"IGLine(setLineWidth)->%f", _lineWidth);
+    NSLog(@"IGLine(setLineWidth)->%ld", (long)_lineWidth);
     //[self didChange];
 }
 
@@ -628,13 +628,13 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     //[self didChange];
 }
 
-- (NSUInteger)arrowType
+- (NSInteger)arrowType
 {
     NSLog(@"IGLine(arrowType) -> %ld", (long)_arrowType);
     return  _arrowType;
 }
 
-- (void)setArrowType:(NSUInteger)value
+- (void)setArrowType:(NSInteger)value
 {
     _arrowType = value;
     
@@ -644,24 +644,24 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     //[self didChange];
 }
 
-- (NSUInteger)arrowHead
+- (NSInteger)arrowHeadAngle
 {
-    return _arrowHead;
+    return _arrowHeadAngle;
 }
 
-- (void)setArrowHead:(NSUInteger)value
+- (void)setArrowHeadAngle:(NSInteger)value
 {
-    _arrowHead = value;
-    NSLog(@"IGLine(setArrowHead)->%ld", (long)_arrowHead);
+    _arrowHeadAngle = value;
+    NSLog(@"IGLine(setArrowHeadAngle)->%ld", (long)_arrowHeadAngle);
     //[self didChange];
 }
 
-- (NSUInteger)arrowHeadSize
+- (NSInteger)arrowHeadSize
 {
     return _arrowHeadSize;
 }
 
-- (void)setArrowHeadSize:(NSUInteger)value
+- (void)setArrowHeadSize:(NSInteger)value
 {
     _arrowHeadSize = value;
     NSLog(@"IGLine(setArrowHeadSize)->%ld", (long)_arrowHeadSize);
@@ -670,21 +670,11 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
 
 - (void)doReverseArrow
 {
-    _reverseArrow = ([self reverseArrow]) ?  0 : 1;
+    _reverseArrow = (self.reverseArrow) ?  0 : 1;
     //[self didChange];
     NSLog(@"-----------------------------------------------");
     NSLog(@"IGL(reverseArrow) -> true?:%i", _reverseArrow);
     NSLog(@"-----------------------------------------------");
-}
-
-- (BOOL)reverseArrow
-{
-    return _reverseArrow;
-}
-
-- (void)setReverseArrow:(BOOL)aValue
-{ //brauche ich um beim laden einer Datei die Werte herstellen zu können. Ansonsten wird im Programm selber die reverseArrow Methode benutzt
-    _reverseArrow = aValue;
 }
 
 
@@ -694,16 +684,16 @@ NSString *IGLineReverseArrowKey = @"LineReverseArrow";
     return NSApp.mainWindow;
 }
 
-- (IGDrawWindowController *)theMainWindowController {
-    return [self theMainWindow].windowController;
+- (IGDocumentWindowController *)theMainWindowController {
+    return self.theMainWindow.windowController;
 }
 
 - (IGGraphicView *)theMainView {
-    return [[self theMainWindowController] graphicView];
+    return self.theMainWindowController.graphicView;
 }
 
 - (IGGraphic *)theOnlySelectedGlyph {
-    IGGraphic *graphic = [[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]];
+    IGGraphic *graphic = [self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]];
     return graphic;
 }
 

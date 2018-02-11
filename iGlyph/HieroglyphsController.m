@@ -16,7 +16,7 @@
 #import "HieroglyphsController.h"
 #import "IGlyphDelegate.h"
 #import "IGGraphicView.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGFontData.h"
 #import "IGGraphic.h"
 #import "IGGlyph.h"
@@ -202,7 +202,7 @@
     NSString *fontName = titleData[glyphPosInArray][1];
     
     //[[self theMainView] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
-    [[self theMainWindowController] createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
+    [self.theMainWindowController createGraphicOfClassGlyph:glyphUniChar WithFont:fontName];
 }
 
 //wird vom IGHieroglyphsTableView aufgerufen wenn right-click oder ctr-click
@@ -222,8 +222,8 @@
 
     NSString *fontName = titleData[glyphPosInArray][1];
 
-    [[self theOnlySelectedGlyph] replaceGlyph:glyphUniChar withFont:fontName];
-    [[self theOnlySelectedGlyph] didChange];
+    [self.theOnlySelectedGlyph replaceGlyph:glyphUniChar withFont:fontName];
+    [self.theOnlySelectedGlyph didChange];
 }
 
 /**
@@ -272,7 +272,7 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     DDLogVerbose(@"HieroglyphsController(windowWillClose) -> Notification received - %@\n", notification.name);
-    IGlyphDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    IGlyphDelegate *delegate = [NSApplication sharedApplication].delegate;
     [delegate resetMenuItemFlag:IGMenuHieroglyphsTag];
 }
 
@@ -289,17 +289,17 @@
     return NSApp.mainWindow;
 }
 
-- (IGDrawWindowController *)theMainWindowController {
-    return [self theMainWindow].windowController;
+- (IGDocumentWindowController *)theMainWindowController {
+    return self.theMainWindow.windowController;
 }
 
 - (IGGraphicView *)theMainView {
-    return [[self theMainWindowController] graphicView];
+    return self.theMainWindowController.graphicView;
 }
 
-- (IGGraphic *)theOnlySelectedGlyph {
-    IGGraphic *graphic = [[self theMainView] theOnlySelectedGraphicOfClass:[IGGlyph class]];
-    return graphic;
+- (IGGlyph *)theOnlySelectedGlyph {
+    IGGlyph *selectedGlyph = (IGGlyph *)[self.theMainView theOnlySelectedGraphicOfClass:[IGGlyph class]];
+    return selectedGlyph;
 }
 
 // dynamische columns

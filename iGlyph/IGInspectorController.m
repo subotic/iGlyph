@@ -81,7 +81,7 @@
 
     NSMatrix *sndr = (NSMatrix *) sender;
 
-    NSUInteger tag = [[sndr selectedCell] tag];
+    NSUInteger tag = sndr.selectedCell.tag;
     DDLogVerbose(@"IGInspectorController - selectedViewChanged - tag = %ld", (long) tag);
 
     [self changeToSelectedTab:tag];

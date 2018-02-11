@@ -9,7 +9,7 @@
 #import "IGFontData.h"
 #import "IGGraphicView.h"
 #import "IGlyphDelegate.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGDrawDocument.h"
 #import "IGGraphic.h"
 #import "IGFoundationExtras.h"
@@ -85,17 +85,17 @@ static float IGDefaultPasteCascadeDelta = 10.0;
         self.oldCursorRect = self.currentCursorRect;
         _cursorColor = [NSColor whiteColor];
         _blinkingCursorTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(blinkingCursorTimer:) userInfo:nil repeats:YES];
-        [self setMarginLineColor:[NSColor lightGrayColor]];
+        self.marginLineColor = [NSColor lightGrayColor];
         colorBetweenPages = [NSColor darkGrayColor];
         self.currentPage = 1;
         
-        [self setShowsGrid:[[PreferencesController sharedPreferencesController] showsGrid]];
+        self.showsGrid = [PreferencesController sharedPreferencesController].showsGrid;
         _gvFlags.showsGrid = NO;
         _gvFlags.snapsToGrid = NO;
         _gvFlags.gridSpacing = 8.0;
         _gridColor = NSColor.lightGrayColor;
         
-        [self setPageBackgroundColor:NSColor.whiteColor];
+        self.pageBackgroundColor = NSColor.whiteColor;
         
         NSLog(@"IGGraphicView(init)");
     }
@@ -123,11 +123,11 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 #pragma mark accessors and convenience methods
 // ====== IGDrawWindowController accessors and convenience methods ===========
 
-- (void)setDrawWindowController:(IGDrawWindowController *)theController {
+- (void)setDrawWindowController:(IGDocumentWindowController *)theController {
     controller = theController;
 }
 
-- (IGDrawWindowController *)drawWindowController {
+- (IGDocumentWindowController *)drawWindowController {
     return controller;
 }
 
@@ -140,34 +140,34 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (NSSize)drawDocumentSize { //paperSize minus margins
-    return [self.drawDocument documentSize];
+    return (self.drawDocument).documentSize;
 }
 
 - (NSSize)drawDocumentPaperSize {
-    return [self.drawDocument paperSize];
+    return (self.drawDocument).paperSize;
 }
 
 - (NSRect)documentRectForPageNumber:(NSUInteger)pageNumber {    /* First page is page 0, of course! */
     
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = [self pageRectForPageNumber:pageNumber];
     rect.origin.x += printInfo.leftMargin;
     rect.origin.y += printInfo.topMargin;
-    rect.size = [self drawDocumentSize];
+    rect.size = self.drawDocumentSize;
     return rect;
 }
 
 - (NSRect)pageRectForPageNumber:(NSUInteger)pageNumber {
     NSRect rect;
-    rect.size = [self drawDocumentPaperSize];
+    rect.size = self.drawDocumentPaperSize;
     //rect.origin = [self frame].origin;
     rect.origin = NSMakePoint(0, 0);
-    rect.origin.y += ((rect.size.height + [self pageSeparatorHeight]) * pageNumber);
+    rect.origin.y += ((rect.size.height + self.pageSeparatorHeight) * pageNumber);
     return rect;
 }
 
 - (NSRect)pageHeaderRect {
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = NSZeroRect;
     rect.size.width = printInfo.paperSize.width;
     rect.size.height = printInfo.topMargin;
@@ -175,7 +175,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (NSRect)pageHeaderSmalerRect {
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = NSZeroRect;
     rect.size.width = printInfo.paperSize.width;
     rect.size.height = printInfo.topMargin - 5;
@@ -183,7 +183,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (NSRect)pageFooterRect {
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = NSZeroRect;
     rect.size.width = printInfo.paperSize.width;
     rect.size.height = printInfo.bottomMargin;
@@ -192,7 +192,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (NSRect)pageFooterSmalerRect {
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = NSZeroRect;
     rect.size.width = printInfo.paperSize.width;
     rect.size.height = printInfo.bottomMargin;
@@ -202,18 +202,18 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 
 - (NSRect)marginRectForSide:(NSUInteger)side { //leftMarginRect = 0, rightMarginRect = 1, bottomMarginRect = 2
-    NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
     NSRect rect = NSZeroRect;
     if (side == 0) {
         rect.origin.y += printInfo.topMargin;
         rect.size.width = printInfo.leftMargin;
-        rect.size.height = [self drawDocumentSize].height;
+        rect.size.height = self.drawDocumentSize.height;
         return rect;
     } else if (side == 1) {
         rect.origin.x = printInfo.paperSize.width - printInfo.rightMargin;
         rect.origin.y += printInfo.topMargin;
         rect.size.width = printInfo.rightMargin;
-        rect.size.height = [self drawDocumentSize].height;
+        rect.size.height = self.drawDocumentSize.height;
         return rect;
     } else if (side == 2) {
         rect.origin.y = printInfo.paperSize.height - printInfo.bottomMargin;
@@ -229,7 +229,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 }
 
 - (NSPrintInfo *)drawDocumentPrintInfo {
-    return [self drawDocument].printInfo;
+    return self.drawDocument.printInfo;
 }
 
 - (NSInteger)tag {
@@ -243,7 +243,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 - (void)invalidateGraphic:(IGGraphic *)graphic {
     NSLog(@"IGGraphicView(invalidateGraphic)");
-    [self setNeedsDisplayInRect:[graphic drawingBounds]];
+    [self setNeedsDisplayInRect:graphic.drawingBounds];
 }
 
 - (void)invalidateGraphics:(NSArray *)graphics {
@@ -256,7 +256,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 - (void)redisplayTweak:(IGGraphic *)graphic {
     NSLog(@"IGGraphicView(redisplayTweak)");
     //[self display];
-    [self displayRect:NSInsetRect([graphic drawingBounds], -3, -3)];
+    [self displayRect:NSInsetRect(graphic.drawingBounds, -3, -3)];
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
@@ -264,10 +264,10 @@ static float IGDefaultPasteCascadeDelta = 10.0;
     NSInteger tag = toolbarItem.tag;
     if (tag == 31) { //BackToFront
         //NSLog(@"tag 31 validate");
-        if ([self selectedGraphics].count == 0) {
+        if (self.selectedGraphics.count == 0) {
             return NO;
-        } else if ([self selectedGraphics].count == 1) {
-            if ([self selectedGraphics][0] == [self graphicsOnPage:self.currentPage][0]) {
+        } else if (self.selectedGraphics.count == 1) {
+            if (self.selectedGraphics[0] == [self graphicsOnPage:self.currentPage][0]) {
                 return NO;
             } else {
                 return YES;
@@ -275,10 +275,10 @@ static float IGDefaultPasteCascadeDelta = 10.0;
         }
     } else if (tag == 32) { //FrontToBack
         //NSLog(@"tag 32 validate");
-        if ([self selectedGraphics].count == 0) {
+        if (self.selectedGraphics.count == 0) {
             return NO;
-        } else if ([self selectedGraphics].count == 1) {
-            if ([self selectedGraphics][0] == [self graphicsOnPage:self.currentPage].lastObject) {
+        } else if (self.selectedGraphics.count == 1) {
+            if (self.selectedGraphics[0] == [self graphicsOnPage:self.currentPage].lastObject) {
                 return NO;
             } else {
                 return YES;
@@ -296,14 +296,14 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 - (NSMutableArray *)selectedGraphics
 {
-    return [[self drawWindowController] selectedGraphics];
+    return self.drawWindowController.selectedGraphics;
 }
 
 - (NSArray *)cartoucheSelectedGraphics
 {
     Class filterClass = [IGCartouche class];
-    NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[self selectedGraphics].count];
-    NSEnumerator *objectsEnumerator = [[self selectedGraphics] objectEnumerator];
+    NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:self.selectedGraphics.count];
+    NSEnumerator *objectsEnumerator = [self.selectedGraphics objectEnumerator];
     id item;
     
     while (item = [objectsEnumerator nextObject]) {
@@ -318,7 +318,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 
 - (int)selectedGraphicCountOfClass:(Class)aClass {
     
-    NSEnumerator *enumerator = [[self selectedGraphics] objectEnumerator];
+    NSEnumerator *enumerator = [self.selectedGraphics objectEnumerator];
     id anObject;
     int count = 0;
     
@@ -332,7 +332,7 @@ static float IGDefaultPasteCascadeDelta = 10.0;
 - (IGGraphic *)theOnlySelectedGraphicOfClass:(Class)aClass {
     
     if ([self selectedGraphicCountOfClass:[IGGlyph class]] == 1) {
-        NSEnumerator *enumerator = [[self selectedGraphics] objectEnumerator];
+        NSEnumerator *enumerator = [self.selectedGraphics objectEnumerator];
         IGGraphic *theGraphic;
         id anObject;
         
@@ -365,17 +365,17 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (NSArray *)orderedSelectedGraphics  {
     //NSAssert([[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:[self graphicsOnPage:self.currentPage]], @"orderedSelectedGraphics: probleme eine geordneten Array mit den Graphics zur zu geben");
-    return [[self selectedGraphics] sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:(__bridge void*) self];
+    return [self.selectedGraphics sortedArrayUsingFunction:IG_orderGraphicsFrontToBack context:(__bridge void*) self];
 }
 
 - (BOOL)graphicIsSelected:(IGGraphic *)graphic {
-    return (([[self selectedGraphics] indexOfObjectIdenticalTo:graphic] == NSNotFound) ? NO : YES);
+    return (([self.selectedGraphics indexOfObjectIdenticalTo:graphic] == NSNotFound) ? NO : YES);
 }
 
 - (void)selectGraphic:(IGGraphic *)graphic
 {
     NSLog(@"IGGraphicView(selectGraphic)");
-    [[self drawWindowController] selectGraphic: graphic];
+    [self.drawWindowController selectGraphic: graphic];
     
     /**
      NSUInteger curIndex = [_selectedGraphics indexOfObjectIdenticalTo:graphic];
@@ -398,7 +398,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 - (void)deselectGraphic:(IGGraphic *)graphic
 {
     NSLog(@"IGGraphicView(deselectGraphic)");
-    [[self drawWindowController] deselectGraphic:graphic];
+    [self.drawWindowController deselectGraphic:graphic];
     
     /**
      NSUInteger curIndex = [_selectedGraphics indexOfObjectIdenticalTo:graphic];
@@ -421,7 +421,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 - (void)clearSelection
 {  
     NSLog(@"IGGraphicView(clearSelection)");
-    [[self drawWindowController] clearSelection];
+    [self.drawWindowController clearSelection];
     
     /**
      int i, c = [_selectedGraphics count];
@@ -501,7 +501,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     for (i=0; i<c; i++) {
         curGraphic = graphics[i];
-        if ([self mouse:point inRect:[curGraphic drawingBounds]] && [curGraphic hitTest:point isSelected:[self graphicIsSelected:curGraphic]]) {
+        if ([self mouse:point inRect:curGraphic.drawingBounds] && [curGraphic hitTest:point isSelected:[self graphicIsSelected:curGraphic]]) {
             break;
         }
     }
@@ -522,14 +522,14 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     for (i = 0; i < c; i++) {
         curGraphic = graphics[i];
-        if (NSIntersectsRect(rect, [curGraphic drawingBounds])) {
+        if (NSIntersectsRect(rect, curGraphic.drawingBounds)) {
             [result addObject:curGraphic];
         }
     }
     //ich will ja auch die sachen im header auswählen können
     for (j = 0; j < k; j++) {
         curGraphic = headerGraphics[j];
-        if (NSIntersectsRect(rect, [curGraphic drawingBounds])) {
+        if (NSIntersectsRect(rect, curGraphic.drawingBounds)) {
             [result addObject:curGraphic];
         }
     }
@@ -575,7 +575,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)drawRect:(NSRect)rect
 {
-    IGDrawWindowController *drawWindowController = [self drawWindowController];
+    IGDocumentWindowController *drawWindowController = self.drawWindowController;
     NSArray *graphics;
     NSUInteger i, firstPage, lastPage;
     IGGraphic *curGraphic;
@@ -600,7 +600,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     NSRectFill(rect);
     
     
-    if ([self showsGrid]) {
+    if (self.showsGrid) {
         //Testing the Grid Image
         NSImage *gridPatternImage = [[NSImage alloc] initWithSize:NSMakeSize(24.0, 24.0)];
         
@@ -637,7 +637,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     [colorBetweenPages set];
     for (i = firstPage; i <= lastPage; i++) {
         NSRect pageRect = [self pageRectForPageNumber:i];
-        NSRectFill (NSMakeRect(pageRect.origin.x, NSMaxY(pageRect), pageRect.size.width, [self pageSeparatorHeight]));
+        NSRectFill (NSMakeRect(pageRect.origin.x, NSMaxY(pageRect), pageRect.size.width, self.pageSeparatorHeight));
     }
     
     [[NSColor whiteColor] set];
@@ -650,7 +650,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         i = graphics.count;
         while (i-- > 0) {
             curGraphic = graphics[i];
-            drawingBounds = [curGraphic drawingBounds];
+            drawingBounds = curGraphic.drawingBounds;
             if (NSIntersectsRect(rect, drawingBounds)) {
                 if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
                     // Figure out if we should draw selected.
@@ -681,7 +681,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         i = graphics.count;
         while (i-- > 0) {
             curGraphic = graphics[i];
-            drawingBounds = [curGraphic drawingBounds];
+            drawingBounds = curGraphic.drawingBounds;
             if (NSIntersectsRect(rect, drawingBounds)) {
                 if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
                     // Figure out if we should draw selected.
@@ -709,7 +709,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     i = graphics.count;
     while (i-- > 0) {
         curGraphic = graphics[i];
-        drawingBounds = [curGraphic drawingBounds];
+        drawingBounds = curGraphic.drawingBounds;
         if (NSIntersectsRect(rect, drawingBounds)) {
             if (!_gvFlags.knobsHidden && (curGraphic != _editingGraphic)) {
                 // Figure out if we should draw selected.
@@ -734,22 +734,22 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //----------------anfang pagenumbers----------------
     //Page Numbers
     //nicht vergessen die printversion auch anzupassen!!!!!!
-    if ([[self drawDocument] showPageNumbers]) {
-        NSPrintInfo *printInfo = [self drawDocumentPrintInfo];
+    if (self.drawDocument.showPageNumbers) {
+        NSPrintInfo *printInfo = self.drawDocumentPrintInfo;
         
         
         NSMutableDictionary *pageNrAttribsDict = [NSMutableDictionary dictionary];
         NSMutableString *pnMutableString = [[NSMutableString alloc] init];
         
-        NSString *pnFontName = [[self drawDocument] pageNumberFont];
-        float pnFontSize = [[self drawDocument] pageNumberSize];
-        NSUInteger pnStyle = [[self drawDocument] pageNumberStyle];
-        NSMutableArray *pnFormatArr = [[self drawDocument] pageNumberFormatArr];
-        NSUInteger initialPageNumber = [[self drawDocument] initialPageNr]; //die Zahl ab welcher gezählt werden soll
-        NSUInteger firstPageNumberToShow = [[self drawDocument] firstPageNumberToShow]; //die erste Seite ab wann angezeigt werden soll
+        NSString *pnFontName = self.drawDocument.pageNumberFont;
+        float pnFontSize = self.drawDocument.pageNumberSize;
+        NSUInteger pnStyle = self.drawDocument.pageNumberStyle;
+        NSMutableArray *pnFormatArr = self.drawDocument.pageNumberFormatArr;
+        NSUInteger initialPageNumber = self.drawDocument.initialPageNr; //die Zahl ab welcher gezählt werden soll
+        NSUInteger firstPageNumberToShow = self.drawDocument.firstPageNumberToShow; //die erste Seite ab wann angezeigt werden soll
         
-        NSUInteger pageNrAlignment = [[self drawDocument] pageNrAlignment];
-        NSUInteger pageNrPosition = [[self drawDocument] pageNrPosition];
+        NSUInteger pageNrAlignment = self.drawDocument.pageNrAlignment;
+        NSUInteger pageNrPosition = self.drawDocument.pageNrPosition;
         
         NSInteger pnNumberToShow = self.currentPage - firstPageNumberToShow + initialPageNumber;
         
@@ -790,7 +790,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         if (pageNrAlignment == 0) { //left
             pnPosition.x = printInfo.rightMargin;
         } else if (pageNrAlignment == 1) { //center
-            pnPosition.x = NSMidX([self pageHeaderRect]) - pnFontSize + 2;
+            pnPosition.x = NSMidX(self.pageHeaderRect) - pnFontSize + 2;
             
         } else if (pageNrAlignment == 2) { //right
             pnPosition.x = printInfo.paperSize.width - printInfo.rightMargin - pnFontSize;
@@ -809,17 +809,17 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         //anpassen in Y
         if (pageNrPosition == 0) { //Header
             
-            pnPosition.y = NSMidY([self pageHeaderRect]);
+            pnPosition.y = NSMidY(self.pageHeaderRect);
             
         } else { //Footer
-            pnPosition.y = NSMidY([self pageFooterRect]);
+            pnPosition.y = NSMidY(self.pageFooterRect);
         }
         
         //anpassen um die fontgrösse
         pnPosition.y -= pnFontSize;
         
         //PNr finetune
-        NSSize pnDelta = [[self drawDocument] pnDeltaPosition];
+        NSSize pnDelta = self.drawDocument.pnDeltaPosition;
         pnPosition.x += pnDelta.width;
         pnPosition.y += pnDelta.height;
         
@@ -834,7 +834,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //----------------ende pagenumers----------------
     
     if (_creatingGraphic) {
-        drawingBounds = [_creatingGraphic drawingBounds];
+        drawingBounds = _creatingGraphic.drawingBounds;
         if (NSIntersectsRect(rect, drawingBounds)) {
             [currentContext saveGraphicsState];
             [NSBezierPath clipRect:drawingBounds];
@@ -913,13 +913,13 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 // ========================== creating graphics ==============================
 
 - (void)createGraphicOfClass:(Class)theClass withEvent:(NSEvent *)theEvent {
-    IGDrawDocument *document = [self drawDocument];
+    IGDrawDocument *document = self.drawDocument;
     _creatingGraphic = [theClass init];
     if ([_creatingGraphic createWithEvent:theEvent inView:self]) {
-        [_creatingGraphic setPageNr:self.currentPage];
+        _creatingGraphic.pageNr = self.currentPage;
         [document insertGraphic:_creatingGraphic atIndex:0];
         [self selectGraphic:_creatingGraphic];
-        if ([_creatingGraphic isEditable]) {
+        if (_creatingGraphic.editable) {
             [self startEditingGraphic:_creatingGraphic withEvent:nil ];
         }
         [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:NSStringFromClass(theClass) value:@"" table:@"GraphicClassNames"]]];
@@ -944,16 +944,16 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     if ([creatingGraphic createGlyph:glyphUniChar withFont:fontName onPosition:NSZeroPoint onPage:0]) { // FIXME: onPosition and onPage are hardcoded
         //NSLog(@"IGGraphicView(createGraphicOfClassGlyph) nach createGlyph -> %@", _creatingGraphic);
         
-        if (NSPointInRect([creatingGraphic bounds].origin, [self pageHeaderRect])) {
-            [creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+        if (NSPointInRect(creatingGraphic.bounds.origin, self.pageHeaderRect)) {
+            creatingGraphic.pageNr = 0; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
         } else {
-            [creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
+            creatingGraphic.pageNr = self.currentPage; //ansonsten ganz normal
         }
         [document insertGraphic:creatingGraphic atIndex:0];
         [self selectGraphic:creatingGraphic];
         
         //nur für den textblock interessant
-        if ([creatingGraphic isEditable]) {
+        if (creatingGraphic.editable) {
             [self startEditingGraphic:creatingGraphic withEvent:nil ];
         }
         
@@ -963,8 +963,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //moving the cursor
     NSPoint mainCursor = self.currentCursorPosition;
     NSPoint tempCursor = mainCursor;
-    int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
-    NSRect glyphBounds = [creatingGraphic bounds];
+    int wd = [WritingDirectionController sharedWritingDirectionController].writingDirection;
+    NSRect glyphBounds = creatingGraphic.bounds;
     
     if (wd == upToDown | wd == upToDownMirr | wd == upToDownVert | wd == upToDownVertMirr)
     {
@@ -1142,7 +1142,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     }
     //Gruppen sind 1-4 Zeichen
     
-    int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
+    int wd = [WritingDirectionController sharedWritingDirectionController].writingDirection;
     
     if (wd == leftToRight)
     {
@@ -1432,11 +1432,11 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     int i;
     float x, y; //meine neuen x und y koordinaten
-    float fontSize = [[FormatGlyphController sharedFormatGlyphController] fontSize];
+    float fontSize = [FormatGlyphController sharedFormatGlyphController].fontSize;
     NSSize groupBoundsSize = NSMakeSize(0.88085938 * fontSize, 0.87988275 * fontSize);
     NSRect glyphGroupBounds = NSZeroRect;
     
-    IGDrawDocument *document = [self drawDocument];
+    IGDrawDocument *document = self.drawDocument;
     
     NSEnumerator *enumerator = [glyphGroupDic keyEnumerator];
     id key;
@@ -1450,7 +1450,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         //NSLog(@"IGGraphicView(createGraphicsOfClassGlyphFromADic) nach init -> %@", _creatingGraphic);
         if ([creatingGraphic createGlyph:glyphUniChar withFont:fontName inView:self]) {
             //NSLog(@"IGGraphicView(createGraphicsOfClassGlyphFromArray) nach createGlyph -> %@", _creatingGraphic);
-            glyphBounds = [creatingGraphic bounds]; //dies muss ich nun anpassen so das sie in der groupBounds an der richtigen Stelle liegt
+            glyphBounds = creatingGraphic.bounds; //dies muss ich nun anpassen so das sie in der groupBounds an der richtigen Stelle liegt
             
             int temp = [key intValue];
             switch (temp)
@@ -1462,7 +1462,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1473,7 +1473,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1484,7 +1484,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - groupBoundsSize.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1495,7 +1495,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1506,7 +1506,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1517,7 +1517,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - (groupBoundsSize.height - glyphBounds.size.height) * 0.5 - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1528,7 +1528,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1539,7 +1539,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
@@ -1550,17 +1550,17 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     y = mainCursor.y - glyphBounds.size.height;
                     
                     glyphBounds.origin = NSMakePoint(x,y);
-                    [creatingGraphic setBounds:glyphBounds];
+                    creatingGraphic.bounds = glyphBounds;
                     
                     break;
                     
             }
             //damite der cursor nacher richtig verschoben werden kann.
             glyphGroupBounds = NSUnionRect(glyphGroupBounds, glyphBounds);
-            if (NSPointInRect([_creatingGraphic bounds].origin, [self pageHeaderRect])) {
-                [creatingGraphic setPageNr:0]; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
+            if (NSPointInRect(_creatingGraphic.bounds.origin, self.pageHeaderRect)) {
+                creatingGraphic.pageNr = 0; //falls die Glyphe im Headerteil erstellt wurde, wird sie automatisch in die Headerseite eingefügt
             } else {
-                [creatingGraphic setPageNr:self.currentPage]; //ansonsten ganz normal
+                creatingGraphic.pageNr = self.currentPage; //ansonsten ganz normal
             }
             [document insertGraphic:_creatingGraphic atIndex:0];
             [document.undoManager setActionName:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Create %@", @"UndoStrings", @"Action name for newly created graphics.  Class name is inserted at the substitution."), [[NSBundle mainBundle] localizedStringForKey:@"IGGlyph" value:@"" table:@"GraphicClassNames"]]];
@@ -1570,7 +1570,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     
     //moving the cursor
-    int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
+    int wd = [WritingDirectionController sharedWritingDirectionController].writingDirection;
     
     if (wd == upToDown | wd == upToDownMirr | wd == upToDownVert | wd == upToDownVertMirr)
     {
@@ -1638,13 +1638,13 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)trackKnob:(int)knob ofGraphic:(IGGraphic *)graphic withEvent:(NSEvent *)theEvent {
     NSPoint point;
-    BOOL snapsToGrid = [self snapsToGrid];
-    float spacing = [self gridSpacing];
+    BOOL snapsToGrid = self.snapsToGrid;
+    float spacing = self.gridSpacing;
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
     
     [graphic startBoundsManipulation];
     if (echoToRulers) {
-        [self beginEchoingMoveToRulers:[graphic bounds]];
+        [self beginEchoingMoveToRulers:graphic.bounds];
     }
     while (1) {
         theEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
@@ -1657,7 +1657,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         knob = [graphic resizeByMovingKnob:knob toPoint:point];
         [self invalidateGraphic:graphic];
         if (echoToRulers) {
-            [self continueEchoingMoveToRulers:[graphic bounds]];
+            [self continueEchoingMoveToRulers:graphic.bounds];
         }
         if (theEvent.type == NSLeftMouseUp) {
             break;
@@ -1669,7 +1669,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     [graphic stopBoundsManipulation];
     
-    [[self drawDocument].undoManager setActionName:NSLocalizedStringFromTable(@"Resize", @"UndoStrings", @"Action name for resizes.")];
+    [self.drawDocument.undoManager setActionName:NSLocalizedStringFromTable(@"Resize", @"UndoStrings", @"Action name for resizes.")];
 }
 
 - (void)rubberbandSelectWithEvent:(NSEvent *)theEvent {
@@ -1730,8 +1730,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     BOOL didMove = NO, isMoving = NO;
     NSPoint selPointOffset = NSZeroPoint;
     NSPoint boundsOrigin;
-    BOOL snapsToGrid = [self snapsToGrid];
-    float spacing = [self gridSpacing];
+    BOOL snapsToGrid = self.snapsToGrid;
+    float spacing = self.gridSpacing;
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
     //++NSRect selBounds = NSMakeRect(self.currentCursorPosition.x, self.currentCursorPosition.y, 0, 0);
     NSPoint selPoint = self.currentCursorPosition;
@@ -1740,7 +1740,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //wenn ctrl gedrückt, kann ich den cursor in alle richtungen verschieben
     BOOL ctrlKeyDown = ((theEvent.modifierFlags & NSControlKeyMask) ? YES : NO);
     
-    int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
+    int wd = [WritingDirectionController sharedWritingDirectionController].writingDirection;
     
     if (snapsToGrid || echoToRulers) {
         //++selOriginOffset = NSMakePoint((lastPoint.x - selBounds.origin.x), (lastPoint.y - selBounds.origin.y));
@@ -1803,16 +1803,16 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)moveSelectedGraphicsWithEvent:(NSEvent *)theEvent {
     NSPoint lastPoint, curPoint;
-    NSArray *selGraphics = [self selectedGraphics];
+    NSArray *selGraphics = self.selectedGraphics;
     NSUInteger i, c;
     IGGraphic *graphic;
     BOOL didMove = NO, isMoving = NO;
     NSPoint selOriginOffset = NSZeroPoint;
     NSPoint boundsOrigin;
-    BOOL snapsToGrid = [self snapsToGrid];
-    float spacing = [self gridSpacing];
+    BOOL snapsToGrid = self.snapsToGrid;
+    float spacing = self.gridSpacing;
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
-    NSRect selBounds = [[self drawDocument] boundsForGraphics:selGraphics];
+    NSRect selBounds = [self.drawDocument boundsForGraphics:selGraphics];
     
     c = selGraphics.count;
     
@@ -1847,15 +1847,15 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                     graphic = selGraphics[i];
                     [self invalidateGraphic:graphic];
                     [graphic moveBy:NSMakePoint(curPoint.x - lastPoint.x, curPoint.y - lastPoint.y)];
-                    if (NSContainsRect([self pageHeaderSmalerRect],[graphic bounds]) || NSContainsRect([self pageFooterSmalerRect],[graphic bounds])) {
+                    if (NSContainsRect(self.pageHeaderSmalerRect,graphic.bounds) || NSContainsRect(self.pageFooterSmalerRect,graphic.bounds)) {
                         //if (NSPointInRect(NSMakePoint([graphic bounds].origin.x, [graphic bounds].origin.y + 5), [self pageHeaderRect])) {
-                        if ([graphic pageNr] != 0) {
-                            [[self drawDocument] moveGraphic:graphic toPage:0]; //falls die Glyphe in den Headerteil verschoben wurde, muss sie auch in die Headerpage verschoben werden
+                        if (graphic.pageNr != 0) {
+                            [self.drawDocument moveGraphic:graphic toPage:0]; //falls die Glyphe in den Headerteil verschoben wurde, muss sie auch in die Headerpage verschoben werden
                         }
-                    } else if (!NSContainsRect([self pageHeaderSmalerRect],[graphic bounds])  && !NSContainsRect([self pageFooterSmalerRect],[graphic bounds])) {
+                    } else if (!NSContainsRect(self.pageHeaderSmalerRect,graphic.bounds)  && !NSContainsRect(self.pageFooterSmalerRect,graphic.bounds)) {
                         //} else if (!NSPointInRect(NSMakePoint([graphic bounds].origin.x, [graphic bounds].origin.y + 5), [self pageHeaderRect])) {
-                        if ([graphic pageNr] != self.currentPage) {
-                            [[self drawDocument] moveGraphic:graphic toPage:self.currentPage]; //ansonsten müssen wir sie in die self.currentPage verschieben
+                        if (graphic.pageNr != self.currentPage) {
+                            [self.drawDocument moveGraphic:graphic toPage:self.currentPage]; //ansonsten müssen wir sie in die self.currentPage verschieben
                         }
                     }
                     
@@ -1867,11 +1867,11 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
                 }
                 //NSLog(@"moving graphics...koennte ich hier den cursor immer updaten?");
                 //um in der Statusleiste die Koordinaten wärend dem verschieben der Objekte anzeigen zu können
-                NSRect tmpRect = [[self drawDocument] drawingBoundsForGraphics:selGraphics];
+                NSRect tmpRect = [self.drawDocument drawingBoundsForGraphics:selGraphics];
                 tmpRect.origin.y += tmpRect.size.height;
                 tmpRect.origin.x += IG_HALF_HANDLE_WIDTH;
                 tmpRect.origin.y -= IG_HALF_HANDLE_WIDTH;
-                [[self drawWindowController] displayMousePos:tmpRect.origin];
+                [self.drawWindowController displayMousePos:tmpRect.origin];
                 
                 // Adjust the delta that is used for cascading pastes.  Pasting and then moving the pasted graphic is the way you determine the cascade delta for subsequent pastes.
                 _pasteCascadeDelta.x += (curPoint.x - lastPoint.x);
@@ -1893,7 +1893,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         
         if (didMove) {
             // Only if we really moved.
-            [[self drawDocument].undoManager setActionName:NSLocalizedStringFromTable(@"Move", @"UndoStrings", @"Action name for moves.")];
+            [self.drawDocument.undoManager setActionName:NSLocalizedStringFromTable(@"Move", @"UndoStrings", @"Action name for moves.")];
         }
     }
 }
@@ -1980,14 +1980,14 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //BOOL shiftKeyDown = (([theEvent modifierFlags] & NSShiftKeyMask) ? YES : NO);
     
     //passiert nur beim text object
-    if ([self editingGraphic]) {
+    if (self.editingGraphic) {
         [self endEditing];
     }
     //ist nur für das text objekt interessant da dieses nur editable ist
     if (theEvent.clickCount > 1) {
         NSPoint curPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
         IGGraphic *graphic = [self graphicUnderPoint:curPoint onPage:self.currentPage];
-        if (graphic && [graphic isEditable]) {
+        if (graphic && graphic.editable) {
             [self startEditingGraphic:graphic withEvent:theEvent];
             return;
         }
@@ -2058,7 +2058,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     //NSLog(@"IGGraphicView(mouseDown) -> rechts-click sollte es sein");
     NSPoint lastPoint;
     NSPoint selPointOffset = NSZeroPoint;
-    BOOL snapsToGrid = [self snapsToGrid];
+    BOOL snapsToGrid = self.snapsToGrid;
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
     
     NSPoint selPoint = self.currentCursorPosition;
@@ -2087,8 +2087,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     BOOL didMove = NO, isMoving = NO;
     NSPoint selPointOffset = NSZeroPoint;
     NSPoint boundsOrigin;
-    BOOL snapsToGrid = [self snapsToGrid];
-    float spacing = [self gridSpacing];
+    BOOL snapsToGrid = self.snapsToGrid;
+    float spacing = self.gridSpacing;
     BOOL echoToRulers = self.enclosingScrollView.rulersVisible;
     
     
@@ -2142,11 +2142,11 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     if (mousePos.x < 0.0f) mousePos.x = 0.0f;
     if (mousePos.y < 0.0f) mousePos.y = 0.0f;
-    if (mousePos.x > [self drawDocumentPaperSize].width) mousePos.x = [self drawDocumentPaperSize].width;
-    if (mousePos.y > [self drawDocumentPaperSize].height) mousePos.y = [self drawDocumentPaperSize].height;
+    if (mousePos.x > self.drawDocumentPaperSize.width) mousePos.x = self.drawDocumentPaperSize.width;
+    if (mousePos.y > self.drawDocumentPaperSize.height) mousePos.y = self.drawDocumentPaperSize.height;
     
     
-    [[self drawWindowController] displayMousePos:mousePos];
+    [self.drawWindowController displayMousePos:mousePos];
 }
 
 
@@ -2161,8 +2161,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSImage *contents = [[NSImage alloc] initWithPasteboard:pboard];
         if (contents) {
             IGImage *newImage = [[IGImage alloc] init];
-            [newImage setBounds:NSMakeRect(point.x, point.y - contents.size.height, contents.size.width, contents.size.height)];
-            [newImage setImage:contents];
+            newImage.bounds = NSMakeRect(point.x, point.y - contents.size.height, contents.size.width, contents.size.height);
+            newImage.image = contents;
             [self.drawDocument insertGraphic:newImage atIndex:0];
             [self clearSelection];
             [self selectGraphic:newImage];
@@ -2178,8 +2178,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSImage *contents = [[NSImage alloc] initWithContentsOfFile:filename];
         if (contents) {
             IGImage *newImage = [[IGImage alloc] init];
-            [newImage setBounds:NSMakeRect(point.x, point.y, contents.size.width, contents.size.height)];
-            [newImage setImage:contents];
+            newImage.bounds = NSMakeRect(point.x, point.y, contents.size.width, contents.size.height);
+            newImage.image = contents;
             [self.drawDocument insertGraphic:newImage atIndex:0];
             [self clearSelection];
             [self selectGraphic:newImage];
@@ -2240,8 +2240,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 // ========================== new row button =================================
 
 - (IBAction)newRowButtonAction:(id)sender {
-    float lineSpacing = [[self drawDocument] documentLineSpacing];
-    float fontSize = [[self drawDocument] documentFontSize];
+    float lineSpacing = self.drawDocument.documentLineSpacing;
+    float fontSize = self.drawDocument.documentFontSize;
     
     self.currentCursorPosition = NSMakePoint([self documentRectForPageNumber:0].origin.x + 10, self.currentCursorPosition.y + (lineSpacing * fontSize));
 }
@@ -2384,7 +2384,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 // ====================== ordering selection stuff ===========================
 
 - (void)changeColor:(id)sender {
-    NSArray *selGraphics = [self selectedGraphics];
+    NSArray *selGraphics = self.selectedGraphics;
     NSUInteger i, c = selGraphics.count;
     if (c > 0) {
         IGGraphic *curGraphic;
@@ -2400,8 +2400,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)selectAll:(id)sender {
-    NSMutableArray *graphics = [NSMutableArray arrayWithArray:[[self drawDocument] graphicsOnPage:self.currentPage]];
-    [graphics addObjectsFromArray:[[self drawDocument] graphicsOnPage:0]];
+    NSMutableArray *graphics = [NSMutableArray arrayWithArray:[self.drawDocument graphicsOnPage:self.currentPage]];
+    [graphics addObjectsFromArray:[self.drawDocument graphicsOnPage:0]];
     [self performSelector:@selector(selectGraphic:) withEachObjectInArray:graphics];
 }
 
@@ -2410,7 +2410,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)delete:(id)sender {
-    NSArray *selCopy = [[NSArray alloc] initWithArray:[self selectedGraphics]];
+    NSArray *selCopy = [[NSArray alloc] initWithArray:self.selectedGraphics];
     if (selCopy.count > 0) {
         [self.drawDocument performSelector:@selector(removeGraphic:) withEachObjectInArray:selCopy];
         [self.drawDocument.undoManager setActionName:NSLocalizedStringFromTable(@"Delete", @"UndoStrings", @"Action name for deletions.")];
@@ -2418,10 +2418,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)bringToFront:(id)sender {
-    NSArray *orderedSelection = [self orderedSelectedGraphics];
+    NSArray *orderedSelection = self.orderedSelectedGraphics;
     NSUInteger c = orderedSelection.count;
     if (c > 0) {
-        IGDrawDocument *document = [self drawDocument];
+        IGDrawDocument *document = self.drawDocument;
         while (c-- > 0) {
             [document moveGraphic:orderedSelection[c] toIndex:0];
         }
@@ -2430,7 +2430,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)sendToBack:(id)sender {
-    NSArray *orderedSelection = [self orderedSelectedGraphics];
+    NSArray *orderedSelection = self.orderedSelectedGraphics;
     NSUInteger i, c = orderedSelection.count;
     if (c > 0) {
         IGDrawDocument *document = self.drawDocument;
@@ -2443,7 +2443,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignLeftEdges:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2451,10 +2451,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (curBounds.origin.x != firstBounds.origin.x) {
                 curBounds.origin.x = firstBounds.origin.x;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Left Edges", @"UndoStrings", @"Action name for align left edges.")];
@@ -2462,7 +2462,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignRightEdges:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2470,10 +2470,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (NSMaxX(curBounds) != NSMaxX(firstBounds)) {
                 curBounds.origin.x = NSMaxX(firstBounds) - curBounds.size.width;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Right Edges", @"UndoStrings", @"Action name for align right edges.")];
@@ -2481,7 +2481,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignTopEdges:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2489,10 +2489,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (curBounds.origin.y != firstBounds.origin.y) {
                 curBounds.origin.y = firstBounds.origin.y;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Top Edges", @"UndoStrings", @"Action name for align top edges.")];
@@ -2500,7 +2500,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignBottomEdges:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2508,10 +2508,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (NSMaxY(curBounds) != NSMaxY(firstBounds)) {
                 curBounds.origin.y = NSMaxY(firstBounds) - curBounds.size.height;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Bottom Edges", @"UndoStrings", @"Action name for align bottom edges.")];
@@ -2519,7 +2519,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignHorizontalCenters:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2527,10 +2527,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (NSMidX(curBounds) != NSMidX(firstBounds)) {
                 curBounds.origin.x = NSMidX(firstBounds) - (curBounds.size.width / 2.0);
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Horizontal Centers", @"UndoStrings", @"Action name for align horizontal centers.")];
@@ -2538,7 +2538,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)alignVerticalCenters:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2546,10 +2546,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (NSMidY(curBounds) != NSMidY(firstBounds)) {
                 curBounds.origin.y = NSMidY(firstBounds) - (curBounds.size.height / 2.0);
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Align Vertical Centers", @"UndoStrings", @"Action name for align vertical centers.")];
@@ -2557,7 +2557,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)makeSameWidth:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2565,10 +2565,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (curBounds.size.width != firstBounds.size.width) {
                 curBounds.size.width = firstBounds.size.width;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
@@ -2576,7 +2576,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)makeSameHeight:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 1) {
         NSRect firstBounds = [selection[0] bounds];
@@ -2584,10 +2584,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         NSRect curBounds;
         for (i=1; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             if (curBounds.size.height != firstBounds.size.height) {
                 curBounds.size.height = firstBounds.size.height;
-                [curGraphic setBounds:curBounds];
+                curGraphic.bounds = curBounds;
             }
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Same Width", @"UndoStrings", @"Action name for make same width.")];
@@ -2595,7 +2595,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (IBAction)makeNaturalSize:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     if (selection.count > 0) {
         [selection makeObjectsPerformSelector:@selector(makeNaturalSize)];
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Make Natural Size", @"UndoStrings", @"Action name for natural size.")];
@@ -2612,14 +2612,14 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     SEL action = item.action;
     
     if (action == @selector(snapsToGridMenuAction:)) {
-        item.state = ([self snapsToGrid] ? NSOnState : NSOffState);
+        item.state = (self.snapsToGrid ? NSOnState : NSOffState);
         return YES;
     } else if (action == @selector(showsGridMenuAction:)) {
-        item.state = ([self showsGrid] ? NSOnState : NSOffState);
+        item.state = (self.showsGrid ? NSOnState : NSOffState);
         return YES;
     } else if (action == @selector(makeNaturalSize:)) {
         // Return YES if we have at least one selected graphic that has a natural size.
-        NSArray *selectedGraphics = [self selectedGraphics];
+        NSArray *selectedGraphics = self.selectedGraphics;
         NSUInteger i, c = selectedGraphics.count;
         if (c > 0) {
             for (i=0; i<c; i++) {
@@ -2631,17 +2631,17 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         return NO;
     } else if ((action == @selector(gridSelectedGraphicsAction:)) || (action == @selector(delete:)) || (action == @selector(bringToFront:)) || (action == @selector(sendToBack:)) || (action == @selector(cut:)) || (action == @selector(copy:))) {
         // These only apply if there is a selection
-        return (([self selectedGraphics].count > 0) ? YES : NO);
+        return ((self.selectedGraphics.count > 0) ? YES : NO);
     } else if ((action == @selector(alignLeftEdges:)) || (action == @selector(alignRightEdges:)) || (action == @selector(alignTopEdges:)) || (action == @selector(alignBottomEdges:)) || (action == @selector(alignHorizontalCenters:)) || (action == @selector(alignVerticalCenters:)) || (action == @selector(alignTextBaselines:)) || (action == @selector(makeSameWidth:)) || (action == @selector(makeSameHeight:))) {
         // These only apply to multiple selection
-        return (([self selectedGraphics].count > 1) ? YES : NO);
+        return ((self.selectedGraphics.count > 1) ? YES : NO);
     } else {
         return YES;
     }
 }
 
 - (IBAction)copy:(id)sender {
-    NSArray *orderedSelection = [self orderedSelectedGraphics];
+    NSArray *orderedSelection = self.orderedSelectedGraphics;
     if (orderedSelection.count > 0)
     {
         int i;
@@ -2650,7 +2650,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
             NSLog(@"IGGraphicView(copy) -> %@", orderedSelection[i]);
         }
         
-        IGDrawDocument *document = [self drawDocument];
+        IGDrawDocument *document = self.drawDocument;
         NSPasteboard *generalPBoard = [NSPasteboard generalPasteboard];
         NSPasteboard *privatePBoard = [NSPasteboard pasteboardWithName:@"IGGlyphPasteboard"];
         
@@ -2700,7 +2700,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     if (privateType) {
         if ([privateType isEqualToString:IGDrawDocumentType]) {
-            IGDrawDocument *document = [self drawDocument];
+            IGDrawDocument *document = self.drawDocument;
             NSDictionary *docDict = [document drawDocumentDictionaryFromData:[privatePBoard dataForType:privateType]];
             NSArray *array = [document graphicsFromDrawDocumentDictionarySinglePage:docDict];
             
@@ -2747,8 +2747,8 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (IBAction)duplicateSelection:(id)sender {
     
-    NSArray *orderedSelection = [self orderedSelectedGraphics];
-    IGDrawDocument *document = [self drawDocument];
+    NSArray *orderedSelection = self.orderedSelectedGraphics;
+    IGDrawDocument *document = self.drawDocument;
     NSPasteboard *pboard = [NSPasteboard generalPasteboard];
     
     if (orderedSelection.count > 0)
@@ -2822,18 +2822,18 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     }
     _unhideKnobsTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(unhideKnobs:) userInfo:nil repeats:NO];
     _gvFlags.knobsHidden = YES;
-    [self invalidateGraphics:[self selectedGraphics]];
+    [self invalidateGraphics:self.selectedGraphics];
 }
 
 - (void)unhideKnobs:(NSTimer *)timer {
     _gvFlags.knobsHidden = NO;
-    [self invalidateGraphics:[self selectedGraphics]];
+    [self invalidateGraphics:self.selectedGraphics];
     [_unhideKnobsTimer invalidate];
     _unhideKnobsTimer = nil;
 }
 
 - (void)moveSelectedGraphicsByPoint:(NSPoint)delta {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 0) {
         [self hideKnobsMomentarily];
@@ -2862,22 +2862,22 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)moveForwardAndModifySelection:(id)sender {
     // We will use this to move by the grid spacing.
-    [self moveSelectedGraphicsByPoint:NSMakePoint([self gridSpacing], 0.0)];
+    [self moveSelectedGraphicsByPoint:NSMakePoint(self.gridSpacing, 0.0)];
 }
 
 - (void)moveBackwardAndModifySelection:(id)sender {
     // We will use this to move by the grid spacing.
-    [self moveSelectedGraphicsByPoint:NSMakePoint(-[self gridSpacing], 0.0)];
+    [self moveSelectedGraphicsByPoint:NSMakePoint(-self.gridSpacing, 0.0)];
 }
 
 - (void)moveUpAndModifySelection:(id)sender {
     // We will use this to move by the grid spacing.
-    [self moveSelectedGraphicsByPoint:NSMakePoint(0.0, -[self gridSpacing])];
+    [self moveSelectedGraphicsByPoint:NSMakePoint(0.0, -self.gridSpacing)];
 }
 
 - (void)moveDownAndModifySelection:(id)sender {
     // We will use this to move by the grid spacing.
-    [self moveSelectedGraphicsByPoint:NSMakePoint(0.0, [self gridSpacing])];
+    [self moveSelectedGraphicsByPoint:NSMakePoint(0.0, self.gridSpacing)];
 }
 
 - (void)deleteForward:(id)sender {
@@ -2894,29 +2894,29 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 // ============================= grid stuff ==================================
 
 - (IBAction)snapsToGridMenuAction:(id)sender {
-    [self setSnapsToGrid:([sender state] ? NO : YES)];
+    self.snapsToGrid = ([sender state] ? NO : YES);
     // Menu item will get state fixed up in validateMenuItem:
     //[[PreferencesController sharedPreferencesController] updatePanel];
 }
 
 - (IBAction)showsGridMenuAction:(id)sender {
-    [self setShowsGrid:([sender state] ? NO : YES)];
+    self.showsGrid = ([sender state] ? NO : YES);
     // Menu item will get state fixed up in validateMenuItem:
     //[[PreferencesController sharedPreferencesController] updatePanel];
 }
 
 - (IBAction)gridSelectedGraphicsAction:(id)sender {
-    NSArray *selection = [self selectedGraphics];
+    NSArray *selection = self.selectedGraphics;
     NSUInteger i, c = selection.count;
     if (c > 0) {
         IGGraphic *curGraphic;
         NSRect curBounds;
         NSPoint curMaxPoint;
-        float spacing = [self gridSpacing];
+        float spacing = self.gridSpacing;
         
         for (i=0; i<c; i++) {
             curGraphic = selection[i];
-            curBounds = [curGraphic bounds];
+            curBounds = curGraphic.bounds;
             curMaxPoint = NSMakePoint(NSMaxX(curBounds), NSMaxY(curBounds));
             curBounds.origin.x = floor((curBounds.origin.x / spacing) + 0.5) * spacing;
             curBounds.origin.y = floor((curBounds.origin.y / spacing) + 0.5) * spacing;
@@ -2924,7 +2924,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
             curMaxPoint.y = floor((curMaxPoint.y / spacing) + 0.5) * spacing;
             curBounds.size.width = curMaxPoint.x - curBounds.origin.x;
             curBounds.size.height = curMaxPoint.y - curBounds.origin.y;
-            [curGraphic setBounds:curBounds];
+            curGraphic.bounds = curBounds;
         }
         [self.undoManager setActionName:NSLocalizedStringFromTable(@"Grid Selected Graphics", @"UndoStrings", @"Action name for grid selected graphics.")];
     }
@@ -3043,14 +3043,14 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 }
 
 - (NSUInteger)pageCount {
-    return [[self drawDocument] pageCount];
+    return self.drawDocument.pageCount;
 }
 
 
 - (IBAction)pageDown:(id)sender
 {
     NSView *senderView = sender;
-    if ([senderView tag] == 19 && self.currentPage > 1)
+    if (senderView.tag == 19 && self.currentPage > 1)
     {
         NSLog(@"pageDown to first page");
         self.currentPage = 1;
@@ -3059,7 +3059,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         [self updateCurrentPageField];
         [self setNeedsDisplay:YES];
         
-    } else if ([senderView tag] == 11 && self.currentPage > 1) {
+    } else if (senderView.tag == 11 && self.currentPage > 1) {
         
         NSLog(@"pageDown one page");
         self.currentPage--;
@@ -3073,10 +3073,10 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (IBAction)pageUp:(id)sender
 {
-    NSInteger pageCount = [self pageCount];
+    NSInteger pageCount = self.pageCount;
     
     NSView *senderView = sender;
-    if ([senderView tag] == 29 && self.currentPage < pageCount)
+    if (senderView.tag == 29 && self.currentPage < pageCount)
     {
         NSLog(@"pageUp to last page");
         self.currentPage = pageCount;
@@ -3085,7 +3085,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
         [self updateCurrentPageField];
         [self setNeedsDisplay:YES];
         
-    } else if ([senderView tag] == 21 && self.currentPage < pageCount) {
+    } else if (senderView.tag == 21 && self.currentPage < pageCount) {
         
         NSLog(@"pageUp one page");
         self.currentPage++;
@@ -3102,7 +3102,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     NSLog(@"insertPageBeforeThisOne:");
     //[pageArr insertObject:[[NSMutableArray alloc] init] atIndex:(pageToDisplayRange.location -1)];
-    [[self drawDocument] insertPageAtPage:(int)self.currentPage];
+    [self.drawDocument insertPageAtPage:(int)self.currentPage];
     [self clearSelection];
     [self updateCurrentPageField];
     [self setNeedsDisplay:YES];
@@ -3114,9 +3114,9 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     NSLog(@"appendPageToEnd:");
     //[pageArr addObject:[[NSMutableArray alloc] init]];
-    self.currentPage = [self pageCount];
-    [[self drawDocument] insertPageAtPage:self.currentPage];
-    self.currentPage = [self pageCount];
+    self.currentPage = self.pageCount;
+    [self.drawDocument insertPageAtPage:self.currentPage];
+    self.currentPage = self.pageCount;
     [self clearSelection];
     [self updateCurrentPageField];
     [self setNeedsDisplay:YES];
@@ -3129,11 +3129,11 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
     
     NSLog(@"deleteCurrentPage:");
     
-    if ([self pageCount] > 1 && [self pageCount] == self.currentPage) { //mehr als eine Seite und ich befinde mich auf der letzten
-        [[self drawDocument] removePage:self.currentPage];
+    if (self.pageCount > 1 && self.pageCount == self.currentPage) { //mehr als eine Seite und ich befinde mich auf der letzten
+        [self.drawDocument removePage:self.currentPage];
         self.currentPage--;
     } else {//eine oder mehr Seiten und ich befinde mich NICHT auf der letzten
-        [[self drawDocument] removePage:self.currentPage];
+        [self.drawDocument removePage:self.currentPage];
     }
     [self clearSelection];
     [self updateCurrentPageField];
@@ -3143,7 +3143,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 - (IBAction)goToPage:(id)sender
 {
     int page = [sender intValue];
-    if ((page == 0) || (page > [self pageCount])) {
+    if ((page == 0) || (page > self.pageCount)) {
         NSBeep();
     } else {
         self.currentPage = page;
@@ -3156,7 +3156,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 
 - (void)updateCurrentPageField {
     
-    currentPageField.stringValue = [[NSString alloc] initWithFormat:@"%ld of %ld", (long)self.currentPage, (long)[self pageCount]];
+    currentPageField.stringValue = [[NSString alloc] initWithFormat:@"%ld of %ld", (long)self.currentPage, (long)self.pageCount];
 }
 
 
@@ -3167,7 +3167,7 @@ static int IG_orderGraphicsFrontToBack(IGGraphic *graphic1, IGGraphic *graphic2,
 // ========================= Selection Printing ==============================
 
 - (IBAction)printSelection:(id)sender {
-    [[self drawDocument] printSelection:[self selectedGraphics]];
+    [self.drawDocument printSelection:self.selectedGraphics];
 }
 
 @end

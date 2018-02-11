@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class IGDrawWindowController;
+@class IGDocumentWindowController;
 @class IGDrawDocument;
 @class IGGraphic;
 @class IGGlyph;
@@ -38,7 +38,7 @@ enum {
     NSUInteger currentPage;
     
     @private
-    IBOutlet IGDrawWindowController *controller;
+    IBOutlet IGDocumentWindowController *controller;
     IBOutlet NSPopUpButton *zoomButton;
     IBOutlet NSTextField *currentPageField;
     
@@ -101,7 +101,7 @@ enum {
 
 
 // IGDrawWindowController accessors and convenience methods
-@property (NS_NONATOMIC_IOSONLY, strong) IGDrawWindowController *drawWindowController;
+@property (NS_NONATOMIC_IOSONLY, strong) IGDocumentWindowController *drawWindowController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawDocument *drawDocument;
 - (NSArray *)graphicsOnPage:(NSUInteger)pageNr;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSSize drawDocumentSize;

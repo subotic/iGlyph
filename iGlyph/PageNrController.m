@@ -7,7 +7,7 @@
 //
 
 #import "PageNrController.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGDrawDocument.h"
 
 
@@ -65,9 +65,9 @@
 - (void)setMainWindow:(NSWindow *)mainWindow {
     NSWindowController *controller = mainWindow.windowController;
     
-    if (controller && [controller isKindOfClass:[IGDrawWindowController class]]) {
-        _inspectingGraphicView = ((IGDrawWindowController *)controller).graphicView;
-        _drawDocument = ((IGDrawWindowController *)controller).document;
+    if (controller && [controller isKindOfClass:[IGDocumentWindowController class]]) {
+        _inspectingGraphicView = ((IGDocumentWindowController *)controller).graphicView;
+        _drawDocument = ((IGDocumentWindowController *)controller).document;
     } else {
         _inspectingGraphicView = nil;
         _drawDocument = nil;
@@ -195,7 +195,7 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
 
     if (_drawDocument) {
         DDLogVerbose(@"PageNrController()");
-        _drawDocument.pageNrPosition = [[sndr selectedCell] tag];
+        _drawDocument.pageNrPosition = sndr.selectedCell.tag;
         [_inspectingGraphicView setNeedsDisplay:YES];
     }
 }
@@ -223,15 +223,15 @@ int myStringSort(NSString *string1, NSString *string2, void *context) {
     NSMatrix *sndr = (NSMatrix *)sender;
 
     if (_drawDocument) {
-        if ([[sndr selectedCell] tag] == 1) {
+        if (sndr.selectedCell.tag == 1) {
             [_drawDocument finetuneYParameter:-0.4];
-        } else if ([[sndr selectedCell] tag] == 3) {
+        } else if (sndr.selectedCell.tag == 3) {
             [_drawDocument finetuneXParameter:-0.4];
-        } else if ([[sndr selectedCell] tag] == 4) {
+        } else if (sndr.selectedCell.tag == 4) {
             [_drawDocument finetuneReset];
-        } else if ([[sndr selectedCell] tag] == 5) {
+        } else if (sndr.selectedCell.tag == 5) {
             [_drawDocument finetuneXParameter:0.4];
-        } else if ([[sndr selectedCell] tag] == 7) {
+        } else if (sndr.selectedCell.tag == 7) {
             [_drawDocument finetuneYParameter:0.4];
         }
         [_inspectingGraphicView setNeedsDisplay:YES];

@@ -16,7 +16,7 @@
 #import "IGlyphDelegate.h"
 #import "IGGraphicView.h"
 #import "IGGraphic.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGLine.h"
 
 
@@ -60,18 +60,18 @@
 - (void)awakeFromNib
 {
     
-    [self setLineType: 0];
-    [self setLineWidth: 1];
+    self.lineType = 0;
+    self.lineWidth = 1;
     [self setRubricLine: NO];
     [self setArrowType: 0];
-    [self setArrowHead: 45.0];
-    [self setArrowHeadSize: 15.0];
+    self.arrowHeadAngle = 45.0;
+    self.arrowHeadSize = 15.0;
     
     _lineFlags.lineType = 0;
     _lineFlags.lineWidth = 1;
     _lineFlags.rubricLine = NO;
     _lineFlags.arrowType = 0;
-    _lineFlags.arrowHead = 45.0;
+    _lineFlags.arrowHeadAngle = 45.0;
     _lineFlags.arrowHeadSize = 15.0;
     
     [self convertToViewController];
@@ -87,7 +87,7 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     DDLogVerbose(@"(LineController.m)->Notification received - %@\n", notification.name);
-    IGlyphDelegate *delegate = (IGlyphDelegate *)[[NSApplication sharedApplication] delegate];
+    IGlyphDelegate *delegate = (IGlyphDelegate *)[NSApplication sharedApplication].delegate;
     [delegate resetMenuItemFlag:IGMenuLineTag];
 }
 
@@ -97,14 +97,14 @@
  */
 - (IBAction)lineTypeChange:(id)sender
 {
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
+    IGLine *selectedLine = self.theOnlySelectedLine;
     NSMatrix *_sender = (NSMatrix *)sender;
 
-    if (tmpLine) {
-        [[self theOnlySelectedLine] setLineType: [[_sender selectedCell] tag]];
+    if (selectedLine) {
+        selectedLine.lineType = _sender.selectedCell.tag;
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.lineType = [[_sender selectedCell] tag];
+        _lineFlags.lineType = _sender.selectedCell.tag;
     }
     
     //DDLogVerbose(@"LineController(lineTypeChange)->%i", _lineFlags.lineType);
@@ -119,13 +119,13 @@
 {
     NSMatrix *sndr = (NSMatrix *)sender;
 
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
-    if (tmpLine) {
+    IGLine *selectedLine = self.theOnlySelectedLine;
+    if (selectedLine) {
         DDLogVerbose(@"LineController(lineWidthChange)->%ld", (long)_lineFlags.lineWidth);
-        [[self theOnlySelectedLine] setLineWidth: [[sndr selectedCell] tag]];
+        selectedLine.lineWidth = sndr.selectedCell.tag;
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.lineWidth = [[sndr selectedCell] tag];
+        _lineFlags.lineWidth = sndr.selectedCell.tag;
     }
     
      
@@ -134,9 +134,9 @@
 
 - (IBAction)lineRubricChange:(id)sender
 {
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
-    if (tmpLine) {
-        [[self theOnlySelectedLine] setRubricLine: [sender state]];
+    IGLine *selectedLine = self.theOnlySelectedLine;
+    if (selectedLine) {
+        selectedLine.rubricLine = [sender state];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
         _lineFlags.rubricLine = [sender state];
@@ -150,52 +150,52 @@
 {
     NSMatrix *sndr = (NSMatrix *)sender;
 
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
-    if (tmpLine) {
-        [self theOnlySelectedLine].arrowType = [[sndr selectedCell] tag];
+    IGLine *selectedLine = self.theOnlySelectedLine;
+    if (selectedLine) {
+        selectedLine.arrowType = sndr.selectedCell.tag;
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
-        _lineFlags.arrowType = [[sndr selectedCell] tag];
+        _lineFlags.arrowType = sndr.selectedCell.tag;
     }
     
     //DDLogVerbose(@"LineController(arrowTypeChange)->%i", _lineFlags.arrowType);
     
 }
 
-- (IBAction)arrowHeadChange:(id)sender
+- (IBAction)arrowHeadAngleChange:(id)sender
 {
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
-    if (tmpLine) {
-        [[self theOnlySelectedLine] setArrowHead: [sender integerValue]];
+    IGLine *selectedLine = self.theOnlySelectedLine;
+    if (selectedLine) {
+        selectedLine.arrowHeadAngle = [sender integerValue];
         //[[self theKeyView] invalidateGraphic:tmpLine];
         DDLogVerbose(@"LineController(arrowHeadChange) - hier darf ich nicht sein fals das erste mal auf Linie geklickt");
     } else {
-        _lineFlags.arrowHead = [sender integerValue];
+        _lineFlags.arrowHeadAngle = [sender integerValue];
     }
     
-    //DDLogVerbose(@"LineController(arrowHeadChange)->%f", _lineFlags.arrowHead);
+    DDLogVerbose(@"LineController(arrowHeadAngleChange)->%ld", (long)_lineFlags.arrowHeadAngle);
     
 }
 
 - (IBAction)arrowHeadSizeChange:(id)sender
 {
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
-    if (tmpLine) {
-        [self theOnlySelectedLine].arrowHeadSize = [sender integerValue];
+    IGLine *selectedLine = self.theOnlySelectedLine;
+    if (selectedLine) {
+        selectedLine.arrowHeadSize = [sender integerValue];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     } else {
         _lineFlags.arrowHeadSize = [sender integerValue];
     }
     
-    //DDLogVerbose(@"LineController(arrowHeadSizeChange)->%f", _lineFlags.arrowHeadSize);
+    DDLogVerbose(@"LineController(arrowHeadSizeChange)->%ld", (long)_lineFlags.arrowHeadSize);
     
 }
 
 - (IBAction)doReverseArrow:(id)sender
 {
-    IGGraphic *tmpLine = [self theOnlySelectedLine];
+    IGGraphic *tmpLine = self.theOnlySelectedLine;
     if (tmpLine) {
-        [[self theOnlySelectedLine] doReverseArrow];
+        [self.theOnlySelectedLine doReverseArrow];
         //[[self theKeyView] invalidateGraphic:tmpLine];
     }        
 }
@@ -211,12 +211,12 @@
     return lineTypeMatrix.selectedCell.tag;
 }
 
-- (void)setLineWidth:(float)aWidth
+- (void)setLineWidth:(NSInteger)aWidth
 {
     [lineWidthMatrix selectCellWithTag:aWidth];
 }
 
-- (float)lineWidth
+- (NSInteger)lineWidth
 {
     return lineWidthMatrix.selectedCell.tag;
 }
@@ -241,12 +241,12 @@
     return arrowTypeMatrix.selectedCell.tag;
 }
 
-- (void)setArrowHead:(NSInteger)aHead
+- (void)setArrowHeadAngle:(NSInteger)aHead
 {
     arrowHeadSlider.integerValue = aHead;
 }
 
-- (NSInteger)arrowHead
+- (NSInteger)arrowHeadAngle
 {
     return arrowHeadSlider.integerValue;
 }
@@ -265,25 +265,25 @@
 - (void)showSelectedLineFormating
 {
     DDLogVerbose(@"LineControler(showSelectedLineFormating)");
-    [self setLineType:[[self theOnlySelectedLine] lineType]];
-    [self setLineWidth:[[self theOnlySelectedLine] lineWidth]];
-    [self setRubricLine:[[self theOnlySelectedLine] rubricLine]];
-    [self setArrowType:[self theOnlySelectedLine].arrowType];
-    [self setArrowHead:[[self theOnlySelectedLine] arrowHead]];
-    [self setArrowHeadSize:[self theOnlySelectedLine].arrowHeadSize];
+    self.lineType = self.theOnlySelectedLine.lineType;
+    self.lineWidth = self.theOnlySelectedLine.lineWidth;
+    self.rubricLine = self.theOnlySelectedLine.rubricLine;
+    self.arrowType = self.theOnlySelectedLine.arrowType;
+    self.arrowHeadAngle = self.theOnlySelectedLine.arrowHeadAngle;
+    self.arrowHeadSize = self.theOnlySelectedLine.arrowHeadSize;
         
 }
 
 - (void)restoreTmpFormating
 {
     DDLogVerbose(@"LineControler(restoreTmpFormating)");
-    [self setLineType: _lineFlags.lineType];
-    [self setLineWidth: _lineFlags.lineWidth];
-    [self setRubricLine: _lineFlags.rubricLine];
-    [self setArrowType: _lineFlags.arrowType];
-    [self setArrowHead: _lineFlags.arrowHead];
-    [self setArrowHeadSize: _lineFlags.arrowHeadSize];
-    [[self theMainView] invalidateGraphic:[self theOnlySelectedLine]];
+    self.lineType = _lineFlags.lineType;
+    self.lineWidth = _lineFlags.lineWidth;
+    self.rubricLine = _lineFlags.rubricLine;
+    self.arrowType = _lineFlags.arrowType;
+    self.arrowHeadAngle = _lineFlags.arrowHeadAngle;
+    self.arrowHeadSize = _lineFlags.arrowHeadSize;
+    [self.theMainView invalidateGraphic:self.theOnlySelectedLine];
 }
 
 
@@ -294,18 +294,19 @@
     return NSApp.mainWindow;
 }
 
-- (IGDrawWindowController *)theMainWindowController {
-    return [self theMainWindow].windowController;
+- (IGDocumentWindowController *)theMainWindowController {
+    return self.theMainWindow.windowController;
 }
 
 - (IGGraphicView *)theMainView {
-    return [[self theMainWindowController] graphicView];
+    return self.theMainWindowController.graphicView;
 }
 
-- (IGGraphic *)theOnlySelectedLine {
-    if ([[self theMainView] selectedGraphics].count == 1) {
-        if ([[[self theMainView] selectedGraphics][0] class] == [IGLine class]) {
-            return [[self theMainView] selectedGraphics][0];
+- (IGLine *)theOnlySelectedLine {
+    if (self.theMainView.selectedGraphics.count == 1) {
+        if ([self.theMainView.selectedGraphics[0] class] == [IGLine class]) {
+            IGLine *selectedLine = (IGLine *)self.theMainView.selectedGraphics[0];
+            return selectedLine;
         }
     }
     return nil;

@@ -16,7 +16,7 @@
 #import "IGlyphDelegate.h"
 #import "IGGraphicView.h"
 #import "IGGraphic.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGCartouche.h"
 
 @implementation CartoucheController
@@ -117,7 +117,7 @@
     IGCartouche *cartouche = self.theOnlySelectedCartouche;
     NSMatrix *_sender = (NSMatrix *)sender;
     if (cartouche) {
-        cartouche.endCartoucheAlignment = [[_sender selectedCell] tag];
+        cartouche.endCartoucheAlignment = _sender.selectedCell.tag;
         [self.theMainView invalidateGraphic:cartouche];
     }
 }
@@ -210,7 +210,7 @@
     return NSApp.mainWindow;
 }
 
-- (IGDrawWindowController *)theMainWindowController {
+- (IGDocumentWindowController *)theMainWindowController {
     return self.theMainWindow.windowController;
 }
 

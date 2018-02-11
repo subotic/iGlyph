@@ -64,7 +64,7 @@
     NSInteger c = [self columnAtPoint:clickAtPoint];
     NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
     
-    HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+    HieroglyphsController *delegate = (HieroglyphsController*)self.delegate;
     [delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
 }
 
@@ -78,7 +78,7 @@
         NSInteger c = [self columnAtPoint:clickAtPoint];
         NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
         
-        HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+        HieroglyphsController *delegate = (HieroglyphsController*)self.delegate;
         [delegate replaceSelectedGlyphWithThisOneAtRow:r andColumn:c];
         
     } else {
@@ -88,7 +88,7 @@
         NSInteger c = [self columnAtPoint:clickAtPoint];
         NSLog(@"IGHieroglyphsTableView(mouseDown) Row: %ld, Column: %ld", (long)r, (long)c);
         
-        HieroglyphsController *delegate = (HieroglyphsController*)[self delegate];
+        HieroglyphsController *delegate = (HieroglyphsController*)self.delegate;
         [delegate glyphClickedAtRow:r andColumn:c];
     }
 }

@@ -22,9 +22,9 @@
     if (self) {
         [self setDrawsStroke:NO];
         [self setDrawsFill:YES];
-        [self setFontName:@"none"];
-        [self setTheGlyph:0];
-        [self setGlyphASC:0];
+        self.fontName = @"none";
+        self.theGlyph = 0;
+        self.glyphASC = 0;
         self.fontSize = 25;
         //[self setRubricCartouche:NO];
         [self setMirrored:NO];
@@ -46,14 +46,14 @@
     id newObj = [super copy];
 
     // Document is not "copied".  The new graphic will need to be inserted into a document.
-    [newObj setFontName:[self fontName]];
-    [newObj setTheGlyph:[self theGlyph]];
-    [newObj setGlyphASC:[self glyphASC]];
-    [newObj setFontSize:[self fontSize]];
-    [newObj setRubricColor:[self rubricColor]];
+    [newObj setFontName:self.fontName];
+    [newObj setTheGlyph:self.theGlyph];
+    [newObj setGlyphASC:self.glyphASC];
+    [newObj setFontSize:self.fontSize];
+    [newObj setRubricColor:self.rubricColor];
     [newObj setMirrored:self.mirrored];
-    [newObj setAngle:[self angle]];
-    [newObj setGlyphBezPath:[self getOldGlyphBezPath]];
+    [newObj setAngle:self.angle];
+    [newObj setGlyphBezPath:self.oldGlyphBezPath];
 
     return newObj;
 }
@@ -65,11 +65,11 @@
     //Hier ist die Idee den bezierPath neu zu berechnen im Falle das sich die Glyphe geändert hat
     //Wenn sich nur die Position und die Farbe geändert haben, müssen wir nur den alten bezierPath inm
     //neuen bound zentrieren
-    if ([self bezPathShouldRecalculate] || ([self getOldGlyphBezPath] == nil)) {
-        glyphBezPath = [self glyphBezierPath];
+    if (self.bezPathShouldRecalculate || (self.oldGlyphBezPath == nil)) {
+        glyphBezPath = self.glyphBezierPath;
         //NSLog(@"IGGlyph(drawinView)->bezPathShouldRecalculate = YES");
     } else {
-        glyphBezPath = [self getOldGlyphBezPath];
+        glyphBezPath = self.oldGlyphBezPath;
         //NSLog(@"IGGlyph(drawinView)->bezPathShouldRecalculate = NO");
     }
     
@@ -79,7 +79,7 @@
     NSRect glyphBoundsRect = glyphBezPath.bounds;
     
     //origin der Bounds, sprich der Umrandung in die nacher die Glyphe dargestellt wird
-    NSPoint boundsOrigin = [self bounds].origin;
+    NSPoint boundsOrigin = self.bounds.origin;
     //NSLog(@"IGGlyph(drawInView) -> boundsOrigin x: %f, y: %f", boundsOrigin.x, boundsOrigin.y);
     
     //wir wollen den origin unten links haben!!!
@@ -96,7 +96,7 @@
     if (flag) {
         if ([view selectedGraphicCountOfClass:[self class]] == 1) {  //nur diese selected
             [self drawHandlesInView:view];
-            if ([self rubricColor]) {
+            if (self.rubricColor) {
                 self.fillColor = [NSColor redColor];
             } else {
                 self.fillColor = [NSColor blackColor];
@@ -106,7 +106,7 @@
             self.fillColor = [NSColor blueColor];
         }
     } else {
-        if ([self rubricColor]) {
+        if (self.rubricColor) {
             self.fillColor = [NSColor redColor];
         } else {
             self.fillColor = [NSColor blackColor];
@@ -131,7 +131,7 @@
 - (NSBezierPath *)glyphBezierPath {
     
     //Die ID der gesuchten Glyphe im Font
-    NSGlyph theGlyph = [self theGlyph];
+    NSGlyph theGlyph = self.theGlyph;
     
     //Erstellen einer Bezier Kurve mit der Glyphe dir wir darstellen wollen. Dazu brauchen wir die ID der Glyphe im Font
     //Sie Idee ist das ein bezierPath zu erstellen, welcher unabhängig ist vom Erstellungsort und der fill Farbe
@@ -139,7 +139,7 @@
     NSBezierPath *glyphBezPath = [NSBezierPath bezierPath];
     // [glyphBezPath setCachesBezierPath:YES];
     [glyphBezPath moveToPoint:NSMakePoint(0,0)];
-    [glyphBezPath appendBezierPathWithGlyph:theGlyph inFont:[self getFont:[self fontName] withSize:self.fontSize]];
+    [glyphBezPath appendBezierPathWithGlyph:theGlyph inFont:[self getFont:self.fontName withSize:self.fontSize]];
     
     //the glyph is still on the head
     //wir müssen ja jede Glyphe flippen da die NSView geflipped ist
@@ -164,7 +164,7 @@
     
     
     //Hier werden die alten Bounds and die veränderte Glyphe angepasst
-    NSRect newBounds = [self bounds];
+    NSRect newBounds = self.bounds;
     newBounds.size  = glyphBezPath.bounds.size;
     
     
@@ -180,7 +180,7 @@
     
     
     [self startBoundsManipulation];
-    [self setBounds:newBounds];
+    self.bounds = newBounds;
     //[self setBoundsDangerous:newBounds];
     [self stopBoundsManipulation];
     
@@ -191,9 +191,9 @@
 }
 
 - (BOOL)replaceGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName {
-    [self setFontName:fontName];
-    [self setTheGlyph:[self getTheGlyph:glyphUniChar forFont:fontName andSize:self.fontSize]]; //um zeit zu Sparen
-    [self setGlyphASC:(int)(glyphUniChar - 0xF000)];
+    self.fontName = fontName;
+    self.theGlyph = [self getTheGlyph:glyphUniChar forFont:fontName andSize:self.fontSize]; //um zeit zu Sparen
+    self.glyphASC = (int)(glyphUniChar - 0xF000);
     return YES;
 }
 
@@ -206,19 +206,19 @@
     //NSLog(@"IGGlyph(createGlyph) -> mainCursor x: %f, y: %f", mainCursor.x, mainCursor.y);
     //damit wir die Glyphe auch später (nach save/load, copy/paste, usw.) noch Zeichnen können, muss
     //das Object alle dafür nötigen Angaben in sich speichern.
-    [self setFontName:fontName];
-    self.fontSize = [[FormatGlyphController sharedFormatGlyphController] fontSize];
-    [self setRubricColor:[[FormatGlyphController sharedFormatGlyphController] rubricColor]];
-    self.mirrored = [[FormatGlyphController sharedFormatGlyphController] mirrored];
-    self.angle = [[FormatGlyphController sharedFormatGlyphController] angle];
-    [self setTheGlyph:[self getTheGlyph:glyphUniChar forFont:fontName andSize:self.fontSize]]; //um zeit zu Sparen
-    [self setGlyphASC:(int)(glyphUniChar - 0xF000)];
+    self.fontName = fontName;
+    self.fontSize = [FormatGlyphController sharedFormatGlyphController].fontSize;
+    self.rubricColor = [FormatGlyphController sharedFormatGlyphController].rubricColor;
+    self.mirrored = [FormatGlyphController sharedFormatGlyphController].mirrored;
+    self.angle = [FormatGlyphController sharedFormatGlyphController].angle;
+    self.theGlyph = [self getTheGlyph:glyphUniChar forFont:fontName andSize:self.fontSize]; //um zeit zu Sparen
+    self.glyphASC = (int)(glyphUniChar - 0xF000);
     //ich will nacher die bounds manipulieren aber nur bei neu erstellten glyphen
     //da ich auch glyphen die ich lade darstelle/erstelle, muss ich das unterscheiden können
     [self setGlyphIsCreating:YES];
     
     //Das erste Mal müssen wir die Glyphe erstellen und deren bezPath abspeichern
-    NSBezierPath *glyphBezPath = [self glyphBezierPath];
+    NSBezierPath *glyphBezPath = self.glyphBezierPath;
     [self setGlyphBezPath:glyphBezPath];
     
     //Abhängig in welche Richtung die Glyphe geschrieben wird, muss sie ein bisschen anders positioniert werden
@@ -228,7 +228,7 @@
     NSRect glyphBoundsRect = glyphBezPath.bounds;
     NSPoint tempCursor = mainCursor;
     
-    int wd = [[WritingDirectionController sharedWritingDirectionController] writingDirection];
+    int wd = [WritingDirectionController sharedWritingDirectionController].writingDirection;
     
     if (wd == upToDown | wd == upToDownMirr | wd == upToDownVert | wd == upToDownVertMirr)
     {
@@ -252,10 +252,10 @@
     
     [self startBoundsManipulation];
     //Achtung!!! Origin ist oben links
-    [self setBounds:NSMakeRect(tempCursor.x, tempCursor.y - glyphBoundsRect.size.height, glyphBoundsRect.size.width, glyphBoundsRect.size.height)];
+    self.bounds = NSMakeRect(tempCursor.x, tempCursor.y - glyphBoundsRect.size.height, glyphBoundsRect.size.width, glyphBoundsRect.size.height);
     [self stopBoundsManipulation];
     
-    NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
     if ((bounds.size.width > 0.0) || (bounds.size.height > 0.0)) {
         //NSLog(@"IGGlyph(createGlyph) -> BOUNDS abgefragt und OK: YES");
         //NSLog(@"IGGlyph(createGlyph) -> BOUNDS x: %f, y: %f, w: %f, h: %f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
@@ -284,13 +284,13 @@ NSString *IGAngleKey = @"Angle";
 
 
 - (NSMutableDictionary *)propertyListRepresentation {
-    NSMutableDictionary *dict = [super propertyListRepresentation];
+    NSMutableDictionary *dict = super.propertyListRepresentation;
     
-    dict[IGFontNameKey] = [self fontName];
-    dict[IGTheGlyphKey] = [NSString stringWithFormat:@"%i", [self theGlyph]];
-    dict[IGGlyphASCKey] = [NSString stringWithFormat:@"%i", [self glyphASC]];
+    dict[IGFontNameKey] = self.fontName;
+    dict[IGTheGlyphKey] = [NSString stringWithFormat:@"%i", self.theGlyph];
+    dict[IGGlyphASCKey] = [NSString stringWithFormat:@"%i", self.glyphASC];
     dict[IGFontSizeKey] = [NSString stringWithFormat:@"%ld", (long)self.fontSize];
-    dict[IGGlyphRubricColorKey] = ([self rubricColor] ? @"YES" : @"NO");
+    dict[IGGlyphRubricColorKey] = (self.rubricColor ? @"YES" : @"NO");
     dict[IGMirroredKey] = (self.mirrored ? @"YES" : @"NO");
     dict[IGAngleKey] = [NSString stringWithFormat:@"%ld", (long)self.angle];
     
@@ -304,15 +304,15 @@ NSString *IGAngleKey = @"Angle";
     
     obj = dict[IGFontNameKey];
     if (obj) {
-        [self setFontName:obj];
+        self.fontName = obj;
     }
     obj = dict[IGTheGlyphKey];
     if (obj) {
-        [self setTheGlyph:[obj intValue]];
+        self.theGlyph = [obj intValue];
     }
     obj = dict[IGGlyphASCKey];
     if (obj) {
-        [self setGlyphASC:[obj intValue]];
+        self.glyphASC = [obj intValue];
     }
     obj = dict[IGFontSizeKey];
     if (obj) {
@@ -320,7 +320,7 @@ NSString *IGAngleKey = @"Angle";
     }
     obj = dict[IGGlyphRubricColorKey];
     if (obj) {
-        [self setRubricColor:([obj isEqualToString:@"YES"] ? 1 : 0)];
+        self.rubricColor = ([obj isEqualToString:@"YES"] ? 1 : 0);
     }
     obj = dict[IGMirroredKey];
     if (obj) {
@@ -340,15 +340,15 @@ NSString *IGAngleKey = @"Angle";
     
     obj = dict[IGFontNameKey];
     if (obj) {
-        [self setFontName:obj];
+        self.fontName = obj;
     }
     obj = dict[IGTheGlyphKey];
     if (obj) {
-        [self setTheGlyph:[obj intValue]];
+        self.theGlyph = [obj intValue];
     }
     obj = dict[IGGlyphASCKey];
     if (obj) {
-        [self setGlyphASC:[obj intValue]];
+        self.glyphASC = [obj intValue];
     }
     obj = dict[IGFontSizeKey];
     if (obj) {
@@ -356,7 +356,7 @@ NSString *IGAngleKey = @"Angle";
     }
     obj = dict[IGGlyphRubricColorKey];
     if (obj) {
-        [self setRubricColor:([obj isEqualToString:@"YES"] ? 1 : 0)];
+        self.rubricColor = ([obj isEqualToString:@"YES"] ? 1 : 0);
     }
     obj = dict[IGMirroredKey];
     if (obj) {
@@ -369,11 +369,150 @@ NSString *IGAngleKey = @"Angle";
     
     //nun habe ich alle Werte an ihrem Ort. Jetzt muss ich theGlyph richtig berechnen,
     //da ich im Moment dort den ASC Wert habe
-    unichar tmpUnichar = [self glyphASC] + 0xF000;
-    [self setTheGlyph:[self getTheGlyph:tmpUnichar forFont:[self fontName] andSize:self.fontSize]];
+    unichar tmpUnichar = self.glyphASC + 0xF000;
+    self.theGlyph = [self getTheGlyph:tmpUnichar forFont:self.fontName andSize:self.fontSize];
     
     return;
 }
+
+
+- (BOOL)glyphIsCreating {
+    return _glyphIsCreating;
+}
+
+- (void)setGlyphIsCreating:(BOOL)state {
+    _glyphIsCreating = state;
+}
+
+- (void)setOldGlyphBoundsSize:(NSSize)size {
+    _oldGlyphBoundsSize = size;
+}
+
+//---------
+
+- (void)setBoundsDangerous:(NSRect)newBounds {
+    _bounds = newBounds;
+}
+
+//---------
+//damit nicht der bezPath immer neu erstellt werden muss; zBsp beim verschieben oder anderer Farbe
+
+- (NSBezierPath *)getOldGlyphBezPath {
+    return _theGlyphBezPath;
+}
+
+- (void)setGlyphBezPath:(NSBezierPath *)path {
+    _theGlyphBezPath = path;
+}
+
+//---------
+//gehört zur vorhergehenden Geschichte
+- (void)setGlypBezPathShouldRecalculate:(BOOL)flag {
+    _glyphBezPathShouldRecalculate = flag;
+}
+
+- (BOOL)bezPathShouldRecalculate {
+    return _glyphBezPathShouldRecalculate;
+}
+
+//---------
+
+- (NSString *)fontName {
+    return _fontName;
+}
+
+- (void)setFontName:(NSString *)fontName {
+    _fontName = fontName;
+    [self setGlypBezPathShouldRecalculate:YES];
+    [self didChange];
+}
+
+//---------
+
+- (int)glyphASC {
+    return _glyphASC;
+}
+
+- (void)setGlyphASC:(int)glyphASC {
+    _glyphASC = glyphASC;
+}
+
+
+//---------
+
+- (NSGlyph)theGlyph {
+    return _theGlyph;
+}
+
+- (void)setTheGlyph:(NSGlyph)theGlyph {
+    _theGlyph = theGlyph;
+}
+
+//---------
+
+- (NSInteger)fontSize {
+    return _glyphGraphicFlags.fontSize;
+}
+
+- (void)setFontSize:(NSInteger)size {
+    if (size) {
+        _glyphGraphicFlags.fontSize = size;
+    } else {
+        _glyphGraphicFlags.fontSize = 25;
+    }
+    [self setGlypBezPathShouldRecalculate:YES];
+    [self didChange];
+}
+
+//---------
+
+- (BOOL)rubricColor {
+    return _glyphGraphicFlags.rubricColor;
+}
+
+- (void)setRubricColor:(BOOL)value {
+    if (value) {
+        _glyphGraphicFlags.rubricColor = value;
+    } else {
+        _glyphGraphicFlags.rubricColor = NO;
+    }
+    [self setGlypBezPathShouldRecalculate:NO];
+    [self didChange];
+}
+
+//---------
+
+- (BOOL)mirrored {
+    return _glyphGraphicFlags.mirrored;
+}
+
+- (void)setMirrored:(BOOL)value {
+    if (value) {
+        _glyphGraphicFlags.mirrored = value;
+    } else {
+        _glyphGraphicFlags.mirrored = NO;
+    }
+    [self setGlypBezPathShouldRecalculate:YES];
+    [self didChange];
+}
+
+//---------
+
+- (NSInteger)angle {
+    return _glyphGraphicFlags.angle;
+}
+
+- (void)setAngle:(NSInteger)value {
+    if (value) {
+        _glyphGraphicFlags.angle = value;
+    } else {
+        _glyphGraphicFlags.angle = NO;
+    }
+    [self setGlypBezPathShouldRecalculate:YES];
+    [self didChange];
+}
+
+
 
 - (NSGlyph)getTheGlyph:(unichar)glyphUniChar forFont:(NSString *)fontName andSize:(float)size
 {

@@ -31,11 +31,6 @@ NSString *IGGlyphDidChangeNotification = @"IGGlyphDidChange";
   
   @synthesize fontSize;  //nur für Hieroglyphen
   @synthesize cartoucheOrientation; //nur für die Cartouche
-  
-  @synthesize arrowType; //0-kein, 1-eine Seite, 2-zwei Seiten
-  @synthesize arrowReversed;
-  @synthesize arrowHeadAngle;
-  @synthesize arrowHeadSize;
 
 #pragma mark -- init stuff --
 // =================================== Initialization ===================================
@@ -775,6 +770,7 @@ NSString *IGPageNum = @"PageNr";
     }
 }
 
+/*
 - (BOOL)replaceGlyph:(unichar)glyphUniChar withFont:(NSString *)fontName {
     //override by IGGlyph class
     return NO;
@@ -784,6 +780,7 @@ NSString *IGPageNum = @"PageNr";
     //override by IGGlyph class
     return NO;
 }
+*/
 
 - (BOOL)isEditable {
     return NO;
@@ -879,6 +876,7 @@ NSString *IGPageNum = @"PageNr";
 
 @end
 
+/*
 @implementation IGGraphic (IGGlyphExtraStuff)
 
 - (BOOL)glyphIsCreating {
@@ -1017,6 +1015,7 @@ NSString *IGPageNum = @"PageNr";
     [self didChange];
 }
 @end
+*/
 
 /*
 @implementation IGGraphic (IGCartoucheExtraStuff)
@@ -1069,6 +1068,7 @@ NSString *IGPageNum = @"PageNr";
 @end
 */
 
+/*
 @implementation IGGraphic (IGLineExtraStuff)
 
 - (NSInteger)lineType
@@ -1091,7 +1091,7 @@ NSString *IGPageNum = @"PageNr";
 - (void)setLineWidth:(NSInteger)value
 {
     _lineGraphicFlags.lineWidth = value;
-    NSLog(@"IGGraphic(setLineWidth)->%f", _lineGraphicFlags.lineWidth);
+    NSLog(@"IGGraphic(setLineWidth)->%ld", (long)_lineGraphicFlags.lineWidth);
     [self didChange];
 }
 
@@ -1157,4 +1157,4 @@ NSString *IGPageNum = @"PageNr";
 
 @end
 
-
+*/

@@ -223,7 +223,7 @@ NSString *IGPrefShowToolTipsKey = @"showToolTips";
 
 - (void)loadLocalFonts
 {
-    NSString *fontsFolder = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"IGFonts"];
+    NSString *fontsFolder = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"IGFonts"];
     NSError *error = nil;
     NSArray *fontNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fontsFolder error:&error];
     DDLogVerbose(@"loadLocalFonts - fontNames: %@", fontNames);

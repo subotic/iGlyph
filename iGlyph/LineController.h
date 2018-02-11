@@ -15,8 +15,9 @@
 #import <Cocoa/Cocoa.h>
 
 @class IGGraphicView;
-@class IGDrawWindowController;
+@class IGDocumentWindowController;
 @class IGGraphic;
+@class IGLine;
 
 @interface LineController : NSWindowController {
 
@@ -35,7 +36,7 @@
         NSInteger rubricLine:1;
         NSInteger lineWidth;
         NSInteger arrowType;
-        NSInteger arrowHead;
+        NSInteger arrowHeadAngle;
         NSInteger arrowHeadSize;
     } _lineFlags;
     
@@ -49,18 +50,15 @@
 - (IBAction)lineWidthChange:(id)sender;
 - (IBAction)lineRubricChange:(id)sender;
 - (IBAction)arrowTypeChange:(id)sender;
-- (IBAction)arrowHeadChange:(id)sender;
+- (IBAction)arrowHeadAngleChange:(id)sender;
 - (IBAction)arrowHeadSizeChange:(id)sender;
 - (IBAction)doReverseArrow:(id)sender;
 
 @property (NS_NONATOMIC_IOSONLY) NSInteger lineType;
-
-@property (NS_NONATOMIC_IOSONLY) float lineWidth;
-
+@property (NS_NONATOMIC_IOSONLY) NSInteger lineWidth;
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricLine;
-
-@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHead;
-
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowType;
+@property (NS_NONATOMIC_IOSONLY) NSInteger arrowHeadAngle;
 @property (NS_NONATOMIC_IOSONLY) NSInteger arrowHeadSize;
 
 
@@ -70,8 +68,8 @@
 
 
 //the key window stuff
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *theOnlySelectedLine;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGDocumentWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGLine *theOnlySelectedLine;
 @end

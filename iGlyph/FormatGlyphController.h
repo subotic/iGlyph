@@ -15,8 +15,9 @@
 #import <Cocoa/Cocoa.h>
 
 @class IGGraphicView;
-@class IGDrawWindowController;
+@class IGDocumentWindowController;
 @class IGGraphic;
+@class IGGlyph;
 
 
 @interface FormatGlyphController : NSWindowController {
@@ -76,9 +77,9 @@
 
 //key window stuff
 - (void)setMainWindowAsKey;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSWindow *theMainWindow;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGDrawWindowController *theMainWindowController;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphicView *theMainView;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) IGGraphic *theOnlySelectedGlyph;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) NSWindow *theMainWindow;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGDocumentWindowController *theMainWindowController;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGGraphicView *theMainView;
+@property (NS_NONATOMIC_IOSONLY, readonly, weak) IGGlyph *theOnlySelectedGlyph;
 
 @end

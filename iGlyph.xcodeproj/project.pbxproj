@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		328BCE87202D0B88002C83A2 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */; };
+		32729C93202F92030016626C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32729C92202F92030016626C /* AppDelegate.swift */; };
+		32729C94202F947A0016626C /* Pods_iGlyph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */; };
 		32C55048202CE60400EC9B16 /* iGlyphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C55047202CE60400EC9B16 /* iGlyphTests.m */; };
 		32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C55050202CF59200EC9B16 /* Cocoa.framework */; };
 		32E58EAF202CA69300946AF1 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 32E58EAE202CA69300946AF1 /* images */; };
@@ -27,7 +28,7 @@
 		4EB1F4F209864F5100D1533D /* IGlyphDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E573BE304FA61C300F265BD /* IGlyphDelegate.h */; };
 		4EB1F4F309864F5100D1533D /* IGGraphicView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF496E2050F5D010016C459 /* IGGraphicView.h */; };
 		4EB1F4F409864F5100D1533D /* IGFontData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E712BAD052195FB00BA812E /* IGFontData.h */; };
-		4EB1F4F509864F5100D1533D /* IGDrawWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EFBE44F0647B97900AEE351 /* IGDrawWindowController.h */; };
+		4EB1F4F509864F5100D1533D /* IGDocumentWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EFBE44F0647B97900AEE351 /* IGDocumentWindowController.h */; };
 		4EB1F4F609864F5100D1533D /* IGGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EFBE4540647C28A00AEE351 /* IGGraphic.h */; };
 		4EB1F4F709864F5100D1533D /* IGRectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EFBE4580647C38300AEE351 /* IGRectangle.h */; };
 		4EB1F4F809864F5100D1533D /* IGCircle.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EFBE45C0647C3E200AEE351 /* IGCircle.h */; };
@@ -60,7 +61,7 @@
 		4EB1F51509864F6800D1533D /* Tips.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D431051096F200F0D238 /* Tips.nib */; };
 		4EB1F51609864F6800D1533D /* WritingDirection.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E89D433051096FB00F0D238 /* WritingDirection.nib */; };
 		4EB1F51709864F6800D1533D /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4E2B4C6105109AD200666E8E /* MainMenu.nib */; };
-		4EB1F51809864F6800D1533D /* DrawWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4ED92DC5065225B000AB29F4 /* DrawWindow.nib */; };
+		4EB1F51809864F6800D1533D /* DocumentWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */; };
 		4EB1F51909864F6800D1533D /* PageNr.nib in Resources */ = {isa = PBXBuildFile; fileRef = 32ADB31F075E6C6E006329AC /* PageNr.nib */; };
 		4EB1F51B09864F6800D1533D /* IGFonts in Resources */ = {isa = PBXBuildFile; fileRef = 3226B91D07E9124E0069519A /* IGFonts */; };
 		4EB1F51C09864F6800D1533D /* IG_GlyphCodes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */; };
@@ -79,7 +80,7 @@
 		4EB1F55D09864F8700D1533D /* IGlyphDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */; };
 		4EB1F55E09864F8700D1533D /* IGGraphicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF496E3050F5D010016C459 /* IGGraphicView.m */; };
 		4EB1F55F09864F8700D1533D /* IGFontData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E712BAE052195FB00BA812E /* IGFontData.m */; };
-		4EB1F56009864F8700D1533D /* IGDrawWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBE4500647B97900AEE351 /* IGDrawWindowController.m */; };
+		4EB1F56009864F8700D1533D /* IGDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBE4500647B97900AEE351 /* IGDocumentWindowController.m */; };
 		4EB1F56109864F8700D1533D /* IGGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBE4550647C28A00AEE351 /* IGGraphic.m */; };
 		4EB1F56209864F8700D1533D /* IGRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBE4590647C38300AEE351 /* IGRectangle.m */; };
 		4EB1F56309864F8700D1533D /* IGCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBE45D0647C3E200AEE351 /* IGCircle.m */; };
@@ -103,7 +104,6 @@
 		4EB1F57509864F8700D1533D /* IGHieroglyphsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EED813606AD349D00ADEF7E /* IGHieroglyphsTableView.m */; };
 		4EB1F57609864F8700D1533D /* PageNrController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ADB326075E6CBD006329AC /* PageNrController.m */; };
 		4EB1F57909864F8700D1533D /* IGInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDE992087489D700104997 /* IGInspectorController.m */; };
-		72F85081EE2A32267F2843CA /* Pods_iGlyph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,7 +137,8 @@
 		3226B91D07E9124E0069519A /* IGFonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = IGFonts; path = iGlyph/IGFonts; sourceTree = "<group>"; };
 		3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = IG_GlyphCodes.txt; path = iGlyph/IG_GlyphCodes.txt; sourceTree = "<group>"; };
 		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
-		328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32729C91202F92020016626C /* iGlyph-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGlyph-Bridging-Header.h"; sourceTree = "<group>"; };
+		32729C92202F92030016626C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32ADB31D075E6C5D006329AC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/PageNr.nib; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
 		32ADB326075E6CBD006329AC /* PageNrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageNrController.m; path = iGlyph/PageNrController.m; sourceTree = "<group>"; };
@@ -153,7 +154,7 @@
 		32EDE992087489D700104997 /* IGInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGInspectorController.m; path = iGlyph/IGInspectorController.m; sourceTree = "<group>"; };
 		32EDE99808748A6E00104997 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/Inspector.nib; sourceTree = "<group>"; };
 		4E2B4C6205109AD200666E8E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		4E48DB120650E39100783CB1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/DrawWindow.nib; sourceTree = "<group>"; };
+		4E48DB120650E39100783CB1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = iGlyph/English.lproj/DocumentWindow.nib; sourceTree = "<group>"; };
 		4E573BA104FA608700F265BD /* CartoucheController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CartoucheController.h; path = iGlyph/CartoucheController.h; sourceTree = "<group>"; };
 		4E573BA204FA608700F265BD /* CartoucheController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CartoucheController.m; path = iGlyph/CartoucheController.m; sourceTree = "<group>"; };
 		4E573BA504FA608700F265BD /* FormatGlyphController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = FormatGlyphController.h; path = iGlyph/FormatGlyphController.h; sourceTree = "<group>"; };
@@ -199,8 +200,8 @@
 		4EED813606AD349D00ADEF7E /* IGHieroglyphsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGHieroglyphsTableView.m; path = iGlyph/IGHieroglyphsTableView.m; sourceTree = "<group>"; };
 		4EF496E2050F5D010016C459 /* IGGraphicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGGraphicView.h; path = iGlyph/IGGraphicView.h; sourceTree = "<group>"; };
 		4EF496E3050F5D010016C459 /* IGGraphicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGGraphicView.m; path = iGlyph/IGGraphicView.m; sourceTree = "<group>"; };
-		4EFBE44F0647B97900AEE351 /* IGDrawWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGDrawWindowController.h; path = iGlyph/IGDrawWindowController.h; sourceTree = "<group>"; };
-		4EFBE4500647B97900AEE351 /* IGDrawWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGDrawWindowController.m; path = iGlyph/IGDrawWindowController.m; sourceTree = "<group>"; };
+		4EFBE44F0647B97900AEE351 /* IGDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGDocumentWindowController.h; path = iGlyph/IGDocumentWindowController.h; sourceTree = "<group>"; };
+		4EFBE4500647B97900AEE351 /* IGDocumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGDocumentWindowController.m; path = iGlyph/IGDocumentWindowController.m; sourceTree = "<group>"; };
 		4EFBE4540647C28A00AEE351 /* IGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGGraphic.h; path = iGlyph/IGGraphic.h; sourceTree = "<group>"; };
 		4EFBE4550647C28A00AEE351 /* IGGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGGraphic.m; path = iGlyph/IGGraphic.m; sourceTree = "<group>"; };
 		4EFBE4580647C38300AEE351 /* IGRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGRectangle.h; path = iGlyph/IGRectangle.h; sourceTree = "<group>"; };
@@ -249,9 +250,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				328BCE87202D0B88002C83A2 /* CocoaLumberjack.framework in Frameworks */,
+				32729C94202F947A0016626C /* Pods_iGlyph.framework in Frameworks */,
 				32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */,
-				72F85081EE2A32267F2843CA /* Pods_iGlyph.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +331,6 @@
 		32C5504F202CF59100EC9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				328BCE88202D0B88002C83A2 /* CocoaLumberjack.framework */,
 				32C55050202CF59200EC9B16 /* Cocoa.framework */,
 				9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */,
 			);
@@ -341,8 +340,8 @@
 		4E573BC904FA60A500F265BD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4EFBE44F0647B97900AEE351 /* IGDrawWindowController.h */,
-				4EFBE4500647B97900AEE351 /* IGDrawWindowController.m */,
+				4EFBE44F0647B97900AEE351 /* IGDocumentWindowController.h */,
+				4EFBE4500647B97900AEE351 /* IGDocumentWindowController.m */,
 				4EFBE7B80649276D00AEE351 /* IGFoundationExtras.h */,
 				4EFBE7B90649276D00AEE351 /* IGFoundationExtras.m */,
 				32EDE991087489D700104997 /* IGInspectorController.h */,
@@ -385,6 +384,8 @@
 			children = (
 				4E573BE304FA61C300F265BD /* IGlyphDelegate.h */,
 				4E6D4F08050F338000EE12B7 /* IGlyphDelegate.m */,
+				32729C92202F92030016626C /* AppDelegate.swift */,
+				32729C91202F92020016626C /* iGlyph-Bridging-Header.h */,
 			);
 			name = "NSApp Delegate";
 			path = iGlyph;
@@ -418,7 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				4E2B4C6105109AD200666E8E /* MainMenu.nib */,
-				4ED92DC5065225B000AB29F4 /* DrawWindow.nib */,
+				4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -509,7 +510,7 @@
 				4EB1F4F209864F5100D1533D /* IGlyphDelegate.h in Headers */,
 				4EB1F4F309864F5100D1533D /* IGGraphicView.h in Headers */,
 				4EB1F4F409864F5100D1533D /* IGFontData.h in Headers */,
-				4EB1F4F509864F5100D1533D /* IGDrawWindowController.h in Headers */,
+				4EB1F4F509864F5100D1533D /* IGDocumentWindowController.h in Headers */,
 				4EB1F4F609864F5100D1533D /* IGGraphic.h in Headers */,
 				4EB1F4F709864F5100D1533D /* IGRectangle.h in Headers */,
 				4EB1F4F809864F5100D1533D /* IGCircle.h in Headers */,
@@ -594,6 +595,10 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 4EB1F4DF09864EBB00D1533D;
 					};
+					4EB1F4DF09864EBB00D1533D = {
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 4E1F7F0E0856E087007F166E /* Build configuration list for PBXProject "iGlyph" */;
@@ -636,7 +641,7 @@
 				4EB1F51509864F6800D1533D /* Tips.nib in Resources */,
 				4EB1F51609864F6800D1533D /* WritingDirection.nib in Resources */,
 				4EB1F51709864F6800D1533D /* MainMenu.nib in Resources */,
-				4EB1F51809864F6800D1533D /* DrawWindow.nib in Resources */,
+				4EB1F51809864F6800D1533D /* DocumentWindow.nib in Resources */,
 				4EB1F51909864F6800D1533D /* PageNr.nib in Resources */,
 				4EB1F51B09864F6800D1533D /* IGFonts in Resources */,
 				4EB1F51C09864F6800D1533D /* IG_GlyphCodes.txt in Resources */,
@@ -728,7 +733,7 @@
 				4EB1F55D09864F8700D1533D /* IGlyphDelegate.m in Sources */,
 				4EB1F55E09864F8700D1533D /* IGGraphicView.m in Sources */,
 				4EB1F55F09864F8700D1533D /* IGFontData.m in Sources */,
-				4EB1F56009864F8700D1533D /* IGDrawWindowController.m in Sources */,
+				4EB1F56009864F8700D1533D /* IGDocumentWindowController.m in Sources */,
 				4EB1F56109864F8700D1533D /* IGGraphic.m in Sources */,
 				4EB1F56209864F8700D1533D /* IGRectangle.m in Sources */,
 				4EB1F56309864F8700D1533D /* IGCircle.m in Sources */,
@@ -737,6 +742,7 @@
 				4EB1F56609864F8700D1533D /* IGCartouche.m in Sources */,
 				4EB1F56709864F8700D1533D /* IGPageNr.m in Sources */,
 				4EB1F56809864F8700D1533D /* IGRubric.m in Sources */,
+				32729C93202F92030016626C /* AppDelegate.swift in Sources */,
 				4EB1F56909864F8700D1533D /* IGDestroyed.m in Sources */,
 				4EB1F56A09864F8700D1533D /* IGArc.m in Sources */,
 				4EB1F56B09864F8700D1533D /* IGGlyph.m in Sources */,
@@ -864,12 +870,12 @@
 			name = Line.nib;
 			sourceTree = "<group>";
 		};
-		4ED92DC5065225B000AB29F4 /* DrawWindow.nib */ = {
+		4ED92DC5065225B000AB29F4 /* DocumentWindow.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4E48DB120650E39100783CB1 /* English */,
 			);
-			name = DrawWindow.nib;
+			name = DocumentWindow.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -878,6 +884,7 @@
 		32C5504D202CE60400EC9B16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -897,6 +904,7 @@
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_GC = unsuported;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -917,6 +925,7 @@
 		32C5504E202CE60400EC9B16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -936,6 +945,7 @@
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_ENABLE_OBJC_GC = unsuported;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = iGlyphTests/Info.plist;
@@ -991,7 +1001,10 @@
 			baseConfigurationReference = 32D11B46F2DC0892A0F0F74A /* Pods-iGlyph.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1010,9 +1023,14 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iGlyph/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.subotic.iGlyph;
 				PRODUCT_NAME = iGlyph;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1059,7 +1077,10 @@
 			baseConfigurationReference = 9B90BC13245B35BF9E8F43D6 /* Pods-iGlyph.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1073,9 +1094,14 @@
 				GCC_PREFIX_HEADER = iGlyph/IGlyph_Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/iGlyph/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.subotic.iGlyph;
 				PRODUCT_NAME = iGlyph;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

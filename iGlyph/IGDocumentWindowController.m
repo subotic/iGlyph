@@ -7,7 +7,7 @@
 //
 
 #import "IGDrawDocument.h"
-#import "IGDrawWindowController.h"
+#import "IGDocumentWindowController.h"
 #import "IGGraphicView.h"
 #import "IGBackgroundView.h"
 #import "ObjectsController.h"
@@ -33,10 +33,10 @@
 #define POINTS_PER_CENTIMETER 28.3464567
 #define MILLIMETERS_PER_INCH 25.4
 
-@implementation IGDrawWindowController
+@implementation IGDocumentWindowController
 
 - (instancetype)init {
-    self = [super initWithWindowNibName:@"DrawWindow"];
+    self = [super initWithWindowNibName:@"DocumentWindow"];
     NSLog(@"IGDrawWindowController(init)");
     return self;
 }
@@ -90,7 +90,7 @@
     //NSLog(@"IGDrawWindowController(setUpGraphicView) -> leftMargin: %f, rightMargin: %f, topMargin: %f, bottomMargin: %f, ", [printInfo leftMargin], [printInfo rightMargin], [printInfo topMargin], [printInfo bottomMargin]);
     
     [graphicView setFrameSize:paperSize];
-    [graphicView setNeedsDisplay:YES];
+    graphicView.needsDisplay = YES;
 }
 
 /*
@@ -162,6 +162,12 @@
     [self setUpGraphicView];
 }
 
+
+/**
+ Points to the graphicView, i.e. the DocumentView
+
+ @return IGGraphicView
+ */
 - (IGGraphicView *)graphicView {
     return graphicView;
 }
@@ -283,7 +289,7 @@
 - (IBAction)dismissMarginSheet:(id)sender
 {
     NSButton *sndr = (NSButton *)sender;
-    [window endSheet:marginWindow returnCode:[sndr tag]];
+    [window endSheet:marginWindow returnCode:sndr.tag];
     [marginWindow orderOut:sender];
     
 }
