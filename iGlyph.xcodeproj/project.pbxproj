@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		323EF17220323701006F8AF2 /* DisclosureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323EF17120323701006F8AF2 /* DisclosureViewController.swift */; };
+		323EF1742032399F006F8AF2 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323EF1732032399F006F8AF2 /* RightViewController.swift */; };
 		32729C93202F92030016626C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32729C92202F92030016626C /* AppDelegate.swift */; };
 		32729C94202F947A0016626C /* Pods_iGlyph.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */; };
 		32B68E622030CEC9000CFA9D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */; };
@@ -21,8 +23,7 @@
 		32B68E7B2030CF2E000CFA9D /* FormatGlyph.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E722030CF2E000CFA9D /* FormatGlyph.xib */; };
 		32B68E802030CF3F000CFA9D /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E7C2030CF3F000CFA9D /* Preferences.xib */; };
 		32B68E812030CF3F000CFA9D /* Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E7E2030CF3F000CFA9D /* Tips.xib */; };
-		32B68E8B2030F97D000CFA9D /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B68E892030F97D000CFA9D /* SidebarViewController.swift */; };
-		32B68E8C2030F97D000CFA9D /* SidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E8A2030F97D000CFA9D /* SidebarViewController.xib */; };
+		32B68E8C2030F97D000CFA9D /* DisclosureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B68E8A2030F97D000CFA9D /* DisclosureViewController.xib */; };
 		32C55048202CE60400EC9B16 /* iGlyphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C55047202CE60400EC9B16 /* iGlyphTests.m */; };
 		32C55051202CF59200EC9B16 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C55050202CF59200EC9B16 /* Cocoa.framework */; };
 		32E58EAF202CA69300946AF1 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 32E58EAE202CA69300946AF1 /* images */; };
@@ -139,6 +140,8 @@
 		3226B91D07E9124E0069519A /* IGFonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = IGFonts; path = iGlyph/IGFonts; sourceTree = "<group>"; };
 		3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = IG_GlyphCodes.txt; path = iGlyph/IG_GlyphCodes.txt; sourceTree = "<group>"; };
 		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
+		323EF17120323701006F8AF2 /* DisclosureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisclosureViewController.swift; path = iGlyph/DisclosureViewController.swift; sourceTree = "<group>"; };
+		323EF1732032399F006F8AF2 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RightViewController.swift; path = iGlyph/RightViewController.swift; sourceTree = "<group>"; };
 		32729C91202F92020016626C /* iGlyph-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGlyph-Bridging-Header.h"; sourceTree = "<group>"; };
 		32729C92202F92030016626C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
@@ -155,8 +158,7 @@
 		32B68E732030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/FormatGlyph.xib; sourceTree = "<group>"; };
 		32B68E7D2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		32B68E7F2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Tips.xib; sourceTree = "<group>"; };
-		32B68E892030F97D000CFA9D /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SidebarViewController.swift; path = iGlyph/SidebarViewController.swift; sourceTree = "<group>"; };
-		32B68E8A2030F97D000CFA9D /* SidebarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SidebarViewController.xib; path = iGlyph/SidebarViewController.xib; sourceTree = "<group>"; };
+		32B68E8A2030F97D000CFA9D /* DisclosureViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DisclosureViewController.xib; path = iGlyph/English.lproj/DisclosureViewController.xib; sourceTree = "<group>"; };
 		32C55045202CE60400EC9B16 /* iGlyphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iGlyphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C55047202CE60400EC9B16 /* iGlyphTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iGlyphTests.m; sourceTree = "<group>"; };
 		32C55049202CE60400EC9B16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -346,7 +348,8 @@
 			children = (
 				4EFBE44F0647B97900AEE351 /* IGDocumentWindowController.h */,
 				4EFBE4500647B97900AEE351 /* IGDocumentWindowController.m */,
-				32B68E892030F97D000CFA9D /* SidebarViewController.swift */,
+				323EF1732032399F006F8AF2 /* RightViewController.swift */,
+				323EF17120323701006F8AF2 /* DisclosureViewController.swift */,
 				4EFBE7B80649276D00AEE351 /* IGFoundationExtras.h */,
 				4EFBE7B90649276D00AEE351 /* IGFoundationExtras.m */,
 				32EDE991087489D700104997 /* IGInspectorController.h */,
@@ -425,7 +428,7 @@
 			children = (
 				32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */,
 				32B68E602030CEC8000CFA9D /* MainMenu.xib */,
-				32B68E8A2030F97D000CFA9D /* SidebarViewController.xib */,
+				32B68E8A2030F97D000CFA9D /* DisclosureViewController.xib */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -645,7 +648,7 @@
 				32B68E772030CF2E000CFA9D /* Hieroglyphs.xib in Resources */,
 				32B68E812030CF3F000CFA9D /* Tips.xib in Resources */,
 				32B68E742030CF2E000CFA9D /* WritingDirection.xib in Resources */,
-				32B68E8C2030F97D000CFA9D /* SidebarViewController.xib in Resources */,
+				32B68E8C2030F97D000CFA9D /* DisclosureViewController.xib in Resources */,
 				32B68E7A2030CF2E000CFA9D /* PageNr.xib in Resources */,
 				32B68E7B2030CF2E000CFA9D /* FormatGlyph.xib in Resources */,
 				32B68E802030CF3F000CFA9D /* Preferences.xib in Resources */,
@@ -729,6 +732,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				323EF1742032399F006F8AF2 /* RightViewController.swift in Sources */,
 				4EB1F55309864F8700D1533D /* main.m in Sources */,
 				4EB1F55409864F8700D1533D /* CartoucheController.m in Sources */,
 				4EB1F55609864F8700D1533D /* FormatGlyphController.m in Sources */,
@@ -744,6 +748,7 @@
 				4EB1F56009864F8700D1533D /* IGDocumentWindowController.m in Sources */,
 				4EB1F56109864F8700D1533D /* IGGraphic.m in Sources */,
 				4EB1F56209864F8700D1533D /* IGRectangle.m in Sources */,
+				323EF17220323701006F8AF2 /* DisclosureViewController.swift in Sources */,
 				4EB1F56309864F8700D1533D /* IGCircle.m in Sources */,
 				4EB1F56409864F8700D1533D /* IGLine.m in Sources */,
 				4EB1F56509864F8700D1533D /* IGTextArea.m in Sources */,
@@ -762,7 +767,6 @@
 				4EB1F57109864F8700D1533D /* IGZoomScrollView.m in Sources */,
 				4EB1F57209864F8700D1533D /* IGBackgroundView.m in Sources */,
 				4EB1F57309864F8700D1533D /* IGSupView.m in Sources */,
-				32B68E8B2030F97D000CFA9D /* SidebarViewController.swift in Sources */,
 				4EB1F57409864F8700D1533D /* IGCenteringClipView.m in Sources */,
 				4EB1F57509864F8700D1533D /* IGHieroglyphsTableView.m in Sources */,
 				4EB1F57609864F8700D1533D /* PageNrController.m in Sources */,
