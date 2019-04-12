@@ -49,7 +49,8 @@
     [newObj setFontName:self.fontName];
     [newObj setTheGlyph:self.theGlyph];
     [newObj setGlyphASC:self.glyphASC];
-    [newObj setFontSize:self.fontSize];
+    // FixMe: needs to be fixed
+    // [newObj setFontSize:self.fontSize];
     [newObj setRubricColor:self.rubricColor];
     [newObj setMirrored:self.mirrored];
     [newObj setAngle:self.angle];

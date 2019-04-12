@@ -239,7 +239,7 @@
 		4EFE35D306747A6800743130 /* IGZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGZoomScrollView.h; path = iGlyph/IGZoomScrollView.h; sourceTree = "<group>"; };
 		4EFE35D406747A6800743130 /* IGZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IGZoomScrollView.m; path = iGlyph/IGZoomScrollView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iGlyph/Info.plist; sourceTree = "<group>"; };
-		90ACD51187A458674F36A69F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		90ACD51187A458674F36A69F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9B90BC13245B35BF9E8F43D6 /* Pods-iGlyph.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGlyph.release.xcconfig"; path = "Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph.release.xcconfig"; sourceTree = "<group>"; };
 		9FADD8DD7CCA68DEB1FD9D61 /* Pods_iGlyph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iGlyph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -604,7 +604,7 @@
 						TestTargetID = 4EB1F4DF09864EBB00D1533D;
 					};
 					4EB1F4DF09864EBB00D1533D = {
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1024,7 +1024,7 @@
 				PRODUCT_NAME = iGlyph;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1094,7 +1094,7 @@
 				PRODUCT_NAME = iGlyph;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
