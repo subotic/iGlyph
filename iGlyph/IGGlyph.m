@@ -450,11 +450,11 @@ NSString *IGAngleKey = @"Angle";
 
 //---------
 
-- (NSInteger)fontSize {
+- (NSUInteger)fontSize {
     return _glyphGraphicFlags.fontSize;
 }
 
-- (void)setFontSize:(NSInteger)size {
+- (void)setFontSize:(NSUInteger)size {
     if (size) {
         _glyphGraphicFlags.fontSize = size;
     } else {

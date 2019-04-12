@@ -29,7 +29,7 @@
 
 @property (NS_NONATOMIC_IOSONLY) NSGlyph theGlyph;
 
-@property (NS_NONATOMIC_IOSONLY) NSInteger fontSize;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger fontSize;
 
 @property (NS_NONATOMIC_IOSONLY) BOOL rubricColor;
 

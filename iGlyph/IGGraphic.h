@@ -145,7 +145,7 @@ extern NSString *IGGlyphDidChangeNotification;
 @property (assign) BOOL filled;
 @property (assign) BOOL stroked;
 
-@property (assign) NSInteger fontSize;  //nur für Hieroglyphen
+@property (assign) NSUInteger fontSize;  //nur für Hieroglyphen
 @property (assign) NSInteger cartoucheOrientation; //nur für die Cartouche
 
 - (IGGraphic *)init;

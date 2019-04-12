@@ -146,18 +146,6 @@
 		32729C92202F92030016626C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
 		32ADB326075E6CBD006329AC /* PageNrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageNrController.m; path = iGlyph/PageNrController.m; sourceTree = "<group>"; };
-		32B68E5F2030CEC8000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/DocumentWindow.xib; sourceTree = "<group>"; };
-		32B68E612030CEC8000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		32B68E652030CF2D000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/WritingDirection.xib; sourceTree = "<group>"; };
-		32B68E672030CF2D000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Inspector.xib; sourceTree = "<group>"; };
-		32B68E692030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Line.xib; sourceTree = "<group>"; };
-		32B68E6B2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Hieroglyphs.xib; sourceTree = "<group>"; };
-		32B68E6D2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Cartouche.xib; sourceTree = "<group>"; };
-		32B68E6F2030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Objects.xib; sourceTree = "<group>"; };
-		32B68E712030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/PageNr.xib; sourceTree = "<group>"; };
-		32B68E732030CF2E000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/FormatGlyph.xib; sourceTree = "<group>"; };
-		32B68E7D2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Preferences.xib; sourceTree = "<group>"; };
-		32B68E7F2030CF3F000CFA9D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = iGlyph/English.lproj/Tips.xib; sourceTree = "<group>"; };
 		32B68E8A2030F97D000CFA9D /* DisclosureViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DisclosureViewController.xib; path = iGlyph/English.lproj/DisclosureViewController.xib; sourceTree = "<group>"; };
 		32C55045202CE60400EC9B16 /* iGlyphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iGlyphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C55047202CE60400EC9B16 /* iGlyphTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iGlyphTests.m; sourceTree = "<group>"; };
@@ -165,6 +153,18 @@
 		32C55050202CF59200EC9B16 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* IGlyph_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGlyph_Prefix.pch; path = iGlyph/IGlyph_Prefix.pch; sourceTree = "<group>"; };
 		32D11B46F2DC0892A0F0F74A /* Pods-iGlyph.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGlyph.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph.debug.xcconfig"; sourceTree = "<group>"; };
+		32DBB294226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/DocumentWindow.xib; sourceTree = "<group>"; };
+		32DBB295226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		32DBB296226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Cartouche.xib; sourceTree = "<group>"; };
+		32DBB297226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/FormatGlyph.xib; sourceTree = "<group>"; };
+		32DBB298226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Hieroglyphs.xib; sourceTree = "<group>"; };
+		32DBB299226070D7004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Inspector.xib; sourceTree = "<group>"; };
+		32DBB29A226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Line.xib; sourceTree = "<group>"; };
+		32DBB29B226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Objects.xib; sourceTree = "<group>"; };
+		32DBB29C226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/PageNr.xib; sourceTree = "<group>"; };
+		32DBB29D226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/WritingDirection.xib; sourceTree = "<group>"; };
+		32DBB29E226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Preferences.xib; sourceTree = "<group>"; };
+		32DBB29F226070D8004CBBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iGlyph/Base.lproj/Tips.xib; sourceTree = "<group>"; };
 		32E58EAE202CA69300946AF1 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = iGlyph/images; sourceTree = "<group>"; };
 		32E58EB0202CA71800946AF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iGlyph/Images.xcassets; sourceTree = "<group>"; };
 		32EDE991087489D700104997 /* IGInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGInspectorController.h; path = iGlyph/IGInspectorController.h; sourceTree = "<group>"; };
@@ -580,7 +580,6 @@
 				4EB1F4DE09864EBB00D1533D /* Frameworks */,
 				327B7D360B94E15900BAEB3A /* Copy Frameworks */,
 				E84164B2CD4D339ADDE450E5 /* [CP] Embed Pods Frameworks */,
-				84D17E555084D4CD953CB730 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -597,7 +596,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1010;
 				TargetAttributes = {
 					32C55044202CE60400EC9B16 = {
 						CreatedOnToolsVersion = 9.2;
@@ -605,7 +604,7 @@
 						TestTargetID = 4EB1F4DF09864EBB00D1533D;
 					};
 					4EB1F4DF09864EBB00D1533D = {
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -617,6 +616,7 @@
 			knownRegions = (
 				en,
 				English,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* VisualGlyph */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
@@ -666,21 +666,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		84D17E555084D4CD953CB730 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C200C204BD9A878C849027F5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -705,7 +690,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -714,7 +699,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iGlyph/Pods-iGlyph-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -798,7 +783,7 @@
 		32B68E5E2030CEC8000CFA9D /* DocumentWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E5F2030CEC8000CFA9D /* English */,
+				32DBB294226070D7004CBBFA /* Base */,
 			);
 			name = DocumentWindow.xib;
 			sourceTree = "<group>";
@@ -806,7 +791,7 @@
 		32B68E602030CEC8000CFA9D /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E612030CEC8000CFA9D /* English */,
+				32DBB295226070D7004CBBFA /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -814,7 +799,7 @@
 		32B68E642030CF2D000CFA9D /* WritingDirection.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E652030CF2D000CFA9D /* English */,
+				32DBB29D226070D8004CBBFA /* Base */,
 			);
 			name = WritingDirection.xib;
 			sourceTree = "<group>";
@@ -822,7 +807,7 @@
 		32B68E662030CF2D000CFA9D /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E672030CF2D000CFA9D /* English */,
+				32DBB299226070D7004CBBFA /* Base */,
 			);
 			name = Inspector.xib;
 			sourceTree = "<group>";
@@ -830,7 +815,7 @@
 		32B68E682030CF2E000CFA9D /* Line.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E692030CF2E000CFA9D /* English */,
+				32DBB29A226070D8004CBBFA /* Base */,
 			);
 			name = Line.xib;
 			sourceTree = "<group>";
@@ -838,7 +823,7 @@
 		32B68E6A2030CF2E000CFA9D /* Hieroglyphs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E6B2030CF2E000CFA9D /* English */,
+				32DBB298226070D7004CBBFA /* Base */,
 			);
 			name = Hieroglyphs.xib;
 			sourceTree = "<group>";
@@ -846,7 +831,7 @@
 		32B68E6C2030CF2E000CFA9D /* Cartouche.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E6D2030CF2E000CFA9D /* English */,
+				32DBB296226070D7004CBBFA /* Base */,
 			);
 			name = Cartouche.xib;
 			sourceTree = "<group>";
@@ -854,7 +839,7 @@
 		32B68E6E2030CF2E000CFA9D /* Objects.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E6F2030CF2E000CFA9D /* English */,
+				32DBB29B226070D8004CBBFA /* Base */,
 			);
 			name = Objects.xib;
 			sourceTree = "<group>";
@@ -862,7 +847,7 @@
 		32B68E702030CF2E000CFA9D /* PageNr.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E712030CF2E000CFA9D /* English */,
+				32DBB29C226070D8004CBBFA /* Base */,
 			);
 			name = PageNr.xib;
 			sourceTree = "<group>";
@@ -870,7 +855,7 @@
 		32B68E722030CF2E000CFA9D /* FormatGlyph.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E732030CF2E000CFA9D /* English */,
+				32DBB297226070D7004CBBFA /* Base */,
 			);
 			name = FormatGlyph.xib;
 			sourceTree = "<group>";
@@ -878,7 +863,7 @@
 		32B68E7C2030CF3F000CFA9D /* Preferences.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E7D2030CF3F000CFA9D /* English */,
+				32DBB29E226070D8004CBBFA /* Base */,
 			);
 			name = Preferences.xib;
 			sourceTree = "<group>";
@@ -886,7 +871,7 @@
 		32B68E7E2030CF3F000CFA9D /* Tips.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				32B68E7F2030CF3F000CFA9D /* English */,
+				32DBB29F226070D8004CBBFA /* Base */,
 			);
 			name = Tips.xib;
 			sourceTree = "<group>";
@@ -917,7 +902,6 @@
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsuported;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -958,7 +942,6 @@
 				DEVELOPMENT_TEAM = V7GQG35M7X;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_ENABLE_OBJC_GC = unsuported;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = iGlyphTests/Info.plist;
@@ -975,15 +958,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -992,7 +978,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1024,8 +1009,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iGlyph/IGlyph_Prefix.pch;
@@ -1037,13 +1020,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iGlyph/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.subotic.iGlyph;
 				PRODUCT_NAME = iGlyph;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1052,15 +1033,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -1068,7 +1052,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1081,6 +1064,7 @@
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SDKROOT = macosx;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
 			};
 			name = Release;
@@ -1100,21 +1084,17 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iGlyph/IGlyph_Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/iGlyph/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.subotic.iGlyph;
 				PRODUCT_NAME = iGlyph;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGlyph/iGlyph-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

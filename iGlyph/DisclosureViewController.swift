@@ -29,18 +29,22 @@ class DisclosureViewController: NSViewController {
         // the header containing the title and the disclosure button will be gray by default
         // set the background of the disclosed part of the view to white (or whatever other colour you want)
         self.panelView.wantsLayer = true
-        self.panelView.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        self.panelView.layer?.backgroundColor = (NSColor.white as! CGColor)
         
         // add horizontal constraints
-        var d1: NSMutableDictionary = NSMutableDictionary()
+        let d1: NSMutableDictionary = NSMutableDictionary()
         d1.setValue(panelView, forKey: "_panelView")
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[_panelView]|", options: NSLayoutFormatOptions.allZeros, metrics: nil, views: d1))
+        
+        // TODO: Updated so it compiles but needs to be checkt if it is correct. I don't really know what it does.
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[_panelView]|", options: NSLayoutConstraint.FormatOptions.alignAllBottom, metrics: nil, views: d1 as! [String : Any]))
         
         // add vertical constraints
-        var d2: NSMutableDictionary = NSMutableDictionary()
+        let d2: NSMutableDictionary = NSMutableDictionary()
         d2.setValue(panelView, forKey: "_panelView")
         d2.setValue(self.headerView, forKey: "_headerView")
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[_headerView][_panelView]", options: NSLayoutFormatOptions.allZeros, metrics: nil, views: d2))
+        
+        // TODO: Updated so it compiles but needs to be checkt if it is correct. I don't really know what it does.
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[_headerView][_panelView]", options: NSLayoutConstraint.FormatOptions.alignAllBottom, metrics: nil, views: d2 as! [String : Any]))
     }
     
     override var title: String! {
@@ -56,10 +60,10 @@ class DisclosureViewController: NSViewController {
     
     override func awakeFromNib() {
         // don't do anything until isClosed is initialised
-        if let x = self.isClosed{
-            openDisclosure(self,open:false,onlyOneOpen:false)
+        if self.isClosed != nil{
+            openDisclosure(sender: self,open:false,onlyOneOpen:false)
             if isClosed == false{
-                openDisclosure(self,open:true,onlyOneOpen:false)
+                openDisclosure(sender: self,open:true,onlyOneOpen:false)
             }
         }
     }
@@ -67,14 +71,14 @@ class DisclosureViewController: NSViewController {
     @IBAction func toggleDisclosure(sender: NSButton) {
         // called when the disclosure button is pressed
         if (self.isClosed == true) {
-            openDisclosure(sender,open:true,onlyOneOpen:true)
+            openDisclosure(sender: sender,open:true,onlyOneOpen:true)
         } else {
-            openDisclosure(sender,open:false,onlyOneOpen:true)
+            openDisclosure(sender: sender,open:false,onlyOneOpen:true)
         }
     }
     
     func openDisclosure(sender: AnyObject, open:Bool, onlyOneOpen:Bool){
-        ad = NSApplication.sharedApplication().delegate as AppDelegate
+        ad = NSApplication.shared.delegate as! IGlyphDelegate
         if (open==false){
             // close an open panel
             var distanceFromHeaderToBottom:CGFloat = NSMinY(self.view.bounds) - NSMinY(self.headerView.frame)
@@ -84,13 +88,13 @@ class DisclosureViewController: NSViewController {
             } else {
                 // The closing constraint is going to tie the bottom of the header view to the bottom of the overall disclosure view.
                 // Initially, it will be offset by the current distance, but we'll be animating it to 0.
-                self.closingConstraint = NSLayoutConstraint(item: self.headerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: distanceFromHeaderToBottom)
+                self.closingConstraint = NSLayoutConstraint(item: self.headerView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: distanceFromHeaderToBottom)
             }
             self.closingConstraint.constant =  distanceFromHeaderToBottom
             self.view.addConstraint(self.closingConstraint)
             
             NSAnimationContext.runAnimationGroup({ context in
-                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
                 // Animate the closing constraint to 0, causing the bottom of the header to be flush with the bottom of the overall disclosure view.
                 self.closingConstraint.animator().constant = 0
                 self.disclosureButton.title = "►"
@@ -102,7 +106,7 @@ class DisclosureViewController: NSViewController {
         {
             // open a closed panel
             NSAnimationContext.runAnimationGroup({ context in
-                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
                 // Animate the closing constraint from 0, causing the panel to open.
                 self.closingConstraint.animator().constant -=  self.panelView.frame.size.height
                 self.disclosureButton.title = "▼"
@@ -127,7 +131,7 @@ class DisclosureViewController: NSViewController {
                  */
                 
             })
-            
+            /*
             if (onlyOneOpen == true){
                 // close other bars
                 // adjust this segment dependant on the number of panels you have
@@ -164,6 +168,7 @@ class DisclosureViewController: NSViewController {
                     ad.sidebar3.toggleDisclosure(sender)
                 }
             }
+            */
             
         }
         
