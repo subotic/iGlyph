@@ -4,6 +4,8 @@
 //
 //  Created by Ivan Subotic on 11.02.18.
 //
+//  Tutorial Site: http://jpopham.github.io/01-sidebar-swift-OSX/
+//
 
 import Cocoa
 

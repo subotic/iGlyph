@@ -136,12 +136,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iGlyph/main.m; sourceTree = "<group>"; };
 		320841B506760E4E00F2B07D /* IGCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGCenteringClipView.h; path = iGlyph/IGCenteringClipView.h; sourceTree = "<group>"; };
 		320841B606760E4E00F2B07D /* IGCenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = IGCenteringClipView.m; path = iGlyph/IGCenteringClipView.m; sourceTree = "<group>"; };
-		3213781308734531000583E2 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = iGlyph/English.lproj/iGlyphHelp; sourceTree = "<group>"; };
 		3226B91D07E9124E0069519A /* IGFonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = IGFonts; path = iGlyph/IGFonts; sourceTree = "<group>"; };
 		3226BB8D07E9136D0069519A /* IG_GlyphCodes.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = IG_GlyphCodes.txt; path = iGlyph/IG_GlyphCodes.txt; sourceTree = "<group>"; };
 		3226BE1607E9C1E80069519A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Credits.html; path = iGlyph/Credits.html; sourceTree = "<group>"; };
 		323EF17120323701006F8AF2 /* DisclosureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisclosureViewController.swift; path = iGlyph/DisclosureViewController.swift; sourceTree = "<group>"; };
 		323EF1732032399F006F8AF2 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RightViewController.swift; path = iGlyph/RightViewController.swift; sourceTree = "<group>"; };
+		3241324D22645CCA00293719 /* en */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en; path = iGlyph/en.lproj/iGlyphHelp; sourceTree = "<group>"; };
 		32729C91202F92020016626C /* iGlyph-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGlyph-Bridging-Header.h"; sourceTree = "<group>"; };
 		32729C92202F92030016626C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32ADB325075E6CBD006329AC /* PageNrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageNrController.h; path = iGlyph/PageNrController.h; sourceTree = "<group>"; };
@@ -615,7 +615,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				English,
 				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* VisualGlyph */;
@@ -775,7 +774,7 @@
 		3213789A0873453B000583E2 /* iGlyphHelp */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3213781308734531000583E2 /* English */,
+				3241324D22645CCA00293719 /* en */,
 			);
 			name = iGlyphHelp;
 			sourceTree = "<group>";

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <deployment version="101300" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,17 +23,17 @@
         <window title="Cartouche" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="cartouche" animationBehavior="default" id="5" userLabel="Panel" customClass="IGEdgeDockablePanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="832" y="588" width="184" height="209"/>
+            <rect key="contentRect" x="832" y="588" width="197" height="211"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="184" height="209"/>
+                <rect key="frame" x="0.0" y="0.0" width="197" height="211"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box title="Border" id="30">
-                        <rect key="frame" x="4" y="2" width="176" height="105"/>
+                        <rect key="frame" x="4" y="2" width="187" height="105"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <view key="contentView" id="7iq-LW-DbU">
-                            <rect key="frame" x="2" y="2" width="172" height="88"/>
+                            <rect key="frame" x="3" y="3" width="181" height="87"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <box horizontalHuggingPriority="750" boxType="separator" id="50">
@@ -44,10 +44,10 @@
                         </view>
                     </box>
                     <box title="Edges" id="22">
-                        <rect key="frame" x="4" y="114" width="176" height="90"/>
+                        <rect key="frame" x="4" y="114" width="187" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <view key="contentView" id="9BR-XF-93H">
-                            <rect key="frame" x="2" y="2" width="172" height="73"/>
+                            <rect key="frame" x="3" y="3" width="181" height="72"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" id="25">
@@ -182,10 +182,10 @@
                         </connections>
                     </textField>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" id="51">
-                        <rect key="frame" x="86" y="16" width="81" height="60"/>
+                        <rect key="frame" x="86" y="16" width="93" height="69"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="27" height="20"/>
+                        <size key="cellSize" width="31" height="23"/>
                         <buttonCell key="prototype" type="radio" title="Radio" imagePosition="leading" alignment="left" inset="2" id="186">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -253,6 +253,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="8"/>
             </connections>
+            <point key="canvasLocation" x="138.5" y="151.5"/>
         </window>
         <arrayController objectClassName="IGCartouche" id="113" userLabel="selectionArrayController">
             <declaredKeys>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <deployment version="101300" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,19 +17,20 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="objects" animationBehavior="default" id="5" userLabel="Panel" customClass="IGEdgeDockablePanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="136" y="231" width="66" height="221"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <rect key="contentRect" x="136" y="231" width="66" height="225"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="66" height="221"/>
+                <rect key="frame" x="0.0" y="0.0" width="66" height="225"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box verticalHuggingPriority="750" boxType="separator" id="84">
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="84">
                         <rect key="frame" x="0.0" y="220" width="66" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
                     </box>
-                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="86">
+                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86">
                         <rect key="frame" x="0.0" y="-7" width="66" height="232"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="232" id="UEV-r6-tHo"/>
+                        </constraints>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="66" height="24.600000000000001"/>
                         <size key="intercellSpacing" width="1" height="0.40000000000000002"/>
@@ -81,10 +83,18 @@
                         </connections>
                     </matrix>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="84" firstAttribute="trailing" secondItem="86" secondAttribute="trailing" id="CHu-Ml-dIN"/>
+                    <constraint firstItem="84" firstAttribute="leading" secondItem="86" secondAttribute="leading" id="Dph-Vd-XI0"/>
+                    <constraint firstItem="86" firstAttribute="top" secondItem="6" secondAttribute="top" id="ZGh-Jj-4Cf"/>
+                    <constraint firstItem="84" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="grX-Fe-K7a"/>
+                    <constraint firstItem="84" firstAttribute="top" secondItem="6" secondAttribute="top" constant="2" id="hbh-Ao-WsX"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="7"/>
             </connections>
+            <point key="canvasLocation" x="132" y="149.5"/>
         </window>
         <view id="85">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
